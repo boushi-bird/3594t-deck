@@ -1,0 +1,35 @@
+@import '../../defines.css';
+
+.card-filter-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card-filter-actions [class^="action-buton-"] {
+  margin: 3px;
+  font-size: 18px;
+  width: 88px;
+  height: 40px;
+  font-weight: bold;
+  color: white;
+  border-style: solid;
+  border-color: var(--card-filter-label-color);
+  border-width: 2px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.card-filter-actions .action-buton-reset {
+  background-color: blue;
+}
+
+.card-filter-actions .action-buton-ok {
+  display: none;
+  background-color: red;
+}
+
+@media (--small-device) {
+  .modal .card-filter-actions .action-buton-ok {
+    display: block;
+  }
+}

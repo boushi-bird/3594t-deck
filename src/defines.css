@@ -1,0 +1,12 @@
+:root {
+  --app-min-width: 630px; /* アプリケーションの最小幅 */
+  --card-filter-min-width: 300px;
+  --card-filter-bg-color: rgba(0, 0, 0, 0.8);
+  --card-filter-content-bg-color: rgba(41, 16, 16, 1);
+  --card-filter-label-color: #fccd4d;
+}
+
+@custom-media --app-min screen and (max-width: 630px);
+@custom-media --small-device-w screen and (max-width: 980px);
+@custom-media --small-device-h screen and (max-height: 760px));
+@custom-media --small-device --small-device-w, --small-device-h;

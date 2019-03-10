@@ -1,0 +1,48 @@
+@import '../../defines.css';
+
+.button-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.simple-filter-state .button-list {
+  flex-wrap: nowrap;
+}
+
+.button.filter-item {
+  max-width: 180px;
+  min-width: 90px;
+  height: 56px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 3px;
+  border-radius: 6px;
+  text-shadow: 0 0 10px lightslategray;
+  background-color: #d2b48c;
+  outline: none;
+  margin: 3px;
+  padding: 0 3px;
+}
+
+.button.filter-item.square {
+  font-size: 28px;
+  max-width: 60px;
+  min-width: 60px;
+  height: 60px;
+  padding: 0;
+}
+
+.button.filter-item.checked {
+  text-shadow: 0 0 30px #ff8c00;
+  border-color: #ff8c00;
+}
+
+.button.filter-item:disabled {
+  color: #ccc;
+  border-color: #ccc;
+}

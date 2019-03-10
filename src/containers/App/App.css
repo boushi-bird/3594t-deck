@@ -1,0 +1,120 @@
+@import '../../defines.css';
+
+.modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.5;
+  display: none;
+}
+
+.app-container {
+  height: 100%;
+  display: flex;
+}
+
+.app-main {
+  flex: 1;
+  height: 100%;
+  display: flex;
+}
+
+@media (--small-device) {
+  .modal .modal-background {
+    display: block;
+  }
+}
+
+.card-list-container {
+  flex: 1;
+  min-width: var(--app-min-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.simple-filter-container {
+  min-height: 80px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.open-filter {
+  font-size: 18px;
+  width: 56px;
+  height: 56px;
+  margin: 5px;
+  border-width: 1px;
+  border-color: black;
+  outline: none;
+}
+
+.card-filter-container {
+  flex: 1;
+  height: 100%;
+  min-width: var(--card-filter-min-width);
+  background-color: var(--card-filter-bg-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-filter-title {
+  text-align: center;
+  font-weight: normal;
+  font-size: 26px;
+  color: var(--card-filter-label-color);
+  text-shadow: 0 0 5px var(--card-filter-label-color);
+  margin: 20px auto;
+  height: 40px;
+}
+
+.card-filter-buttons {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  border-bottom: solid 3px var(--card-filter-label-color);
+}
+
+.card-filter-content {
+  height: calc(100% - 130px);
+  background-color: var(--card-filter-content-bg-color);
+  display: none;
+  overflow: auto;
+}
+
+.card-filter-content.active {
+  display: block;
+}
+
+@media (--small-device) {
+  div.simple-filter-container {
+    display: flex;
+  }
+
+  .card-filter-container {
+    display: none;
+    position: fixed;
+    margin: 10px;
+    width: calc(100% - 20px);
+    min-width: 610px;
+    height: calc(100% - 20px);
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+
+  .card-filter-container.open {
+    display: block;
+  }
+}
+
+@media (--app-min) {
+  .card-filter-container.open {
+    position: absolute;
+  }
+}

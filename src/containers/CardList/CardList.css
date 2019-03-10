@@ -1,0 +1,6 @@
+@import '../../defines.css';
+
+.cardlist-container {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}

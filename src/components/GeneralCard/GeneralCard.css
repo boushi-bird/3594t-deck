@@ -1,0 +1,229 @@
+@import '../../defines.css';
+
+.general-card {
+  display: block;
+  font-size: 18px;
+  margin: 5px auto;
+  width: 600px;
+  height: 80px;
+  position: relative;
+}
+
+.general-card > * {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  height: 40px;
+}
+
+.general-card > *::before {
+  font-size: 8px;
+  position: absolute;
+  top: 0;
+}
+
+.general-card .state {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  top: 0;
+  left: 0;
+  width: 40px;
+}
+
+.general-card .rarity {
+  font-weight: bold;
+  top: 40px;
+  left: 0;
+  width: 40px;
+  justify-content: flex-end;
+}
+
+.general-card .version {
+  font-weight: bold;
+  padding-left: 3px;
+  top: 0;
+  left: 40px;
+  width: 116px;
+  justify-content: flex-start;
+}
+
+.general-card .name {
+  font-weight: bold;
+  font-size: 22px;
+  padding-left: 3px;
+  top: 40px;
+  left: 40px;
+  width: 116px;
+  justify-content: flex-start;
+}
+
+.general-card .image {
+  top: 0;
+  left: 156px;
+  width: 46px;
+  height: 80px;
+}
+
+.general-card .cost {
+  top: 0;
+  left: 202px;
+  width: 36px;
+  height: 40px;
+}
+
+.general-card .cost::before {
+  content: attr(data-label);
+}
+
+.general-card .unit {
+  top: 40px;
+  left: 202px;
+  width: 36px;
+  height: 40px;
+  padding-top: 2px;
+}
+
+.general-card .unit::before {
+  content: attr(data-label);
+}
+
+.general-card .force {
+  top: 0;
+  left: 238px;
+  width: 36px;
+  height: 40px;
+}
+
+.general-card .force::before {
+  content: attr(data-label);
+}
+
+.general-card .intelligence {
+  top: 0;
+  left: 274px;
+  width: 36px;
+  height: 40px;
+}
+
+.general-card .intelligence::before {
+  content: attr(data-label);
+}
+
+.general-card .conquest {
+  top: 0;
+  left: 310px;
+  width: 36px;
+  height: 40px;
+}
+
+.general-card .conquest::before {
+  content: attr(data-label);
+}
+
+.general-card .skills {
+  top: 40px;
+  left: 238px;
+  width: 108px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.skill {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 2px;
+  width: 30px;
+  height: 30px;
+  background-color: yellow;
+  border: solid 2px black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.no-skill {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 90px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.general-card .strategy {
+  padding-left: 3px;
+  padding-right: 3px;
+  top: 0;
+  left: 346px;
+  width: 120px;
+  height: 80px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.general-card .strategy::before {
+  content: attr(data-label);
+}
+
+.general-card .strategy-morale {
+  top: 0;
+  left: 466px;
+  width: 32px;
+  height: 80px;
+  padding-top: 6px;
+}
+
+.general-card .strategy-morale::before {
+  content: attr(data-label1) '\A' attr(data-label2);
+  white-space: pre;
+}
+
+.general-card .gen-mains {
+  top: 0;
+  left: 498px;
+  width: 70px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 14px;
+}
+
+.general-card .gen-mains::before {
+  content: '主将器';
+}
+
+.gen-main {
+  margin: 1px;
+  background-color: lightslategray;
+  border-color: black;
+  font-size: 14px;
+  width: 64px;
+  height: 20px;
+}
+
+.gen-main i {
+  margin-left: 4px;
+}
+
+.general-card .buttons {
+  top: 0;
+  left: 568px;
+  width: 32px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 14px;
+}
+
+.general-thumb {
+  width: 40px;
+  height: 64px;
+}

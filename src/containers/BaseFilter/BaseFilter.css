@@ -1,0 +1,22 @@
+@import '../../defines.css';
+
+.filter-section {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.filter-section .title {
+  font-size: 24px;
+  font-weight: lighter;
+  padding-left: 10px;
+  color: var(--card-filter-label-color);
+  text-shadow: 0 0 5px var(--card-filter-label-color);
+  border-bottom: solid 3px var(--card-filter-label-color);
+  margin: 15px auto 10px;
+}
+
+.filter-section .title-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}

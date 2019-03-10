@@ -1,0 +1,36 @@
+@import '../../defines.css';
+
+.card-filter-tabs {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.card-filter-tabs [class^="tab-button-"] {
+  width: 80px;
+  height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--card-filter-label-color);
+  margin: 0 3px;
+  border-color: var(--card-filter-label-color);
+  border-width: 3px;
+  outline: none;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-filter-tabs .tab-button-basic {
+  background-color: #636;
+}
+
+.card-filter-tabs .tab-button-detail {
+  background-color: #903;
+}
+
+.card-filter-tabs [class^="tab-button-"].active {
+  margin-top: -10px;
+  height: 60px;
+  border-bottom-width: 0;
+  border-bottom-color: rgba(41, 16, 16, 1);
+}

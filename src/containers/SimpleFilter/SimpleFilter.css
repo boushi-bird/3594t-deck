@@ -1,0 +1,25 @@
+@import '../../defines.css';
+
+.simple-filter-section {
+  position: relative;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.simple-filter-section .title-inline {
+  font-size: 18px;
+  font-weight: lighter;
+  vertical-align: middle;
+  color: var(--card-filter-label-color);
+  text-shadow: 0 0 5px var(--card-filter-label-color);
+  margin: 5px;
+}
+
+.simple-filter-state {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 5px;
+  background-color: gray;
+}
