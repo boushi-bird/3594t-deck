@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.tsx",
   "scripts": {
-    "build": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
-    "deploy": "npm run build && npm run deploy-only",
+    "build": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
+    "deploy": "cross-env NODE_ENV=production npm run build && npm run deploy-only",
     "deploy-only": "gh-pages -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
     "lint": "npm-run-all lint:*",
