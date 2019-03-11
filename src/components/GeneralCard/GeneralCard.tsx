@@ -4,17 +4,21 @@ import { DatalistState } from '../../modules/datalist';
 
 interface Props {
   general: DatalistState['generals'][number];
+  show?: boolean;
 }
 
 export default class GeneralCard extends React.PureComponent<Props> {
   public render(): React.ReactNode {
-    const { general } = this.props;
+    const { general, show } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
     const styleState: React.CSSProperties = {
       backgroundColor: general.state.color,
     };
+    if (show != null && !show) {
+      style.display = 'none';
+    }
     const skills: JSX.Element[] = [];
     general.skills.forEach(skill => {
       skills.push(

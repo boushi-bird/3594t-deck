@@ -5,6 +5,7 @@ import { DatalistState } from '../../modules/datalist';
 
 export interface StateFromProps {
   generals: DatalistState['generals'];
+  searchedGeneralIds: string[];
 }
 
 export interface DispatchFromProps {}
@@ -13,10 +14,13 @@ type Props = StateFromProps & DispatchFromProps;
 
 export default class CardList extends React.PureComponent<Props> {
   public render(): React.ReactNode {
-    const { generals } = this.props;
+    const { generals, searchedGeneralIds } = this.props;
     const generalCards: JSX.Element[] = [];
     generals.forEach(general => {
-      generalCards.push(<GeneralCard key={general.id} general={general} />);
+      const show = searchedGeneralIds.includes(general.id);
+      generalCards.push(
+        <GeneralCard key={general.id} general={general} show={show} />
+      );
     });
     return <div className="cardlist-container">{generalCards}</div>;
   }
