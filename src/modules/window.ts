@@ -8,11 +8,13 @@ export const filterTabNames = {
 export type FilterTab = keyof typeof filterTabNames;
 
 export interface WindowState {
+  ready: boolean;
   openedFilter: boolean;
   activeFilter: FilterTab;
 }
 
 export const windowActions = {
+  beReady: createAction('BE_READY'),
   openFilter: createAction('CHANGE_FILTER_VISIBLE', action => () =>
     action({ openedFilter: true })
   ),
@@ -27,6 +29,7 @@ export const windowActions = {
 };
 
 const initialState: WindowState = {
+  ready: false,
   openedFilter: false,
   activeFilter: 'BASIC',
 };
@@ -36,6 +39,11 @@ export default function windowReducer(
   actions: ActionType<typeof windowActions>
 ): WindowState {
   switch (actions.type) {
+    case 'BE_READY':
+      return {
+        ...state,
+        ready: true,
+      };
     case 'CHANGE_FILTER_VISIBLE':
       const {
         payload: { openedFilter },

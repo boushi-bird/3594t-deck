@@ -11,6 +11,7 @@ import DetailFilter from '../../containers/DetailFilter';
 
 export interface StateFromProps extends WindowState {
   openedAnyModal: boolean;
+  loading: boolean;
 }
 
 export interface DispatchFromProps {
@@ -31,6 +32,8 @@ export default class App extends React.PureComponent<Props> {
 
   public render(): React.ReactNode {
     const {
+      ready,
+      loading,
       resetConditions,
       openFilter,
       closeFilter,
@@ -41,7 +44,7 @@ export default class App extends React.PureComponent<Props> {
       activeFilter,
     } = this.props;
     return (
-      <div className={classNames(['app-container', { modal }])}>
+      <div className={classNames(['app-container', { modal, ready }])}>
         <div className="app-main">
           <div className="card-list-container">
             <div className="simple-filter-container">
@@ -84,6 +87,7 @@ export default class App extends React.PureComponent<Props> {
           </div>
         </div>
         <div className="modal-background" onClick={closeAllModal} />
+        <div className={classNames('loading-item', { loading })} />
       </div>
     );
   }

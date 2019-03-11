@@ -10,3 +10,25 @@
 @custom-media --small-device-w screen and (max-width: 980px);
 @custom-media --small-device-h screen and (max-height: 760px));
 @custom-media --small-device --small-device-w, --small-device-h;
+
+@keyframes rolling {
+  from {
+    transform: rotate(0);
+    transform-origin: center;
+  }
+
+  to {
+    transform: rotate(360deg);
+    transform-origin: center;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
