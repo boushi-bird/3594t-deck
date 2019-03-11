@@ -1,10 +1,12 @@
 {
-  "name": "3594t-tools",
+  "name": "3594t-deck",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.tsx",
   "scripts": {
-    "build": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
+    "build": "npm-run-all build:*",
+    "build:ts": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
+    "build:license": "license-checker --production --markdown --excludePrivatePackages --out dist/dependencies.md",
     "deploy": "cross-env NODE_ENV=production npm run build && npm run deploy-only",
     "deploy-only": "gh-pages -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
@@ -16,8 +18,12 @@
     "lint:css": "stylelint .",
     "fix:css": "stylelint --fix ."
   },
-  "author": "",
-  "license": "ISC",
+  "author": "boushi-bird <boushi-bird@users.noreply.github.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boushi-bird/3594t-deck.git"
+  },
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
@@ -59,6 +65,7 @@
     "eslint-plugin-react": "^7.12.4",
     "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "license-checker": "^25.0.1",
     "mini-css-extract-plugin": "^0.5.0",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
