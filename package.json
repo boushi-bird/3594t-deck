@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm-run-all build:*",
     "build:ts": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
-    "build:license": "license-checker --production --markdown --excludePrivatePackages --out dist/dependencies.md",
+    "build:license": "license-checker --markdown --excludePrivatePackages --customPath=resources/license-checker.json --out dist/dependencies.md",
     "deploy": "cross-env NODE_ENV=production npm run build && npm run deploy-only",
     "deploy-only": "gh-pages -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
