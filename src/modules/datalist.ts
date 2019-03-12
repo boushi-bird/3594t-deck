@@ -1,5 +1,5 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { BaseData, FilterItem, FilterContents } from '../services/map-basedata';
+import { BaseData, FilterItem, FilterContents } from '../services/mapBaseData';
 
 export type FilterItem = FilterItem;
 

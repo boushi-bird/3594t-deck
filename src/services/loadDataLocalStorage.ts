@@ -1,5 +1,5 @@
-import { BaseData } from './types/base-data';
-import { MemberData } from './types/member-data';
+import { BaseData } from './types/baseData';
+import { MemberData } from './types/memberData';
 
 export interface SavedLocalData {
   base_data: BaseData;

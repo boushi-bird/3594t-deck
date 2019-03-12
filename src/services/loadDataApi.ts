@@ -1,4 +1,4 @@
-import { BaseData } from './types/base-data';
+import { BaseData } from './types/baseData';
 
 export default async (): Promise<BaseData> => {
   const res: Response = await fetch(process.env.BASE_DATA_URL as string);

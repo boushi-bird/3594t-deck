@@ -4,7 +4,7 @@ import { windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
 import { State } from '../../store';
 import App, { StateFromProps, DispatchFromProps } from './App';
-import { loadFromApi } from '../../services/load-data';
+import { loadFromApi } from '../../services/loadData';
 
 export default connect<StateFromProps, DispatchFromProps>(
   (state: State) => ({

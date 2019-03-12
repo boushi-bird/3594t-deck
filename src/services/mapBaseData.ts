@@ -1,4 +1,4 @@
-import { BaseData as RawBaseData } from './types/base-data';
+import { BaseData as RawBaseData } from './types/baseData';
 
 type RawGeneral = RawBaseData['GENERAL'][number];
 type Personal = RawBaseData['PERSONAL'][number];

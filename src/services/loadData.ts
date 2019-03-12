@@ -1,7 +1,7 @@
-import { BaseData as RawBaseData } from './types/base-data';
-import loadDataFromApi from './load-data-api';
-import loadDataFromLocalStorage from './load-data-localstorage';
-import mapToBaseData, { BaseData } from './map-basedata';
+import { BaseData as RawBaseData } from './types/baseData';
+import loadDataFromApi from './loadDataApi';
+import loadDataFromLocalStorage from './loadDataLocalStorage';
+import mapToBaseData, { BaseData } from './mapBaseData';
 
 interface AllData {
   baseData: BaseData;
