@@ -3,6 +3,7 @@ import React from 'react';
 import {
   DatalistState,
   FilterCondition,
+  FilterConditionKey,
   FilterItem,
 } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
@@ -15,8 +16,8 @@ export interface StateFromProps {
 
 export interface DispatchFromProps {
   setCondition: (condition: Partial<FilterCondition>) => void;
-  toggleCheckList: (key: keyof FilterCondition, value: string) => void;
-  toggleCheck: (key: keyof FilterCondition, value: boolean) => void;
+  toggleCheckList: (key: FilterConditionKey, value: string) => void;
+  toggleCheck: (key: FilterConditionKey, value: boolean) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;

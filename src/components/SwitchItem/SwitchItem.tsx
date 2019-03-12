@@ -1,9 +1,7 @@
 import './SwitchItem.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterCondition } from '../../modules/datalist';
-
-type FilterConditionKey = keyof FilterCondition;
+import { FilterCondition, FilterConditionKey } from '../../modules/datalist';
 
 interface Props {
   isOn: boolean;

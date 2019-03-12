@@ -1,9 +1,7 @@
 import './FilterButtonList.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterCondition } from '../../modules/datalist';
-
-type FilterConditionKey = keyof FilterCondition;
+import { FilterConditionKey } from '../../modules/datalist';
 
 interface ButtonItem {
   id: string;

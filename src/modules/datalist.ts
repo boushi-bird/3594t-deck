@@ -36,6 +36,8 @@ export interface FilterCondition {
   searchText: string;
 }
 
+export type FilterConditionKey = keyof FilterCondition;
+
 const initialFilterCondition: FilterCondition = {
   belongStates: [],
   costs: [],
@@ -87,12 +89,11 @@ export const datalistActions = {
   ),
   toggleCheckList: createAction(
     'TOGGLE_CHECK_LIST',
-    action => (key: keyof FilterCondition, value: string) =>
-      action({ key, value })
+    action => (key: FilterConditionKey, value: string) => action({ key, value })
   ),
   toggleCheck: createAction(
     'TOGGLE_CHECK',
-    action => (key: keyof FilterCondition, value: boolean) =>
+    action => (key: FilterConditionKey, value: boolean) =>
       action({ key, value })
   ),
   setBaseData: createAction('SET_BASE_DATA', action => (baseData: BaseData) =>
@@ -102,7 +103,7 @@ export const datalistActions = {
 
 const toggleCheckList = (
   state: DatalistState,
-  key: keyof FilterCondition,
+  key: FilterConditionKey,
   value: string,
   targetCondition: string[]
 ): DatalistState => {

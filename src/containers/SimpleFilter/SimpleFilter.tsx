@@ -1,6 +1,6 @@
 import './SimpleFilter.css';
 import React from 'react';
-import { FilterCondition, FilterItem } from '../../modules/datalist';
+import { FilterConditionKey, FilterItem } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 
 export interface StateFromProps {
@@ -9,7 +9,7 @@ export interface StateFromProps {
 }
 
 export interface DispatchFromProps {
-  toggleCheckList: (key: keyof FilterCondition, value: string) => void;
+  toggleCheckList: (key: FilterConditionKey, value: string) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
