@@ -1,0 +1,17 @@
+[@babel/runtime@7.3.4](https://github.com/babel/babel/tree/master/packages/babel-runtime) - MIT
+[classnames@2.2.6](https://github.com/JedWatson/classnames) - MIT
+[hoist-non-react-statics@3.3.0](https://github.com/mridgway/hoist-non-react-statics) - BSD-3-Clause
+[invariant@2.2.4](https://github.com/zertosh/invariant) - MIT
+[js-tokens@4.0.0](https://github.com/lydell/js-tokens) - MIT
+[loose-envify@1.4.0](https://github.com/zertosh/loose-envify) - MIT
+[object-assign@4.1.1](https://github.com/sindresorhus/object-assign) - MIT
+[prop-types@15.7.2](https://github.com/facebook/prop-types) - MIT
+[react-dom@16.8.4](https://github.com/facebook/react) - MIT
+[react-is@16.8.4](https://github.com/facebook/react) - MIT
+[react-redux@6.0.1](https://github.com/reduxjs/react-redux) - MIT
+[react@16.8.4](https://github.com/facebook/react) - MIT
+[redux@4.0.1](https://github.com/reduxjs/redux) - MIT
+[regenerator-runtime@0.12.1](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime) - MIT
+[scheduler@0.13.4](https://github.com/facebook/react) - MIT
+[symbol-observable@1.2.0](https://github.com/blesh/symbol-observable) - MIT
+[typesafe-actions@3.2.1](https://github.com/piotrwitek/typesafe-actions) - MIT
