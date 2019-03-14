@@ -87,108 +87,9 @@ export const datalistActions = {
     'SET_CONDITION',
     action => (condition: Partial<FilterCondition>) => action({ condition })
   ),
-  toggleCheckList: createAction(
-    'TOGGLE_CHECK_LIST',
-    action => (key: FilterConditionKey, value: string) => action({ key, value })
-  ),
-  toggleCheck: createAction(
-    'TOGGLE_CHECK',
-    action => (key: FilterConditionKey, value: boolean) =>
-      action({ key, value })
-  ),
   setBaseData: createAction('SET_BASE_DATA', action => (baseData: BaseData) =>
     action({ baseData })
   ),
-};
-
-const toggleCheckList = (
-  state: DatalistState,
-  key: FilterConditionKey,
-  value: string,
-  targetCondition: string[]
-): DatalistState => {
-  let targetValue;
-  if (targetCondition.includes(value)) {
-    // チェック外す
-    targetValue = targetCondition.filter(v => v !== value);
-  } else {
-    // チェック入れる
-    targetValue = [...targetCondition, value];
-  }
-  return {
-    ...state,
-    filterCondition: {
-      ...state.filterCondition,
-      [key]: targetValue,
-    },
-  };
-};
-
-const toggleCheckListMajorVersion = (
-  state: DatalistState,
-  value: string
-): DatalistState => {
-  const targetCondition = state.filterCondition.majorVersions;
-  let versions = state.filterCondition.versions.filter(
-    v => !v.startsWith(`${value}-`)
-  );
-  let majorVersions;
-  if (targetCondition.includes(value)) {
-    // チェック外す
-    majorVersions = targetCondition.filter(v => v !== value);
-  } else {
-    // チェック入れる
-    const versionItems = ([] as FilterItem[])
-      .concat(...state.filterContents.versions)
-      .filter(v => v.id.startsWith(`${value}-`));
-    majorVersions = [...targetCondition, value];
-    versions = versions.concat(versionItems.map(v => v.id));
-  }
-  return {
-    ...state,
-    filterCondition: {
-      ...state.filterCondition,
-      majorVersions,
-      versions,
-    },
-  };
-};
-
-const toggleCheckListVersion = (
-  state: DatalistState,
-  value: string
-): DatalistState => {
-  const targetCondition = state.filterCondition.versions;
-  let majorVersions = [...state.filterCondition.majorVersions];
-  const majorVersion = value.split('-')[0];
-  // const majorVersions = state.filterCondition.majorVersions;
-  let versions: string[];
-  if (targetCondition.includes(value)) {
-    // チェック外す
-    versions = targetCondition.filter(v => v !== value);
-    if (!versions.some(version => version.startsWith(`${majorVersion}-`))) {
-      majorVersions = majorVersions.filter(version => version !== majorVersion);
-    }
-  } else {
-    // チェック入れる
-    versions = [...targetCondition, value];
-    if (!majorVersions.includes(majorVersion)) {
-      const versionItems = ([] as FilterItem[])
-        .concat(...state.filterContents.versions)
-        .filter(v => v.id.startsWith(`${majorVersion}-`));
-      if (versionItems.every(v => versions.includes(v.id))) {
-        majorVersions.push(majorVersion);
-      }
-    }
-  }
-  return {
-    ...state,
-    filterCondition: {
-      ...state.filterCondition,
-      versions,
-      majorVersions,
-    },
-  };
 };
 
 export default function datalistReducer(
@@ -209,33 +110,6 @@ export default function datalistReducer(
           ...state.filterCondition,
           ...actions.payload.condition,
         },
-      };
-    }
-    case 'TOGGLE_CHECK_LIST': {
-      const { key, value } = actions.payload;
-      const targetCondition = state.filterCondition[key];
-      if (!(targetCondition instanceof Array)) {
-        console.warn(`${key} is not array.`);
-        return state;
-      }
-      if (key === 'majorVersions') {
-        return toggleCheckListMajorVersion(state, value);
-      }
-      if (key === 'versions') {
-        return toggleCheckListVersion(state, value);
-      }
-      return toggleCheckList(state, key, value, targetCondition);
-    }
-    case 'TOGGLE_CHECK': {
-      const { key, value } = actions.payload;
-      const targetCondition = state.filterCondition[key];
-      if (!(targetCondition instanceof Boolean)) {
-        console.warn(`${key} is not boolean.`);
-        return state;
-      }
-      return {
-        ...state,
-        [key]: !value,
       };
     }
     case 'SET_BASE_DATA': {

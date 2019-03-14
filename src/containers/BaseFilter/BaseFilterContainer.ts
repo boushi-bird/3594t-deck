@@ -1,18 +1,34 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { datalistActions } from '../../modules/datalist';
+import toggleCheckList from '../Common/toggleCheckList';
+import {
+  datalistActions,
+  DatalistState,
+  FilterConditionKey,
+} from '../../modules/datalist';
 import { State } from '../../store';
 import BaseFilter, { StateFromProps, DispatchFromProps } from './BaseFilter';
 
-export default connect<StateFromProps, DispatchFromProps>(
+export default connect<
+  DatalistState,
+  Pick<DispatchFromProps, Exclude<keyof DispatchFromProps, 'toggleCheckList'>>,
+  {},
+  StateFromProps & DispatchFromProps
+>(
   (state: State) => state.datalistReducer,
-  (dispatch: Dispatch) =>
-    bindActionCreators(
+  (dispatch: Dispatch) => ({
+    ...bindActionCreators(
       {
         setCondition: datalistActions.setCondition,
-        toggleCheckList: datalistActions.toggleCheckList,
-        toggleCheck: datalistActions.toggleCheck,
       },
       dispatch
-    )
+    ),
+  }),
+  (state, actions) => ({
+    ...state,
+    ...actions,
+    toggleCheckList: (key: FilterConditionKey, value: string) => {
+      actions.setCondition(toggleCheckList(state, key, value));
+    },
+  })
 )(BaseFilter);

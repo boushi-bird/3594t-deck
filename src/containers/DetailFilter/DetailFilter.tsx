@@ -17,7 +17,6 @@ export interface StateFromProps {
 export interface DispatchFromProps {
   setCondition: (condition: Partial<FilterCondition>) => void;
   toggleCheckList: (key: FilterConditionKey, value: string) => void;
-  toggleCheck: (key: FilterConditionKey, value: boolean) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
