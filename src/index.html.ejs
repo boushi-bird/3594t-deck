@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Deck</title>
+  <title><%= htmlWebpackPlugin.options.title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=0.5">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <% var gtmEnabled = process.env.NODE_ENV === 'production' && !!process.env.GOOGLE_TAG_MANAGER_CONTAINER_ID; %>

@@ -11,6 +11,10 @@ const isProduction: boolean = process.env.NODE_ENV === 'production';
 
 const fileName = isProduction ? '[name].[chunkhash]' : '[name]';
 
+const appTitle = isProduction
+  ? '三国志大戦デッキシミュレーター'
+  : '三国志大戦デッキシミュレーター(local)';
+
 const distDir = 'dist';
 
 const config: Configuration = {
@@ -54,7 +58,8 @@ const config: Configuration = {
       filename: `styles/${fileName}.css`,
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/index.html'),
+      title: appTitle,
+      template: path.resolve(__dirname, 'src/index.html.ejs'),
       filename: 'index.html',
       minify: {
         collapseWhitespace: isProduction,
