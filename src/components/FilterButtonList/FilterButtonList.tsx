@@ -17,6 +17,7 @@ interface Props {
   onClickItem: (itemName: FilterConditionKey, itemValue: string) => void;
   square?: boolean;
   addtionalClasses?: string[];
+  show?: boolean;
 }
 
 const defaultClasses = ['button', 'filter-item'];
@@ -61,7 +62,7 @@ export default class FilterButtonList extends React.PureComponent<Props> {
   }
 
   public render(): React.ReactNode {
-    const { checkedItems, items } = this.props;
+    const { checkedItems, items, show } = this.props;
     const square = this.square;
     const buttons: JSX.Element[] = [];
     items.forEach(item => {
@@ -81,6 +82,14 @@ export default class FilterButtonList extends React.PureComponent<Props> {
         )
       );
     });
-    return <div className="button-list">{buttons}</div>;
+    const style: React.CSSProperties = {};
+    if (show != null && !show) {
+      style.display = 'none';
+    }
+    return (
+      <div className="button-list" style={style}>
+        {buttons}
+      </div>
+    );
   }
 }
