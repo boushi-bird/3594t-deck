@@ -27,7 +27,17 @@ const config: Configuration = {
     extensions: ['.ts', '.tsx', '.js'],
   },
   optimization: {
-    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            // ライセンスは別で出力しているためjsからは除去
+            comments: false,
+          },
+        },
+      }),
+      new OptimizeCSSAssetsPlugin(),
+    ],
     splitChunks: {
       name: 'vendor',
       chunks: 'initial',
