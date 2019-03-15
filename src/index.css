@@ -35,10 +35,14 @@ button:disabled {
 
 html {
   height: 100%;
+  font-family: sans-serif;
+}
+
+html.wf-active {
+  font-family: 'Noto Sans Japanese', sans-serif;
 }
 
 body {
-  font-family: 'Noto Sans Japanese', sans-serif;
   height: 100%;
   min-width: var(--app-min-width);
 }
