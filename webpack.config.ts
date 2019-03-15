@@ -28,6 +28,10 @@ const config: Configuration = {
   },
   optimization: {
     minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
+    splitChunks: {
+      name: 'vendor',
+      chunks: 'initial',
+    },
   },
   plugins: [
     new Dotenv({ systemvars: true, defaults: true }),
