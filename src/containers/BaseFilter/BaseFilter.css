@@ -20,3 +20,13 @@
   top: 5px;
   right: 10px;
 }
+
+.range {
+  font-size: 32px;
+  color: var(--card-filter-label-color);
+  padding-left: 3px;
+}
+
+.range * {
+  margin: 0 3px;
+}

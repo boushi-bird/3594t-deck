@@ -11,6 +11,18 @@ export interface FilterCondition {
   costs: string[];
   /** 兵種 */
   unitTypes: string[];
+  /** 武力 最小 */
+  forceMin: number;
+  /** 武力 最大 */
+  forceMax: number;
+  /** 知力 最小 */
+  intelligenceMin: number;
+  /** 知力 最大 */
+  intelligenceMax: number;
+  /** 征圧力 最小 */
+  conquestMin: number;
+  /** 征圧力 最大 */
+  conquestMax: number;
   /** 特技 */
   skills: string[];
   /** 特技 And条件 */
@@ -43,6 +55,12 @@ const initialFilterCondition: FilterCondition = {
   belongStates: [],
   costs: [],
   unitTypes: [],
+  forceMin: 1,
+  forceMax: 10,
+  intelligenceMin: 1,
+  intelligenceMax: 10,
+  conquestMin: 1,
+  conquestMax: 4,
   skills: [],
   skillsAnd: false,
   genMains: [],

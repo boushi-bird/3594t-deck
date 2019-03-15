@@ -10,6 +10,12 @@ const satisfyGeneral = (
     belongStates,
     costs,
     unitTypes,
+    forceMin,
+    forceMax,
+    intelligenceMin,
+    intelligenceMax,
+    conquestMin,
+    conquestMax,
     skills,
     skillsAnd,
     genMains,
@@ -33,6 +39,27 @@ const satisfyGeneral = (
   }
   // 兵種
   if (unitTypes.length > 0 && !unitTypes.includes(raw.unit_type)) {
+    return false;
+  }
+  // 武力
+  if (forceMin > general.force) {
+    return false;
+  }
+  if (forceMax < general.force) {
+    return false;
+  }
+  // 知力
+  if (intelligenceMin > general.intelligence) {
+    return false;
+  }
+  if (intelligenceMax < general.intelligence) {
+    return false;
+  }
+  // 征圧力
+  if (conquestMin > general.conquest) {
+    return false;
+  }
+  if (conquestMax < general.conquest) {
     return false;
   }
   // 特技

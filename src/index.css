@@ -50,3 +50,7 @@ body {
 .home {
   height: 100%;
 }
+
+select {
+  font-size: 32px;
+}
