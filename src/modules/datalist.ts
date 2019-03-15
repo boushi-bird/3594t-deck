@@ -1,5 +1,6 @@
 import { ActionType, createAction } from 'typesafe-actions';
 import { BaseData, FilterItem, FilterContents } from '../services/mapBaseData';
+import cloneDeep from 'lodash-es/cloneDeep';
 
 export type FilterItem = FilterItem;
 
@@ -71,18 +72,21 @@ const initialFilterContents: FilterContents = {
 
 export interface DatalistState {
   filterCondition: FilterCondition;
+  effectiveFilterCondition: FilterCondition;
   filterContents: FilterContents;
   generals: BaseData['generals'];
 }
 
 const initialState: DatalistState = {
   filterCondition: initialFilterCondition,
+  effectiveFilterCondition: initialFilterCondition,
   filterContents: initialFilterContents,
   generals: [],
 };
 
 export const datalistActions = {
   resetConditions: createAction('RESET_CONDITIONS'),
+  applyCondition: createAction('APPLY_CONDITION'),
   setCondition: createAction(
     'SET_CONDITION',
     action => (condition: Partial<FilterCondition>) => action({ condition })
@@ -101,6 +105,13 @@ export default function datalistReducer(
       return {
         ...state,
         filterCondition: initialFilterCondition,
+        effectiveFilterCondition: initialFilterCondition,
+      };
+    }
+    case 'APPLY_CONDITION': {
+      return {
+        ...state,
+        effectiveFilterCondition: cloneDeep(state.filterCondition),
       };
     }
     case 'SET_CONDITION': {
@@ -118,6 +129,7 @@ export default function datalistReducer(
       return {
         ...state,
         filterCondition: initialFilterCondition,
+        effectiveFilterCondition: initialFilterCondition,
         filterContents,
         generals,
       };

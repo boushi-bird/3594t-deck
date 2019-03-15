@@ -1,11 +1,8 @@
 import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
+import { Dispatch } from 'redux';
+import setConditionAdapter from '../Common/setConditionAdapter';
 import toggleCheckList from '../Common/toggleCheckList';
-import {
-  datalistActions,
-  DatalistState,
-  FilterConditionKey,
-} from '../../modules/datalist';
+import { DatalistState, FilterConditionKey } from '../../modules/datalist';
 import { State } from '../../store';
 import DetailFilter, {
   StateFromProps,
@@ -20,12 +17,7 @@ export default connect<
 >(
   (state: State) => state.datalistReducer,
   (dispatch: Dispatch) => ({
-    ...bindActionCreators(
-      {
-        setCondition: datalistActions.setCondition,
-      },
-      dispatch
-    ),
+    setCondition: setConditionAdapter(dispatch),
   }),
   (state, actions) => ({
     ...state,

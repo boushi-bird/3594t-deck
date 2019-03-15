@@ -103,7 +103,10 @@ const satisfyGeneral = (
 
 export default connect<StateFromProps, DispatchFromProps>(
   (state: State) => {
-    const { generals, filterCondition } = state.datalistReducer;
+    const {
+      generals,
+      effectiveFilterCondition: filterCondition,
+    } = state.datalistReducer;
     const searchedGeneralIds = generals
       .filter(general => {
         return satisfyGeneral(general, filterCondition);
