@@ -13,17 +13,7 @@ export interface DeckState {
 }
 
 const initialState: DeckState = {
-  deckCards: [
-    {
-      general: '1',
-    },
-    {
-      general: '2',
-    },
-    {
-      general: '4',
-    },
-  ],
+  deckCards: [],
 };
 
 export const deckActions = {
