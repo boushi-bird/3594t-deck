@@ -1,1 +1,12 @@
 @import '../../defines.css';
+
+.major-version,
+.detail-version {
+  animation: fadeIn 0.5s ease 0s 1 normal;
+  display: none;
+}
+
+.major-version.active,
+.detail-version.active {
+  display: block;
+}

@@ -1,5 +1,6 @@
 import './DetailFilter.css';
 import React from 'react';
+import classNames from 'classnames';
 import {
   DatalistState,
   FilterCondition,
@@ -49,7 +50,6 @@ export default class DetailFilter extends React.PureComponent<Props> {
           items={version}
           checkedItems={filterCondition.versions}
           onClickItem={toggleCheckList}
-          show={filterCondition.enableDetailVersion}
         />
       );
     });
@@ -67,14 +67,25 @@ export default class DetailFilter extends React.PureComponent<Props> {
               width={220}
             />
           </div>
-          {versionElements}
-          <FilterButtonList
-            itemName="majorVersions"
-            items={filterContents.majorVersions}
-            checkedItems={filterCondition.majorVersions}
-            onClickItem={toggleCheckList}
-            show={!filterCondition.enableDetailVersion}
-          />
+          <div
+            className={classNames('major-version', {
+              active: !filterCondition.enableDetailVersion,
+            })}
+          >
+            <FilterButtonList
+              itemName="majorVersions"
+              items={filterContents.majorVersions}
+              checkedItems={filterCondition.majorVersions}
+              onClickItem={toggleCheckList}
+            />
+          </div>
+          <div
+            className={classNames('detail-version', {
+              active: filterCondition.enableDetailVersion,
+            })}
+          >
+            {versionElements}
+          </div>
         </section>
         <section className="filter-section">
           <h2 className="title">将器主効果候補</h2>
