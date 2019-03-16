@@ -1,5 +1,7 @@
 import './GeneralCard.css';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { DatalistState } from '../../modules/datalist';
 
 interface Props {
@@ -40,6 +42,15 @@ export default class GeneralCard extends React.PureComponent<Props> {
       stratName = general.strategy.name;
       stratMorale = general.strategy.morale;
     }
+    const genMains: JSX.Element[] = [];
+    general.genMains.forEach((genMain, i) => {
+      genMains.push(
+        <button className="gen-main" key={i}>
+          {genMain.nameShort}
+          <FontAwesomeIcon icon={faPlusCircle} />
+        </button>
+      );
+    });
     return (
       <div className="general-card" style={style}>
         <span className="state" style={styleState}>
@@ -72,6 +83,14 @@ export default class GeneralCard extends React.PureComponent<Props> {
         </span>
         <span className="strategy-morale" data-label1="必要" data-label2="士気">
           {stratMorale}
+        </span>
+        <span className="gen-mains" data-label="主将器">
+          {genMains}
+        </span>
+        <span className="buttons">
+          <button className="add-deck">
+            <FontAwesomeIcon icon={faPlusCircle} />
+          </button>
         </span>
       </div>
     );
