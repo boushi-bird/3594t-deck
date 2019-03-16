@@ -56,12 +56,29 @@
   }
 }
 
+.app-header {
+  min-height: 46px;
+  background-color: var(--app-header-bg-color);
+}
+
+.app-header-title {
+  text-align: center;
+  font-weight: normal;
+  font-size: 28px;
+  color: white;
+  margin: auto;
+}
+
 .card-list-container {
   flex: 1;
   min-width: var(--app-min-width);
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.deck-boad-container {
+  min-height: 300px;
 }
 
 .simple-filter-container {

@@ -8,18 +8,25 @@ export interface StateFromProps {
   searchedGeneralIds: string[];
 }
 
-export interface DispatchFromProps {}
+export interface DispatchFromProps {
+  addDeckGeneral: (general: string, genMain?: string) => void;
+}
 
 type Props = StateFromProps & DispatchFromProps;
 
 export default class CardList extends React.PureComponent<Props> {
   public render(): React.ReactNode {
-    const { generals, searchedGeneralIds } = this.props;
+    const { generals, searchedGeneralIds, addDeckGeneral } = this.props;
     const generalCards: JSX.Element[] = [];
     generals.forEach(general => {
       const show = searchedGeneralIds.includes(general.id);
       generalCards.push(
-        <GeneralCard key={general.id} general={general} show={show} />
+        <GeneralCard
+          key={general.id}
+          general={general}
+          onAddDeck={addDeckGeneral}
+          show={show}
+        />
       );
     });
     return <div className="cardlist-container">{generalCards}</div>;

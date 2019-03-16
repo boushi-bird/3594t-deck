@@ -4,10 +4,11 @@ import classNames from 'classnames';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
-import CardList from '../../containers/CardList';
-import SimpleFilter from '../../containers/SimpleFilter';
-import BaseFilter from '../../containers/BaseFilter';
-import DetailFilter from '../../containers/DetailFilter';
+import DeckBoard from '../DeckBoard';
+import CardList from '../CardList';
+import SimpleFilter from '../SimpleFilter';
+import BaseFilter from '../BaseFilter';
+import DetailFilter from '../DetailFilter';
 
 export interface StateFromProps extends WindowState {
   openedAnyModal: boolean;
@@ -47,6 +48,14 @@ export default class App extends React.PureComponent<Props> {
       <div className={classNames(['app-container', { modal, ready }])}>
         <div className="app-main">
           <div className="card-list-container">
+            <div className="app-header">
+              <div className="app-header-title">
+                三国志大戦デッキシミュレーター
+              </div>
+            </div>
+            <div className="deck-boad-container">
+              <DeckBoard />
+            </div>
             <div className="simple-filter-container">
               <SimpleFilter />
               <button className="open-filter" onClick={openFilter}>

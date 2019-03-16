@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import { Dispatch, bindActionCreators } from 'redux';
+import { deckActions } from '../../modules/deck';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
 
@@ -162,5 +164,11 @@ export default connect<StateFromProps, DispatchFromProps>(
       searchedGeneralIds,
     };
   },
-  () => ({})
+  (dispatch: Dispatch) =>
+    bindActionCreators(
+      {
+        addDeckGeneral: deckActions.addDeckGeneral,
+      },
+      dispatch
+    )
 )(CardList);

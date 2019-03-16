@@ -67,6 +67,8 @@ interface General extends IdItem, GeneralProps {
   readonly versionValue: string;
   /** さんぽけあり */
   readonly hasPocket: boolean;
+  /** サムネイル画像URL */
+  readonly thumbUrl: string;
 }
 
 const createVersionLabel = (
@@ -126,6 +128,9 @@ class GeneralImpl implements General {
   }
   public get hasPocket(): boolean {
     return this.raw.pocket_code !== '';
+  }
+  public get thumbUrl(): string {
+    return `https://3594t.net/img/card_small/${this.code}.jpg`;
   }
 }
 
