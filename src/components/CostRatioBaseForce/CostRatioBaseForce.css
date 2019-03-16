@@ -1,0 +1,22 @@
+@import '../../defines.css';
+
+.cost-ratio-base-force {
+  font-size: 32px;
+  font-weight: normal;
+  color: var(--card-filter-label-color);
+  padding-left: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.cost-ratio-base-force .title-inline {
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+.cost-ratio-base-force * {
+  margin: 0 3px;
+}

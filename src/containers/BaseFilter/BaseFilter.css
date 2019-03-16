@@ -1,6 +1,7 @@
 @import '../../defines.css';
 
 .filter-section {
+  animation: fadeIn 0.5s ease 0s 1 normal;
   position: relative;
   margin-bottom: 15px;
 }
@@ -19,6 +20,17 @@
   position: absolute;
   top: 5px;
   right: 10px;
+}
+
+.normal-force,
+.cost-ratio-force {
+  animation: fadeIn 0.5s ease 0s 1 normal;
+  display: none;
+}
+
+.normal-force.active,
+.cost-ratio-force.active {
+  display: block;
 }
 
 .range {

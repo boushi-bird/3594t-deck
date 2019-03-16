@@ -15,6 +15,14 @@ export interface FilterCondition {
   forceMin: number;
   /** 武力 最大 */
   forceMax: number;
+  /** コスト比武力 使用 */
+  useCostRatioForce: boolean;
+  /** コスト比武力 最小 */
+  costRatioForceMin: number;
+  /** コスト比武力 最大 */
+  costRatioForceMax: number;
+  /** コスト比 基準武力 */
+  costRatioBaseForces: { [key: string]: number };
   /** 知力 最小 */
   intelligenceMin: number;
   /** 知力 最大 */
@@ -57,9 +65,19 @@ const initialFilterCondition: FilterCondition = {
   unitTypes: [],
   forceMin: 1,
   forceMax: 10,
+  useCostRatioForce: false,
+  costRatioForceMin: -4,
+  costRatioForceMax: 5,
+  costRatioBaseForces: {
+    '10': 3,
+    '15': 6,
+    '20': 8,
+    '25': 9,
+    '30': 10,
+  },
   intelligenceMin: 1,
   intelligenceMax: 10,
-  conquestMin: 1,
+  conquestMin: 0,
   conquestMax: 4,
   skills: [],
   skillsAnd: false,

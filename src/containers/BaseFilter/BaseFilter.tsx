@@ -1,5 +1,6 @@
 import './BaseFilter.css';
 import React from 'react';
+import classNames from 'classnames';
 import {
   DatalistState,
   FilterCondition,
@@ -9,6 +10,7 @@ import FilterButtonList from '../../components/FilterButtonList';
 import SkillButtonList from '../../components/SkillButtonList';
 import SwitchItem from '../../components/SwitchItem';
 import NumberSelect from '../../components/NumberSelect';
+import CostRatioBaseForce from '../../components/CostRatioBaseForce';
 
 export interface StateFromProps {
   filterCondition: FilterCondition;
@@ -64,21 +66,57 @@ export default class BaseFilter extends React.PureComponent<Props> {
         </section>
         <section className="filter-section">
           <h2 className="title">武力</h2>
-          <div className="range">
-            <NumberSelect
-              itemName="forceMin"
+          <div className="title-button">
+            <SwitchItem
+              itemName="useCostRatioForce"
               setCondition={setCondition}
-              value={filterCondition.forceMin}
-              max={10}
-              min={1}
+              isOn={filterCondition.useCostRatioForce}
+              labelOff="通常"
+              labelOn="コスト比"
+              width={180}
             />
-            -
-            <NumberSelect
-              itemName="forceMax"
+          </div>
+          <div
+            className={classNames('normal-force', {
+              active: !filterCondition.useCostRatioForce,
+            })}
+          >
+            <div className="range">
+              <NumberSelect
+                itemName="forceMin"
+                setCondition={setCondition}
+                value={filterCondition.forceMin}
+                max={10}
+                min={1}
+              />
+              -
+              <NumberSelect
+                itemName="forceMax"
+                setCondition={setCondition}
+                value={filterCondition.forceMax}
+                max={10}
+                min={1}
+              />
+            </div>
+          </div>
+          <div
+            className={classNames('cost-ratio-force', {
+              active: filterCondition.useCostRatioForce,
+            })}
+          >
+            <div className="range">
+              <NumberSelect
+                itemName="costRatioForceMin"
+                setCondition={setCondition}
+                value={filterCondition.costRatioForceMin}
+                max={5}
+                min={-5}
+              />
+              以上
+            </div>
+            <CostRatioBaseForce
+              costRatioBaseForces={filterCondition.costRatioBaseForces}
               setCondition={setCondition}
-              value={filterCondition.forceMax}
-              max={10}
-              min={1}
             />
           </div>
         </section>
@@ -110,7 +148,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
               setCondition={setCondition}
               value={filterCondition.conquestMin}
               max={4}
-              min={1}
+              min={0}
             />
             -
             <NumberSelect
@@ -118,7 +156,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
               setCondition={setCondition}
               value={filterCondition.conquestMax}
               max={4}
-              min={1}
+              min={0}
             />
           </div>
         </section>

@@ -12,6 +12,10 @@ const satisfyGeneral = (
     unitTypes,
     forceMin,
     forceMax,
+    useCostRatioForce,
+    costRatioForceMin,
+    costRatioForceMax,
+    costRatioBaseForces,
     intelligenceMin,
     intelligenceMax,
     conquestMin,
@@ -42,11 +46,25 @@ const satisfyGeneral = (
     return false;
   }
   // 武力
-  if (forceMin > general.force) {
-    return false;
-  }
-  if (forceMax < general.force) {
-    return false;
+  if (useCostRatioForce) {
+    const costRatioBaseForce = costRatioBaseForces[general.raw.cost];
+    if (costRatioBaseForce == null) {
+      return false;
+    }
+    const costRatioForce = general.force - costRatioBaseForce;
+    if (costRatioForceMin > costRatioForce) {
+      return false;
+    }
+    if (costRatioForceMax < costRatioForce) {
+      return false;
+    }
+  } else {
+    if (forceMin > general.force) {
+      return false;
+    }
+    if (forceMax < general.force) {
+      return false;
+    }
   }
   // 知力
   if (intelligenceMin > general.intelligence) {
