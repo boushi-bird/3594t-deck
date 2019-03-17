@@ -1,0 +1,87 @@
+@import '../../defines.css';
+
+:root {
+  --deck-dummy-card-width: 72px;
+  --deck-dummy-card-height: 254px;
+  --deck-dummy-card-inner-top-height: 136px;
+  --deck-dummy-card-inner-bottom-height: 118px;
+}
+
+.deck-dummy-card {
+  margin: 0 2px;
+  font-size: 16px;
+  width: var(--deck-dummy-card-width);
+  min-width: var(--deck-dummy-card-width);
+  height: var(--deck-dummy-card-height);
+  cursor: pointer;
+  border: 1px solid #ccc;
+
+  &.has-state {
+    border-style: none;
+  }
+
+  & .deck-card-inner-top {
+    width: 100%;
+    height: var(--deck-dummy-card-inner-top-height);
+    position: relative;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    @nest .has-state& {
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+
+    & > * {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+  }
+
+  & .deck-card-inner-bottom {
+    position: relative;
+    height: var(--deck-dummy-card-inner-bottom-height);
+
+    & > * {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+  }
+
+  & *[data-label]::before {
+    font-size: 10px;
+    position: absolute;
+    top: -4px;
+    content: attr(data-label);
+  }
+
+  & .state {
+    font-size: 18px;
+    top: 14px;
+    left: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  & .cost {
+    left: 0;
+    bottom: 28px;
+    padding-top: 4px;
+    width: 32px;
+    height: 28px;
+  }
+
+  & .unit {
+    left: 0;
+    bottom: 0;
+    padding-top: 4px;
+    width: 32px;
+    height: 28px;
+  }
+}

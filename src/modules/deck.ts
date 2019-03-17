@@ -1,10 +1,10 @@
 import { ActionType, createAction } from 'typesafe-actions';
 
-interface DeckCard {
+export interface DeckCard {
   general?: string;
   genMain?: string;
-  state?: string;
-  cost?: string;
+  belongState?: string;
+  cost: string;
   unitType?: string;
 }
 
@@ -19,8 +19,16 @@ const initialState: DeckState = {
 export const deckActions = {
   addDeckGeneral: createAction(
     'ADD_DECK_GENERAL',
-    action => (general: string, genMain?: string) =>
-      action({ general, genMain })
+    action => (card: { general: string; cost: string; genMain?: string }) =>
+      action(card)
+  ),
+  addDeckDummy: createAction(
+    'ADD_DECK_DUMMY',
+    action => (dummy: {
+      cost: string;
+      belongState?: string;
+      unitType?: string;
+    }) => action(dummy)
   ),
   selectMainGen: createAction(
     'SELECT_MAIN_GEN',
@@ -34,10 +42,17 @@ export default function datalistReducer(
 ): DeckState {
   switch (actions.type) {
     case 'ADD_DECK_GENERAL': {
-      const { general, genMain } = actions.payload;
+      const { general, cost, genMain } = actions.payload;
       return {
         ...state,
-        deckCards: [...state.deckCards, { general, genMain }],
+        deckCards: [...state.deckCards, { general, cost, genMain }],
+      };
+    }
+    case 'ADD_DECK_DUMMY': {
+      const { cost, belongState, unitType } = actions.payload;
+      return {
+        ...state,
+        deckCards: [...state.deckCards, { cost, belongState, unitType }],
       };
     }
     case 'SELECT_MAIN_GEN': {

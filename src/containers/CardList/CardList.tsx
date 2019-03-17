@@ -9,7 +9,11 @@ export interface StateFromProps {
 }
 
 export interface DispatchFromProps {
-  addDeckGeneral: (general: string, genMain?: string) => void;
+  addDeckGeneral: (card: {
+    general: string;
+    cost: string;
+    genMain?: string;
+  }) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;

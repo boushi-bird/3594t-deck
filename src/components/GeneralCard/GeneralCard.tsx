@@ -7,7 +7,11 @@ import { DatalistState } from '../../modules/datalist';
 interface Props {
   general: DatalistState['generals'][number];
   show?: boolean;
-  onAddDeck: (general: string, genMain?: string) => void;
+  onAddDeck: (card: {
+    general: string;
+    cost: string;
+    genMain?: string;
+  }) => void;
 }
 
 export default class GeneralCard extends React.PureComponent<Props> {
@@ -16,7 +20,11 @@ export default class GeneralCard extends React.PureComponent<Props> {
   ): void => {
     const { general, onAddDeck } = this.props;
     const genMain = event.currentTarget.dataset['genMain'];
-    onAddDeck(general.id, genMain);
+    onAddDeck({
+      general: general.id,
+      cost: general.raw.cost,
+      genMain,
+    });
   };
 
   public render(): React.ReactNode {
@@ -47,9 +55,12 @@ export default class GeneralCard extends React.PureComponent<Props> {
     }
     let stratName = '';
     let stratMorale = '';
+    let stratExplanation = '';
     if (general.strategy) {
       stratName = general.strategy.name;
       stratMorale = general.strategy.morale;
+      stratExplanation = general.strategy.explanation;
+      stratExplanation = stratExplanation.replace(/\<br\s*\/?\>/g, '\n');
     }
     const genMains: JSX.Element[] = [];
     general.genMains.forEach((genMain, i) => {
@@ -92,7 +103,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
           {general.conquest}
         </span>
         <span className="skills">{skills}</span>
-        <span className="strategy" data-label="計略名">
+        <span className="strategy" data-label="計略名" title={stratExplanation}>
           {stratName}
         </span>
         <span className="strategy-morale" data-label1="必要" data-label2="士気">

@@ -4,7 +4,7 @@
   --deck-card-width: 72px;
   --deck-card-height: 254px;
   --deck-card-inner-top-height: 136px;
-  --deck-card-inner-top-bottom: 118px;
+  --deck-card-inner-bottom-height: 118px;
   --deck-card-row1-top: 4px;
   --deck-card-row1-height: 38px;
   --deck-card-row2-top: calc(var(--deck-card-row1-top) + var(--deck-card-row1-height) - 4px);
@@ -19,6 +19,36 @@
   width: var(--deck-card-width);
   min-width: var(--deck-card-width);
   height: var(--deck-card-height);
+  cursor: pointer;
+
+  & .deck-card-inner-top {
+    width: 100%;
+    height: var(--deck-card-inner-top-height);
+    position: relative;
+    user-select: none;
+    color: white;
+
+    & > * {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+  }
+
+  & .deck-card-inner-bottom {
+    position: relative;
+    height: var(--deck-card-inner-bottom-height);
+
+    & > * {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+  }
 
   & *[data-label]::before {
     font-size: 10px;
@@ -45,9 +75,8 @@
 
   & .state {
     font-size: 18px;
-    color: white;
     top: 14px;
-    right: 0;
+    left: 0;
     width: 24px;
     height: 24px;
   }
@@ -57,7 +86,7 @@
     font-size: 10px;
     color: white;
     top: 0;
-    right: 0;
+    left: 0;
     height: 16px;
   }
 
@@ -81,7 +110,6 @@
     padding-top: 4px;
     width: 32px;
     height: 28px;
-    color: white;
   }
 
   & .unit {
@@ -90,7 +118,6 @@
     padding-top: 4px;
     width: 32px;
     height: 28px;
-    color: white;
   }
 
   & .force {
@@ -161,33 +188,5 @@
   & .gen-mains-select {
     width: 116px;
     transform: scale(0.62);
-  }
-}
-
-.deck-card-inner-top {
-  width: 100%;
-  height: var(--deck-card-inner-top-height);
-  position: relative;
-  user-select: none;
-
-  & > * {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-  }
-}
-
-.deck-card-inner-bottom {
-  position: relative;
-  height: var(--deck-card-inner-top-bottom);
-
-  & > * {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
   }
 }
