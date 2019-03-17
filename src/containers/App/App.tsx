@@ -16,6 +16,7 @@ export interface StateFromProps extends WindowState {
 }
 
 export interface DispatchFromProps {
+  clearActiveCard(): void;
   resetConditions(): void;
   fetchBaseData(): void;
   openFilter(): void;
@@ -31,6 +32,10 @@ export default class App extends React.PureComponent<Props> {
     this.props.fetchBaseData();
   }
 
+  private handleAppClick = () => {
+    this.props.clearActiveCard();
+  };
+
   public render(): React.ReactNode {
     const {
       ready,
@@ -45,7 +50,10 @@ export default class App extends React.PureComponent<Props> {
       activeFilter,
     } = this.props;
     return (
-      <div className={classNames(['app-container', { modal, ready }])}>
+      <div
+        className={classNames(['app-container', { modal, ready }])}
+        onClick={this.handleAppClick}
+      >
         <div className="app-main">
           <div className="card-list-container">
             <div className="app-header">

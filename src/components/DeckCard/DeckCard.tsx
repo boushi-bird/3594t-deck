@@ -1,12 +1,15 @@
 import './DeckCard.css';
 import React from 'react';
+import classNames from 'classnames';
 import { DatalistState } from '../../modules/datalist';
 
 interface Props {
   index: number;
   genMain?: string;
   general: DatalistState['generals'][number];
+  active: boolean;
   onSelectMainGen: (index: number, genMain?: string) => void;
+  onActive: (index: number) => void;
 }
 
 export default class DeckCard extends React.PureComponent<Props> {
@@ -21,8 +24,14 @@ export default class DeckCard extends React.PureComponent<Props> {
     onSelectMainGen(index, value);
   };
 
+  private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    const { index, onActive } = this.props;
+    onActive(index);
+  };
+
   public render(): React.ReactNode {
-    const { general, genMain } = this.props;
+    const { general, genMain, active } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
@@ -64,7 +73,11 @@ export default class DeckCard extends React.PureComponent<Props> {
     });
     const selectedGenMain = genMain != null ? genMain : '';
     return (
-      <div className="deck-card" style={style}>
+      <div
+        className={classNames('deck-card', { active })}
+        style={style}
+        onClick={this.handleActive}
+      >
         <div className="deck-card-inner-top">
           <img className="general-thumb" src={general.thumbUrl} />
           <div className="shadow" style={styleShadow} />

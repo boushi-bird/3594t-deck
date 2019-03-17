@@ -8,15 +8,27 @@
 }
 
 .deck-dummy-card {
-  margin: 0 2px;
+  margin: 1px;
   font-size: 16px;
   width: var(--deck-dummy-card-width);
   min-width: var(--deck-dummy-card-width);
   height: var(--deck-dummy-card-height);
   cursor: pointer;
+  box-sizing: content-box;
   border: 1px solid #ccc;
 
+  @nest .active& {
+    margin: 0;
+    border: 2px solid orange;
+
+    &.has-state {
+      margin: 0;
+      border-style: solid;
+    }
+  }
+
   &.has-state {
+    margin: 2px;
     border-style: none;
   }
 

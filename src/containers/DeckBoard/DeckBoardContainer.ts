@@ -21,6 +21,7 @@ export default connect<
     ...bindActionCreators(
       {
         selectMainGen: deckActions.selectMainGen,
+        setActiveCard: deckActions.setActiveCard,
       },
       dispatch
     ),

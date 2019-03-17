@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
+import { deckActions } from '../../modules/deck';
 import { State } from '../../store';
 import App, { StateFromProps, DispatchFromProps } from './App';
 import { loadFromApi } from '../../services/loadData';
@@ -22,6 +23,7 @@ export default connect<StateFromProps, DispatchFromProps>(
     },
     ...bindActionCreators(
       {
+        clearActiveCard: deckActions.clearActiveCard,
         resetConditions: datalistActions.resetConditions,
         ...windowActions,
       },

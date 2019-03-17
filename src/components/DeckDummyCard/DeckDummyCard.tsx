@@ -7,14 +7,22 @@ import { DeckCard } from '../../modules/deck';
 interface Props {
   index: number;
   deckCard: DeckCard;
+  active: boolean;
   belongStates: DatalistState['filterContents']['belongStates'];
   costs: DatalistState['filterContents']['costs'];
   unitTypes: DatalistState['filterContents']['unitTypes'];
+  onActive: (index: number) => void;
 }
 
 export default class DeckDummyCard extends React.PureComponent<Props> {
+  private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    const { index, onActive } = this.props;
+    onActive(index);
+  };
+
   public render(): React.ReactNode {
-    const { deckCard, belongStates, costs, unitTypes } = this.props;
+    const { deckCard, active, belongStates, costs, unitTypes } = this.props;
     const style: React.CSSProperties = {};
     const styleState: React.CSSProperties = {};
     const belongState = deckCard.belongState
@@ -47,8 +55,12 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     }
     return (
       <div
-        className={classNames('deck-dummy-card', { 'has-state': hasState })}
+        className={classNames('deck-dummy-card', {
+          'has-state': hasState,
+          active,
+        })}
         style={style}
+        onClick={this.handleActive}
       >
         <div className="deck-card-inner-top" style={styleState}>
           <span className="state">{stateName}</span>

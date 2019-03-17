@@ -19,6 +19,7 @@ export interface StateFromProps extends DeckState {
 export interface DispatchFromProps {
   addDeckDummy: () => void;
   selectMainGen: (index: number, genMain?: string) => void;
+  setActiveCard: (index: number) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
@@ -27,12 +28,14 @@ export default class DeckBoard extends React.Component<Props> {
   public render(): React.ReactNode {
     const {
       deckCards,
+      activeIndex,
       generals,
-      selectMainGen,
-      addDeckDummy,
       belongStates,
       costs,
       unitTypes,
+      addDeckDummy,
+      selectMainGen,
+      setActiveCard,
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
@@ -40,14 +43,17 @@ export default class DeckBoard extends React.Component<Props> {
       if (deckCard.general) {
         general = generals.find(g => g.id === deckCard.general);
       }
+      const active = activeIndex === i;
       if (general) {
         deckCardsElements.push(
           <DeckCard
             key={i}
             index={i}
+            active={active}
             genMain={deckCard.genMain}
             general={general}
             onSelectMainGen={selectMainGen}
+            onActive={setActiveCard}
           />
         );
       } else {
@@ -55,10 +61,12 @@ export default class DeckBoard extends React.Component<Props> {
           <DeckDummyCard
             key={i}
             index={i}
+            active={active}
             deckCard={deckCard}
             belongStates={belongStates}
             costs={costs}
             unitTypes={unitTypes}
+            onActive={setActiveCard}
           />
         );
       }

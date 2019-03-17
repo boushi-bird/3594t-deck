@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
+import { Dispatch } from 'redux';
 import { deckActions } from '../../modules/deck';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
@@ -148,8 +148,15 @@ const satisfyGeneral = (
   return true;
 };
 
-export default connect<StateFromProps, DispatchFromProps>(
-  (state: State) => {
+export default connect<
+  State,
+  { dispatch: Dispatch },
+  {},
+  StateFromProps & DispatchFromProps
+>(
+  (state: State) => state,
+  (dispatch: Dispatch) => ({ dispatch }),
+  (state, { dispatch }) => {
     const {
       generals,
       effectiveFilterCondition: filterCondition,
@@ -162,13 +169,19 @@ export default connect<StateFromProps, DispatchFromProps>(
     return {
       generals,
       searchedGeneralIds,
-    };
-  },
-  (dispatch: Dispatch) =>
-    bindActionCreators(
-      {
-        addDeckGeneral: deckActions.addDeckGeneral,
+      addDeckGeneral: (card: {
+        general: string;
+        cost: string;
+        genMain?: string;
+      }) => {
+        if (state.deckReducer.activeIndex != null) {
+          dispatch(
+            deckActions.changeDeckGeneral(state.deckReducer.activeIndex, card)
+          );
+        } else {
+          dispatch(deckActions.addDeckGeneral(card));
+        }
       },
-      dispatch
-    )
+    };
+  }
 )(CardList);
