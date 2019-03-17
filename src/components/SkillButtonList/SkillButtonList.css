@@ -4,10 +4,10 @@
   color: black;
   font-weight: normal;
   text-shadow: 0 0 5px white;
-}
 
-.button.filter-item.no-skill:disabled {
-  color: #ccc;
-  border-color: #ccc;
-  text-shadow: 0 0 10px lightslategray;
+  &:disabled {
+    color: #ccc;
+    border-color: #ccc;
+    text-shadow: 0 0 10px lightslategray;
+  }
 }

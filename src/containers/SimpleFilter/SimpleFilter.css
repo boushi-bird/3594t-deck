@@ -4,15 +4,15 @@
   position: relative;
   display: flex;
   margin-bottom: 0;
-}
 
-.simple-filter-section .title-inline {
-  font-size: 18px;
-  font-weight: lighter;
-  vertical-align: middle;
-  color: var(--card-filter-label-color);
-  text-shadow: 0 0 5px var(--card-filter-label-color);
-  margin: 5px;
+  & .title-inline {
+    font-size: 18px;
+    font-weight: lighter;
+    vertical-align: middle;
+    color: var(--card-filter-label-color);
+    text-shadow: 0 0 5px var(--card-filter-label-color);
+    margin: 5px;
+  }
 }
 
 .simple-filter-state {
@@ -22,4 +22,8 @@
   flex-wrap: wrap;
   padding: 5px;
   background-color: gray;
+
+  & .button-list {
+    flex-wrap: nowrap;
+  }
 }

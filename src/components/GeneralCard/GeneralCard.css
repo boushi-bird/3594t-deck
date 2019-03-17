@@ -33,206 +33,202 @@
   width: var(--general-card-width);
   height: var(--general-card-height);
   position: relative;
-}
 
-.general-card > * {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-  height: calc(var(--general-card-height) / 2);
-}
+  & > * {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    height: calc(var(--general-card-height) / 2);
+  }
 
-.general-card *[data-label]::before {
-  font-size: 10px;
-  position: absolute;
-  top: 0;
-  content: attr(data-label);
-}
+  & *[data-label]::before {
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    content: attr(data-label);
+  }
 
-.general-card *[data-label1][data-label2]::before {
-  font-size: 10px;
-  position: absolute;
-  top: 0;
-  content: attr(data-label1) '\A' attr(data-label2);
-  white-space: pre;
-}
+  & *[data-label1][data-label2]::before {
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    content: attr(data-label1) '\A' attr(data-label2);
+    white-space: pre;
+  }
 
-.general-card .state {
-  font-size: 26px;
-  font-weight: bold;
-  color: white;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-}
+  & .state {
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+  }
 
-.general-card .rarity {
-  font-weight: bold;
-  top: calc(var(--general-card-height) / 2);
-  left: 0;
-  width: var(--general-card-col1-width);
-  justify-content: flex-end;
-}
+  & .rarity {
+    font-weight: bold;
+    top: calc(var(--general-card-height) / 2);
+    left: 0;
+    width: var(--general-card-col1-width);
+    justify-content: flex-end;
+  }
 
-.general-card .version {
-  font-weight: bold;
-  padding-left: 3px;
-  top: 0;
-  left: var(--general-card-col2-left);
-  width: var(--general-card-col2-width);
-  justify-content: flex-start;
-}
+  & .version {
+    font-weight: bold;
+    padding-left: 3px;
+    top: 0;
+    left: var(--general-card-col2-left);
+    width: var(--general-card-col2-width);
+    justify-content: flex-start;
+  }
 
-.general-card .name {
-  font-weight: bold;
-  font-size: 26px;
-  padding-left: 3px;
-  top: calc(var(--general-card-height) / 2);
-  left: var(--general-card-col2-left);
-  width: var(--general-card-col2-width);
-  justify-content: flex-start;
-}
+  & .name {
+    font-weight: bold;
+    font-size: 26px;
+    padding-left: 3px;
+    top: calc(var(--general-card-height) / 2);
+    left: var(--general-card-col2-left);
+    width: var(--general-card-col2-width);
+    justify-content: flex-start;
+  }
 
-.general-card .image {
-  top: 0;
-  left: var(--general-card-col3-left);
-  width: var(--general-card-col3-width);
-  height: var(--general-card-height);
-}
+  & .image {
+    top: 0;
+    left: var(--general-card-col3-left);
+    width: var(--general-card-col3-width);
+    height: var(--general-card-height);
+  }
 
-.general-card .cost {
-  top: 0;
-  left: var(--general-card-col4-left);
-  width: var(--general-card-col4-width);
-}
+  & .general-thumb {
+    width: 40px;
+    height: 64px;
+  }
 
-.general-card .unit {
-  top: calc(var(--general-card-height) / 2);
-  left: var(--general-card-col4-left);
-  width: var(--general-card-col4-width);
-  padding-top: 2px;
-}
+  & .cost {
+    top: 0;
+    left: var(--general-card-col4-left);
+    width: var(--general-card-col4-width);
+  }
 
-.general-card .force {
-  top: 0;
-  left: var(--general-card-col5-left);
-  width: var(--general-card-col5-width);
-}
+  & .unit {
+    top: calc(var(--general-card-height) / 2);
+    left: var(--general-card-col4-left);
+    width: var(--general-card-col4-width);
+    padding-top: 2px;
+  }
 
-.general-card .intelligence {
-  top: 0;
-  left: var(--general-card-col6-left);
-  width: var(--general-card-col6-width);
-}
+  & .force {
+    top: 0;
+    left: var(--general-card-col5-left);
+    width: var(--general-card-col5-width);
+  }
 
-.general-card .conquest {
-  top: 0;
-  left: var(--general-card-col7-left);
-  width: var(--general-card-col7-width);
-}
+  & .intelligence {
+    top: 0;
+    left: var(--general-card-col6-left);
+    width: var(--general-card-col6-width);
+  }
 
-.general-card .skills {
-  top: calc(var(--general-card-height) / 2);
-  left: var(--general-card-col5-left);
-  width: calc(var(--general-card-col5-width) + var(--general-card-col6-width) + var(--general-card-col7-width));
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
+  & .conquest {
+    top: 0;
+    left: var(--general-card-col7-left);
+    width: var(--general-card-col7-width);
+  }
 
-.general-card .skills .skill {
-  font-weight: bold;
-  margin: 0 2px;
-  width: 30px;
-  height: 30px;
-  background-color: yellow;
-  border: solid 2px black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
+  & .skills {
+    top: calc(var(--general-card-height) / 2);
+    left: var(--general-card-col5-left);
+    width: calc(var(--general-card-col5-width) + var(--general-card-col6-width) + var(--general-card-col7-width));
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
 
-.general-card .skills .no-skill {
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 94px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
+    & .skill {
+      font-weight: bold;
+      margin: 0 2px;
+      width: 30px;
+      height: 30px;
+      background-color: yellow;
+      border: solid 2px black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
 
-.general-card .strategy {
-  padding-left: 3px;
-  padding-right: 3px;
-  top: 0;
-  left: var(--general-card-col8-left);
-  width: var(--general-card-col8-width);
-  height: var(--general-card-height);
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
+    & .no-skill {
+      background-color: rgba(0, 0, 0, 0.2);
+      width: 94px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+  }
 
-.general-card .strategy-morale {
-  top: 0;
-  left: var(--general-card-col9-left);
-  width: var(--general-card-col9-width);
-  height: var(--general-card-height);
-  padding-top: 6px;
-}
+  & .strategy {
+    padding-left: 3px;
+    padding-right: 3px;
+    top: 0;
+    left: var(--general-card-col8-left);
+    width: var(--general-card-col8-width);
+    height: var(--general-card-height);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
 
-.general-card .gen-mains {
-  top: 0;
-  left: var(--general-card-col10-left);
-  width: var(--general-card-col10-width);
-  height: var(--general-card-height);
-  display: flex;
-  flex-direction: column;
-  padding: 11px 2px 0;
-}
+  & .strategy-morale {
+    top: 0;
+    left: var(--general-card-col9-left);
+    width: var(--general-card-col9-width);
+    height: var(--general-card-height);
+    padding-top: 6px;
+  }
 
-.general-card .gen-mains::before {
-  top: -2px;
-}
+  & .gen-mains {
+    top: 0;
+    left: var(--general-card-col10-left);
+    width: var(--general-card-col10-width);
+    height: var(--general-card-height);
+    display: flex;
+    flex-direction: column;
+    padding: 11px 2px 0;
 
-.general-card .gen-main {
-  margin-top: 1px;
-  background-color: lightslategray;
-  border-color: black;
-  font-size: 16px;
-  width: 100%;
-  height: 33%;
-}
+    &::before {
+      top: -2px;
+    }
+  }
 
-.general-card .gen-main i {
-  margin-left: 4px;
-}
+  & .gen-main {
+    margin-top: 1px;
+    background-color: lightslategray;
+    border-color: black;
+    font-size: 16px;
+    width: 100%;
+    height: 33%;
+  }
 
-.general-card .buttons {
-  top: 0;
-  left: var(--general-card-col11-left);
-  width: var(--general-card-col11-width);
-  height: var(--general-card-height);
-  display: flex;
-  flex-direction: column;
-  padding-top: 11px;
-}
+  & .buttons {
+    top: 0;
+    left: var(--general-card-col11-left);
+    width: var(--general-card-col11-width);
+    height: var(--general-card-height);
+    display: flex;
+    flex-direction: column;
+    padding-top: 11px;
+  }
 
-.general-card .add-deck {
-  font-size: 20px;
-  background-color: lightslategray;
-  border-color: black;
-  width: 100%;
-  height: 100%;
-}
-
-.general-card .general-thumb {
-  width: 40px;
-  height: 64px;
+  & .add-deck {
+    font-size: 20px;
+    background-color: lightslategray;
+    border-color: black;
+    width: 100%;
+    height: 100%;
+  }
 }

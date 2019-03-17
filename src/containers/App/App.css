@@ -14,10 +14,10 @@
   border-radius: 30px;
   animation: rolling 1s linear infinite;
   display: none;
-}
 
-.loading.loading-item {
-  display: block;
+  &.loading {
+    display: block;
+  }
 }
 
 .modal-background {
@@ -28,10 +28,10 @@
   left: 0;
   background: black;
   opacity: 0.5;
-}
 
-.ready .modal-background {
-  display: none;
+  @nest .ready & {
+    display: none;
+  }
 }
 
 .app-container {
@@ -44,15 +44,9 @@
   height: 100%;
   display: none;
   animation: fadeIn 1s ease 0s 1 normal;
-}
 
-.ready .app-main {
-  display: flex;
-}
-
-@media (--small-device) {
-  .modal.ready .modal-background {
-    display: block;
+  @nest .ready & {
+    display: flex;
   }
 }
 
@@ -130,13 +124,17 @@
   background-color: var(--card-filter-content-bg-color);
   display: none;
   overflow: auto;
-}
 
-.card-filter-content.active {
-  display: block;
+  &.active {
+    display: block;
+  }
 }
 
 @media (--small-device) {
+  .ready.modal .modal-background {
+    display: block;
+  }
+
   div.simple-filter-container {
     display: flex;
   }
@@ -151,10 +149,10 @@
     top: 0;
     left: 0;
     z-index: 100;
-  }
 
-  .card-filter-container.open {
-    display: block;
+    &.open {
+      display: block;
+    }
   }
 }
 

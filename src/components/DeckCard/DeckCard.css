@@ -19,13 +19,86 @@
   width: var(--deck-card-width);
   min-width: var(--deck-card-width);
   height: var(--deck-card-height);
-}
 
-.deck-card *[data-label]::before {
-  font-size: 10px;
-  position: absolute;
-  top: -4px;
-  content: attr(data-label);
+  & *[data-label]::before {
+    font-size: 10px;
+    position: absolute;
+    top: -4px;
+    content: attr(data-label);
+  }
+
+  & .general-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-user-drag: none;
+  }
+
+  & .force {
+    top: var(--deck-card-row1-top);
+    left: 0;
+    width: 24px;
+    height: var(--deck-card-row1-height);
+  }
+
+  & .intelligence {
+    top: var(--deck-card-row1-top);
+    left: 24px;
+    width: 24px;
+    height: var(--deck-card-row1-height);
+  }
+
+  & .conquest {
+    top: var(--deck-card-row1-top);
+    left: 48px;
+    width: 24px;
+    height: var(--deck-card-row1-height);
+  }
+
+  & .skills {
+    top: var(--deck-card-row2-top);
+    width: 100%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+
+    & .skill {
+      font-weight: bold;
+      margin: 0 2px;
+      width: 20px;
+      height: 20px;
+      background-color: yellow;
+      border: solid 2px black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    & .no-skill {
+      background-color: rgba(0, 0, 0, 0.2);
+      width: 64px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+  }
+
+  & .gen-mains {
+    top: var(--deck-card-row3-top);
+    width: 100%;
+    height: var(--deck-card-row3-height);
+    padding-top: 5px;
+  }
+
+  & .gen-mains-select {
+    width: 116px;
+    transform: scale(0.62);
+  }
 }
 
 .deck-card-inner-top {
@@ -35,88 +108,15 @@
   user-select: none;
 }
 
-.deck-card .general-thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  -webkit-user-drag: none;
-}
-
 .deck-card-inner-bottom {
   position: relative;
   height: var(--deck-card-inner-top-bottom);
-}
 
-.deck-card-inner-bottom > * {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
-
-.deck-card-inner-bottom .force {
-  top: var(--deck-card-row1-top);
-  left: 0;
-  width: 24px;
-  height: var(--deck-card-row1-height);
-}
-
-.deck-card-inner-bottom .intelligence {
-  top: var(--deck-card-row1-top);
-  left: 24px;
-  width: 24px;
-  height: var(--deck-card-row1-height);
-}
-
-.deck-card-inner-bottom .conquest {
-  top: var(--deck-card-row1-top);
-  left: 48px;
-  width: 24px;
-  height: var(--deck-card-row1-height);
-}
-
-.deck-card .skills {
-  top: var(--deck-card-row2-top);
-  width: 100%;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
-
-.deck-card .skills .skill {
-  font-weight: bold;
-  margin: 0 2px;
-  width: 20px;
-  height: 20px;
-  background-color: yellow;
-  border: solid 2px black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
-
-.deck-card .skills .no-skill {
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 64px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
-
-.deck-card .gen-mains {
-  top: var(--deck-card-row3-top);
-  width: 100%;
-  height: var(--deck-card-row3-height);
-  padding-top: 5px;
-}
-
-.deck-card .gen-mains-select {
-  width: 116px;
-  transform: scale(0.62);
+  & > * {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
 }

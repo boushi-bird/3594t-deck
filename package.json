@@ -81,6 +81,7 @@
     "postcss-custom-properties": "^8.0.9",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
+    "postcss-nesting": "^7.0.0",
     "prettier": "^1.16.4",
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
