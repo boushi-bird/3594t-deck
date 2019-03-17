@@ -134,6 +134,14 @@
     - license: MIT
  - **[@babel/types@7.3.4](https://github.com/babel/babel/tree/master/packages/babel-types)**
     - license: MIT
+ - **[@fortawesome/fontawesome-common-types@0.2.15](https://github.com/FortAwesome/Font-Awesome)**
+    - license: MIT
+ - **[@fortawesome/fontawesome-svg-core@1.2.15](https://github.com/FortAwesome/Font-Awesome)**
+    - license: MIT
+ - **[@fortawesome/free-solid-svg-icons@5.7.2](https://github.com/FortAwesome/Font-Awesome)**
+    - license: (CC-BY-4.0 AND MIT)
+ - **[@fortawesome/react-fontawesome@0.1.4](https://github.com/FortAwesome/react-fontawesome)**
+    - license: MIT
  - **[@mrmlnc/readdir-enhanced@2.2.1](https://github.com/bigstickcarpet/readdir-enhanced)**
     - license: MIT
  - **[@nodelib/fs.stat@1.1.3](https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.stat)**
@@ -948,6 +956,8 @@
     - license: MIT
  - **[humanize-url@1.0.1](https://github.com/sindresorhus/humanize-url)**
     - license: MIT
+ - **[humps@2.0.1](https://github.com/domchristie/humps)**
+    - license: MIT
  - **[iconv-lite@0.4.23](https://github.com/ashtuchkin/iconv-lite)**
     - license: MIT
  - **[iconv-lite@0.4.24](https://github.com/ashtuchkin/iconv-lite)**
@@ -1514,6 +1524,8 @@
     - license: ISC
  - **[postcss-modules-values@2.0.0](https://github.com/css-modules/postcss-modules-values)**
     - license: ISC
+ - **[postcss-nesting@7.0.0](https://github.com/jonathantneal/postcss-nesting)**
+    - license: CC0-1.0
  - **[postcss-normalize-charset@4.0.1](https://github.com/cssnano/cssnano)**
     - license: MIT
  - **[postcss-normalize-display-values@4.0.2](https://github.com/cssnano/cssnano)**
