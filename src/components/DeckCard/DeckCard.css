@@ -21,6 +21,7 @@
   height: var(--deck-card-height);
   cursor: pointer;
   box-sizing: content-box;
+  position: relative;
 
   @nest .active& {
     margin: 0;
@@ -77,6 +78,40 @@
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  & .tool-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 80px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    background-color: gray;
+
+    @nest .active& {
+      display: flex;
+    }
+
+    & > * {
+      font-size: 20px;
+    }
+
+    & .remove {
+      width: 36px;
+      height: 36px;
+      background-color: lightslategray;
+    }
+
+    & .search {
+      width: 36px;
+      height: 36px;
+      background-color: lightslategray;
+    }
   }
 
   & .state {

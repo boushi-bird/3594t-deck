@@ -73,6 +73,39 @@
     content: attr(data-label);
   }
 
+  & .tool-box {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 40px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    background-color: gray;
+
+    & > * {
+      font-size: 20px;
+    }
+
+    & .remove {
+      width: 36px;
+      height: 36px;
+      background-color: lightslategray;
+    }
+
+    & .search {
+      width: 36px;
+      height: 36px;
+      background-color: lightslategray;
+    }
+  }
+
   & .state {
     font-size: 18px;
     top: 14px;

@@ -38,6 +38,9 @@ export const deckActions = {
       unitType?: string;
     }) => action(dummy)
   ),
+  removeDeck: createAction('REMOVE_DECK', action => (index: number) =>
+    action(index)
+  ),
   setActiveCard: createAction('SET_ACTIVE_CARD', action => (index: number) =>
     action(index)
   ),
@@ -57,6 +60,7 @@ export default function datalistReducer(
       const { general, cost, genMain } = actions.payload;
       return {
         ...state,
+        activeIndex: undefined,
         deckCards: [...state.deckCards, { general, cost, genMain }],
       };
     }
@@ -67,6 +71,7 @@ export default function datalistReducer(
       deckCards[index] = { general, cost, genMain };
       return {
         ...state,
+        activeIndex: undefined,
         deckCards,
       };
     }
@@ -74,7 +79,17 @@ export default function datalistReducer(
       const { cost, belongState, unitType } = actions.payload;
       return {
         ...state,
+        activeIndex: undefined,
         deckCards: [...state.deckCards, { cost, belongState, unitType }],
+      };
+    }
+    case 'REMOVE_DECK': {
+      const index = actions.payload;
+      const deckCards = state.deckCards.filter((_v, i) => i !== index);
+      return {
+        ...state,
+        activeIndex: undefined,
+        deckCards,
       };
     }
     case 'SET_ACTIVE_CARD': {
@@ -103,6 +118,7 @@ export default function datalistReducer(
       };
       return {
         ...state,
+        activeIndex: index,
         deckCards,
       };
     }

@@ -20,6 +20,7 @@ export interface DispatchFromProps {
   addDeckDummy: () => void;
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
+  removeDeck: (index: number) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
@@ -36,6 +37,7 @@ export default class DeckBoard extends React.Component<Props> {
       addDeckDummy,
       selectMainGen,
       setActiveCard,
+      removeDeck,
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
@@ -54,6 +56,7 @@ export default class DeckBoard extends React.Component<Props> {
             general={general}
             onSelectMainGen={selectMainGen}
             onActive={setActiveCard}
+            onRemoveDeck={removeDeck}
           />
         );
       } else {
@@ -67,6 +70,7 @@ export default class DeckBoard extends React.Component<Props> {
             costs={costs}
             unitTypes={unitTypes}
             onActive={setActiveCard}
+            onRemoveDeck={removeDeck}
           />
         );
       }

@@ -1,5 +1,8 @@
 import './DeckCard.css';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
+import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import classNames from 'classnames';
 import { DatalistState } from '../../modules/datalist';
 
@@ -10,6 +13,7 @@ interface Props {
   active: boolean;
   onSelectMainGen: (index: number, genMain?: string) => void;
   onActive: (index: number) => void;
+  onRemoveDeck: (index: number) => void;
 }
 
 export default class DeckCard extends React.PureComponent<Props> {
@@ -28,6 +32,12 @@ export default class DeckCard extends React.PureComponent<Props> {
     event.stopPropagation();
     const { index, onActive } = this.props;
     onActive(index);
+  };
+
+  private handleRemove = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    const { index, onRemoveDeck } = this.props;
+    onRemoveDeck(index);
   };
 
   public render(): React.ReactNode {
@@ -119,6 +129,14 @@ export default class DeckCard extends React.PureComponent<Props> {
               {genMains}
             </select>
           </span>
+        </div>
+        <div className="tool-box">
+          <button className="remove" onClick={this.handleRemove}>
+            <FontAwesomeIcon icon={faMinusCircle} />
+          </button>
+          <button className="search">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
         </div>
       </div>
     );
