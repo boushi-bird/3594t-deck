@@ -14,7 +14,7 @@
 }
 
 .deck-card {
-  margin: 0 3px;
+  margin: 0 2px;
   font-size: 16px;
   width: var(--deck-card-width);
   min-width: var(--deck-card-width);
