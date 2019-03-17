@@ -23,6 +23,22 @@ export default class DeckCard extends React.PureComponent<Props> {
 
   public render(): React.ReactNode {
     const { general, genMain } = this.props;
+    const style: React.CSSProperties = {
+      backgroundColor: general.state.thinColor,
+    };
+    const stateColor = general.state.color;
+    const styleState: React.CSSProperties = {
+      backgroundColor: stateColor,
+    };
+    const gradientColors = [
+      stateColor,
+      `${stateColor} 30px`,
+      'transparent 92px',
+      'transparent',
+    ];
+    const styleShadow: React.CSSProperties = {
+      background: `linear-gradient(-30deg, ${gradientColors.join(',')})`,
+    };
     const skills: JSX.Element[] = [];
     general.skills.forEach(skill => {
       skills.push(
@@ -48,9 +64,26 @@ export default class DeckCard extends React.PureComponent<Props> {
     });
     const selectedGenMain = genMain != null ? genMain : '';
     return (
-      <div className="deck-card">
+      <div className="deck-card" style={style}>
         <div className="deck-card-inner-top">
           <img className="general-thumb" src={general.thumbUrl} />
+          <div className="shadow" style={styleShadow} />
+          <span className="state" style={styleState}>
+            {general.state.nameShort}
+          </span>
+          <span className="version" style={styleState}>
+            {general.version}
+          </span>
+          <span className="cost" data-label="コスト">
+            {general.cost.name}
+          </span>
+          <span className="unit" data-label="兵種">
+            {general.unitType.nameShort}
+          </span>
+          <span className="name">
+            <span className="rarity">{general.rarity.name}</span>
+            {general.name}
+          </span>
         </div>
         <div className="deck-card-inner-bottom">
           <span className="force" data-label="武">
