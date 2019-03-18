@@ -1,12 +1,15 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Dispatch, bindActionCreators } from 'redux';
 import { deckActions } from '../../modules/deck';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
 
+type General = StateFromProps['generals'][number];
+type FilterCondition = State['datalistReducer']['filterCondition'];
+
 const satisfyGeneral = (
-  general: StateFromProps['generals'][number],
-  filterCondition: State['datalistReducer']['filterCondition']
+  general: General,
+  filterCondition: FilterCondition
 ): boolean => {
   const {
     belongStates,
@@ -148,19 +151,44 @@ const satisfyGeneral = (
   return true;
 };
 
+interface DeckCardGeneral {
+  general: string;
+  cost: string;
+  genMain?: string;
+}
+
+interface ContainerStateFromProps {
+  generals: General[];
+  filterCondition: FilterCondition;
+  activeIndex?: number;
+}
+
+interface ContainerDispatchFromProps {
+  changeDeckGeneral: (index: number, card: DeckCardGeneral) => void;
+  addDeckGeneral: (card: DeckCardGeneral) => void;
+}
+
 export default connect<
-  State,
-  { dispatch: Dispatch },
+  ContainerStateFromProps,
+  ContainerDispatchFromProps,
   {},
   StateFromProps & DispatchFromProps
 >(
-  (state: State) => state,
-  (dispatch: Dispatch) => ({ dispatch }),
-  (state, { dispatch }) => {
-    const {
-      generals,
-      effectiveFilterCondition: filterCondition,
-    } = state.datalistReducer;
+  (state: State) => ({
+    generals: state.datalistReducer.generals,
+    filterCondition: state.datalistReducer.effectiveFilterCondition,
+    activeIndex: state.deckReducer.activeIndex,
+  }),
+  (dispatch: Dispatch) =>
+    bindActionCreators(
+      {
+        changeDeckGeneral: deckActions.changeDeckGeneral,
+        addDeckGeneral: deckActions.addDeckGeneral,
+      },
+      dispatch
+    ),
+  (state, actions) => {
+    const { generals, filterCondition, activeIndex } = state;
     const searchedGeneralIds = generals
       .filter(general => {
         return satisfyGeneral(general, filterCondition);
@@ -174,14 +202,19 @@ export default connect<
         cost: string;
         genMain?: string;
       }) => {
-        if (state.deckReducer.activeIndex != null) {
-          dispatch(
-            deckActions.changeDeckGeneral(state.deckReducer.activeIndex, card)
-          );
+        if (activeIndex != null) {
+          actions.changeDeckGeneral(activeIndex, card);
         } else {
-          dispatch(deckActions.addDeckGeneral(card));
+          actions.addDeckGeneral(card);
         }
       },
     };
+  },
+  {
+    areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+      const next = nextMergedProps.searchedGeneralIds;
+      const prev = prevMergedProps.searchedGeneralIds;
+      return next.length === prev.length && next.every(v => prev.includes(v));
+    },
   }
 )(CardList);
