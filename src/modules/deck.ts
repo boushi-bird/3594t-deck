@@ -38,6 +38,11 @@ export const deckActions = {
       unitType?: string;
     }) => action(dummy)
   ),
+  setDeckValue: createAction(
+    'SET_DECK_VALUE',
+    action => (index: number, deckCard: Partial<DeckCard>) =>
+      action({ index, deckCard })
+  ),
   removeDeck: createAction('REMOVE_DECK', action => (index: number) =>
     action(index)
   ),
@@ -81,6 +86,18 @@ export default function datalistReducer(
         ...state,
         activeIndex: undefined,
         deckCards: [...state.deckCards, { cost, belongState, unitType }],
+      };
+    }
+    case 'SET_DECK_VALUE': {
+      const { index, deckCard } = actions.payload;
+      const deckCards = [...state.deckCards];
+      deckCards[index] = {
+        ...deckCards[index],
+        ...deckCard,
+      };
+      return {
+        ...state,
+        deckCards,
       };
     }
     case 'REMOVE_DECK': {

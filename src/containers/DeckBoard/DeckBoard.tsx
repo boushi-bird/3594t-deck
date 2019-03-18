@@ -20,6 +20,10 @@ export interface DispatchFromProps {
   addDeckDummy: () => void;
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
+  setDeckValue: (
+    index: number,
+    deckCard: { belongState?: string; cost?: string; unitType?: string }
+  ) => void;
   removeDeck: (index: number) => void;
 }
 
@@ -37,6 +41,7 @@ export default class DeckBoard extends React.Component<Props> {
       addDeckDummy,
       selectMainGen,
       setActiveCard,
+      setDeckValue,
       removeDeck,
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
@@ -69,6 +74,7 @@ export default class DeckBoard extends React.Component<Props> {
             belongStates={belongStates}
             costs={costs}
             unitTypes={unitTypes}
+            onChangeDeckValue={setDeckValue}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
           />
@@ -79,7 +85,7 @@ export default class DeckBoard extends React.Component<Props> {
       <div className="deck-board">
         <div className="deck-card-list">
           {deckCardsElements}
-          <div className="add-new-deck-card" onClick={addDeckDummy}>
+          <div className="add-new-deck-card button" onClick={addDeckDummy}>
             追加
             <FontAwesomeIcon icon={faPlusCircle} />
           </div>

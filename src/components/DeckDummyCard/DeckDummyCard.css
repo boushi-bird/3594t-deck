@@ -51,6 +51,38 @@
       justify-content: center;
       flex-wrap: nowrap;
     }
+
+    & .edit {
+      position: static;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      padding-top: 2px;
+
+      @nest .active& {
+        display: flex;
+      }
+
+      & .select-item-container {
+        width: 100%;
+        height: 45px;
+        padding-top: 2px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+
+      & .select-item {
+        width: 116px;
+        height: 48px;
+        min-width: 116px;
+        transform: scale(0.62);
+      }
+    }
   }
 
   & .deck-card-inner-bottom {
@@ -112,6 +144,10 @@
     left: 0;
     width: 24px;
     height: 24px;
+
+    @nest .active& {
+      display: none;
+    }
   }
 
   & .cost {
@@ -120,6 +156,10 @@
     padding-top: 4px;
     width: 32px;
     height: 28px;
+
+    @nest .active& {
+      display: none;
+    }
   }
 
   & .unit {
@@ -128,5 +168,9 @@
     padding-top: 4px;
     width: 32px;
     height: 28px;
+
+    @nest .active& {
+      display: none;
+    }
   }
 }

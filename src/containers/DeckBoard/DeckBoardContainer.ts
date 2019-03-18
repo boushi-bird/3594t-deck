@@ -22,6 +22,7 @@ export default connect<
       {
         selectMainGen: deckActions.selectMainGen,
         setActiveCard: deckActions.setActiveCard,
+        setDeckValue: deckActions.setDeckValue,
         removeDeck: deckActions.removeDeck,
       },
       dispatch

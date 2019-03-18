@@ -27,6 +27,7 @@ button,
   margin: 0;
   padding: 0;
   cursor: pointer;
+  -webkit-tap-highlight-color: gray;
 }
 
 button:disabled {
@@ -49,6 +50,10 @@ body {
 
 .home {
   height: 100%;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 select {

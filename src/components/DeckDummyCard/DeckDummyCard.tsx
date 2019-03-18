@@ -14,6 +14,10 @@ interface Props {
   belongStates: DatalistState['filterContents']['belongStates'];
   costs: DatalistState['filterContents']['costs'];
   unitTypes: DatalistState['filterContents']['unitTypes'];
+  onChangeDeckValue: (
+    index: number,
+    deckCard: { belongState?: string; cost?: string; unitType?: string }
+  ) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
 }
@@ -31,6 +35,18 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     onRemoveDeck(index);
   };
 
+  private handleChangeDeckValue = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { index, onChangeDeckValue } = this.props;
+    const key = event.currentTarget.name as 'belongState' | 'cost' | 'unitType';
+    let value: string | undefined = event.currentTarget.value;
+    if (value === '') {
+      value = undefined;
+    }
+    onChangeDeckValue(index, { [key]: value });
+  };
+
   public render(): React.ReactNode {
     const { deckCard, active, belongStates, costs, unitTypes } = this.props;
     const style: React.CSSProperties = {};
@@ -44,11 +60,13 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     const unitType = deckCard.unitType
       ? unitTypes.find(v => v.id === deckCard.unitType)
       : undefined;
+    let stateId = '';
     let stateName = '';
     let hasState = false;
     if (belongState) {
       style.backgroundColor = belongState.thinColor;
       styleState.backgroundColor = belongState.color;
+      stateId = belongState.id;
       stateName = belongState.nameShort || '';
       hasState = true;
     }
@@ -57,12 +75,38 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
       costName = cost.name;
     }
     const styleUnitType: React.CSSProperties = {};
+    let unitTypeId = '';
     let unitTypeName = '';
     if (unitType) {
+      unitTypeId = unitType.id;
       unitTypeName = unitType.nameShort || '';
     } else {
       styleUnitType.display = 'none';
     }
+    const belongStatesOptions: JSX.Element[] = [];
+    belongStates.forEach((state, i) => {
+      belongStatesOptions.push(
+        <option value={state.id} key={i}>
+          {state.name}
+        </option>
+      );
+    });
+    const costsOptions: JSX.Element[] = [];
+    costs.forEach((cost, i) => {
+      costsOptions.push(
+        <option value={cost.id} key={i}>
+          {cost.name}
+        </option>
+      );
+    });
+    const unitTypesOptions: JSX.Element[] = [];
+    unitTypes.forEach((unitType, i) => {
+      unitTypesOptions.push(
+        <option value={unitType.id} key={i}>
+          {unitType.nameShort || unitType.name}
+        </option>
+      );
+    });
     return (
       <div
         className={classNames('deck-dummy-card', {
@@ -80,6 +124,40 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
           <span className="unit" style={styleUnitType} data-label="兵種">
             {unitTypeName}
           </span>
+          <div className="edit">
+            <span className="select-item-container" data-label="勢力">
+              <select
+                className="select-item"
+                name="belongState"
+                value={stateId}
+                onChange={this.handleChangeDeckValue}
+              >
+                <option value="" />
+                {belongStatesOptions}
+              </select>
+            </span>
+            <span className="select-item-container" data-label="コスト">
+              <select
+                className="select-item"
+                name="cost"
+                value={deckCard.cost}
+                onChange={this.handleChangeDeckValue}
+              >
+                {costsOptions}
+              </select>
+            </span>
+            <span className="select-item-container" data-label="兵種">
+              <select
+                className="select-item"
+                name="unitType"
+                value={unitTypeId}
+                onChange={this.handleChangeDeckValue}
+              >
+                <option value="" />
+                {unitTypesOptions}
+              </select>
+            </span>
+          </div>
         </div>
         <div className="deck-card-inner-bottom">
           <div className="tool-box">
