@@ -22,5 +22,8 @@ export default connect<
     toggleCheckList: (key: FilterConditionKey, value: string) => {
       actions.setCondition(toggleCheckList(state, key, value));
     },
-  })
+  }),
+  {
+    areMergedPropsEqual: () => false,
+  }
 )(BaseFilter);

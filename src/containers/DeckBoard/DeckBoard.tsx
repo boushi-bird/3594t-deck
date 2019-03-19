@@ -3,7 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import DeckCard from '../../components/DeckCard';
-import DeckDummyCard from '../../components/DeckDummyCard';
+import DeckDummyCard from '../DeckDummyCard';
 import { DatalistState } from '../../modules/datalist';
 import { DeckState } from '../../modules/deck';
 
@@ -11,19 +11,12 @@ type General = DatalistState['generals'][number];
 
 export interface StateFromProps extends DeckState {
   generals: General[];
-  belongStates: DatalistState['filterContents']['belongStates'];
-  costs: DatalistState['filterContents']['costs'];
-  unitTypes: DatalistState['filterContents']['unitTypes'];
 }
 
 export interface DispatchFromProps {
   addDeckDummy: () => void;
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
-  setDeckValue: (
-    index: number,
-    deckCard: { belongState?: string; cost?: string; unitType?: string }
-  ) => void;
   removeDeck: (index: number) => void;
 }
 
@@ -35,13 +28,9 @@ export default class DeckBoard extends React.Component<Props> {
       deckCards,
       activeIndex,
       generals,
-      belongStates,
-      costs,
-      unitTypes,
       addDeckDummy,
       selectMainGen,
       setActiveCard,
-      setDeckValue,
       removeDeck,
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
@@ -71,12 +60,6 @@ export default class DeckBoard extends React.Component<Props> {
             index={i}
             active={active}
             deckCard={deckCard}
-            belongStates={belongStates}
-            costs={costs}
-            unitTypes={unitTypes}
-            onChangeDeckValue={setDeckValue}
-            onActive={setActiveCard}
-            onRemoveDeck={removeDeck}
           />
         );
       }

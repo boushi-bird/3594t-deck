@@ -7,44 +7,52 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { DatalistState } from '../../modules/datalist';
 import { DeckCard } from '../../modules/deck';
 
-interface Props {
+export interface OwnProps {
   index: number;
   deckCard: DeckCard;
   active: boolean;
+}
+
+export interface StateFromProps {
   belongStates: DatalistState['filterContents']['belongStates'];
   costs: DatalistState['filterContents']['costs'];
   unitTypes: DatalistState['filterContents']['unitTypes'];
-  onChangeDeckValue: (
+}
+
+export interface DispatchFromProps {
+  setDeckValue: (
     index: number,
     deckCard: { belongState?: string; cost?: string; unitType?: string }
   ) => void;
-  onActive: (index: number) => void;
-  onRemoveDeck: (index: number) => void;
+  setActiveCard: (index: number) => void;
+  removeDeck: (index: number) => void;
 }
+
+type Props = OwnProps & StateFromProps & DispatchFromProps;
 
 export default class DeckDummyCard extends React.PureComponent<Props> {
   private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, onActive } = this.props;
-    onActive(index);
+    const { index, setActiveCard } = this.props;
+    setActiveCard(index);
   };
 
   private handleRemove = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, onRemoveDeck } = this.props;
-    onRemoveDeck(index);
+    const { index, removeDeck } = this.props;
+    removeDeck(index);
   };
 
   private handleChangeDeckValue = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const { index, onChangeDeckValue } = this.props;
+    const { index, setDeckValue } = this.props;
     const key = event.currentTarget.name as 'belongState' | 'cost' | 'unitType';
     let value: string | undefined = event.currentTarget.value;
     if (value === '') {
       value = undefined;
     }
-    onChangeDeckValue(index, { [key]: value });
+    setDeckValue(index, { [key]: value });
   };
 
   public render(): React.ReactNode {
