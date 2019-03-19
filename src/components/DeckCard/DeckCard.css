@@ -2,9 +2,9 @@
 
 :root {
   --deck-card-width: 72px;
-  --deck-card-height: 254px;
+  --deck-card-height: 250px;
   --deck-card-inner-top-height: 136px;
-  --deck-card-inner-bottom-height: 118px;
+  --deck-card-inner-bottom-height: 114px;
   --deck-card-row1-top: 4px;
   --deck-card-row1-height: 38px;
   --deck-card-row2-top: calc(var(--deck-card-row1-top) + var(--deck-card-row1-height) - 4px);
@@ -14,7 +14,7 @@
 }
 
 .deck-card {
-  margin: 2px;
+  margin: 4px;
   font-size: 16px;
   width: var(--deck-card-width);
   min-width: var(--deck-card-width);
@@ -25,7 +25,7 @@
 
   @nest .active& {
     margin: 0;
-    border: 2px solid orange;
+    border: 4px solid orange;
   }
 
   & .deck-card-inner-top {
@@ -228,6 +228,8 @@
 
   & .gen-mains-select {
     width: 116px;
+    min-width: 116px;
+    height: 48px;
     transform: scale(0.62);
   }
 }

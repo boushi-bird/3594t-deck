@@ -52,8 +52,20 @@
 }
 
 .app-header {
-  min-height: 46px;
+  min-height: 80px;
   background-color: var(--app-header-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.side-menu-button {
+  font-size: 48px;
+  margin-left: 2px;
+  width: 72px;
+  height: 72px;
+  border-radius: 4px;
+  visibility: hidden;
 }
 
 .app-header-title {

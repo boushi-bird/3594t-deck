@@ -2,13 +2,13 @@
 
 :root {
   --deck-dummy-card-width: 72px;
-  --deck-dummy-card-height: 254px;
+  --deck-dummy-card-height: 250px;
   --deck-dummy-card-inner-top-height: 136px;
-  --deck-dummy-card-inner-bottom-height: 118px;
+  --deck-dummy-card-inner-bottom-height: 114px;
 }
 
 .deck-dummy-card {
-  margin: 1px;
+  margin: 3px;
   font-size: 16px;
   width: var(--deck-dummy-card-width);
   min-width: var(--deck-dummy-card-width);
@@ -19,7 +19,7 @@
 
   @nest .active& {
     margin: 0;
-    border: 2px solid orange;
+    border: 4px solid orange;
 
     &.has-state {
       margin: 0;
@@ -28,7 +28,7 @@
   }
 
   &.has-state {
-    margin: 2px;
+    margin: 4px;
     border-style: none;
   }
 

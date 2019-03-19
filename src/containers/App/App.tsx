@@ -1,6 +1,8 @@
 import './App.css';
 import React from 'react';
 import classNames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
@@ -57,6 +59,9 @@ export default class App extends React.PureComponent<Props> {
         <div className="app-main">
           <div className="card-list-container">
             <div className="app-header">
+              <button className="side-menu-button">
+                <FontAwesomeIcon icon={faBars} />
+              </button>
               <div className="app-header-title">
                 三国志大戦デッキシミュレーター
               </div>
