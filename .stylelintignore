@@ -1,5 +1,7 @@
 node_modules/
+/bin/
 /dist/
+/docs/
 /LICENSE
 *.json
 *.html
