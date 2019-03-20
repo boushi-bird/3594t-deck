@@ -5,7 +5,7 @@ title: About
 
 ### このツールについて
 
-[三国志大戦.NET](https://3594t.net) のデッキシミュレーターです。
+アーケードゲーム [三国志大戦](http://www.sangokushi-taisen.com) のデッキシミュレーターです。
 
 ### 使い方
 
