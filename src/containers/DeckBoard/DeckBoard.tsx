@@ -23,6 +23,21 @@ export interface DispatchFromProps {
 type Props = StateFromProps & DispatchFromProps;
 
 export default class DeckBoard extends React.Component<Props> {
+  public componentDidMount(): void {
+    window.addEventListener('beforeunload', this.onBeforeUnload);
+  }
+
+  public componentWillUnmount(): void {
+    window.removeEventListener('beforeunload', this.onBeforeUnload);
+  }
+
+  private onBeforeUnload = (event: Event): void => {
+    if (this.props.deckCards.length > 0) {
+      event.preventDefault();
+      event.returnValue = true;
+    }
+  };
+
   public render(): React.ReactNode {
     const {
       deckCards,
