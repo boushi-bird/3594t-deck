@@ -232,3 +232,14 @@
     height: 100%;
   }
 }
+
+.no-generals {
+  display: flex;
+  font-size: 20px;
+  margin: 5px auto;
+  width: var(--general-card-width);
+  height: var(--general-card-height);
+  background-color: gray;
+  align-items: center;
+  justify-content: center;
+}

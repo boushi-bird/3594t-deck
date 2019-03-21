@@ -111,6 +111,8 @@ export interface DatalistState {
   effectiveFilterCondition: FilterCondition;
   filterContents: FilterContents;
   generals: BaseData['generals'];
+  currentPage: number;
+  pageLimit: number;
 }
 
 const initialState: DatalistState = {
@@ -118,6 +120,8 @@ const initialState: DatalistState = {
   effectiveFilterCondition: initialFilterCondition,
   filterContents: initialFilterContents,
   generals: [],
+  currentPage: 1,
+  pageLimit: 50,
 };
 
 export const datalistActions = {
@@ -129,6 +133,12 @@ export const datalistActions = {
   ),
   setBaseData: createAction('SET_BASE_DATA', action => (baseData: BaseData) =>
     action({ baseData })
+  ),
+  incrementPage: createAction('INCREMENT_PAGE', action => () =>
+    action({ page: 1 })
+  ),
+  decrementPage: createAction('DECREMENT_PAGE', action => () =>
+    action({ page: -1 })
   ),
 };
 
@@ -142,12 +152,14 @@ export default function datalistReducer(
         ...state,
         filterCondition: initialFilterCondition,
         effectiveFilterCondition: initialFilterCondition,
+        currentPage: initialState.currentPage,
       };
     }
     case 'APPLY_CONDITION': {
       return {
         ...state,
         effectiveFilterCondition: cloneDeep(state.filterCondition),
+        currentPage: initialState.currentPage,
       };
     }
     case 'SET_CONDITION': {
@@ -166,8 +178,17 @@ export default function datalistReducer(
         ...state,
         filterCondition: initialFilterCondition,
         effectiveFilterCondition: initialFilterCondition,
+        currentPage: initialState.currentPage,
         filterContents,
         generals,
+      };
+    }
+    case 'INCREMENT_PAGE':
+    case 'DECREMENT_PAGE': {
+      const page = actions.payload.page;
+      return {
+        ...state,
+        currentPage: state.currentPage + page,
       };
     }
     default:

@@ -57,7 +57,7 @@ export default class App extends React.PureComponent<Props> {
         onClick={this.handleAppClick}
       >
         <div className="app-main">
-          <div className="card-list-container">
+          <div className="app-deck-block">
             <div className="app-header">
               <button className="side-menu-button">
                 <FontAwesomeIcon icon={faBars} />

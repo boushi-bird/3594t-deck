@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
+import { datalistActions } from '../../modules/datalist';
 import { deckActions } from '../../modules/deck';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
@@ -159,6 +160,8 @@ interface DeckCardGeneral {
 
 interface ContainerStateFromProps {
   generals: General[];
+  currentPage: number;
+  pageLimit: number;
   filterCondition: FilterCondition;
   activeIndex?: number;
 }
@@ -166,6 +169,8 @@ interface ContainerStateFromProps {
 interface ContainerDispatchFromProps {
   changeDeckGeneral: (index: number, card: DeckCardGeneral) => void;
   addDeckGeneral: (card: DeckCardGeneral) => void;
+  decrementPage: () => void;
+  incrementPage: () => void;
 }
 
 export default connect<
@@ -176,6 +181,8 @@ export default connect<
 >(
   (state: State) => ({
     generals: state.datalistReducer.generals,
+    currentPage: state.datalistReducer.currentPage,
+    pageLimit: state.datalistReducer.pageLimit,
     filterCondition: state.datalistReducer.effectiveFilterCondition,
     activeIndex: state.deckReducer.activeIndex,
   }),
@@ -184,19 +191,40 @@ export default connect<
       {
         changeDeckGeneral: deckActions.changeDeckGeneral,
         addDeckGeneral: deckActions.addDeckGeneral,
+        decrementPage: datalistActions.decrementPage,
+        incrementPage: datalistActions.incrementPage,
       },
       dispatch
     ),
   (state, actions) => {
-    const { generals, filterCondition, activeIndex } = state;
-    const searchedGeneralIds = generals
+    const {
+      generals,
+      currentPage,
+      pageLimit,
+      filterCondition,
+      activeIndex,
+    } = state;
+    let searchedGeneralIds = generals
       .filter(general => {
         return satisfyGeneral(general, filterCondition);
       })
       .map(v => v.id);
+    const searchedAll = searchedGeneralIds.length;
+    const searchedOffset = (currentPage - 1) * pageLimit;
+    const hasPrev = searchedOffset > 0;
+    const hasNext = searchedOffset + pageLimit < searchedAll;
+    searchedGeneralIds = searchedGeneralIds.slice(
+      searchedOffset,
+      searchedOffset + pageLimit
+    );
     return {
       generals,
       searchedGeneralIds,
+      searchedAll,
+      searchedOffset,
+      searchedLimit: pageLimit,
+      hasPrev,
+      hasNext,
       addDeckGeneral: (card: {
         general: string;
         cost: string;
@@ -208,10 +236,18 @@ export default connect<
           actions.addDeckGeneral(card);
         }
       },
+      onPagePrev: actions.decrementPage,
+      onPageNext: actions.incrementPage,
     };
   },
   {
     areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+      if (nextMergedProps.searchedAll !== prevMergedProps.searchedAll) {
+        return false;
+      }
+      if (nextMergedProps.searchedOffset !== prevMergedProps.searchedOffset) {
+        return false;
+      }
       const next = nextMergedProps.searchedGeneralIds;
       const prev = prevMergedProps.searchedGeneralIds;
       return next.length === prev.length && next.every(v => prev.includes(v));

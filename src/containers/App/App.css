@@ -76,7 +76,7 @@
   margin: auto;
 }
 
-.card-list-container {
+.app-deck-block {
   flex: 1;
   min-width: var(--app-min-width);
   height: 100%;

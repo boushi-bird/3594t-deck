@@ -1,6 +1,49 @@
 @import '../../defines.css';
 
 .cardlist-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardlist-paging {
+  min-height: 40px;
+  max-height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & .pageing-label {
+    font-size: 20px;
+    width: 300px;
+    text-align: center;
+    margin: auto;
+  }
+
+  & .paging-button {
+    font-size: 20px;
+    margin: auto 6px;
+    border-color: black;
+    width: 80px;
+    height: 32px;
+    visibility: hidden;
+
+    &.prev {
+      float: left;
+    }
+
+    &.next {
+      float: right;
+    }
+
+    &.active {
+      visibility: visible;
+    }
+  }
+}
+
+.cardlist-main {
+  padding: 10px 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
