@@ -7,6 +7,7 @@ import { DatalistState } from '../../modules/datalist';
 interface Props {
   general: DatalistState['generals'][number];
   show?: boolean;
+  enableAddDeck: boolean;
   onAddDeck: (card: {
     general: string;
     cost: string;
@@ -28,7 +29,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { general, show } = this.props;
+    const { general, show, enableAddDeck } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
@@ -68,6 +69,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
         <button
           className="gen-main"
           key={i}
+          disabled={!enableAddDeck}
           data-gen-main={genMain.id}
           onClick={this.handleAddDeckClick}
         >
@@ -113,7 +115,11 @@ export default class GeneralCard extends React.PureComponent<Props> {
           {genMains}
         </span>
         <span className="buttons">
-          <button className="add-deck" onClick={this.handleAddDeckClick}>
+          <button
+            className="add-deck"
+            disabled={!enableAddDeck}
+            onClick={this.handleAddDeckClick}
+          >
             <FontAwesomeIcon icon={faPlusCircle} />
           </button>
         </span>

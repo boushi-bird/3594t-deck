@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { datalistActions } from '../../modules/datalist';
-import { deckActions } from '../../modules/deck';
+import { deckActions, DeckCard } from '../../modules/deck';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
 
@@ -163,6 +163,7 @@ interface ContainerStateFromProps {
   currentPage: number;
   pageLimit: number;
   filterCondition: FilterCondition;
+  deckCards: DeckCard[];
   activeIndex?: number;
 }
 
@@ -172,6 +173,9 @@ interface ContainerDispatchFromProps {
   decrementPage: () => void;
   incrementPage: () => void;
 }
+
+const arrayEquals = <V>(a: V[], b: V[]): boolean =>
+  a.length === b.length && a.every(v => b.includes(v));
 
 export default connect<
   ContainerStateFromProps,
@@ -184,6 +188,7 @@ export default connect<
     currentPage: state.datalistReducer.currentPage,
     pageLimit: state.datalistReducer.pageLimit,
     filterCondition: state.datalistReducer.effectiveFilterCondition,
+    deckCards: state.deckReducer.deckCards,
     activeIndex: state.deckReducer.activeIndex,
   }),
   (dispatch: Dispatch) =>
@@ -202,8 +207,25 @@ export default connect<
       currentPage,
       pageLimit,
       filterCondition,
+      deckCards,
       activeIndex,
     } = state;
+    const deckGenerals: string[] = [];
+    deckCards.forEach((deckCard, i) => {
+      if (activeIndex === i) {
+        return;
+      }
+      const general = deckCard.general;
+      if (general) {
+        deckGenerals.push(general);
+      }
+    });
+    // デッキにいる武将(武将名単位)
+    const deckPersonals = generals
+      .filter(general => {
+        return deckGenerals.includes(general.id);
+      })
+      .map(v => v.raw.personal);
     let searchedGeneralIds = generals
       .filter(general => {
         return satisfyGeneral(general, filterCondition);
@@ -220,6 +242,7 @@ export default connect<
     return {
       generals,
       searchedGeneralIds,
+      deckPersonals,
       searchedAll,
       searchedOffset,
       searchedLimit: pageLimit,
@@ -248,9 +271,23 @@ export default connect<
       if (nextMergedProps.searchedOffset !== prevMergedProps.searchedOffset) {
         return false;
       }
-      const next = nextMergedProps.searchedGeneralIds;
-      const prev = prevMergedProps.searchedGeneralIds;
-      return next.length === prev.length && next.every(v => prev.includes(v));
+      if (
+        !arrayEquals(
+          nextMergedProps.searchedGeneralIds,
+          prevMergedProps.searchedGeneralIds
+        )
+      ) {
+        return false;
+      }
+      if (
+        !arrayEquals(
+          nextMergedProps.deckPersonals,
+          prevMergedProps.deckPersonals
+        )
+      ) {
+        return false;
+      }
+      return true;
     },
   }
 )(CardList);
