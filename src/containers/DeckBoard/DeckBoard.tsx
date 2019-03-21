@@ -1,16 +1,32 @@
 import './DeckBoard.css';
 import React from 'react';
+import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
 import { DatalistState } from '../../modules/datalist';
-import { DeckState } from '../../modules/deck';
+import { DeckCard as DeckCardDummy } from '../../modules/deck';
 
 type General = DatalistState['generals'][number];
 
-export interface StateFromProps extends DeckState {
-  generals: General[];
+export interface DeckCardGeneral {
+  general: General;
+  genMain?: string;
+}
+
+// general = generals.find(g => g.id === deckCard.general);
+
+export interface StateFromProps {
+  deckCards: (DeckCardGeneral | DeckCardDummy)[];
+  activeIndex?: number;
+  enableSearch: boolean;
+  totalForce: number;
+  totalIntelligence: number;
+  totalConquest: number;
+  totalCost: number;
+  limitCost: number;
+  hasDummy: boolean;
 }
 
 export interface DispatchFromProps {
@@ -42,7 +58,12 @@ export default class DeckBoard extends React.Component<Props> {
     const {
       deckCards,
       activeIndex,
-      generals,
+      totalForce,
+      totalIntelligence,
+      totalConquest,
+      totalCost,
+      limitCost,
+      hasDummy,
       addDeckDummy,
       selectMainGen,
       setActiveCard,
@@ -50,25 +71,9 @@ export default class DeckBoard extends React.Component<Props> {
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
-      let general: General | undefined;
-      if (deckCard.general) {
-        general = generals.find(g => g.id === deckCard.general);
-      }
       const active = activeIndex === i;
-      if (general) {
-        deckCardsElements.push(
-          <DeckCard
-            key={i}
-            index={i}
-            active={active}
-            genMain={deckCard.genMain}
-            general={general}
-            onSelectMainGen={selectMainGen}
-            onActive={setActiveCard}
-            onRemoveDeck={removeDeck}
-          />
-        );
-      } else {
+      if ('cost' in deckCard) {
+        console.log(deckCard);
         deckCardsElements.push(
           <DeckDummyCard
             key={i}
@@ -77,8 +82,43 @@ export default class DeckBoard extends React.Component<Props> {
             deckCard={deckCard}
           />
         );
+      } else {
+        const { general, genMain } = deckCard;
+        deckCardsElements.push(
+          <DeckCard
+            key={i}
+            index={i}
+            active={active}
+            genMain={genMain}
+            general={general}
+            onSelectMainGen={selectMainGen}
+            onActive={setActiveCard}
+            onRemoveDeck={removeDeck}
+          />
+        );
       }
     });
+    let costRemain = totalCost - limitCost;
+    let costRemainText = '残り';
+    let over = false;
+    let under = false;
+    if (costRemain > 0) {
+      costRemainText = 'コストオーバー';
+      over = true;
+    } else if (costRemain < 0) {
+      costRemain *= -1;
+      under = true;
+    }
+    let conquestRank;
+    if (totalConquest >= 11) {
+      conquestRank = 'S';
+    } else if (totalConquest >= 9) {
+      conquestRank = 'A';
+    } else if (totalConquest >= 7) {
+      conquestRank = 'B';
+    } else {
+      conquestRank = 'C';
+    }
     return (
       <div className="deck-board">
         <div className="deck-card-list">
@@ -88,7 +128,32 @@ export default class DeckBoard extends React.Component<Props> {
             <FontAwesomeIcon icon={faPlusCircle} />
           </div>
         </div>
-        <div className="deck-total" />
+        <div className="deck-total">
+          <div className="total" data-label="総武力">
+            <span className={classNames('force', { dummy: hasDummy })}>
+              {totalForce}
+            </span>
+          </div>
+          <div className="total" data-label="総知力">
+            <span className={classNames('intelligence', { dummy: hasDummy })}>
+              {totalIntelligence}
+            </span>
+          </div>
+          <div className="total" data-label="総征圧力">
+            <span className={classNames('conquest-rank', { dummy: hasDummy })}>
+              {conquestRank}
+            </span>
+            <span className={classNames('conquest', { dummy: hasDummy })}>
+              {totalConquest}
+            </span>
+          </div>
+          <div className="total" data-label="総コスト">
+            <span className="cost">{totalCost.toFixed(1)}</span>
+            <span className={classNames('cost-remain', { over, under })}>
+              ({costRemainText} {costRemain.toFixed(1)})
+            </span>
+          </div>
+        </div>
       </div>
     );
   }

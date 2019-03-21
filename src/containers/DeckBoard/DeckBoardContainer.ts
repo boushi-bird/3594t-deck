@@ -1,13 +1,22 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { deckActions } from '../../modules/deck';
+import {
+  deckActions,
+  DeckState,
+  DeckCard as DeckCardDummy,
+} from '../../modules/deck';
 import { State } from '../../store';
-import DeckBoard, { StateFromProps, DispatchFromProps } from './DeckBoard';
+import DeckBoard, {
+  StateFromProps,
+  DispatchFromProps,
+  DeckCardGeneral,
+} from './DeckBoard';
 
 type General = State['datalistReducer']['generals'][number];
 type FilterCondition = State['datalistReducer']['filterCondition'];
 
-interface ContainerStateFromProps extends StateFromProps {
+interface ContainerStateFromProps {
+  deckState: DeckState;
   generals: General[];
   costs: FilterCondition['costs'];
   belongStates: FilterCondition['belongStates'];
@@ -29,7 +38,7 @@ export default connect<
   StateFromProps & DispatchFromProps
 >(
   (state: State) => ({
-    ...state.deckReducer,
+    deckState: state.deckReducer,
     generals: state.datalistReducer.generals,
     belongStates: state.datalistReducer.filterCondition.belongStates,
     costs: state.datalistReducer.filterCondition.costs,
@@ -46,10 +55,48 @@ export default connect<
       dispatch
     ),
   (state, actions) => {
-    const { costs, belongStates, unitTypes, ...otherState } = state;
+    const { deckState, generals, costs, belongStates, unitTypes } = state;
+    const { activeIndex, enableSearch } = deckState;
     const { rawAddDeckDummy, ...otherActions } = actions;
+    let totalForce = 0;
+    let totalIntelligence = 0;
+    let totalConquest = 0;
+    let totalCost = 0;
+    let hasDummy = false;
+    const deckCards: (DeckCardGeneral | DeckCardDummy)[] = [];
+    deckState.deckCards.forEach(deckCard => {
+      const general =
+        deckCard.general != null
+          ? generals.find(g => g.id === deckCard.general)
+          : undefined;
+      let cost: string;
+      if (general) {
+        totalForce += general.force;
+        totalIntelligence += general.intelligence;
+        totalConquest += general.conquest;
+        cost = general.raw.cost;
+        deckCards.push({
+          general,
+          genMain: deckCard.genMain,
+        });
+      } else {
+        hasDummy = true;
+        cost = deckCard.cost;
+        deckCards.push(deckCard);
+      }
+      totalCost += parseInt(cost) / 10;
+    });
     return {
-      ...otherState,
+      deckCards,
+      activeIndex,
+      enableSearch,
+      generals,
+      totalForce,
+      totalIntelligence,
+      totalConquest,
+      totalCost,
+      limitCost: 8,
+      hasDummy,
       ...otherActions,
       addDeckDummy: () => {
         let cost = '10';

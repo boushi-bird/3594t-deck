@@ -2,6 +2,7 @@
 
 .deck-board {
   width: 100%;
+  min-width: var(--app-min-width);
 }
 
 .deck-card-list {
@@ -29,7 +30,60 @@
 }
 
 .deck-total {
-  height: 30px;
+  min-height: 56px;
+  max-height: 56px;
+  display: flex;
+  position: relative;
+
+  & > .total {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    margin: 3px;
+    padding: 0 5px;
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    & > * {
+      font-weight: bold;
+    }
+
+    & .dummy {
+      font-weight: normal;
+    }
+
+    & .conquest-rank {
+      margin-right: 18px;
+    }
+
+    & .cost-remain {
+      font-size: 12px;
+
+      &.over {
+        color: red;
+      }
+
+      &.under {
+        color: blue;
+      }
+    }
+  }
+
+  & > *[data-label] {
+    font-weight: bold;
+    position: relative;
+  }
+
+  & > *[data-label]::before {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    content: attr(data-label);
+  }
 }
 
 @media (--small-device) {
