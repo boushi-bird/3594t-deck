@@ -15,6 +15,9 @@ import CostRatioBaseForce from '../../components/CostRatioBaseForce';
 export interface StateFromProps {
   filterCondition: FilterCondition;
   filterContents: DatalistState['filterContents'];
+  searchByDeckBelongState: boolean;
+  searchByDeckCost: boolean;
+  searchByDeckUnitType: boolean;
 }
 
 export interface DispatchFromProps {
@@ -29,6 +32,9 @@ export default class BaseFilter extends React.PureComponent<Props> {
     const {
       filterContents,
       filterCondition,
+      searchByDeckBelongState,
+      searchByDeckCost,
+      searchByDeckUnitType,
       setCondition,
       toggleCheckList,
     } = this.props;
@@ -42,6 +48,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             checkedItems={filterCondition.belongStates}
             onClickItem={toggleCheckList}
             square={true}
+            disabled={searchByDeckBelongState}
           />
         </section>
         <section className="filter-section">
@@ -52,6 +59,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             checkedItems={filterCondition.costs}
             onClickItem={toggleCheckList}
             square={true}
+            disabled={searchByDeckCost}
           />
         </section>
         <section className="filter-section">
@@ -62,6 +70,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             checkedItems={filterCondition.unitTypes}
             onClickItem={toggleCheckList}
             square={true}
+            disabled={searchByDeckUnitType}
           />
         </section>
         <section className="filter-section">

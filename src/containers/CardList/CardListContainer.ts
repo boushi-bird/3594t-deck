@@ -165,6 +165,7 @@ interface ContainerStateFromProps {
   filterCondition: FilterCondition;
   deckCards: DeckCard[];
   activeIndex?: number;
+  enableDeckSearch: boolean;
 }
 
 interface ContainerDispatchFromProps {
@@ -190,6 +191,7 @@ export default connect<
     filterCondition: state.datalistReducer.effectiveFilterCondition,
     deckCards: state.deckReducer.deckCards,
     activeIndex: state.deckReducer.activeIndex,
+    enableDeckSearch: state.deckReducer.enableSearch,
   }),
   (dispatch: Dispatch) =>
     bindActionCreators(
@@ -206,9 +208,10 @@ export default connect<
       generals,
       currentPage,
       pageLimit,
-      filterCondition,
+      filterCondition: rawFilterCondition,
       deckCards,
       activeIndex,
+      enableDeckSearch,
     } = state;
     const deckGenerals: string[] = [];
     deckCards.forEach((deckCard, i) => {
@@ -226,6 +229,23 @@ export default connect<
         return deckGenerals.includes(general.id);
       })
       .map(v => v.raw.personal);
+    const deckCard =
+      activeIndex != null && enableDeckSearch
+        ? deckCards[activeIndex]
+        : undefined;
+    let filterCondition = rawFilterCondition;
+    if (deckCard) {
+      filterCondition = {
+        ...filterCondition,
+      };
+      if (deckCard.belongState != null) {
+        filterCondition.belongStates = [deckCard.belongState];
+      }
+      filterCondition.costs = [deckCard.cost];
+      if (deckCard.unitType != null) {
+        filterCondition.unitTypes = [deckCard.unitType];
+      }
+    }
     let searchedGeneralIds = generals
       .filter(general => {
         return satisfyGeneral(general, filterCondition);

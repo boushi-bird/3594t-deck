@@ -6,6 +6,7 @@ import FilterButtonList from '../../components/FilterButtonList';
 export interface StateFromProps {
   filterCondition: string[];
   filterContents: FilterItem[];
+  searchByDeck: boolean;
 }
 
 export interface DispatchFromProps {
@@ -16,7 +17,12 @@ type Props = StateFromProps & DispatchFromProps;
 
 export default class SimpleFilter extends React.Component<Props> {
   public render(): React.ReactNode {
-    const { filterContents, filterCondition, toggleCheckList } = this.props;
+    const {
+      filterContents,
+      filterCondition,
+      searchByDeck,
+      toggleCheckList,
+    } = this.props;
     return (
       <section className="simple-filter-section">
         <div className="simple-filter-state">
@@ -27,6 +33,7 @@ export default class SimpleFilter extends React.Component<Props> {
             checkedItems={filterCondition}
             onClickItem={toggleCheckList}
             square={true}
+            disabled={searchByDeck}
           />
         </div>
       </section>

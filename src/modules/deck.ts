@@ -11,10 +11,12 @@ export interface DeckCard {
 export interface DeckState {
   deckCards: DeckCard[];
   activeIndex?: number;
+  enableSearch: boolean;
 }
 
 const initialState: DeckState = {
   deckCards: [],
+  enableSearch: false,
 };
 
 export const deckActions = {
@@ -49,6 +51,9 @@ export const deckActions = {
   setActiveCard: createAction('SET_ACTIVE_CARD', action => (index: number) =>
     action(index)
   ),
+  searchByDeck: createAction('SEARCH_BY_DECK', action => (index: number) =>
+    action(index)
+  ),
   clearActiveCard: createAction('CLEAR_ACTIVE_CARD'),
   selectMainGen: createAction(
     'SELECT_MAIN_GEN',
@@ -66,6 +71,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
+        enableSearch: false,
         deckCards: [...state.deckCards, { general, cost, genMain }],
       };
     }
@@ -77,6 +83,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
+        enableSearch: false,
         deckCards,
       };
     }
@@ -85,6 +92,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
+        enableSearch: false,
         deckCards: [...state.deckCards, { cost, belongState, unitType }],
       };
     }
@@ -106,6 +114,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
+        enableSearch: false,
         deckCards,
       };
     }
@@ -114,12 +123,22 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex,
+        enableSearch: false,
+      };
+    }
+    case 'SEARCH_BY_DECK': {
+      const activeIndex = actions.payload;
+      return {
+        ...state,
+        activeIndex,
+        enableSearch: true,
       };
     }
     case 'CLEAR_ACTIVE_CARD': {
       return {
         ...state,
         activeIndex: undefined,
+        enableSearch: false,
       };
     }
     case 'SELECT_MAIN_GEN': {

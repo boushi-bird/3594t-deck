@@ -35,6 +35,11 @@
   &.checked {
     text-shadow: 0 0 30px #ff8c00;
     border-color: #ff8c00;
+
+    &:disabled {
+      color: #ccc;
+      border-color: #ff8c00;
+    }
   }
 
   &:disabled {

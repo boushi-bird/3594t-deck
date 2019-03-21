@@ -17,29 +17,69 @@ interface ContainerDispatchFromProps {
   setCondition: (condition: Partial<FilterCondition>) => void;
 }
 
+interface ContainerStateFromProps {
+  datalistState: DatalistState;
+  deckCardBelongState?: string;
+}
+
 export default connect<
-  DatalistState,
+  ContainerStateFromProps,
   ContainerDispatchFromProps,
   {},
   StateFromProps & DispatchFromProps
 >(
-  (state: State) => state.datalistReducer,
+  (state: State) => {
+    const { activeIndex, enableSearch, deckCards } = state.deckReducer;
+    const deckCard =
+      activeIndex != null && enableSearch ? deckCards[activeIndex] : undefined;
+    const deckCardBelongState =
+      deckCard != null ? deckCard.belongState : undefined;
+    return {
+      datalistState: state.datalistReducer,
+      deckCardBelongState,
+    };
+  },
   (dispatch: Dispatch) => ({ setCondition: setConditionAdapter(dispatch) }),
-  (state, actions) => ({
-    filterCondition: state.filterCondition.belongStates,
-    filterContents: state.filterContents.belongStates,
-    toggleCheckList: (key: FilterConditionKey, value: string) => {
-      actions.setCondition(toggleCheckList(state, key, value));
-    },
-  }),
+  (state, actions) => {
+    const { deckCardBelongState, datalistState } = state;
+    let searchByDeck = false;
+    let filterCondition = datalistState.filterCondition.belongStates;
+    if (deckCardBelongState != null) {
+      searchByDeck = true;
+      filterCondition = [deckCardBelongState];
+    }
+    return {
+      filterCondition,
+      filterContents: datalistState.filterContents.belongStates,
+      searchByDeck,
+      toggleCheckList: (key: FilterConditionKey, value: string) => {
+        actions.setCondition(toggleCheckList(datalistState, key, value));
+      },
+    };
+  },
   {
     areStatePropsEqual: (nextStateProps, prevStateProps) => {
-      return (
-        nextStateProps.filterCondition.belongStates ===
-          prevStateProps.filterCondition.belongStates &&
-        nextStateProps.filterContents.belongStates ===
-          prevStateProps.filterContents.belongStates
-      );
+      const nextDatalistState = nextStateProps.datalistState;
+      const prevDatalistState = prevStateProps.datalistState;
+      if (
+        nextDatalistState.filterCondition.belongStates !==
+        prevDatalistState.filterCondition.belongStates
+      ) {
+        return false;
+      }
+      if (
+        nextDatalistState.filterContents.belongStates !==
+        prevDatalistState.filterContents.belongStates
+      ) {
+        return false;
+      }
+      if (
+        nextStateProps.deckCardBelongState !==
+        prevStateProps.deckCardBelongState
+      ) {
+        return false;
+      }
+      return true;
     },
     areMergedPropsEqual: () => false,
   }

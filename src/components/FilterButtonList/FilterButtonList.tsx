@@ -18,6 +18,7 @@ interface Props {
   square?: boolean;
   addtionalClasses?: string[];
   show?: boolean;
+  disabled?: boolean;
 }
 
 const defaultClasses = ['button', 'filter-item'];
@@ -46,6 +47,7 @@ export default class FilterButtonList extends React.PureComponent<Props> {
     value: string,
     label: string,
     style: React.CSSProperties,
+    disabled: boolean,
     className: string
   ): JSX.Element {
     return (
@@ -54,6 +56,7 @@ export default class FilterButtonList extends React.PureComponent<Props> {
         value={value}
         style={style}
         className={className}
+        disabled={disabled}
         onClick={this.handleClickItem}
       >
         {label}
@@ -62,9 +65,10 @@ export default class FilterButtonList extends React.PureComponent<Props> {
   }
 
   public render(): React.ReactNode {
-    const { checkedItems, items, show } = this.props;
+    const { checkedItems, items, show, disabled: propDisabled } = this.props;
     const square = this.square;
     const buttons: JSX.Element[] = [];
+    const disabled = propDisabled != null && propDisabled;
     items.forEach(item => {
       const value = item.id;
       const label = item.nameShort || item.name;
@@ -78,6 +82,7 @@ export default class FilterButtonList extends React.PureComponent<Props> {
           value,
           label,
           style,
+          disabled,
           classNames(this.buttonClasses, { checked, square })
         )
       );
