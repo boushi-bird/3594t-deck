@@ -24,9 +24,17 @@ export interface StateFromProps {
   totalForce: number;
   totalIntelligence: number;
   totalConquest: number;
+  conquestRank: string;
   totalCost: number;
   limitCost: number;
+  maxMorale: number;
+  startMorale: number;
+  hasGenMainMaxMorale: boolean;
+  hasGenMainStartMorale: boolean;
+  hasGenMainTotalIntelligence: boolean;
+  hasGenMainTotalConquest: boolean;
   hasDummy: boolean;
+  hasStateDummy: boolean;
 }
 
 export interface DispatchFromProps {
@@ -61,9 +69,17 @@ export default class DeckBoard extends React.Component<Props> {
       totalForce,
       totalIntelligence,
       totalConquest,
+      conquestRank,
       totalCost,
       limitCost,
+      maxMorale,
+      startMorale,
+      hasGenMainMaxMorale,
+      hasGenMainStartMorale,
+      hasGenMainTotalIntelligence,
+      hasGenMainTotalConquest,
       hasDummy,
+      hasStateDummy,
       addDeckDummy,
       selectMainGen,
       setActiveCard,
@@ -109,16 +125,6 @@ export default class DeckBoard extends React.Component<Props> {
       costRemain *= -1;
       under = true;
     }
-    let conquestRank;
-    if (totalConquest >= 11) {
-      conquestRank = 'S';
-    } else if (totalConquest >= 9) {
-      conquestRank = 'A';
-    } else if (totalConquest >= 7) {
-      conquestRank = 'B';
-    } else {
-      conquestRank = 'C';
-    }
     return (
       <div className="deck-board">
         <div className="deck-card-list">
@@ -135,11 +141,25 @@ export default class DeckBoard extends React.Component<Props> {
             </span>
           </div>
           <div className="total" data-label="総知力">
+            <span
+              className={classNames('has-gen-main', {
+                active: hasGenMainTotalIntelligence,
+              })}
+            >
+              将器込み
+            </span>
             <span className={classNames('intelligence', { dummy: hasDummy })}>
               {totalIntelligence}
             </span>
           </div>
           <div className="total" data-label="総征圧力">
+            <span
+              className={classNames('has-gen-main', {
+                active: hasGenMainTotalConquest,
+              })}
+            >
+              将器込み
+            </span>
             <span className={classNames('conquest-rank', { dummy: hasDummy })}>
               {conquestRank}
             </span>
@@ -147,11 +167,35 @@ export default class DeckBoard extends React.Component<Props> {
               {totalConquest}
             </span>
           </div>
-          <div className="total" data-label="総コスト">
+          <div className="total total-cost" data-label="総コスト">
             <span className="cost">{totalCost.toFixed(1)}</span>
             <span className={classNames('cost-remain', { over, under })}>
               ({costRemainText} {costRemain.toFixed(1)})
             </span>
+          </div>
+          <div className="total" data-label="最大士気">
+            <span
+              className={classNames('has-gen-main', {
+                active: hasGenMainMaxMorale,
+              })}
+            >
+              将器込み
+            </span>
+            <span
+              className={classNames('max-morale', { dummy: hasStateDummy })}
+            >
+              {maxMorale}
+            </span>
+          </div>
+          <div className="total" data-label="開幕士気">
+            <span
+              className={classNames('has-gen-main', {
+                active: hasGenMainStartMorale,
+              })}
+            >
+              将器込み
+            </span>
+            <span className="start-morale">{startMorale}</span>
           </div>
         </div>
       </div>

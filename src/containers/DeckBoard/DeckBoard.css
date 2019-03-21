@@ -38,13 +38,27 @@
   & > .total {
     font-size: 16px;
     border: 1px solid #ccc;
-    margin: 3px;
+    margin: 1px;
     padding: 0 5px;
     flex: 1;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     flex-wrap: wrap;
+    position: relative;
+
+    & .has-gen-main {
+      font-size: 10px;
+      color: orange;
+      position: absolute;
+      top: 2px;
+      right: 0;
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
 
     & > * {
       font-weight: bold;
@@ -58,10 +72,15 @@
       margin-right: 18px;
     }
 
+    &.total-cost {
+      min-width: 110px;
+    }
+
     & .cost-remain {
       font-size: 12px;
 
       &.over {
+        font-size: 10px;
         color: red;
       }
 
