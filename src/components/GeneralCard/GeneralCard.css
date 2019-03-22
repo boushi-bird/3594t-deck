@@ -97,6 +97,7 @@
 
   & .image {
     top: 0;
+    display: none; /* TODO: 画像の遅延ロード */
     left: var(--general-card-col3-left);
     width: var(--general-card-col3-width);
     height: var(--general-card-height);
