@@ -6,6 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
+import SideMenu from '../SideMenu';
 import DeckBoard from '../DeckBoard';
 import CardList from '../CardList';
 import SimpleFilter from '../SimpleFilter';
@@ -21,6 +22,8 @@ export interface DispatchFromProps {
   clearActiveCard(): void;
   resetConditions(): void;
   fetchBaseData(): void;
+  openSideMenu(): void;
+  closeSideMenu(): void;
   openFilter(): void;
   closeFilter(): void;
   closeAllModal(): void;
@@ -36,6 +39,11 @@ export default class App extends React.PureComponent<Props> {
 
   private handleAppClick = () => {
     this.props.clearActiveCard();
+    this.props.closeSideMenu();
+  };
+
+  private handleSideMenuButtonClick = () => {
+    this.props.openSideMenu();
   };
 
   public render(): React.ReactNode {
@@ -43,6 +51,7 @@ export default class App extends React.PureComponent<Props> {
       ready,
       loading,
       resetConditions,
+      openedSideMenu,
       openFilter,
       closeFilter,
       closeAllModal,
@@ -56,10 +65,19 @@ export default class App extends React.PureComponent<Props> {
         className={classNames(['app-container', { modal, ready }])}
         onClick={this.handleAppClick}
       >
+        <div className={classNames('side-menu', { open: openedSideMenu })}>
+          <div className="side-menu-header" />
+          <SideMenu />
+        </div>
         <div className="app-main">
           <div className="app-deck-block">
             <div className="app-header">
-              <button className="side-menu-button">
+              <button
+                className={classNames('side-menu-button', {
+                  show: !openedSideMenu,
+                })}
+                onClick={this.handleSideMenuButtonClick}
+              >
                 <FontAwesomeIcon icon={faBars} />
               </button>
               <div className="app-header-title">

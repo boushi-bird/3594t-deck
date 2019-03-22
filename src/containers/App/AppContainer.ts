@@ -50,6 +50,11 @@ export default connect<
           actions.clearActiveCard();
         }
       },
+      closeSideMenu: () => {
+        if (otherState.openedSideMenu) {
+          actions.closeSideMenu();
+        }
+      },
     };
   },
   {

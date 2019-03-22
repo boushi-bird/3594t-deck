@@ -12,6 +12,9 @@
   --active-color: #ff8c00;
   --normal-border-color: #ccc;
   --title-color: white;
+  --side-menu-color: black;
+  --side-menu-bg-color: white;
+  --side-menu-hover-bg-color: lightslategray;
   --add-button-color: black;
   --add-button-bg-color: lightslategray;
   --deck-card-top-color: white;
@@ -44,6 +47,7 @@
 @custom-media --small-device --small-device-w, --small-device-h;
 @custom-media --oblong-device-w screen and (min-width: 1260px);
 @custom-media --oblong-device --oblong-device-w and --small-device-h;
+@custom-media --large-device screen and (min-width: 1460px);
 
 @keyframes rolling {
   from {
