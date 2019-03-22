@@ -15,11 +15,11 @@
   height: var(--deck-dummy-card-height);
   cursor: pointer;
   box-sizing: content-box;
-  border: 1px solid #ccc;
+  border: 1px solid var(--normal-border-color);
 
   @nest .active& {
     margin: 0;
-    border: 4px solid orange;
+    border: 4px solid var(--active-color);
 
     &.has-state {
       margin: 0;
@@ -37,11 +37,10 @@
     height: var(--deck-dummy-card-inner-top-height);
     position: relative;
     user-select: none;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--deck-card-top-bg-color);
 
     @nest .has-state& {
-      background-color: rgba(0, 0, 0, 0.2);
-      color: white;
+      color: var(--general-state-bg-color);
     }
 
     & > * {
@@ -120,7 +119,7 @@
     justify-content: space-between;
     flex-wrap: nowrap;
     padding: 2px 0;
-    background-color: gray;
+    background-color: var(--deck-card-tool-bg-color);
 
     & > * {
       font-size: 20px;
@@ -129,13 +128,13 @@
     & .remove {
       width: 36px;
       height: 36px;
-      background-color: lightslategray;
+      background-color: var(--deck-card-tool-box-button-color);
     }
 
     & .search {
       width: 36px;
       height: 36px;
-      background-color: lightslategray;
+      background-color: var(--deck-card-tool-box-button-color);
     }
   }
 

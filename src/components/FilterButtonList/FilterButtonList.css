@@ -13,13 +13,13 @@
   height: 48px;
   font-size: 24px;
   font-weight: bold;
-  color: #fff;
+  color: var(--filter-button-color);
   border-style: solid;
-  border-color: #fff;
+  border-color: var(--filter-button-border-color);
   border-width: 3px;
   border-radius: 6px;
-  text-shadow: 0 0 10px lightslategray;
-  background-color: #d2b48c;
+  text-shadow: 0 0 10px var(--filter-button-shadow-color);
+  background-color: var(--filter-button-bg-color);
   outline: none;
   margin: 3px;
   padding: 0 3px;
@@ -33,17 +33,17 @@
   }
 
   &.checked {
-    text-shadow: 0 0 30px #ff8c00;
-    border-color: #ff8c00;
+    text-shadow: 0 0 30px var(--active-color);
+    border-color: var(--active-color);
 
     &:disabled {
-      color: #ccc;
-      border-color: #ff8c00;
+      color: var(--filter-button-disabled-color);
+      border-color: var(--active-color);
     }
   }
 
   &:disabled {
-    color: #ccc;
-    border-color: #ccc;
+    color: var(--filter-button-disabled-color);
+    border-color: var(--filter-button-disabled-color);
   }
 }

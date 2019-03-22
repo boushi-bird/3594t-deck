@@ -6,8 +6,8 @@
   text-shadow: 0 0 5px white;
 
   &:disabled {
-    color: #ccc;
-    border-color: #ccc;
-    text-shadow: 0 0 10px lightslategray;
+    color: var(--filter-button-shadow-color);
+    border-color: var(--filter-button-shadow-color);
+    text-shadow: 0 0 10px var(--filter-button-shadow-color);
   }
 }

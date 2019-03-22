@@ -18,12 +18,13 @@
 
 .add-new-deck-card {
   font-size: 28px;
+  color: var(--add-button-color);
   writing-mode: vertical-rl;
   margin: 4px;
   width: 72px;
   min-width: 72px;
   height: 250px;
-  background-color: gray;
+  background-color: var(--add-button-bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +38,7 @@
 
   & > .total {
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--normal-border-color);
     margin: 1px;
     padding: 0 5px;
     flex: 1;
@@ -49,7 +50,7 @@
 
     & .has-gen-main {
       font-size: 10px;
-      color: orange;
+      color: var(--active-color);
       position: absolute;
       top: 2px;
       right: 0;
@@ -81,11 +82,11 @@
 
       &.over {
         font-size: 10px;
-        color: red;
+        color: var(--danger-color);
       }
 
       &.under {
-        color: blue;
+        color: var(--cold-color);
       }
     }
   }

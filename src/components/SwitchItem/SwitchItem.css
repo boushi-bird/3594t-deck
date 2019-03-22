@@ -4,7 +4,7 @@
   width: 120px;
   height: 30px;
   position: relative;
-  border: solid 2px #ccc;
+  border: solid 2px var(--normal-border-color);
   border-radius: 15px;
   outline: none;
   overflow: hidden;
@@ -28,12 +28,12 @@
       font-size: 16px;
       font-weight: bold;
       border-width: 0;
-      background-color: #eee;
+      background-color: var(--switch-button-bg-color);
       transform: skewX(-20deg);
     }
 
     &.active button {
-      background-color: green;
+      background-color: var(--switch-button-active-bg-color);
     }
 
     &:first-child {

@@ -22,15 +22,15 @@
       margin-top: -10px;
       height: 60px;
       border-bottom-width: 0;
-      border-bottom-color: rgba(41, 16, 16, 1);
+      border-bottom-color: var(--card-filter-content-bg-color);
     }
   }
 
   & .tab-button-basic {
-    background-color: #636;
+    background-color: var(--filter-tab-button-basic-color);
   }
 
   & .tab-button-detail {
-    background-color: #903;
+    background-color: var(--filter-tab-button-detail-color);
   }
 }
