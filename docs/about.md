@@ -11,6 +11,15 @@ title: About
 
 作成中
 
+### 動作対象ブラウザ
+
+- Google Chrome
+- Firefox
+- Edge(Windows)
+- Safari(Mac)
+- Safari(iOS)
+- Android Chrome
+
 ### 使用しているライブラリについて
 
 [こちら](licenses.md) をご確認ください。
