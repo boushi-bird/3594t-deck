@@ -9,8 +9,10 @@
 
 @custom-media --app-min screen and (max-width: 630px);
 @custom-media --small-device-w screen and (max-width: 980px);
-@custom-media --small-device-h screen and (max-height: 760px));
+@custom-media --small-device-h screen and (max-height: 600px);
 @custom-media --small-device --small-device-w, --small-device-h;
+@custom-media --oblong-device-w screen and (min-width: 1260px);
+@custom-media --oblong-device --oblong-device-w and --small-device-h;
 
 @keyframes rolling {
   from {

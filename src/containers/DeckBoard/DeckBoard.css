@@ -105,8 +105,8 @@
   }
 }
 
-@media (--small-device) {
+@media (--oblong-device) {
   .deck-board {
-    width: 100vw;
+    max-width: var(--app-min-width);
   }
 }

@@ -169,6 +169,12 @@
   }
 }
 
+@media (--oblong-device) {
+  .app-deck-block {
+    flex-wrap: wrap;
+  }
+}
+
 @media (--app-min) {
   .card-filter-container.open {
     position: absolute;
