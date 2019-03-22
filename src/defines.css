@@ -1,35 +1,35 @@
 :root {
   --app-min-width: 630px; /* アプリケーションの最小幅 */
-  --app-header-bg-color: rgba(41, 16, 16, 1);
+  --app-header-bg-color: #40a1b2;
   --card-filter-min-width: 300px;
   --card-filter-bg-color: rgba(0, 0, 0, 0.8);
-  --card-filter-content-bg-color: rgba(41, 16, 16, 1);
+  --card-filter-content-bg-color: #774f38;
   --card-filter-label-color: #fccd4d;
   --loading-color: white;
   --modal-bg-color: black;
   --cold-color: blue;
-  --danger-color: red;
+  --danger-color: #f94355;
   --active-color: #ff8c00;
   --normal-border-color: #ccc;
   --title-color: white;
   --side-menu-color: black;
-  --side-menu-bg-color: white;
-  --side-menu-hover-bg-color: lightslategray;
+  --side-menu-bg-color: #f1d4af;
+  --side-menu-hover-bg-color: #edc693;
   --add-button-color: black;
-  --add-button-bg-color: lightslategray;
+  --add-button-bg-color: #c5e0dc;
   --deck-card-top-color: white;
   --deck-card-top-bg-color: rgba(0, 0, 0, 0.1);
   --deck-card-tool-bg-color: gray;
   --deck-card-tool-box-button-color: lightslategray;
-  --simple-filter-bg-color: gray;
-  --general-skill-bg-color: yellow;
+  --simple-filter-bg-color: #333;
+  --general-skill-bg-color: #e2ab04;
   --general-skill-border-color: black;
   --general-no-skill-bg-color: rgba(0, 0, 0, 0.2);
   --filter-tab-button-basic-color: #636;
   --filter-tab-button-detail-color: #903;
   --action-button-color: white;
-  --action-button-ok-bg-color: red;
-  --action-button-cancel-bg-color: blue;
+  --action-button-ok-bg-color: #e55ba2;
+  --action-button-cancel-bg-color: #1656f9;
   --filter-button-color: white;
   --filter-button-border-color: white;
   --filter-button-bg-color: #d2b48c;
@@ -38,7 +38,7 @@
   --no-general-bg-color: gray;
   --general-state-bg-color: white;
   --switch-button-bg-color: #eee;
-  --switch-button-active-bg-color: green;
+  --switch-button-active-bg-color: #40a1b2;
 }
 
 @custom-media --app-min screen and (max-width: 630px);
