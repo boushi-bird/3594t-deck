@@ -8,7 +8,7 @@ import store from './store';
 
 WebFontLoader.load({
   custom: {
-    families: ['Noto Sans Japanese:n1,n4,n7'],
+    families: ['Noto Sans Japanese:n4,n7'],
     urls: ['https://fonts.googleapis.com/earlyaccess/notosansjapanese.css'],
   },
 });

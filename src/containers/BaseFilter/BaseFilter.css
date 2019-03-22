@@ -7,7 +7,6 @@
 
   & .title {
     font-size: 24px;
-    font-weight: lighter;
     padding-left: 10px;
     color: var(--card-filter-label-color);
     text-shadow: 0 0 5px var(--card-filter-label-color);
