@@ -126,6 +126,7 @@
     }
 
     & .remove {
+      color: var(--danger-color);
       width: 36px;
       height: 36px;
       background-color: var(--deck-card-tool-box-button-color);
@@ -135,6 +136,10 @@
       width: 36px;
       height: 36px;
       background-color: var(--deck-card-tool-box-button-color);
+
+      &.enable {
+        color: var(--active-color);
+      }
     }
   }
 

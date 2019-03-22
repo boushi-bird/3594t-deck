@@ -11,6 +11,7 @@ export interface OwnProps {
   index: number;
   deckCard: DeckCard;
   active: boolean;
+  search: boolean;
 }
 
 export interface StateFromProps {
@@ -63,7 +64,14 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { deckCard, active, belongStates, costs, unitTypes } = this.props;
+    const {
+      deckCard,
+      active,
+      search,
+      belongStates,
+      costs,
+      unitTypes,
+    } = this.props;
     const style: React.CSSProperties = {};
     const styleState: React.CSSProperties = {};
     const belongState = deckCard.belongState
@@ -179,7 +187,10 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
             <button className="remove" onClick={this.handleRemove}>
               <FontAwesomeIcon icon={faMinusCircle} />
             </button>
-            <button className="search" onClick={this.handleSearch}>
+            <button
+              className={classNames('search', { enable: search })}
+              onClick={this.handleSearch}
+            >
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>

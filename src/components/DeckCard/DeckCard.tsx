@@ -11,6 +11,7 @@ interface Props {
   genMain?: string;
   general: DatalistState['generals'][number];
   active: boolean;
+  search: boolean;
   onSelectMainGen: (index: number, genMain?: string) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
@@ -41,7 +42,7 @@ export default class DeckCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { general, genMain, active } = this.props;
+    const { general, genMain, active, search } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
@@ -134,7 +135,7 @@ export default class DeckCard extends React.PureComponent<Props> {
           <button className="remove" onClick={this.handleRemove}>
             <FontAwesomeIcon icon={faMinusCircle} />
           </button>
-          <button className="search">
+          <button className={classNames('search', { enable: search })}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>

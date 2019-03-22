@@ -66,6 +66,7 @@ export default class DeckBoard extends React.Component<Props> {
     const {
       deckCards,
       activeIndex,
+      enableSearch,
       totalForce,
       totalIntelligence,
       totalConquest,
@@ -95,6 +96,7 @@ export default class DeckBoard extends React.Component<Props> {
             key={i}
             index={i}
             active={active}
+            search={active && enableSearch}
             deckCard={deckCard}
           />
         );
@@ -105,6 +107,7 @@ export default class DeckBoard extends React.Component<Props> {
             key={i}
             index={i}
             active={active}
+            search={active && enableSearch}
             genMain={genMain}
             general={general}
             onSelectMainGen={selectMainGen}
