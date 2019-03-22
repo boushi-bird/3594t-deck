@@ -6,7 +6,9 @@ const jsYaml = require('js-yaml');
 const cpx = require('cpx');
 
 const srcDir = path.resolve(__dirname, '../docs');
+const srcIconDir = path.resolve(__dirname, '../src');
 const distDir = path.resolve(__dirname, '../dist');
+const distIconDir = path.resolve(distDir, 'icons');
 
 if (!fs.existsSync(distDir)) {
   fs.mkdirSync(distDir);
@@ -30,4 +32,11 @@ cpx.copy(path.resolve(srcDir, '**/*.{md,html}'), distDir, err => {
     return;
   }
   console.log('output pages.');
+});
+cpx.copy(path.resolve(srcIconDir, 'icons/*'), distIconDir, err => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log('output icons.');
 });
