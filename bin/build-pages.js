@@ -19,6 +19,10 @@ const distConfigPath = path.resolve(distDir, '_config.yml');
 
 const conf = jsYaml.safeLoad(fs.readFileSync(srcConfigPath, 'utf8'));
 
+if (process.env.GH_PAGES_URL) {
+  conf['url'] = process.env.GH_PAGES_URL;
+}
+
 if (process.env.GOOGLE_TAG_MANAGER_CONTAINER_ID) {
   conf['google_tag_manager'] = process.env.GOOGLE_TAG_MANAGER_CONTAINER_ID;
 }
