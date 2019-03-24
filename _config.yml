@@ -2,4 +2,12 @@ theme: jekyll-theme-minimal
 lang: ja
 title: 三国志大戦デッキシミュレーター
 description: 三国志大戦デッキシミュレーター
+plugins:
+  - jekyll-sitemap
+defaults:
+  - scope:
+      path: dependencies.md
+    values:
+      sitemap: false
+url: 'https://boushi-bird.github.io'
 google_tag_manager: GTM-NFHN8MZ
