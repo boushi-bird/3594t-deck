@@ -90,7 +90,6 @@ export default class DeckBoard extends React.Component<Props> {
     deckCards.forEach((deckCard, i) => {
       const active = activeIndex === i;
       if ('cost' in deckCard) {
-        console.log(deckCard);
         deckCardsElements.push(
           <DeckDummyCard
             key={i}
