@@ -68,6 +68,7 @@ export default class App extends React.PureComponent<Props> {
         <div className={classNames('side-menu', { open: openedSideMenu })}>
           <div className="side-menu-header" />
           <SideMenu />
+          &copy;SEGA
         </div>
         <div className="app-main">
           <div className="app-deck-block">
