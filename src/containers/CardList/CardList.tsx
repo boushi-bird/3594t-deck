@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import GeneralCard from '../../components/GeneralCard';
 import { DatalistState } from '../../modules/datalist';
+import { DeckCardGeneral } from '../../modules/deck';
 
 export interface StateFromProps {
   generals: DatalistState['generals'];
@@ -16,11 +17,7 @@ export interface StateFromProps {
 }
 
 export interface DispatchFromProps {
-  addDeckGeneral: (card: {
-    general: string;
-    cost: string;
-    genMain?: string;
-  }) => void;
+  addDeckGeneral: (card: DeckCardGeneral) => void;
   onPagePrev: () => void;
   onPageNext: () => void;
 }
@@ -30,12 +27,22 @@ type Props = StateFromProps & DispatchFromProps;
 export default class CardList extends React.PureComponent<Props> {
   private scrollArea = React.createRef<HTMLDivElement>();
 
-  private handleOnAddDeck = (card: {
-    general: string;
-    cost: string;
-    genMain?: string;
-  }) => {
+  private handleOnAddDeck = (card: DeckCardGeneral) => {
     this.props.addDeckGeneral(card);
+  };
+
+  private handleOnPagePrev = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    this.props.onPagePrev();
+  };
+
+  private handleOnPageNext = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    this.props.onPageNext();
   };
 
   public componentDidUpdate(prevProps: Readonly<Props>): void {
@@ -59,8 +66,6 @@ export default class CardList extends React.PureComponent<Props> {
       searchedLimit,
       hasPrev,
       hasNext,
-      onPagePrev,
-      onPageNext,
     } = this.props;
     const generalCards: JSX.Element[] = [];
     const count = searchedGeneralIds.length;
@@ -94,7 +99,7 @@ export default class CardList extends React.PureComponent<Props> {
         <div className="cardlist-paging">
           <button
             className={classNames('paging-button', 'prev', { active: hasPrev })}
-            onClick={onPagePrev}
+            onClick={this.handleOnPagePrev}
           >
             &lt; 前
           </button>
@@ -103,7 +108,7 @@ export default class CardList extends React.PureComponent<Props> {
           </div>
           <button
             className={classNames('paging-button', 'next', { active: hasNext })}
-            onClick={onPageNext}
+            onClick={this.handleOnPageNext}
           >
             次 &gt;
           </button>

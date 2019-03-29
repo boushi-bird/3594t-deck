@@ -1,11 +1,18 @@
 import { ActionType, createAction } from 'typesafe-actions';
 
-export interface DeckCard {
-  general?: string;
+export interface DeckCardGeneral {
+  general: string;
   genMain?: string;
-  belongState?: string;
+  belongState: string;
   cost: string;
-  unitType?: string;
+  unitType: string;
+}
+
+type PartialDeckCard = Partial<DeckCardGeneral>;
+
+export interface DeckCard
+  extends Pick<PartialDeckCard, Exclude<keyof PartialDeckCard, 'cost'>> {
+  cost: string;
 }
 
 export interface DeckState {
@@ -22,15 +29,11 @@ const initialState: DeckState = {
 export const deckActions = {
   addDeckGeneral: createAction(
     'ADD_DECK_GENERAL',
-    action => (card: { general: string; cost: string; genMain?: string }) =>
-      action(card)
+    action => (card: DeckCardGeneral) => action(card)
   ),
   changeDeckGeneral: createAction(
     'CHANGE_DECK_GENERAL',
-    action => (
-      index: number,
-      card: { general: string; cost: string; genMain?: string }
-    ) => action({ index, card })
+    action => (index: number, card: DeckCardGeneral) => action({ index, card })
   ),
   addDeckDummy: createAction(
     'ADD_DECK_DUMMY',
@@ -42,7 +45,7 @@ export const deckActions = {
   ),
   setDeckValue: createAction(
     'SET_DECK_VALUE',
-    action => (index: number, deckCard: Partial<DeckCard>) =>
+    action => (index: number, deckCard: PartialDeckCard) =>
       action({ index, deckCard })
   ),
   removeDeck: createAction('REMOVE_DECK', action => (index: number) =>
@@ -67,19 +70,18 @@ export default function datalistReducer(
 ): DeckState {
   switch (actions.type) {
     case 'ADD_DECK_GENERAL': {
-      const { general, cost, genMain } = actions.payload;
+      const card = actions.payload;
       return {
         ...state,
         activeIndex: undefined,
         enableSearch: false,
-        deckCards: [...state.deckCards, { general, cost, genMain }],
+        deckCards: [...state.deckCards, { ...card }],
       };
     }
     case 'CHANGE_DECK_GENERAL': {
       const { index, card } = actions.payload;
-      const { general, cost, genMain } = card;
       const deckCards = [...state.deckCards];
-      deckCards[index] = { general, cost, genMain };
+      deckCards[index] = { ...card };
       return {
         ...state,
         activeIndex: undefined,

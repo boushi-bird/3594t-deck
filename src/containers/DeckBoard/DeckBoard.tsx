@@ -42,6 +42,7 @@ export interface DispatchFromProps {
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
+  toggleSearch: (index: number) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
@@ -85,6 +86,7 @@ export default class DeckBoard extends React.Component<Props> {
       selectMainGen,
       setActiveCard,
       removeDeck,
+      toggleSearch,
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
@@ -97,6 +99,9 @@ export default class DeckBoard extends React.Component<Props> {
             active={active}
             search={active && enableSearch}
             deckCard={deckCard}
+            onActive={setActiveCard}
+            onRemoveDeck={removeDeck}
+            onToggleSearch={toggleSearch}
           />
         );
       } else {
@@ -112,6 +117,7 @@ export default class DeckBoard extends React.Component<Props> {
             onSelectMainGen={selectMainGen}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
+            onToggleSearch={toggleSearch}
           />
         );
       }

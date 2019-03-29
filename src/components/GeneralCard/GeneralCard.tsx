@@ -3,16 +3,13 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { DatalistState } from '../../modules/datalist';
+import { DeckCardGeneral } from '../../modules/deck';
 
 interface Props {
   general: DatalistState['generals'][number];
   show?: boolean;
   enableAddDeck: boolean;
-  onAddDeck: (card: {
-    general: string;
-    cost: string;
-    genMain?: string;
-  }) => void;
+  onAddDeck: (card: DeckCardGeneral) => void;
 }
 
 export default class GeneralCard extends React.PureComponent<Props> {
@@ -23,7 +20,9 @@ export default class GeneralCard extends React.PureComponent<Props> {
     const genMain = event.currentTarget.dataset['genMain'];
     onAddDeck({
       general: general.id,
+      belongState: general.raw.state,
       cost: general.raw.cost,
+      unitType: general.raw.unit_type,
       genMain,
     });
   };

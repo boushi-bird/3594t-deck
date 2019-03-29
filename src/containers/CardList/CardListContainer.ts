@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { datalistActions } from '../../modules/datalist';
-import { deckActions, DeckCard } from '../../modules/deck';
+import { deckActions, DeckCard, DeckCardGeneral } from '../../modules/deck';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
 
@@ -152,12 +152,6 @@ const satisfyGeneral = (
   return true;
 };
 
-interface DeckCardGeneral {
-  general: string;
-  cost: string;
-  genMain?: string;
-}
-
 interface ContainerStateFromProps {
   generals: General[];
   currentPage: number;
@@ -268,11 +262,7 @@ export default connect<
       searchedLimit: pageLimit,
       hasPrev,
       hasNext,
-      addDeckGeneral: (card: {
-        general: string;
-        cost: string;
-        genMain?: string;
-      }) => {
+      addDeckGeneral: (card: DeckCardGeneral) => {
         if (activeIndex != null) {
           actions.changeDeckGeneral(activeIndex, card);
         } else {

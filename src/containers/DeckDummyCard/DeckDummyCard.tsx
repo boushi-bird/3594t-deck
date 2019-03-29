@@ -12,6 +12,9 @@ export interface OwnProps {
   deckCard: DeckCard;
   active: boolean;
   search: boolean;
+  onActive: (index: number) => void;
+  onRemoveDeck: (index: number) => void;
+  onToggleSearch: (index: number) => void;
 }
 
 export interface StateFromProps {
@@ -25,9 +28,6 @@ export interface DispatchFromProps {
     index: number,
     deckCard: { belongState?: string; cost?: string; unitType?: string }
   ) => void;
-  setActiveCard: (index: number) => void;
-  removeDeck: (index: number) => void;
-  toggleSearch: (index: number) => void;
 }
 
 type Props = StateFromProps & OwnProps & DispatchFromProps;
@@ -35,20 +35,20 @@ type Props = StateFromProps & OwnProps & DispatchFromProps;
 export default class DeckDummyCard extends React.PureComponent<Props> {
   private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, setActiveCard } = this.props;
-    setActiveCard(index);
+    const { index, onActive } = this.props;
+    onActive(index);
   };
 
   private handleRemove = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, removeDeck } = this.props;
-    removeDeck(index);
+    const { index, onRemoveDeck } = this.props;
+    onRemoveDeck(index);
   };
 
   private handleSearch = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, toggleSearch } = this.props;
-    toggleSearch(index);
+    const { index, onToggleSearch } = this.props;
+    onToggleSearch(index);
   };
 
   private handleChangeDeckValue = (

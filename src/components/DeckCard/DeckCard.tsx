@@ -15,6 +15,7 @@ interface Props {
   onSelectMainGen: (index: number, genMain?: string) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
+  onToggleSearch: (index: number) => void;
 }
 
 export default class DeckCard extends React.PureComponent<Props> {
@@ -39,6 +40,12 @@ export default class DeckCard extends React.PureComponent<Props> {
     event.stopPropagation();
     const { index, onRemoveDeck } = this.props;
     onRemoveDeck(index);
+  };
+
+  private handleSearch = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    const { index, onToggleSearch } = this.props;
+    onToggleSearch(index);
   };
 
   public render(): React.ReactNode {
@@ -135,7 +142,10 @@ export default class DeckCard extends React.PureComponent<Props> {
           <button className="remove" onClick={this.handleRemove}>
             <FontAwesomeIcon icon={faMinusCircle} />
           </button>
-          <button className={classNames('search', { enable: search })}>
+          <button
+            className={classNames('search', { enable: search })}
+            onClick={this.handleSearch}
+          >
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>

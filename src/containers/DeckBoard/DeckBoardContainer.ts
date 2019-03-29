@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
+import { datalistActions } from '../../modules/datalist';
 import {
   deckActions,
   DeckState,
@@ -26,9 +27,11 @@ interface ContainerStateFromProps {
 interface ContainerDispatchFromProps
   extends Pick<
     DispatchFromProps,
-    Exclude<keyof DispatchFromProps, 'addDeckDummy'>
+    Exclude<keyof DispatchFromProps, 'addDeckDummy' | 'toggleSearch'>
   > {
   rawAddDeckDummy: typeof deckActions['addDeckDummy'];
+  resetPage: () => void;
+  searchByDeck: (index: number) => void;
 }
 
 export default connect<
@@ -51,13 +54,20 @@ export default connect<
         setActiveCard: deckActions.setActiveCard,
         removeDeck: deckActions.removeDeck,
         rawAddDeckDummy: deckActions.addDeckDummy,
+        searchByDeck: deckActions.searchByDeck,
+        resetPage: datalistActions.resetPage,
       },
       dispatch
     ),
   (state, actions) => {
     const { deckState, generals, costs, belongStates, unitTypes } = state;
     const { activeIndex, enableSearch } = deckState;
-    const { rawAddDeckDummy, ...otherActions } = actions;
+    const {
+      rawAddDeckDummy,
+      resetPage,
+      searchByDeck,
+      ...otherActions
+    } = actions;
     let totalForce = 0;
     let totalIntelligence = 0;
     let totalConquest = 0;
@@ -193,6 +203,14 @@ export default connect<
           unitType = unitTypes[0];
         }
         rawAddDeckDummy({ cost, belongState, unitType });
+      },
+      toggleSearch: index => {
+        resetPage();
+        if (activeIndex === index && enableSearch) {
+          otherActions.setActiveCard(index);
+        } else {
+          searchByDeck(index);
+        }
       },
     };
   },

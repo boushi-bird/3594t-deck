@@ -137,6 +137,7 @@ export const datalistActions = {
   incrementPage: createAction('INCREMENT_PAGE', action => () =>
     action({ page: 1 })
   ),
+  resetPage: createAction('RESET_PAGE'),
   decrementPage: createAction('DECREMENT_PAGE', action => () =>
     action({ page: -1 })
   ),
@@ -181,6 +182,12 @@ export default function datalistReducer(
         currentPage: initialState.currentPage,
         filterContents,
         generals,
+      };
+    }
+    case 'RESET_PAGE': {
+      return {
+        ...state,
+        currentPage: initialState.currentPage,
       };
     }
     case 'INCREMENT_PAGE':
