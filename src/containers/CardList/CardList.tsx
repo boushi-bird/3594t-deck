@@ -14,6 +14,7 @@ export interface StateFromProps {
   searchedLimit: number;
   hasPrev: boolean;
   hasNext: boolean;
+  enabledAddDeck: boolean;
 }
 
 export interface DispatchFromProps {
@@ -66,19 +67,21 @@ export default class CardList extends React.PureComponent<Props> {
       searchedLimit,
       hasPrev,
       hasNext,
+      enabledAddDeck,
     } = this.props;
     const generalCards: JSX.Element[] = [];
     const count = searchedGeneralIds.length;
     generals.forEach(general => {
       const show = searchedGeneralIds.includes(general.id);
-      const enableAddDeck = !deckPersonals.includes(general.raw.personal);
+      const enabled =
+        enabledAddDeck && !deckPersonals.includes(general.raw.personal);
       generalCards.push(
         <GeneralCard
           key={general.id}
           general={general}
           onAddDeck={this.handleOnAddDeck}
           show={show}
-          enableAddDeck={enableAddDeck}
+          enabledAddDeck={enabled}
         />
       );
     });

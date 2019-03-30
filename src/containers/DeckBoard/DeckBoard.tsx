@@ -18,6 +18,7 @@ export interface DeckCardGeneral {
 export interface StateFromProps {
   deckCards: (DeckCardGeneral | DeckCardDummy)[];
   activeIndex?: number;
+  enabledAddDeck: boolean;
   enableSearch: boolean;
   /** 総武力 */
   totalForce: number;
@@ -79,6 +80,7 @@ export default class DeckBoard extends React.Component<Props> {
     const {
       deckCards,
       activeIndex,
+      enabledAddDeck,
       enableSearch,
       totalForce,
       totalIntelligence,
@@ -149,7 +151,12 @@ export default class DeckBoard extends React.Component<Props> {
       <div className="deck-board">
         <div className="deck-card-list">
           {deckCardsElements}
-          <div className="add-new-deck-card button" onClick={addDeckDummy}>
+          <div
+            className={classNames('add-new-deck-card', 'button', {
+              disabled: !enabledAddDeck,
+            })}
+            onClick={addDeckDummy}
+          >
             追加
             <FontAwesomeIcon icon={faPlusCircle} />
           </div>

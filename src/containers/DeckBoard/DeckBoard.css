@@ -28,6 +28,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.disabled {
+    color: var(--filter-button-disabled-color);
+    cursor: not-allowed;
+  }
 }
 
 .deck-total {

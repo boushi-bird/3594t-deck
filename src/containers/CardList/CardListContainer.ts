@@ -5,6 +5,7 @@ import { deckActions, DeckCard, DeckCardGeneral } from '../../modules/deck';
 import { General } from '../../services/mapBaseData';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
+import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 import satisfyGeneral from './satisfyGeneral';
 
 interface ContainerStateFromProps {
@@ -108,6 +109,7 @@ export default connect<
       searchedOffset,
       searchedOffset + pageLimit
     );
+    const enabledAddDeck = isEnabledAddDeck(deckCards, activeIndex);
     return {
       generals,
       searchedGeneralIds,
@@ -117,7 +119,11 @@ export default connect<
       searchedLimit: pageLimit,
       hasPrev,
       hasNext,
+      enabledAddDeck,
       addDeckGeneral: (card: DeckCardGeneral) => {
+        if (!enabledAddDeck) {
+          return;
+        }
         if (activeIndex != null) {
           actions.changeDeckGeneral(activeIndex, card);
         } else {
@@ -130,6 +136,9 @@ export default connect<
   },
   {
     areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+      if (nextMergedProps.enabledAddDeck !== prevMergedProps.enabledAddDeck) {
+        return false;
+      }
       if (nextMergedProps.searchedAll !== prevMergedProps.searchedAll) {
         return false;
       }

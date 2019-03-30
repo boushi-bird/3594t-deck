@@ -13,6 +13,7 @@ import DeckBoard, {
   DispatchFromProps,
   DeckCardGeneral,
 } from './DeckBoard';
+import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 
 interface ContainerStateFromProps {
   deckState: DeckState;
@@ -66,6 +67,7 @@ export default connect<
       searchByDeck,
       ...otherActions
     } = actions;
+    const enabledAddDeck = isEnabledAddDeck(deckState.deckCards);
     let totalForce = 0;
     let totalIntelligence = 0;
     let totalConquest = 0;
@@ -169,6 +171,7 @@ export default connect<
     return {
       deckCards,
       activeIndex,
+      enabledAddDeck,
       enableSearch,
       generals,
       totalForce,
@@ -187,6 +190,9 @@ export default connect<
       hasStateDummy,
       ...otherActions,
       addDeckDummy: () => {
+        if (!enabledAddDeck) {
+          return;
+        }
         let cost = '10';
         let belongState: string | undefined;
         let unitType: string | undefined;

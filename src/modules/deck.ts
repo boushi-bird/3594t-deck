@@ -1,5 +1,7 @@
 import { ActionType, createAction } from 'typesafe-actions';
 
+export const MAX_DECK_CARD_COUNT = 8;
+
 export interface DeckCardGeneral {
   general: string;
   genMain?: string;
