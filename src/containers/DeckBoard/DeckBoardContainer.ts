@@ -146,26 +146,25 @@ export default connect<
     // 将器による加算
 
     const allyCount = genMainCounts.get('同盟者') || 0;
-    // 最大士気で将器使用
-    const hasGenMainMaxMorale = maxMorale < 12 && allyCount > 0;
-    maxMorale += allyCount * 2;
-    if (maxMorale > 12) {
+    let maxMoraleByMainGen = allyCount * 2;
+    if (maxMorale + maxMoraleByMainGen >= 12) {
+      maxMoraleByMainGen = 12 - maxMorale;
       maxMorale = 12;
+    } else {
+      maxMorale += maxMoraleByMainGen;
     }
 
     const moraleCount = genMainCounts.get('士気上昇') || 0;
-    const hasGenMainStartMorale = moraleCount > 0;
-    startMorale += moraleCount * 0.5;
+    const startMoraleByMainGen = moraleCount * 0.5;
+    startMorale += startMoraleByMainGen;
 
     const wiseCount = genMainCounts.get('知力上昇') || 0;
-    // 総知力で将器使用
-    const hasGenMainTotalIntelligence = wiseCount > 0;
-    totalIntelligence += wiseCount * 3;
+    const intelligenceByMainGen = wiseCount * 3;
+    totalIntelligence += intelligenceByMainGen;
 
     const conquestCount = genMainCounts.get('征圧力上昇') || 0;
-    // 総知力で将器使用
-    const hasGenMainTotalConquest = conquestCount > 0;
-    totalConquest += conquestCount * 1;
+    const conquestByMainGen = conquestCount * 1;
+    totalConquest += conquestByMainGen;
 
     return {
       deckCards,
@@ -174,16 +173,16 @@ export default connect<
       generals,
       totalForce,
       totalIntelligence,
+      intelligenceByMainGen,
       totalConquest,
+      conquestByMainGen,
       conquestRank,
       totalCost,
       limitCost: 8,
       maxMorale,
+      maxMoraleByMainGen,
       startMorale,
-      hasGenMainMaxMorale,
-      hasGenMainStartMorale,
-      hasGenMainTotalIntelligence,
-      hasGenMainTotalConquest,
+      startMoraleByMainGen,
       hasDummy,
       hasStateDummy,
       ...otherActions,

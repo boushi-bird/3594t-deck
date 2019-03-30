@@ -89,6 +89,18 @@
         color: var(--cold-color);
       }
     }
+
+    & .breakdown {
+      display: none;
+
+      &.active {
+        display: inline-block;
+      }
+
+      & .addition-by-main-gen {
+        color: var(--active-color);
+      }
+    }
   }
 
   & > *[data-label] {

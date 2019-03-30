@@ -19,19 +19,33 @@ export interface StateFromProps {
   deckCards: (DeckCardGeneral | DeckCardDummy)[];
   activeIndex?: number;
   enableSearch: boolean;
+  /** 総武力 */
   totalForce: number;
+  /** 総知力 */
   totalIntelligence: number;
+  /** 総知力将器加算値 */
+  intelligenceByMainGen: number;
+  /** 総征圧力 */
   totalConquest: number;
+  /** 総征圧力将器加算値 */
+  conquestByMainGen: number;
+  /** 征圧ランク */
   conquestRank: string;
+  /** 総コスト */
   totalCost: number;
+  /** 上限コスト */
   limitCost: number;
+  /** 最大士気 */
   maxMorale: number;
+  /** 最大士気将器加算値 */
+  maxMoraleByMainGen: number;
+  /** 開幕士気 */
   startMorale: number;
-  hasGenMainMaxMorale: boolean;
-  hasGenMainStartMorale: boolean;
-  hasGenMainTotalIntelligence: boolean;
-  hasGenMainTotalConquest: boolean;
+  /** 開幕士気将器加算値 */
+  startMoraleByMainGen: number;
+  /** ダミー含む */
   hasDummy: boolean;
+  /** 勢力未指定ダミー含む */
   hasStateDummy: boolean;
 }
 
@@ -68,16 +82,16 @@ export default class DeckBoard extends React.Component<Props> {
       enableSearch,
       totalForce,
       totalIntelligence,
+      intelligenceByMainGen,
       totalConquest,
+      conquestByMainGen,
       conquestRank,
       totalCost,
       limitCost,
       maxMorale,
+      maxMoraleByMainGen,
       startMorale,
-      hasGenMainMaxMorale,
-      hasGenMainStartMorale,
-      hasGenMainTotalIntelligence,
-      hasGenMainTotalConquest,
+      startMoraleByMainGen,
       hasDummy,
       hasStateDummy,
       addDeckDummy,
@@ -149,19 +163,30 @@ export default class DeckBoard extends React.Component<Props> {
           <div className="total" data-label="総知力">
             <span
               className={classNames('has-gen-main', {
-                active: hasGenMainTotalIntelligence,
+                active: intelligenceByMainGen > 0,
               })}
             >
               将器込み
             </span>
             <span className={classNames('intelligence', { dummy: hasDummy })}>
               {totalIntelligence}
+              <span
+                className={classNames('breakdown', {
+                  active: intelligenceByMainGen > 0,
+                })}
+              >
+                ({totalIntelligence - intelligenceByMainGen}
+                <span className="addition-by-main-gen">
+                  &#43;{intelligenceByMainGen}
+                </span>
+                )
+              </span>
             </span>
           </div>
           <div className="total" data-label="総征圧力">
             <span
               className={classNames('has-gen-main', {
-                active: hasGenMainTotalConquest,
+                active: conquestByMainGen > 0,
               })}
             >
               将器込み
@@ -171,6 +196,17 @@ export default class DeckBoard extends React.Component<Props> {
             </span>
             <span className={classNames('conquest', { dummy: hasDummy })}>
               {totalConquest}
+              <span
+                className={classNames('breakdown', {
+                  active: conquestByMainGen > 0,
+                })}
+              >
+                ({totalConquest - conquestByMainGen}
+                <span className="addition-by-main-gen">
+                  &#43;{conquestByMainGen}
+                </span>
+                )
+              </span>
             </span>
           </div>
           <div className="total total-cost" data-label="総コスト">
@@ -182,7 +218,7 @@ export default class DeckBoard extends React.Component<Props> {
           <div className="total" data-label="最大士気">
             <span
               className={classNames('has-gen-main', {
-                active: hasGenMainMaxMorale,
+                active: maxMoraleByMainGen > 0,
               })}
             >
               将器込み
@@ -191,17 +227,41 @@ export default class DeckBoard extends React.Component<Props> {
               className={classNames('max-morale', { dummy: hasStateDummy })}
             >
               {maxMorale}
+              <span
+                className={classNames('breakdown', {
+                  active: maxMoraleByMainGen > 0,
+                })}
+              >
+                ({maxMorale - maxMoraleByMainGen}
+                <span className="addition-by-main-gen">
+                  &#43;{maxMoraleByMainGen}
+                </span>
+                )
+              </span>
             </span>
           </div>
           <div className="total" data-label="開幕士気">
             <span
               className={classNames('has-gen-main', {
-                active: hasGenMainStartMorale,
+                active: startMoraleByMainGen > 0,
               })}
             >
               将器込み
             </span>
-            <span className="start-morale">{startMorale}</span>
+            <span className="start-morale">
+              {startMorale}
+              <span
+                className={classNames('breakdown', {
+                  active: startMoraleByMainGen > 0,
+                })}
+              >
+                ({startMorale - startMoraleByMainGen}
+                <span className="addition-by-main-gen">
+                  &#43;{startMoraleByMainGen}
+                </span>
+                )
+              </span>
+            </span>
           </div>
         </div>
       </div>
