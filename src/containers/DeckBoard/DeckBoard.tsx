@@ -5,10 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
-import { DatalistState } from '../../modules/datalist';
 import { DeckCard as DeckCardDummy } from '../../modules/deck';
-
-type General = DatalistState['generals'][number];
+import { General } from '../../services/mapBaseData';
 
 export interface DeckCardGeneral {
   general: General;

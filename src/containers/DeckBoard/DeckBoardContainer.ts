@@ -1,20 +1,18 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { datalistActions } from '../../modules/datalist';
+import { datalistActions, FilterCondition } from '../../modules/datalist';
 import {
   deckActions,
   DeckState,
   DeckCard as DeckCardDummy,
 } from '../../modules/deck';
+import { General } from '../../services/mapBaseData';
 import { State } from '../../store';
 import DeckBoard, {
   StateFromProps,
   DispatchFromProps,
   DeckCardGeneral,
 } from './DeckBoard';
-
-type General = State['datalistReducer']['generals'][number];
-type FilterCondition = State['datalistReducer']['filterCondition'];
 
 interface ContainerStateFromProps {
   deckState: DeckState;

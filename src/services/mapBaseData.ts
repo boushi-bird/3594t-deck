@@ -55,7 +55,7 @@ interface GeneralProps {
   readonly strategy?: Strategy;
 }
 
-interface General extends IdItem, GeneralProps {
+export interface General extends IdItem, GeneralProps {
   readonly raw: RawGeneral;
   /** コード */
   readonly code: string;
