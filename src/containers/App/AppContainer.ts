@@ -24,6 +24,7 @@ export default connect<
       state.windowReducer.openedFilter || !state.windowReducer.ready,
     loading: !state.windowReducer.ready,
     activeIndex: state.deckReducer.activeIndex,
+    aprilFool: state.datalistReducer.aprilFool,
   }),
   (dispatch: Dispatch) => {
     const actions = bindActionCreators(
@@ -62,6 +63,7 @@ export default connect<
         {
           clearActiveCard: deckActions.clearActiveCard,
           resetConditions: datalistActions.resetConditions,
+          disableAprilFool: datalistActions.disableAprilFool,
           ...windowActions,
         },
         dispatch

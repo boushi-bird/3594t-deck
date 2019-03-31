@@ -17,6 +17,7 @@ import Dialog from '../Dialog';
 export interface StateFromProps extends WindowState {
   openedAnyModal: boolean;
   loading: boolean;
+  aprilFool: boolean;
 }
 
 export interface DispatchFromProps {
@@ -29,6 +30,7 @@ export interface DispatchFromProps {
   closeFilter(): void;
   closeAllModal(): void;
   changeActiveFilterTab(activeFilter: FilterTab): void;
+  disableAprilFool(): void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
@@ -60,7 +62,17 @@ export default class App extends React.PureComponent<Props> {
       openedFilter: open,
       openedAnyModal: modal,
       activeFilter,
+      aprilFool,
+      disableAprilFool,
     } = this.props;
+    const stylePurge: React.CSSProperties = { display: 'none' };
+    if (aprilFool) {
+      stylePurge.display = 'block';
+      stylePurge.position = 'fixed';
+      stylePurge.top = '40px';
+      stylePurge.left = '80px';
+      stylePurge.fontSize = '20px';
+    }
     return (
       <div
         className={classNames(['app-container', { modal, ready }])}
@@ -128,6 +140,9 @@ export default class App extends React.PureComponent<Props> {
             </div>
           </div>
         </div>
+        <button style={stylePurge} onClick={disableAprilFool}>
+          浄化する
+        </button>
         <div className="modal-background" onClick={closeAllModal} />
         <div className={classNames('loading-item', { loading })} />
         <Dialog />
