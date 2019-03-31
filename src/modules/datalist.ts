@@ -113,6 +113,7 @@ export interface DatalistState {
   generals: BaseData['generals'];
   currentPage: number;
   pageLimit: number;
+  aprilFool: boolean;
 }
 
 const initialState: DatalistState = {
@@ -122,6 +123,7 @@ const initialState: DatalistState = {
   generals: [],
   currentPage: 1,
   pageLimit: 50,
+  aprilFool: false,
 };
 
 export const datalistActions = {
@@ -140,6 +142,12 @@ export const datalistActions = {
   resetPage: createAction('RESET_PAGE'),
   decrementPage: createAction('DECREMENT_PAGE', action => () =>
     action({ page: -1 })
+  ),
+  enableAprilFool: createAction('CHANGE_APRIL_FOOL', action => () =>
+    action({ aprilFool: true })
+  ),
+  disableAprilFool: createAction('CHANGE_APRIL_FOOL', action => () =>
+    action({ aprilFool: false })
   ),
 };
 
@@ -196,6 +204,13 @@ export default function datalistReducer(
       return {
         ...state,
         currentPage: state.currentPage + page,
+      };
+    }
+    case 'CHANGE_APRIL_FOOL': {
+      const aprilFool = actions.payload.aprilFool;
+      return {
+        ...state,
+        aprilFool,
       };
     }
     default:

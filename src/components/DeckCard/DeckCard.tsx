@@ -12,6 +12,7 @@ interface Props {
   general: DatalistState['generals'][number];
   active: boolean;
   search: boolean;
+  aprilFool: boolean;
   onSelectMainGen: (index: number, genMain?: string) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
@@ -49,7 +50,7 @@ export default class DeckCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { general, genMain, active, search } = this.props;
+    const { general, genMain, active, search, aprilFool } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
@@ -97,7 +98,14 @@ export default class DeckCard extends React.PureComponent<Props> {
         onClick={this.handleActive}
       >
         <div className="deck-card-inner-top">
-          <img className="general-thumb" src={general.thumbUrl} />
+          <img
+            className="general-thumb"
+            src={
+              aprilFool
+                ? 'https://3594t.net/img/card_small/6b66d077b9d057234c9e8c1a834618a7.jpg'
+                : general.thumbUrl
+            }
+          />
           <div className="shadow" style={styleShadow} />
           <span className="state" style={styleState}>
             {general.state.nameShort}
@@ -113,7 +121,7 @@ export default class DeckCard extends React.PureComponent<Props> {
           </span>
           <span className="name">
             <span className="rarity">{general.rarity.name}</span>
-            {general.name}
+            {aprilFool ? '李儒' : general.name}
           </span>
         </div>
         <div className="deck-card-inner-bottom">

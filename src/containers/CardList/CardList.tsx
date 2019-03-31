@@ -15,6 +15,7 @@ export interface StateFromProps {
   hasPrev: boolean;
   hasNext: boolean;
   enabledAddDeck: boolean;
+  aprilFool: boolean;
 }
 
 export interface DispatchFromProps {
@@ -68,6 +69,7 @@ export default class CardList extends React.PureComponent<Props> {
       hasPrev,
       hasNext,
       enabledAddDeck,
+      aprilFool,
     } = this.props;
     const generalCards: JSX.Element[] = [];
     const count = searchedGeneralIds.length;
@@ -82,6 +84,7 @@ export default class CardList extends React.PureComponent<Props> {
           onAddDeck={this.handleOnAddDeck}
           show={show}
           enabledAddDeck={enabled}
+          aprilFool={aprilFool}
         />
       );
     });

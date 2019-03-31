@@ -22,6 +22,7 @@ interface ContainerStateFromProps {
   costs: FilterCondition['costs'];
   belongStates: FilterCondition['belongStates'];
   unitTypes: FilterCondition['unitTypes'];
+  aprilFool: boolean;
 }
 
 interface ContainerDispatchFromProps
@@ -46,6 +47,7 @@ export default connect<
     belongStates: state.datalistReducer.filterCondition.belongStates,
     costs: state.datalistReducer.filterCondition.costs,
     unitTypes: state.datalistReducer.filterCondition.unitTypes,
+    aprilFool: state.datalistReducer.aprilFool,
   }),
   (dispatch: Dispatch) => {
     const actions = bindActionCreators(
@@ -82,7 +84,14 @@ export default connect<
     };
   },
   (state, actions) => {
-    const { deckState, generals, costs, belongStates, unitTypes } = state;
+    const {
+      deckState,
+      generals,
+      costs,
+      belongStates,
+      unitTypes,
+      aprilFool,
+    } = state;
     const { activeIndex, enableSearch } = deckState;
     const {
       rawAddDeckDummy,
@@ -193,6 +202,7 @@ export default connect<
     totalConquest += conquestByMainGen;
 
     return {
+      aprilFool,
       deckCards,
       activeIndex,
       enabledAddDeck,

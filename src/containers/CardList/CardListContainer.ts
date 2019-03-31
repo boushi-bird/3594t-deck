@@ -16,6 +16,7 @@ interface ContainerStateFromProps {
   deckCards: DeckCard[];
   activeIndex?: number;
   enableDeckSearch: boolean;
+  aprilFool: boolean;
 }
 
 interface ContainerDispatchFromProps {
@@ -42,6 +43,7 @@ export default connect<
     deckCards: state.deckReducer.deckCards,
     activeIndex: state.deckReducer.activeIndex,
     enableDeckSearch: state.deckReducer.enableSearch,
+    aprilFool: state.datalistReducer.aprilFool,
   }),
   (dispatch: Dispatch) =>
     bindActionCreators(
@@ -62,6 +64,7 @@ export default connect<
       deckCards,
       activeIndex,
       enableDeckSearch,
+      aprilFool,
     } = state;
     const deckGenerals: string[] = [];
     deckCards.forEach((deckCard, i) => {
@@ -120,6 +123,7 @@ export default connect<
       hasPrev,
       hasNext,
       enabledAddDeck,
+      aprilFool,
       addDeckGeneral: (card: DeckCardGeneral) => {
         if (!enabledAddDeck) {
           return;
@@ -136,6 +140,9 @@ export default connect<
   },
   {
     areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+      if (nextMergedProps.aprilFool !== prevMergedProps.aprilFool) {
+        return false;
+      }
       if (nextMergedProps.enabledAddDeck !== prevMergedProps.enabledAddDeck) {
         return false;
       }

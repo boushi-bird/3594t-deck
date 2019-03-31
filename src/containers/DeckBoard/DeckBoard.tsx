@@ -48,6 +48,7 @@ export interface StateFromProps {
   hasDummy: boolean;
   /** 勢力未指定ダミー含む */
   hasStateDummy: boolean;
+  aprilFool: boolean;
 }
 
 export interface DispatchFromProps {
@@ -103,6 +104,7 @@ export default class DeckBoard extends React.Component<Props> {
       setActiveCard,
       removeDeck,
       toggleSearch,
+      aprilFool,
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
@@ -134,6 +136,7 @@ export default class DeckBoard extends React.Component<Props> {
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
+            aprilFool={aprilFool}
           />
         );
       }

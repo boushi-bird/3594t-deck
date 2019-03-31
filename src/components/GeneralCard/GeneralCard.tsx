@@ -9,6 +9,7 @@ interface Props {
   general: DatalistState['generals'][number];
   show?: boolean;
   enabledAddDeck: boolean;
+  aprilFool: boolean;
   onAddDeck: (card: DeckCardGeneral) => void;
 }
 
@@ -28,7 +29,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { general, show, enabledAddDeck } = this.props;
+    const { general, show, enabledAddDeck, aprilFool } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
@@ -84,7 +85,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
         </span>
         <span className="version">{general.version}</span>
         <span className="rarity">{general.rarity.name}</span>
-        <span className="name">{general.name}</span>
+        <span className="name">{aprilFool ? '李儒' : general.name}</span>
         <span className="image">
           <img className="general-thumb" />
         </span>
