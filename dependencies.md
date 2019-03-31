@@ -312,6 +312,8 @@
     - license: ISC
  - **[aproba@1.2.0](https://github.com/iarna/aproba)**
     - license: ISC
+ - **[are-we-there-yet@1.1.5](https://github.com/iarna/are-we-there-yet)**
+    - license: ISC
  - **[arg@4.1.0](https://github.com/zeit/arg)**
     - license: MIT
  - **[argparse@1.0.10](https://github.com/nodeca/argparse)**
@@ -534,6 +536,8 @@
     - license: MIT
  - **[console-browserify@1.1.0](https://github.com/Raynos/console-browserify)**
     - license: 
+ - **[console-control-strings@1.1.0](https://github.com/iarna/console-control-strings)**
+    - license: ISC
  - **[constants-browserify@1.0.0](https://github.com/juliangruber/constants-browserify)**
     - license: MIT
  - **[content-disposition@0.5.2](https://github.com/jshttp/content-disposition)**
@@ -638,6 +642,8 @@
     - license: MIT
  - **[deep-equal@1.0.1](https://github.com/substack/node-deep-equal)**
     - license: MIT
+ - **[deep-extend@0.6.0](https://github.com/unclechu/node-deep-extend)**
+    - license: MIT
  - **[deep-is@0.1.3](https://github.com/thlorenz/deep-is)**
     - license: undefined
  - **[deepmerge@2.2.1](https://github.com/KyleAMathews/deepmerge)**
@@ -654,6 +660,8 @@
     - license: MIT
  - **[del@3.0.0](https://github.com/sindresorhus/del)**
     - license: MIT
+ - **[delegates@1.0.0](https://github.com/visionmedia/node-delegates)**
+    - license: MIT
  - **[depd@1.1.2](https://github.com/dougwilson/nodejs-depd)**
     - license: MIT
  - **[des.js@1.0.0](https://github.com/indutny/des.js)**
@@ -662,6 +670,8 @@
     - license: MIT
  - **[detect-file@1.0.0](https://github.com/doowb/detect-file)**
     - license: MIT
+ - **[detect-libc@1.0.3](https://github.com/lovell/detect-libc)**
+    - license: Apache-2.0
  - **[detect-node@2.0.4](https://github.com/iliakan/detect-node)**
     - license: ISC
  - **[dezalgo@1.0.3](https://github.com/npm/dezalgo)**
@@ -878,14 +888,20 @@
     - license: MIT
  - **[fs-extra@7.0.1](https://github.com/jprichardson/node-fs-extra)**
     - license: MIT
+ - **[fs-minipass@1.2.5](https://github.com/npm/fs-minipass)**
+    - license: ISC
  - **[fs-write-stream-atomic@1.0.10](https://github.com/npm/fs-write-stream-atomic)**
     - license: ISC
  - **[fs.realpath@1.0.0](https://github.com/isaacs/fs.realpath)**
     - license: ISC
+ - **[fsevents@1.2.7](https://github.com/strongloop/fsevents)**
+    - license: MIT
  - **[function-bind@1.1.1](https://github.com/Raynos/function-bind)**
     - license: MIT
  - **[functional-red-black-tree@1.0.1](https://github.com/mikolalysenko/functional-red-black-tree)**
     - license: MIT
+ - **[gauge@2.7.4](https://github.com/iarna/gauge)**
+    - license: ISC
  - **[get-caller-file@1.0.3](https://github.com/stefanpenner/get-caller-file)**
     - license: ISC
  - **[get-stdin@6.0.0](https://github.com/sindresorhus/get-stdin)**
@@ -934,6 +950,8 @@
     - license: MIT
  - **[has-symbols@1.0.0](https://github.com/ljharb/has-symbols)**
     - license: MIT
+ - **[has-unicode@2.0.1](https://github.com/iarna/has-unicode)**
+    - license: ISC
  - **[has-value@0.3.1](https://github.com/jonschlinkert/has-value)**
     - license: MIT
  - **[has-value@1.0.0](https://github.com/jonschlinkert/has-value)**
@@ -1006,6 +1024,8 @@
     - license: BSD-3-Clause
  - **[iferr@0.1.5](https://github.com/shesek/iferr)**
     - license: MIT
+ - **[ignore-walk@3.0.1](https://github.com/isaacs/ignore-walk)**
+    - license: ISC
  - **[ignore@4.0.6](https://github.com/kaelzhang/node-ignore)**
     - license: MIT
  - **[ignore@5.0.5](https://github.com/kaelzhang/node-ignore)**
@@ -1342,6 +1362,10 @@
     - license: MIT
  - **[minimist@1.2.0](https://github.com/substack/minimist)**
     - license: MIT
+ - **[minipass@2.3.5](https://github.com/isaacs/minipass)**
+    - license: ISC
+ - **[minizlib@1.2.1](https://github.com/isaacs/minizlib)**
+    - license: MIT
  - **[mississippi@3.0.0](https://github.com/maxogden/mississippi)**
     - license: BSD-2-Clause
  - **[mixin-deep@1.3.1](https://github.com/jonschlinkert/mixin-deep)**
@@ -1360,9 +1384,13 @@
     - license: MIT
  - **[mute-stream@0.0.7](https://github.com/isaacs/mute-stream)**
     - license: ISC
+ - **[nan@2.12.1](https://github.com/nodejs/nan)**
+    - license: MIT
  - **[nanomatch@1.2.13](https://github.com/micromatch/nanomatch)**
     - license: MIT
  - **[natural-compare@1.4.0](https://github.com/litejs/natural-compare-lite)**
+    - license: MIT
+ - **[needle@2.2.4](https://github.com/tomas/needle)**
     - license: MIT
  - **[negotiator@0.6.1](https://github.com/jshttp/negotiator)**
     - license: MIT
@@ -1376,6 +1404,8 @@
     - license: (BSD-3-Clause OR GPL-2.0)
  - **[node-libs-browser@2.2.0](https://github.com/webpack/node-libs-browser)**
     - license: MIT
+ - **[node-pre-gyp@0.10.3](https://github.com/mapbox/node-pre-gyp)**
+    - license: BSD-3-Clause
  - **[node-releases@1.1.10](https://github.com/chicoxyzzy/node-releases)**
     - license: MIT
  - **[nopt@4.0.1](https://github.com/npm/nopt)**
@@ -1394,10 +1424,16 @@
     - license: MIT
  - **[normalize-url@3.3.0](https://github.com/sindresorhus/normalize-url)**
     - license: MIT
+ - **[npm-bundled@1.0.5](https://github.com/npm/npm-bundled)**
+    - license: ISC
+ - **[npm-packlist@1.2.0](https://github.com/npm/npm-packlist)**
+    - license: ISC
  - **[npm-run-all@4.1.5](https://github.com/mysticatea/npm-run-all)**
     - license: MIT
  - **[npm-run-path@2.0.2](https://github.com/sindresorhus/npm-run-path)**
     - license: MIT
+ - **[npmlog@4.1.2](https://github.com/npm/npmlog)**
+    - license: ISC
  - **[nth-check@1.0.2](https://github.com/fb55/nth-check)**
     - license: BSD-2-Clause
  - **[num2fraction@1.2.2](https://github.com/yisibl/num2fraction)**
@@ -1704,6 +1740,8 @@
     - license: MIT
  - **[raw-body@2.3.3](https://github.com/stream-utils/raw-body)**
     - license: MIT
+ - **[rc@1.2.8](https://github.com/dominictarr/rc)**
+    - license: (BSD-2-Clause OR MIT OR Apache-2.0)
  - **[react-dom@16.8.4](https://github.com/facebook/react)**
     - license: MIT
  - **[react-is@16.8.4](https://github.com/facebook/react)**
@@ -2002,6 +2040,8 @@
     - license: BSD-3-Clause
  - **[tapable@1.1.1](https://github.com/webpack/tapable)**
     - license: MIT
+ - **[tar@4.4.8](https://github.com/npm/node-tar)**
+    - license: ISC
  - **[terser-webpack-plugin@1.2.3](https://github.com/webpack-contrib/terser-webpack-plugin)**
     - license: MIT
  - **[terser@3.17.0](https://github.com/fabiosantoscode/terser)**
@@ -2183,6 +2223,8 @@
  - **[which-module@2.0.0](https://github.com/nexdrew/which-module)**
     - license: ISC
  - **[which@1.3.1](https://github.com/isaacs/node-which)**
+    - license: ISC
+ - **[wide-align@1.1.3](https://github.com/iarna/wide-align)**
     - license: ISC
  - **[wordwrap@1.0.0](https://github.com/substack/node-wordwrap)**
     - license: MIT
