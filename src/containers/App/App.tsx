@@ -12,6 +12,7 @@ import CardList from '../CardList';
 import SimpleFilter from '../SimpleFilter';
 import BaseFilter from '../BaseFilter';
 import DetailFilter from '../DetailFilter';
+import Dialog from '../Dialog';
 
 export interface StateFromProps extends WindowState {
   openedAnyModal: boolean;
@@ -129,6 +130,7 @@ export default class App extends React.PureComponent<Props> {
         </div>
         <div className="modal-background" onClick={closeAllModal} />
         <div className={classNames('loading-item', { loading })} />
+        <Dialog />
       </div>
     );
   }

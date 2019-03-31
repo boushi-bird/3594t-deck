@@ -16,23 +16,51 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.deck-actions {
+  margin: 2px 4px;
+  width: 72px;
+  min-width: 72px;
+  height: 254px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  & > * {
+    margin: 2px 0;
+  }
+}
+
 .add-new-deck-card {
   font-size: 28px;
   color: var(--add-button-color);
   writing-mode: vertical-rl;
-  margin: 4px;
   width: 72px;
   min-width: 72px;
-  height: 250px;
+  border: solid 1px var(--normal-border-color);
   background-color: var(--add-button-bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 5;
 
   &.disabled {
     color: var(--filter-button-disabled-color);
     cursor: not-allowed;
   }
+}
+
+.deck-clear {
+  font-size: 16px;
+  color: var(--deck-clear-button-color);
+  width: 72px;
+  min-width: 72px;
+  border: solid 1px var(--normal-border-color);
+  background-color: var(--add-button-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .deck-total {

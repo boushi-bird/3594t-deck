@@ -52,6 +52,7 @@ export interface StateFromProps {
 
 export interface DispatchFromProps {
   addDeckDummy: () => void;
+  clearDeck: () => void;
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
@@ -97,6 +98,7 @@ export default class DeckBoard extends React.Component<Props> {
       hasDummy,
       hasStateDummy,
       addDeckDummy,
+      clearDeck,
       selectMainGen,
       setActiveCard,
       removeDeck,
@@ -151,14 +153,19 @@ export default class DeckBoard extends React.Component<Props> {
       <div className="deck-board">
         <div className="deck-card-list">
           {deckCardsElements}
-          <div
-            className={classNames('add-new-deck-card', 'button', {
-              disabled: !enabledAddDeck,
-            })}
-            onClick={addDeckDummy}
-          >
-            追加
-            <FontAwesomeIcon icon={faPlusCircle} />
+          <div className="deck-actions">
+            <div
+              className={classNames('add-new-deck-card', 'button', {
+                disabled: !enabledAddDeck,
+              })}
+              onClick={addDeckDummy}
+            >
+              追加
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </div>
+            <div className="deck-clear button" onClick={clearDeck}>
+              クリア
+            </div>
           </div>
         </div>
         <div className="deck-total">

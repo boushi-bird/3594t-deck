@@ -24,22 +24,31 @@ export default connect<
     loading: !state.windowReducer.ready,
     activeIndex: state.deckReducer.activeIndex,
   }),
-  (dispatch: Dispatch) => ({
-    fetchBaseData: async (): Promise<void> => {
-      // TODO APIからかLocalからか選択してデータ取得させる
-      const baseData = await loadFromApi();
-      dispatch(datalistActions.setBaseData(baseData));
-      dispatch(windowActions.beReady());
-    },
-    ...bindActionCreators(
+  (dispatch: Dispatch) => {
+    const actions = bindActionCreators(
       {
-        clearActiveCard: deckActions.clearActiveCard,
-        resetConditions: datalistActions.resetConditions,
-        ...windowActions,
+        setBaseData: datalistActions.setBaseData,
+        beReady: windowActions.beReady,
       },
       dispatch
-    ),
-  }),
+    );
+    return {
+      fetchBaseData: async (): Promise<void> => {
+        const baseData = await loadFromApi();
+        // TODO APIからかLocalからか選択してデータ取得させる
+        actions.setBaseData(baseData);
+        actions.beReady();
+      },
+      ...bindActionCreators(
+        {
+          clearActiveCard: deckActions.clearActiveCard,
+          resetConditions: datalistActions.resetConditions,
+          ...windowActions,
+        },
+        dispatch
+      ),
+    };
+  },
   (state, actions) => {
     const { activeIndex, ...otherState } = state;
     return {

@@ -6,6 +6,7 @@ import {
   DeckState,
   DeckCard as DeckCardDummy,
 } from '../../modules/deck';
+import { dialogActions } from '../../modules/dialog';
 import { General } from '../../services/mapBaseData';
 import { State } from '../../store';
 import DeckBoard, {
@@ -46,18 +47,40 @@ export default connect<
     costs: state.datalistReducer.filterCondition.costs,
     unitTypes: state.datalistReducer.filterCondition.unitTypes,
   }),
-  (dispatch: Dispatch) =>
-    bindActionCreators(
+  (dispatch: Dispatch) => {
+    const actions = bindActionCreators(
       {
-        selectMainGen: deckActions.selectMainGen,
-        setActiveCard: deckActions.setActiveCard,
-        removeDeck: deckActions.removeDeck,
-        rawAddDeckDummy: deckActions.addDeckDummy,
-        searchByDeck: deckActions.searchByDeck,
-        resetPage: datalistActions.resetPage,
+        clearDeck: deckActions.clearDeck,
+        showDialog: dialogActions.showDialog,
       },
       dispatch
-    ),
+    );
+    return {
+      clearDeck: () => {
+        actions.showDialog({
+          title: 'デッキクリア',
+          message: 'デッキをクリアします。',
+          redText: 'クリア',
+          actionRed: () => {
+            actions.clearDeck();
+          },
+          blueText: 'キャンセル',
+          actionBlue: () => {},
+        });
+      },
+      ...bindActionCreators(
+        {
+          selectMainGen: deckActions.selectMainGen,
+          setActiveCard: deckActions.setActiveCard,
+          removeDeck: deckActions.removeDeck,
+          rawAddDeckDummy: deckActions.addDeckDummy,
+          searchByDeck: deckActions.searchByDeck,
+          resetPage: datalistActions.resetPage,
+        },
+        dispatch
+      ),
+    };
+  },
   (state, actions) => {
     const { deckState, generals, costs, belongStates, unitTypes } = state;
     const { activeIndex, enableSearch } = deckState;
@@ -65,6 +88,7 @@ export default connect<
       rawAddDeckDummy,
       resetPage,
       searchByDeck,
+      clearDeck,
       ...otherActions
     } = actions;
     const enabledAddDeck = isEnabledAddDeck(deckState.deckCards);
@@ -206,6 +230,11 @@ export default connect<
           unitType = unitTypes[0];
         }
         rawAddDeckDummy({ cost, belongState, unitType });
+      },
+      clearDeck: () => {
+        if (deckCards.length > 0) {
+          clearDeck();
+        }
       },
       toggleSearch: index => {
         resetPage();

@@ -53,6 +53,7 @@ export const deckActions = {
   removeDeck: createAction('REMOVE_DECK', action => (index: number) =>
     action(index)
   ),
+  clearDeck: createAction('CLEAR_DECK'),
   setActiveCard: createAction('SET_ACTIVE_CARD', action => (index: number) =>
     action(index)
   ),
@@ -120,6 +121,14 @@ export default function datalistReducer(
         activeIndex: undefined,
         enableSearch: false,
         deckCards,
+      };
+    }
+    case 'CLEAR_DECK': {
+      return {
+        ...state,
+        activeIndex: undefined,
+        enableSearch: false,
+        deckCards: [],
       };
     }
     case 'SET_ACTIVE_CARD': {

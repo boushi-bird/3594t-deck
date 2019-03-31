@@ -1,0 +1,157 @@
+@import '../../defines.css';
+
+.dialog-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 200;
+}
+
+.dialog-base {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.dialog-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--modal-bg-color);
+  opacity: 0.8;
+}
+
+.dialog {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  min-width: 300px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease 0s 1 normal;
+}
+
+.dialog-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  & > * {
+    background-color: #40a1b2;
+  }
+}
+
+.dialog-title {
+  color: white;
+  font-size: 20px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog-body {
+  min-height: 120px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+
+  & .dialog-logo {
+    flex: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    &.show {
+      display: flex;
+    }
+
+    & img {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  & .dialog-message {
+    color: white;
+    flex: 4;
+    text-align: center;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.dialog-actions {
+  min-height: 80px;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+
+  & .dialog-action-button {
+    padding: 0 10px;
+    position: relative;
+    min-width: 100px;
+    font-size: 20px;
+    color: #f7ca7e;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: solid 1px black;
+
+    &.dialog-action-red {
+      background-color: #f94355;
+
+      &::before {
+        position: absolute;
+        color: #f94355;
+        font-size: 30px;
+        font-weight: normal;
+        content: '緋';
+        left: -28px;
+        opacity: 0.5;
+      }
+    }
+
+    &.dialog-action-blue {
+      background-color: #1656f9;
+
+      &::after {
+        position: absolute;
+        color: #1656f9;
+        font-size: 30px;
+        font-weight: normal;
+        content: '蒼';
+        right: -28px;
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.dialog-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 22px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: none;
+
+  &.cancelable {
+    display: block;
+  }
+}
