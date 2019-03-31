@@ -50,7 +50,7 @@ export default connect<
           actionRed: () => {
             actions.beReady();
           },
-          blueText: '反計しない',
+          blueText: '毒を受ける',
           actionBlue: () => {
             actions.enableAprilFool();
             actions.beReady();
