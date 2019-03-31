@@ -41,6 +41,11 @@
   --general-state-bg-color: white;
   --switch-button-bg-color: #eee;
   --switch-button-active-bg-color: #40a1b2;
+  --dialog-bg-color: #40a1b2;
+  --dialog-text-color: white;
+  --dialog-action-text-color: #f7ca7e;
+  --dialog-action-red-color: #f94355;
+  --dialog-action-blue-color: #1656f9;
 }
 
 @custom-media --app-min screen and (max-width: 630px);

@@ -10,6 +10,7 @@ export interface StateFromProps {
   redText: string;
   blueText: string;
   cancelable: boolean;
+  animation: boolean;
 }
 
 export interface DispatchFromProps {
@@ -20,26 +21,59 @@ export interface DispatchFromProps {
 
 type Props = StateFromProps & DispatchFromProps;
 
-export default class Dialog extends React.PureComponent<Props> {
+type ButtonAnimation = 'RED' | 'BLUE';
+
+const delay = 500;
+
+interface LocalState {
+  buttonAnimation?: ButtonAnimation;
+}
+
+export default class Dialog extends React.PureComponent<Props, LocalState> {
+  public state: Readonly<LocalState> = {};
+
+  private actionWithAnimation = (
+    buttonAnimation: ButtonAnimation,
+    action: () => void
+  ) => {
+    if (this.state.buttonAnimation) {
+      return;
+    }
+    if (!this.props.animation) {
+      action();
+      return;
+    }
+    this.setState({ buttonAnimation });
+    setTimeout(() => {
+      this.setState({ buttonAnimation: undefined });
+      action();
+    }, delay);
+  };
+
   private handleRedClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     event.stopPropagation();
-    this.props.actionRed();
+    this.actionWithAnimation('RED', this.props.actionRed);
   };
 
   private handleBlueClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     event.stopPropagation();
-    this.props.actionBlue();
+    this.actionWithAnimation('BLUE', this.props.actionBlue);
   };
 
   private handleCancelClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     event.stopPropagation();
-    this.props.actionCancel();
+    if (this.state.buttonAnimation) {
+      return;
+    }
+    if (this.props.cancelable) {
+      this.props.actionCancel();
+    }
   };
 
   public render(): React.ReactNode {
@@ -51,7 +85,19 @@ export default class Dialog extends React.PureComponent<Props> {
       redText,
       blueText,
       cancelable,
+      animation,
     } = this.props;
+    const { buttonAnimation } = this.state;
+    let animationText = '';
+    let red = false;
+    let blue = false;
+    if (buttonAnimation === 'RED') {
+      animationText = '緋略';
+      red = true;
+    } else if (buttonAnimation === 'BLUE') {
+      animationText = '蒼略';
+      blue = true;
+    }
     const style: React.CSSProperties = {};
     if (!show) {
       style.display = 'none';
@@ -75,13 +121,21 @@ export default class Dialog extends React.PureComponent<Props> {
               </div>
               <div className="dialog-actions">
                 <div
-                  className="dialog-action-button dialog-action-red"
+                  className={classNames(
+                    'dialog-action-button',
+                    'dialog-action-red',
+                    { text: animation }
+                  )}
                   onClick={this.handleRedClick}
                 >
                   {redText}
                 </div>
                 <div
-                  className="dialog-action-button dialog-action-blue"
+                  className={classNames(
+                    'dialog-action-button',
+                    'dialog-action-blue',
+                    { text: animation }
+                  )}
                   onClick={this.handleBlueClick}
                 >
                   {blueText}
@@ -94,6 +148,15 @@ export default class Dialog extends React.PureComponent<Props> {
                 x
               </div>
             </div>
+          </div>
+          <div
+            className={classNames('action-animation', {
+              red,
+              blue,
+              show: red || blue,
+            })}
+          >
+            {animationText}
           </div>
         </div>
       </div>
