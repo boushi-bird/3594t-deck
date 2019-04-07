@@ -202,6 +202,8 @@
     - license: MIT
  - **[@types/react-dom@16.8.2](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
+ - **[@types/react-lazyload@2.3.2](https://github.com/DefinitelyTyped/DefinitelyTyped)**
+    - license: MIT
  - **[@types/react-redux@7.0.3](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
  - **[@types/react@16.8.7](https://github.com/DefinitelyTyped/DefinitelyTyped)**
@@ -1707,6 +1709,8 @@
  - **[react-dom@16.8.4](https://github.com/facebook/react)**
     - license: MIT
  - **[react-is@16.8.4](https://github.com/facebook/react)**
+    - license: MIT
+ - **[react-lazyload@2.5.0](https://github.com/jasonslyvia/react-lazyload)**
     - license: MIT
  - **[react-redux@6.0.1](https://github.com/reduxjs/react-redux)**
     - license: MIT
