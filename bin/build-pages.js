@@ -30,7 +30,7 @@ if (process.env.GOOGLE_TAG_MANAGER_CONTAINER_ID) {
 fs.writeFileSync(distConfigPath, jsYaml.safeDump(conf), 'utf8');
 
 console.log(`output ${distConfigPath}`);
-cpx.copy(path.resolve(srcDir, '**/*.{md,html}'), distDir, err => {
+cpx.copy(path.resolve(srcDir, '**/*.{md,html,png}'), distDir, err => {
   if (err) {
     console.error(err);
     return;
