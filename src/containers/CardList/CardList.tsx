@@ -1,5 +1,6 @@
 import './CardList.css';
 import React from 'react';
+import { forceCheck } from 'react-lazyload';
 import classNames from 'classnames';
 import GeneralCard from '../../components/GeneralCard';
 import { DatalistState } from '../../modules/datalist';
@@ -46,6 +47,10 @@ export default class CardList extends React.PureComponent<Props> {
     this.props.onPageNext();
   };
 
+  private handleOnScroll = () => {
+    forceCheck();
+  };
+
   public componentDidUpdate(prevProps: Readonly<Props>): void {
     const next = this.props.searchedGeneralIds;
     const prev = prevProps.searchedGeneralIds;
@@ -55,6 +60,7 @@ export default class CardList extends React.PureComponent<Props> {
     if (!notChanged && scrollArea) {
       scrollArea.scrollTop = 0;
     }
+    forceCheck();
   }
 
   public render(): React.ReactNode {
@@ -98,7 +104,7 @@ export default class CardList extends React.PureComponent<Props> {
       end = searchedAll;
     }
     return (
-      <div className="cardlist-container">
+      <div className="cardlist-container" onScroll={this.handleOnScroll}>
         <div className="cardlist-paging">
           <button
             className={classNames('paging-button', 'prev', { active: hasPrev })}

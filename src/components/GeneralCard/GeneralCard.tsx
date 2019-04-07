@@ -1,5 +1,6 @@
 import './GeneralCard.css';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { DatalistState } from '../../modules/datalist';
@@ -86,7 +87,15 @@ export default class GeneralCard extends React.PureComponent<Props> {
         <span className="rarity">{general.rarity.name}</span>
         <span className="name">{general.name}</span>
         <span className="image">
-          <img className="general-thumb" />
+          <LazyLoad
+            height={64}
+            once={true}
+            scroll={false}
+            resize={false}
+            placeholder={<div className="no-image general-thumb" />}
+          >
+            <img className="general-thumb" src={general.thumbUrl} />
+          </LazyLoad>
         </span>
         <span className="cost" data-label="コスト">
           {general.cost.name}

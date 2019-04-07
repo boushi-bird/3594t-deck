@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
+import { forceCheck } from 'react-lazyload';
 import { windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
 import { deckActions } from '../../modules/deck';
@@ -38,6 +39,7 @@ export default connect<
         // TODO APIからかLocalからか選択してデータ取得させる
         actions.setBaseData(baseData);
         actions.beReady();
+        forceCheck();
       },
       ...bindActionCreators(
         {
