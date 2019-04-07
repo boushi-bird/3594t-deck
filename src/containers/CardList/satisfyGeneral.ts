@@ -21,16 +21,7 @@ export default (
     conquestMax,
     skills,
     skillsAnd,
-    genMains,
-    genMainsAnd,
-    rarities,
-    generalTypes,
-    varTypes,
-    versions,
-    majorVersions,
-    enableDetailVersion,
-    pockets,
-  } = filterCondition;
+  } = filterCondition.basic;
   const { raw } = general;
   // 勢力
   if (belongStates.length > 0 && !belongStates.includes(raw.state)) {
@@ -97,10 +88,22 @@ export default (
       }
     }
   }
+  const {
+    genMains,
+    genMainsAnd,
+    rarities,
+    generalTypes,
+    varTypes,
+    versions,
+    majorVersions,
+    enableDetailVersion,
+    pockets,
+  } = filterCondition.detail;
   // レアリティ
   if (rarities.length > 0 && !rarities.includes(raw.rarity)) {
     return false;
   }
+  // 登場弾
   if (enableDetailVersion) {
     if (versions.length > 0 && !versions.includes(general.versionValue)) {
       return false;
@@ -113,7 +116,7 @@ export default (
       return false;
     }
   }
-  // 登場弾
+  // 主将器
   if (genMains.length > 0) {
     const hasGenMain = (v: string): boolean =>
       general.genMains.map(s => s.id).includes(v);

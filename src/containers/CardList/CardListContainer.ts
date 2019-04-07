@@ -87,13 +87,16 @@ export default connect<
     if (deckCard) {
       filterCondition = {
         ...filterCondition,
+        basic: {
+          ...filterCondition.basic,
+        },
       };
       if (deckCard.belongState != null) {
-        filterCondition.belongStates = [deckCard.belongState];
+        filterCondition.basic.belongStates = [deckCard.belongState];
       }
-      filterCondition.costs = [deckCard.cost];
+      filterCondition.basic.costs = [deckCard.cost];
       if (deckCard.unitType != null) {
-        filterCondition.unitTypes = [deckCard.unitType];
+        filterCondition.basic.unitTypes = [deckCard.unitType];
       }
     }
     let searchedGeneralIds = generals

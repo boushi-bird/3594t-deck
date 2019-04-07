@@ -1,7 +1,9 @@
 import {
-  DatalistState,
-  FilterCondition,
-  FilterConditionKey,
+  FilterContents,
+  BasicFilterCondition,
+  BasicFilterConditionKey,
+  DetailFilterCondition,
+  DetailFilterConditionKey,
   FilterItem,
 } from '../../modules/datalist';
 
@@ -54,16 +56,10 @@ const toggleCheckListMajorVersion = (
   return majorVersions;
 };
 
-export default function toggleCheckList(
-  state: DatalistState,
-  key: FilterConditionKey,
-  value: string
-): Partial<FilterCondition> {
-  const targetCondition = state.filterCondition[key];
-  if (!(targetCondition instanceof Array)) {
-    console.warn(`${key} is not array.`);
-    return {};
-  }
+function toggleCheckList(
+  value: string,
+  targetCondition: string[]
+): { checked: boolean; targetValue: string[] } {
   const checked = targetCondition.includes(value);
   let targetValue;
   if (checked) {
@@ -73,6 +69,37 @@ export default function toggleCheckList(
     // チェック入れる
     targetValue = [...targetCondition, value];
   }
+  return { checked, targetValue };
+}
+
+export function toggleBasicCheckList(
+  filterCondition: BasicFilterCondition,
+  key: BasicFilterConditionKey,
+  value: string
+): Partial<BasicFilterCondition> {
+  const targetCondition = filterCondition[key];
+  if (!(targetCondition instanceof Array)) {
+    console.warn(`${key} is not array.`);
+    return {};
+  }
+  const { targetValue } = toggleCheckList(value, targetCondition);
+  return { [key]: targetValue };
+}
+
+export function toggleDetailCheckList(
+  state: {
+    filterContents: FilterContents;
+    filterCondition: DetailFilterCondition;
+  },
+  key: DetailFilterConditionKey,
+  value: string
+): Partial<DetailFilterCondition> {
+  const targetCondition = state.filterCondition[key];
+  if (!(targetCondition instanceof Array)) {
+    console.warn(`${key} is not array.`);
+    return {};
+  }
+  const { checked, targetValue } = toggleCheckList(value, targetCondition);
   const conditions = { [key]: targetValue };
   switch (key) {
     case 'majorVersions': {

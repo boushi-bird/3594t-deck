@@ -3,8 +3,9 @@ import { BaseData, FilterItem, FilterContents } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 export type FilterItem = FilterItem;
+export type FilterContents = FilterContents;
 
-export interface FilterCondition {
+export interface BasicFilterCondition {
   /** 勢力 */
   belongStates: string[];
   /** コスト */
@@ -35,6 +36,11 @@ export interface FilterCondition {
   skills: string[];
   /** 特技 And条件 */
   skillsAnd: boolean;
+  /** 検索ワード */
+  searchText: string;
+}
+
+export interface DetailFilterCondition {
   /** 主将器 */
   genMains: string[];
   /** 主将器 And条件 */
@@ -53,13 +59,22 @@ export interface FilterCondition {
   enableDetailVersion: boolean;
   /** ぽけっと武将 */
   pockets: string[];
-  /** 検索ワード */
-  searchText: string;
 }
 
-export type FilterConditionKey = keyof FilterCondition;
+export interface FilterCondition {
+  basic: BasicFilterCondition;
+  detail: DetailFilterCondition;
+}
 
-const initialFilterCondition: FilterCondition = {
+export type AllFilterCondition = BasicFilterCondition | DetailFilterCondition;
+
+export type BasicFilterConditionKey = keyof BasicFilterCondition;
+export type DetailFilterConditionKey = keyof DetailFilterCondition;
+export type AllFilterConditionKey =
+  | BasicFilterConditionKey
+  | DetailFilterConditionKey;
+
+const initialBasicFilterCondition: BasicFilterCondition = {
   belongStates: [],
   costs: [],
   unitTypes: [],
@@ -81,6 +96,10 @@ const initialFilterCondition: FilterCondition = {
   conquestMax: 4,
   skills: [],
   skillsAnd: false,
+  searchText: '',
+};
+
+const initialDetailFilterCondition: DetailFilterCondition = {
   genMains: [],
   genMainsAnd: false,
   rarities: [],
@@ -90,7 +109,11 @@ const initialFilterCondition: FilterCondition = {
   versions: [],
   enableDetailVersion: false,
   pockets: [],
-  searchText: '',
+};
+
+const initialFilterCondition: FilterCondition = {
+  basic: initialBasicFilterCondition,
+  detail: initialDetailFilterCondition,
 };
 
 const initialFilterContents: FilterContents = {
@@ -127,9 +150,15 @@ const initialState: DatalistState = {
 export const datalistActions = {
   resetConditions: createAction('RESET_CONDITIONS'),
   applyCondition: createAction('APPLY_CONDITION'),
-  setCondition: createAction(
-    'SET_CONDITION',
-    action => (condition: Partial<FilterCondition>) => action({ condition })
+  setBasicCondition: createAction(
+    'SET_BASIC_CONDITION',
+    action => (condition: Partial<BasicFilterCondition>) =>
+      action({ condition })
+  ),
+  setDetailCondition: createAction(
+    'SET_DETAIL_CONDITION',
+    action => (condition: Partial<DetailFilterCondition>) =>
+      action({ condition })
   ),
   setBaseData: createAction('SET_BASE_DATA', action => (baseData: BaseData) =>
     action({ baseData })
@@ -163,12 +192,27 @@ export default function datalistReducer(
         currentPage: initialState.currentPage,
       };
     }
-    case 'SET_CONDITION': {
+    case 'SET_BASIC_CONDITION': {
       return {
         ...state,
         filterCondition: {
           ...state.filterCondition,
-          ...actions.payload.condition,
+          basic: {
+            ...state.filterCondition.basic,
+            ...actions.payload.condition,
+          },
+        },
+      };
+    }
+    case 'SET_DETAIL_CONDITION': {
+      return {
+        ...state,
+        filterCondition: {
+          ...state.filterCondition,
+          detail: {
+            ...state.filterCondition.detail,
+            ...actions.payload.condition,
+          },
         },
       };
     }

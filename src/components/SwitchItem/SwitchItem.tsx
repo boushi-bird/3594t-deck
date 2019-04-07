@@ -1,14 +1,17 @@
 import './SwitchItem.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterCondition, FilterConditionKey } from '../../modules/datalist';
+import {
+  AllFilterCondition,
+  AllFilterConditionKey,
+} from '../../modules/datalist';
 
 interface Props {
   isOn: boolean;
   labelOff: string;
   labelOn: string;
-  itemName: FilterConditionKey;
-  setCondition: (condition: Partial<FilterCondition>) => void;
+  itemName: AllFilterConditionKey;
+  setCondition: (condition: Partial<AllFilterCondition>) => void;
   width?: number;
 }
 

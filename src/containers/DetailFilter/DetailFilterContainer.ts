@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import setConditionAdapter from '../Common/setConditionAdapter';
-import toggleCheckList from '../Common/toggleCheckList';
-import { DatalistState, FilterConditionKey } from '../../modules/datalist';
+import { setDetailConditionAdapter } from '../Common/setConditionAdapter';
+import { toggleDetailCheckList } from '../Common/toggleCheckList';
+import { DetailFilterConditionKey } from '../../modules/datalist';
 import { State } from '../../store';
 import DetailFilter, {
   StateFromProps,
@@ -10,23 +10,24 @@ import DetailFilter, {
 } from './DetailFilter';
 
 export default connect<
-  DatalistState,
+  StateFromProps,
   Pick<DispatchFromProps, Exclude<keyof DispatchFromProps, 'toggleCheckList'>>,
   {},
   StateFromProps & DispatchFromProps
 >(
-  (state: State) => state.datalistReducer,
+  (state: State) => ({
+    filterCondition: state.datalistReducer.filterCondition.detail,
+    filterContents: state.datalistReducer.filterContents,
+  }),
   (dispatch: Dispatch) => ({
-    setCondition: setConditionAdapter(dispatch),
+    setCondition: setDetailConditionAdapter(dispatch),
   }),
   (state, actions) => ({
     ...state,
     ...actions,
-    toggleCheckList: (key: FilterConditionKey, value: string) => {
-      actions.setCondition(toggleCheckList(state, key, value));
+    toggleCheckList: (key: DetailFilterConditionKey, value: string) => {
+      actions.setCondition(toggleDetailCheckList(state, key, value));
     },
   }),
-  {
-    areMergedPropsEqual: () => false,
-  }
+  { areMergedPropsEqual: () => false }
 )(DetailFilter);

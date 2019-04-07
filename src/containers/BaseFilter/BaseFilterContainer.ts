@@ -1,14 +1,19 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import setConditionAdapter from '../Common/setConditionAdapter';
-import toggleCheckList from '../Common/toggleCheckList';
-import { DatalistState, FilterConditionKey } from '../../modules/datalist';
+import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
+import { toggleBasicCheckList } from '../Common/toggleCheckList';
+import {
+  FilterContents,
+  BasicFilterCondition,
+  BasicFilterConditionKey,
+} from '../../modules/datalist';
 import { DeckCard } from '../../modules/deck';
 import { State } from '../../store';
 import BaseFilter, { StateFromProps, DispatchFromProps } from './BaseFilter';
 
 interface ContainerStateFromProps {
-  datalistState: DatalistState;
+  filterCondition: BasicFilterCondition;
+  filterContents: FilterContents;
   deckCard?: DeckCard;
 }
 
@@ -23,17 +28,17 @@ export default connect<
     const deckCard =
       activeIndex != null && enableSearch ? deckCards[activeIndex] : undefined;
     return {
-      datalistState: state.datalistReducer,
+      filterCondition: state.datalistReducer.filterCondition.basic,
+      filterContents: state.datalistReducer.filterContents,
       deckCard,
     };
   },
   (dispatch: Dispatch) => ({
-    setCondition: setConditionAdapter(dispatch),
+    setCondition: setBasicConditionAdapter(dispatch),
   }),
   (state, actions) => {
-    const { deckCard, datalistState } = state;
+    const { deckCard, filterCondition, filterContents } = state;
     if (deckCard) {
-      const { filterCondition } = datalistState;
       let belongStates: string[];
       let searchByDeckBelongState = false;
       if (deckCard.belongState != null) {
@@ -52,7 +57,7 @@ export default connect<
         unitTypes = filterCondition.unitTypes;
       }
       return {
-        ...datalistState,
+        filterContents,
         searchByDeckBelongState,
         searchByDeckCost: true,
         searchByDeckUnitType,
@@ -63,23 +68,24 @@ export default connect<
           unitTypes,
         },
         ...actions,
-        toggleCheckList: (key: FilterConditionKey, value: string) => {
-          actions.setCondition(toggleCheckList(datalistState, key, value));
+        toggleCheckList: (key: BasicFilterConditionKey, value: string) => {
+          actions.setCondition(
+            toggleBasicCheckList(filterCondition, key, value)
+          );
         },
       };
     }
     return {
-      ...datalistState,
+      filterContents,
+      filterCondition,
       searchByDeckBelongState: false,
       searchByDeckCost: false,
       searchByDeckUnitType: false,
       ...actions,
-      toggleCheckList: (key: FilterConditionKey, value: string) => {
-        actions.setCondition(toggleCheckList(datalistState, key, value));
+      toggleCheckList: (key: BasicFilterConditionKey, value: string) => {
+        actions.setCondition(toggleBasicCheckList(filterCondition, key, value));
       },
     };
   },
-  {
-    areMergedPropsEqual: () => false,
-  }
+  { areMergedPropsEqual: () => false }
 )(BaseFilter);

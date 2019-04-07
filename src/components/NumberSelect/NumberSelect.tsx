@@ -1,7 +1,10 @@
 import './NumberSelect.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterCondition, FilterConditionKey } from '../../modules/datalist';
+import {
+  AllFilterCondition,
+  AllFilterConditionKey,
+} from '../../modules/datalist';
 
 interface Props {
   min: number;
@@ -9,9 +12,9 @@ interface Props {
   value: number;
   className?: string;
   halfStep?: boolean;
-  itemName: FilterConditionKey;
+  itemName: AllFilterConditionKey;
   itemKey?: string;
-  setCondition: (condition: Partial<FilterCondition>) => void;
+  setCondition: (condition: Partial<AllFilterCondition>) => void;
 }
 
 export default class NumberSelect extends React.PureComponent<Props> {

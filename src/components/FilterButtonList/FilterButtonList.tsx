@@ -1,7 +1,7 @@
 import './FilterButtonList.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterConditionKey } from '../../modules/datalist';
+import { AllFilterConditionKey } from '../../modules/datalist';
 
 interface ButtonItem {
   id: string;
@@ -11,10 +11,10 @@ interface ButtonItem {
 }
 
 interface Props {
-  itemName: FilterConditionKey;
+  itemName: AllFilterConditionKey;
   items: ButtonItem[];
   checkedItems: string[];
-  onClickItem: (itemName: FilterConditionKey, itemValue: string) => void;
+  onClickItem: (itemName: AllFilterConditionKey, itemValue: string) => void;
   square?: boolean;
   addtionalClasses?: string[];
   show?: boolean;

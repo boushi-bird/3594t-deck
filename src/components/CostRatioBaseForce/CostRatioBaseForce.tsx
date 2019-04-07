@@ -1,15 +1,17 @@
 import './CostRatioBaseForce.css';
 import React from 'react';
 import NumberSelect from '../NumberSelect';
-import { FilterCondition } from '../../modules/datalist';
+import { BasicFilterCondition } from '../../modules/datalist';
 
 interface Props {
-  costRatioBaseForces: FilterCondition['costRatioBaseForces'];
-  setCondition: (condition: Partial<FilterCondition>) => void;
+  costRatioBaseForces: BasicFilterCondition['costRatioBaseForces'];
+  setCondition: (condition: Partial<BasicFilterCondition>) => void;
 }
 
 export default class CostRatioBaseForce extends React.PureComponent<Props> {
-  private handleSetCondition = (condition: Partial<FilterCondition>): void => {
+  private handleSetCondition = (
+    condition: Partial<BasicFilterCondition>
+  ): void => {
     const { setCondition, costRatioBaseForces } = this.props;
     if (condition.costRatioBaseForces) {
       condition.costRatioBaseForces = {

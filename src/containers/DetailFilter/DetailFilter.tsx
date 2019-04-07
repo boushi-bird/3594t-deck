@@ -2,22 +2,22 @@ import './DetailFilter.css';
 import React from 'react';
 import classNames from 'classnames';
 import {
-  DatalistState,
-  FilterCondition,
-  FilterConditionKey,
+  FilterContents,
+  DetailFilterCondition,
+  DetailFilterConditionKey,
   FilterItem,
 } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 import SwitchItem from '../../components/SwitchItem';
 
 export interface StateFromProps {
-  filterCondition: FilterCondition;
-  filterContents: DatalistState['filterContents'];
+  filterCondition: DetailFilterCondition;
+  filterContents: FilterContents;
 }
 
 export interface DispatchFromProps {
-  setCondition: (condition: Partial<FilterCondition>) => void;
-  toggleCheckList: (key: FilterConditionKey, value: string) => void;
+  setCondition: (condition: Partial<DetailFilterCondition>) => void;
+  toggleCheckList: (key: DetailFilterConditionKey, value: string) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;

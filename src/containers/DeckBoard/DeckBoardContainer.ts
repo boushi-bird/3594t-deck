@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { datalistActions, FilterCondition } from '../../modules/datalist';
+import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
 import {
   deckActions,
   DeckState,
@@ -19,9 +19,9 @@ import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 interface ContainerStateFromProps {
   deckState: DeckState;
   generals: General[];
-  costs: FilterCondition['costs'];
-  belongStates: FilterCondition['belongStates'];
-  unitTypes: FilterCondition['unitTypes'];
+  costs: BasicFilterCondition['costs'];
+  belongStates: BasicFilterCondition['belongStates'];
+  unitTypes: BasicFilterCondition['unitTypes'];
 }
 
 interface ContainerDispatchFromProps
@@ -43,9 +43,9 @@ export default connect<
   (state: State) => ({
     deckState: state.deckReducer,
     generals: state.datalistReducer.generals,
-    belongStates: state.datalistReducer.filterCondition.belongStates,
-    costs: state.datalistReducer.filterCondition.costs,
-    unitTypes: state.datalistReducer.filterCondition.unitTypes,
+    belongStates: state.datalistReducer.filterCondition.basic.belongStates,
+    costs: state.datalistReducer.filterCondition.basic.costs,
+    unitTypes: state.datalistReducer.filterCondition.basic.unitTypes,
   }),
   (dispatch: Dispatch) => {
     const actions = bindActionCreators(
@@ -246,7 +246,5 @@ export default connect<
       },
     };
   },
-  {
-    areMergedPropsEqual: () => false,
-  }
+  { areMergedPropsEqual: () => false }
 )(DeckBoard);

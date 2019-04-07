@@ -1,15 +1,31 @@
 import { Dispatch } from 'redux';
 
-import { datalistActions, FilterCondition } from '../../modules/datalist';
+import {
+  datalistActions,
+  BasicFilterCondition,
+  DetailFilterCondition,
+} from '../../modules/datalist';
 
 let handleId: NodeJS.Timeout;
 const delayTime = 500;
 
-export default function setConditionAdapter(
+export function setBasicConditionAdapter(
   dispatch: Dispatch
-): (condition: Partial<FilterCondition>) => void {
-  return (condition: Partial<FilterCondition>) => {
-    dispatch(datalistActions.setCondition(condition));
+): (condition: Partial<BasicFilterCondition>) => void {
+  return (condition: Partial<BasicFilterCondition>) => {
+    dispatch(datalistActions.setBasicCondition(condition));
+    clearTimeout(handleId);
+    handleId = setTimeout(() => {
+      dispatch(datalistActions.applyCondition());
+    }, delayTime);
+  };
+}
+
+export function setDetailConditionAdapter(
+  dispatch: Dispatch
+): (condition: Partial<DetailFilterCondition>) => void {
+  return (condition: Partial<DetailFilterCondition>) => {
+    dispatch(datalistActions.setDetailCondition(condition));
     clearTimeout(handleId);
     handleId = setTimeout(() => {
       dispatch(datalistActions.applyCondition());

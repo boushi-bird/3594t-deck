@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import setConditionAdapter from '../Common/setConditionAdapter';
-import toggleCheckList from '../Common/toggleCheckList';
+import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
+import { toggleBasicCheckList } from '../Common/toggleCheckList';
 import {
-  DatalistState,
-  FilterCondition,
-  FilterConditionKey,
+  FilterItem,
+  BasicFilterCondition,
+  BasicFilterConditionKey,
 } from '../../modules/datalist';
 import { State } from '../../store';
 import SimpleFilter, {
@@ -13,13 +13,14 @@ import SimpleFilter, {
   DispatchFromProps,
 } from './SimpleFilter';
 
-interface ContainerDispatchFromProps {
-  setCondition: (condition: Partial<FilterCondition>) => void;
+interface ContainerStateFromProps {
+  belongStates: FilterItem[];
+  basicFilterCondition: BasicFilterCondition;
+  deckCardBelongState?: string;
 }
 
-interface ContainerStateFromProps {
-  datalistState: DatalistState;
-  deckCardBelongState?: string;
+interface ContainerDispatchFromProps {
+  setCondition: (condition: Partial<BasicFilterCondition>) => void;
 }
 
 export default connect<
@@ -35,52 +36,32 @@ export default connect<
     const deckCardBelongState =
       deckCard != null ? deckCard.belongState : undefined;
     return {
-      datalistState: state.datalistReducer,
+      belongStates: state.datalistReducer.filterContents.belongStates,
+      basicFilterCondition: state.datalistReducer.filterCondition.basic,
       deckCardBelongState,
     };
   },
-  (dispatch: Dispatch) => ({ setCondition: setConditionAdapter(dispatch) }),
+  (dispatch: Dispatch) => ({
+    setCondition: setBasicConditionAdapter(dispatch),
+  }),
   (state, actions) => {
-    const { deckCardBelongState, datalistState } = state;
+    const { deckCardBelongState, belongStates, basicFilterCondition } = state;
     let searchByDeck = false;
-    let filterCondition = datalistState.filterCondition.belongStates;
+    let filterCondition = basicFilterCondition.belongStates;
     if (deckCardBelongState != null) {
       searchByDeck = true;
       filterCondition = [deckCardBelongState];
     }
     return {
+      filterContents: belongStates,
       filterCondition,
-      filterContents: datalistState.filterContents.belongStates,
       searchByDeck,
-      toggleCheckList: (key: FilterConditionKey, value: string) => {
-        actions.setCondition(toggleCheckList(datalistState, key, value));
+      toggleCheckList: (key: BasicFilterConditionKey, value: string) => {
+        actions.setCondition(
+          toggleBasicCheckList(basicFilterCondition, key, value)
+        );
       },
     };
   },
-  {
-    areStatePropsEqual: (nextStateProps, prevStateProps) => {
-      const nextDatalistState = nextStateProps.datalistState;
-      const prevDatalistState = prevStateProps.datalistState;
-      if (
-        nextDatalistState.filterCondition.belongStates !==
-        prevDatalistState.filterCondition.belongStates
-      ) {
-        return false;
-      }
-      if (
-        nextDatalistState.filterContents.belongStates !==
-        prevDatalistState.filterContents.belongStates
-      ) {
-        return false;
-      }
-      if (
-        nextStateProps.deckCardBelongState !==
-        prevStateProps.deckCardBelongState
-      ) {
-        return false;
-      }
-      return true;
-    },
-    areMergedPropsEqual: () => false,
-  }
+  { areMergedPropsEqual: () => false }
 )(SimpleFilter);

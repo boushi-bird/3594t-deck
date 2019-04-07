@@ -2,9 +2,9 @@ import './BaseFilter.css';
 import React from 'react';
 import classNames from 'classnames';
 import {
-  DatalistState,
-  FilterCondition,
-  FilterConditionKey,
+  FilterContents,
+  BasicFilterCondition,
+  BasicFilterConditionKey,
 } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 import SkillButtonList from '../../components/SkillButtonList';
@@ -13,16 +13,16 @@ import NumberSelect from '../../components/NumberSelect';
 import CostRatioBaseForce from '../../components/CostRatioBaseForce';
 
 export interface StateFromProps {
-  filterCondition: FilterCondition;
-  filterContents: DatalistState['filterContents'];
+  filterCondition: BasicFilterCondition;
+  filterContents: FilterContents;
   searchByDeckBelongState: boolean;
   searchByDeckCost: boolean;
   searchByDeckUnitType: boolean;
 }
 
 export interface DispatchFromProps {
-  setCondition: (condition: Partial<FilterCondition>) => void;
-  toggleCheckList: (key: FilterConditionKey, value: string) => void;
+  setCondition: (condition: Partial<BasicFilterCondition>) => void;
+  toggleCheckList: (key: BasicFilterConditionKey, value: string) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
