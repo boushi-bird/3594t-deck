@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Omit } from 'type-fest';
 import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleBasicCheckList } from '../Common/toggleCheckList';
 import {
@@ -19,7 +20,7 @@ interface ContainerStateFromProps {
 
 export default connect<
   ContainerStateFromProps,
-  Pick<DispatchFromProps, Exclude<keyof DispatchFromProps, 'toggleCheckList'>>,
+  Omit<DispatchFromProps, 'toggleCheckList'>,
   {},
   StateFromProps & DispatchFromProps
 >(

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Omit } from 'type-fest';
 import { setDetailConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleDetailCheckList } from '../Common/toggleCheckList';
 import { DetailFilterConditionKey } from '../../modules/datalist';
@@ -11,7 +12,7 @@ import DetailFilter, {
 
 export default connect<
   StateFromProps,
-  Pick<DispatchFromProps, Exclude<keyof DispatchFromProps, 'toggleCheckList'>>,
+  Omit<DispatchFromProps, 'toggleCheckList'>,
   {},
   StateFromProps & DispatchFromProps
 >(

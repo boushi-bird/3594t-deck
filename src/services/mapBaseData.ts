@@ -1,3 +1,4 @@
+import { Omit } from 'type-fest';
 import { BaseData as RawBaseData } from './types/baseData';
 
 type RawGeneral = RawBaseData['GENERAL'][number];
@@ -19,8 +20,7 @@ export interface FilterItem extends Item, IdItem {}
 
 type RawStrategy = RawBaseData['STRAT'][number];
 
-interface Strategy
-  extends Pick<RawStrategy, Exclude<keyof RawStrategy, 'key'>> {}
+interface Strategy extends Omit<RawStrategy, 'key'> {}
 
 interface GeneralProps {
   /** 登場弾(メジャー) */

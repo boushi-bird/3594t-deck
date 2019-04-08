@@ -1,4 +1,5 @@
 import { ActionType, createAction } from 'typesafe-actions';
+import { Omit } from 'type-fest';
 
 export const MAX_DECK_CARD_COUNT = 8;
 
@@ -12,8 +13,7 @@ export interface DeckCardGeneral {
 
 type PartialDeckCard = Partial<DeckCardGeneral>;
 
-export interface DeckCard
-  extends Pick<PartialDeckCard, Exclude<keyof PartialDeckCard, 'cost'>> {
+export interface DeckCard extends Omit<PartialDeckCard, 'cost'> {
   cost: string;
 }
 

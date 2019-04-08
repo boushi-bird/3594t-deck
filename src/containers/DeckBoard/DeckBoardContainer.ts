@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
+import { Omit } from 'type-fest';
 import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
 import {
   deckActions,
@@ -25,10 +26,7 @@ interface ContainerStateFromProps {
 }
 
 interface ContainerDispatchFromProps
-  extends Pick<
-    DispatchFromProps,
-    Exclude<keyof DispatchFromProps, 'addDeckDummy' | 'toggleSearch'>
-  > {
+  extends Omit<DispatchFromProps, 'addDeckDummy' | 'toggleSearch'> {
   rawAddDeckDummy: typeof deckActions['addDeckDummy'];
   resetPage: () => void;
   searchByDeck: (index: number) => void;
