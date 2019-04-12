@@ -1176,6 +1176,8 @@
     - license: MIT
  - **[isobject@3.0.1](https://github.com/jonschlinkert/isobject)**
     - license: MIT
+ - **[jaco@3.0.0](https://github.com/jaco-project/jaco-js)**
+    - license: MIT
  - **[js-levenshtein@1.1.6](https://github.com/gustf/js-levenshtein)**
     - license: MIT
  - **[js-tokens@4.0.0](https://github.com/lydell/js-tokens)**
