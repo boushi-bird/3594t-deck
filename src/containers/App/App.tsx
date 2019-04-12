@@ -12,6 +12,7 @@ import CardList from '../CardList';
 import SimpleFilter from '../SimpleFilter';
 import BaseFilter from '../BaseFilter';
 import DetailFilter from '../DetailFilter';
+import StrategyFilter from '../StrategyFilter';
 import Dialog from '../Dialog';
 
 export interface StateFromProps extends WindowState {
@@ -125,6 +126,14 @@ export default class App extends React.PureComponent<Props> {
               ])}
             >
               <DetailFilter />
+            </div>
+            <div
+              className={classNames([
+                'card-filter-content',
+                { active: activeFilter === 'STRAT' },
+              ])}
+            >
+              <StrategyFilter />
             </div>
           </div>
         </div>

@@ -1,0 +1,18 @@
+@import '../../defines.css';
+
+.button.filter-item.strategy-category-button {
+  height: 58px;
+}
+
+.multiline-label {
+  & .main-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--filter-button-color);
+  }
+
+  & .sub-name {
+    display: block;
+    font-size: 12px;
+  }
+}

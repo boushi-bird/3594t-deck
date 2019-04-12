@@ -1,0 +1,6 @@
+@import '../../defines.css';
+
+.search-textbox {
+  width: 90%;
+  margin: 0 3px;
+}

@@ -28,7 +28,7 @@ const config: Configuration = {
   },
   devtool: isProduction ? false : 'inline-source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.js', '.ts', '.tsx'],
   },
   optimization: {
     minimizer: [

@@ -33,4 +33,8 @@
   & .tab-button-detail {
     background-color: var(--filter-tab-button-detail-color);
   }
+
+  & .tab-button-strat {
+    background-color: var(--filter-tab-button-strat-color);
+  }
 }

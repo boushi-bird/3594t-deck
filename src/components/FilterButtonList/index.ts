@@ -1,1 +1,1 @@
-export { default } from './FilterButtonList';
+export { default, ButtonItem } from './FilterButtonList';

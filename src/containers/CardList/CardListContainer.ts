@@ -2,14 +2,16 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { datalistActions, FilterCondition } from '../../modules/datalist';
 import { deckActions, DeckCard, DeckCardGeneral } from '../../modules/deck';
-import { General } from '../../services/mapBaseData';
+import { General, Strategy } from '../../services/mapBaseData';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
+import satisfyStrategy from './satisfyStrategy';
 import satisfyGeneral from './satisfyGeneral';
 
 interface ContainerStateFromProps {
   generals: General[];
+  strategies: Strategy[];
   currentPage: number;
   pageLimit: number;
   filterCondition: FilterCondition;
@@ -40,6 +42,7 @@ export default connect<
 >(
   (state: State) => ({
     generals: state.datalistReducer.generals,
+    strategies: state.datalistReducer.strategies,
     currentPage: state.datalistReducer.currentPage,
     pageLimit: state.datalistReducer.pageLimit,
     filterCondition: state.datalistReducer.effectiveFilterCondition,
@@ -60,6 +63,7 @@ export default connect<
   (state, actions) => {
     const {
       generals,
+      strategies,
       currentPage,
       pageLimit,
       filterCondition: rawFilterCondition,
@@ -103,11 +107,28 @@ export default connect<
         filterCondition.basic.unitTypes = [deckCard.unitType];
       }
     }
-    let searchedGeneralIds = generals
-      .filter(general => {
-        return satisfyGeneral(general, filterCondition);
-      })
-      .map(v => v.id);
+    const searchedStrategies = strategies.filter(strategy => {
+      return satisfyStrategy(strategy, filterCondition.strategies);
+    });
+    let searchedGeneralIds: string[] = [];
+    if (searchedStrategies.length > 0) {
+      // 計略が総計略数と同じなら計略IDによる絞り込みはしない
+      const searchedStrategyIds: string[] | undefined =
+        searchedStrategies.length !== strategies.length
+          ? searchedStrategies.map(v => v.id)
+          : undefined;
+      searchedGeneralIds = generals
+        .filter(general => {
+          if (
+            searchedStrategyIds &&
+            !searchedStrategyIds.includes(general.strategy.id)
+          ) {
+            return false;
+          }
+          return satisfyGeneral(general, filterCondition);
+        })
+        .map(v => v.id);
+    }
     const searchedAll = searchedGeneralIds.length;
     const searchedOffset = (currentPage - 1) * pageLimit;
     const hasPrev = searchedOffset > 0;
@@ -128,6 +149,8 @@ export default connect<
       hasPrev,
       hasNext,
       enabledAddDeck,
+      showStrategyExplanation:
+        filterCondition.strategies.showStrategyExplanation,
       addDeckGeneral: (card: DeckCardGeneral) => {
         if (!enabledAddDeck) {
           return;
@@ -148,6 +171,12 @@ export default connect<
         return false;
       }
       if (nextMergedProps.enabledAddDeck !== prevMergedProps.enabledAddDeck) {
+        return false;
+      }
+      if (
+        nextMergedProps.showStrategyExplanation !==
+        prevMergedProps.showStrategyExplanation
+      ) {
         return false;
       }
       if (nextMergedProps.searchedAll !== prevMergedProps.searchedAll) {

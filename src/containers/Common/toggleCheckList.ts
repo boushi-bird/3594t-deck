@@ -4,6 +4,8 @@ import {
   BasicFilterConditionKey,
   DetailFilterCondition,
   DetailFilterConditionKey,
+  StrategiesFilterCondition,
+  StrategiesFilterConditionKey,
   FilterItem,
 } from '../../modules/datalist';
 
@@ -128,4 +130,18 @@ export function toggleDetailCheckList(
     default:
       return conditions;
   }
+}
+
+export function toggleStrategyCheckList(
+  filterCondition: StrategiesFilterCondition,
+  key: StrategiesFilterConditionKey,
+  value: string
+): Partial<StrategiesFilterCondition> {
+  const targetCondition = filterCondition[key];
+  if (!(targetCondition instanceof Array)) {
+    console.warn(`${key} is not array.`);
+    return {};
+  }
+  const { targetValue } = toggleCheckList(value, targetCondition);
+  return { [key]: targetValue };
 }

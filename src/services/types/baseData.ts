@@ -1,3 +1,16 @@
+interface Enishi {
+  readonly fire_10t: string;
+  readonly hire: string;
+  readonly rarity: string;
+}
+
+interface ExRank {
+  readonly code: string;
+  readonly count: string;
+  readonly key: string;
+  readonly name: string;
+}
+
 interface General {
   readonly add_version: string;
   readonly belong: number;
@@ -46,6 +59,11 @@ interface GenSub {
   readonly name_short: string;
 }
 
+interface Illustrator {
+  readonly idx: string;
+  readonly name: string;
+}
+
 interface Personal {
   readonly azana: string;
   readonly azana_ruby: string;
@@ -81,6 +99,20 @@ interface Strat {
   readonly strat_time: string;
 }
 
+interface StratCategory {
+  readonly code: string;
+  readonly key: string;
+  readonly name: string;
+}
+
+interface StratRange {
+  readonly code: string;
+}
+
+interface StratTime {
+  readonly name: string;
+}
+
 interface UnitType {
   readonly code: string;
   readonly key: string;
@@ -91,26 +123,34 @@ interface VerType {
   readonly name: string;
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+interface VoiceActor {
+  readonly idx: string;
+  readonly name: string;
+}
+
 export interface BaseData {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   readonly ACTIVE_JEWEL: ReadonlyArray<any>;
   readonly ACTIVE_JEWEL_TYPE: ReadonlyArray<any>;
   readonly BGM: ReadonlyArray<any>;
+  /* eslint-enable @typescript-eslint/no-explicit-any */
   readonly COST: {
     readonly [key: number]: { readonly code: string; readonly name: string };
   };
   readonly DATA: ReadonlyArray<{ code: string }>;
-  readonly ENISHI: ReadonlyArray<any>;
-  readonly EXT: ReadonlyArray<any>;
-  readonly EX_RANK: ReadonlyArray<any>;
+  readonly ENISHI: ReadonlyArray<Enishi>;
+  readonly EXT: ReadonlyArray<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  readonly EX_RANK: ReadonlyArray<ExRank>;
   readonly GENERAL: ReadonlyArray<General>;
   readonly GENERAL_TYPE: ReadonlyArray<GeneralType>;
   readonly GEN_MAIN: ReadonlyArray<GenMain>;
   readonly GEN_SUB: ReadonlyArray<GenSub>;
-  readonly ILLUSTRATOR: ReadonlyArray<any>;
+  readonly ILLUSTRATOR: ReadonlyArray<Illustrator>;
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   readonly PARAM: ReadonlyArray<any>;
   readonly PASSIVE_JEWEL: ReadonlyArray<any>;
   readonly PATH: ReadonlyArray<any>;
+  /* eslint-enable @typescript-eslint/no-explicit-any */
   readonly PERSONAL: ReadonlyArray<Personal>;
   readonly RARITY: {
     readonly [key: string]: { readonly code: string; readonly name: string };
@@ -118,12 +158,11 @@ export interface BaseData {
   readonly SKILL: ReadonlyArray<Skill>;
   readonly STATE: ReadonlyArray<State>;
   readonly STRAT: ReadonlyArray<Strat>;
-  readonly STRAT_CATEGORY: ReadonlyArray<any>;
-  readonly STRAT_RANGE: ReadonlyArray<any>;
-  readonly STRAT_TIME: ReadonlyArray<any>;
-  readonly TACTICS: ReadonlyArray<any>;
+  readonly STRAT_CATEGORY: ReadonlyArray<StratCategory>;
+  readonly STRAT_RANGE: ReadonlyArray<StratRange>;
+  readonly STRAT_TIME: ReadonlyArray<StratTime>;
+  readonly TACTICS: ReadonlyArray<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
   readonly UNIT_TYPE: ReadonlyArray<UnitType>;
   readonly VER_TYPE: ReadonlyArray<VerType>;
-  readonly VOICE_ACTOR: ReadonlyArray<any>;
+  readonly VOICE_ACTOR: ReadonlyArray<VoiceActor>;
 }
-/* eslint-enable @typescript-eslint/no-explicit-any */

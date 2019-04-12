@@ -1,4 +1,3 @@
-import { Omit } from 'type-fest';
 import { BaseData as RawBaseData } from './types/baseData';
 
 type RawGeneral = RawBaseData['GENERAL'][number];
@@ -18,9 +17,17 @@ interface Item {
 
 export interface FilterItem extends Item, IdItem {}
 
-type RawStrategy = RawBaseData['STRAT'][number];
-
-interface Strategy extends Omit<RawStrategy, 'key'> {}
+export interface Strategy {
+  readonly id: string;
+  readonly code: string;
+  readonly explanation: string;
+  readonly morale: number;
+  readonly name: string;
+  readonly nameRuby: string;
+  readonly stratCategory: string;
+  readonly stratRange: string;
+  readonly stratTime: string;
+}
 
 interface GeneralProps {
   /** 登場弾(メジャー) */
@@ -52,7 +59,7 @@ interface GeneralProps {
   /** 兵種 */
   readonly unitType: Item;
   /** 計略 */
-  readonly strategy?: Strategy;
+  readonly strategy: Strategy;
 }
 
 export interface General extends IdItem, GeneralProps {
@@ -104,7 +111,7 @@ class GeneralImpl implements General {
   public readonly skills: ReadonlyArray<FilterItem>;
   public readonly state: Item;
   public readonly unitType: Item;
-  public readonly strategy?: Strategy;
+  public readonly strategy: Strategy;
   public constructor(id: string, raw: RawGeneral, option: GeneralProps) {
     this.id = id;
     this.raw = raw;
@@ -155,6 +162,12 @@ export interface FilterContents {
   versions: FilterItem[][];
   /** 登場弾(メジャーバージョン) */
   majorVersions: FilterItem[];
+  /** 計略カテゴリー */
+  strategyCategories: FilterItem[];
+  /** 計略範囲 */
+  strategyRanges: FilterItem[];
+  /** 計略効果時間 */
+  strategyTimes: FilterItem[];
 }
 
 export interface BaseData {
@@ -201,6 +214,18 @@ const toItem = (
 
 const emptyItem: Item = {
   name: '',
+};
+
+const emptyStrategy: Strategy = {
+  id: '',
+  code: '',
+  explanation: '',
+  morale: 1,
+  name: '',
+  nameRuby: '',
+  stratCategory: '',
+  stratRange: '',
+  stratTime: '',
 };
 
 const findById = (filterItems: FilterItem[], id: string): Item => {
@@ -270,10 +295,29 @@ export default (baseData: RawBaseData): BaseData => {
     }
   );
   // 計略
-  const strategies = convertIdItem(baseData.STRAT, idIsKey, (strat, id) => ({
-    id,
-    ...strat,
-  }));
+  const strategies: Strategy[] = convertIdItem(
+    baseData.STRAT,
+    idIsKey,
+    (strat, id) => {
+      const {
+        morale,
+        name_ruby: nameRuby,
+        strat_category: stratCategory,
+        strat_range: stratRange,
+        strat_time: stratTime,
+        ...otherStrat
+      } = strat;
+      return {
+        id,
+        ...otherStrat,
+        morale: parseInt(morale),
+        nameRuby,
+        stratCategory,
+        stratRange,
+        stratTime,
+      };
+    }
+  );
   // 登場弾
   const versions: { [key: number]: number[] } = {};
   // 武将
@@ -310,7 +354,7 @@ export default (baseData: RawBaseData): BaseData => {
       ),
       state: findById(belongStates, raw.state),
       unitType: findById(unitTypes, raw.unit_type),
-      strategy: strategies.find(v => v.id === raw.strat),
+      strategy: strategies.find(v => v.id === raw.strat) || emptyStrategy,
     });
   });
   const majorVersions = Object.keys(versions).map(v => parseInt(v));
@@ -321,6 +365,21 @@ export default (baseData: RawBaseData): BaseData => {
   majorVersions.forEach(major => {
     versions[major].sort(sortNumber);
   });
+  const strategyCategories = convertIdItem(
+    baseData.STRAT_CATEGORY,
+    idIsKey,
+    toItem
+  );
+  const strategyRanges = convertIdItem(
+    baseData.STRAT_RANGE,
+    idIsIndex,
+    (s, id) => ({
+      id,
+      code: s.code,
+      name: '',
+    })
+  );
+  const strategyTimes = convertIdItem(baseData.STRAT_TIME, idIsIndex, toItem);
   return {
     filterContents: {
       belongStates,
@@ -348,6 +407,9 @@ export default (baseData: RawBaseData): BaseData => {
         v => `${v}`,
         (v, id) => ({ id, name: createVersionLabel(v) })
       ),
+      strategyCategories,
+      strategyRanges,
+      strategyTimes,
     },
     generals,
     strategies,

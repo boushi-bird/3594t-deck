@@ -4,6 +4,7 @@ import {
   datalistActions,
   BasicFilterCondition,
   DetailFilterCondition,
+  StrategiesFilterCondition,
 } from '../../modules/datalist';
 
 let handleId: NodeJS.Timeout;
@@ -26,6 +27,18 @@ export function setDetailConditionAdapter(
 ): (condition: Partial<DetailFilterCondition>) => void {
   return (condition: Partial<DetailFilterCondition>) => {
     dispatch(datalistActions.setDetailCondition(condition));
+    clearTimeout(handleId);
+    handleId = setTimeout(() => {
+      dispatch(datalistActions.applyCondition());
+    }, delayTime);
+  };
+}
+
+export function setStrategiesFilterConditionAdapter(
+  dispatch: Dispatch
+): (condition: Partial<StrategiesFilterCondition>) => void {
+  return (condition: Partial<StrategiesFilterCondition>) => {
+    dispatch(datalistActions.setStrategiesCondition(condition));
     clearTimeout(handleId);
     handleId = setTimeout(() => {
       dispatch(datalistActions.applyCondition());

@@ -1,5 +1,6 @@
 import './GeneralCard.css';
 import React from 'react';
+import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
@@ -10,6 +11,7 @@ interface Props {
   general: DatalistState['generals'][number];
   show?: boolean;
   enabledAddDeck: boolean;
+  showStrategyExplanation: boolean;
   onAddDeck: (card: DeckCardGeneral) => void;
 }
 
@@ -29,7 +31,12 @@ export default class GeneralCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { general, show, enabledAddDeck } = this.props;
+    const {
+      general,
+      show,
+      enabledAddDeck,
+      showStrategyExplanation,
+    } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
@@ -54,15 +61,16 @@ export default class GeneralCard extends React.PureComponent<Props> {
         </span>
       );
     }
-    let stratName = '';
-    let stratMorale = '';
-    let stratExplanation = '';
-    if (general.strategy) {
-      stratName = general.strategy.name;
-      stratMorale = general.strategy.morale;
-      stratExplanation = general.strategy.explanation;
-      stratExplanation = stratExplanation.replace(/\<br\s*\/?\>/g, '\n');
-    }
+    const stratName = general.strategy.name;
+    const stratMorale = general.strategy.morale;
+    const stratExplanation = general.strategy.explanation.replace(
+      /\<br\s*\/?\>/g,
+      '\n'
+    );
+    const stratExplanationElements: JSX.Element[] = [];
+    stratExplanation.split('\n').forEach((exp, i) => {
+      stratExplanationElements.push(<span key={i}>{exp}</span>);
+    });
     const genMains: JSX.Element[] = [];
     general.genMains.forEach((genMain, i) => {
       genMains.push(
@@ -113,8 +121,19 @@ export default class GeneralCard extends React.PureComponent<Props> {
           {general.conquest}
         </span>
         <span className="skills">{skills}</span>
-        <span className="strategy" data-label="計略名" title={stratExplanation}>
+        <span
+          className={classNames('strategy', { show: !showStrategyExplanation })}
+          data-label="計略名"
+          title={stratExplanation}
+        >
           {stratName}
+        </span>
+        <span
+          className={classNames('strategy-explanation', {
+            show: showStrategyExplanation,
+          })}
+        >
+          {stratExplanationElements}
         </span>
         <span className="strategy-morale" data-label1="必要" data-label2="士気">
           {stratMorale}

@@ -3,9 +3,10 @@ import React from 'react';
 import classNames from 'classnames';
 import { AllFilterConditionKey } from '../../modules/datalist';
 
-interface ButtonItem {
+export interface ButtonItem {
   id: string;
   name: string;
+  code?: string;
   nameShort?: string;
   color?: string;
 }
@@ -43,9 +44,13 @@ export default class FilterButtonList extends React.PureComponent<Props> {
     onClickItem(itemName, value);
   };
 
+  protected createLabel(item: ButtonItem): React.ReactNode | React.ReactNode[] {
+    return item.nameShort || item.name;
+  }
+
   protected createButton(
     value: string,
-    label: string,
+    label: React.ReactNode | React.ReactNode[],
     style: React.CSSProperties,
     disabled: boolean,
     className: string
@@ -71,7 +76,7 @@ export default class FilterButtonList extends React.PureComponent<Props> {
     const disabled = propDisabled != null && propDisabled;
     items.forEach(item => {
       const value = item.id;
-      const label = item.nameShort || item.name;
+      const label = this.createLabel(item);
       const style: React.CSSProperties = {};
       if (item.color) {
         style.backgroundColor = item.color;

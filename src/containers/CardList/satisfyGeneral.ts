@@ -1,5 +1,32 @@
 import { General } from '../../services/mapBaseData';
 import { FilterCondition } from '../../modules/datalist';
+import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
+import toBasicLetter from 'jaco/fn/toNarrowKatakana';
+
+function includeSearchText(
+  target: string | undefined,
+  searchText: string
+): boolean {
+  if (target == null) {
+    return false;
+  }
+  const search = searchText.split(/\s+/g).filter(s => s.length > 0);
+  return search.some(s => target.includes(s));
+}
+
+function includeSearchTextRuby(
+  targetRuby: string | undefined,
+  searchText: string
+): boolean {
+  if (targetRuby == null) {
+    return false;
+  }
+  const search = searchText
+    .split(/\s+/g)
+    .filter(s => s.length > 0)
+    .map(s => toNarrowKatakana(toBasicLetter(s), true).replace(/[ﾞﾟ]/g, ''));
+  return search.some(s => targetRuby.includes(s));
+}
 
 export default (
   general: General,
@@ -21,6 +48,7 @@ export default (
     conquestMax,
     skills,
     skillsAnd,
+    searchText,
   } = filterCondition.basic;
   const { raw } = general;
   // 勢力
@@ -144,6 +172,17 @@ export default (
     (pockets[0] === '1') !== (raw.pocket_code !== '')
   ) {
     return false;
+  }
+  if (searchText.length > 0) {
+    if (general.personal == null) {
+      return false;
+    }
+    if (
+      !includeSearchText(general.personal.name, searchText) &&
+      !includeSearchTextRuby(general.personal.name_ruby, searchText)
+    ) {
+      return false;
+    }
   }
   return true;
 };

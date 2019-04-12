@@ -11,6 +11,7 @@ import SkillButtonList from '../../components/SkillButtonList';
 import SwitchItem from '../../components/SwitchItem';
 import NumberSelect from '../../components/NumberSelect';
 import CostRatioBaseForce from '../../components/CostRatioBaseForce';
+import SearchTextBox from '../../components/SearchTextBox';
 
 export interface StateFromProps {
   filterCondition: BasicFilterCondition;
@@ -187,6 +188,15 @@ export default class BaseFilter extends React.PureComponent<Props> {
             onClickItem={toggleCheckList}
             square={true}
           />
+        </section>
+        <section className="filter-section">
+          <h2 className="title">武将名検索</h2>
+          <SearchTextBox
+            itemName="searchText"
+            value={filterCondition.searchText}
+            setCondition={setCondition}
+          />
+          <div>スペース区切りでOR検索 読み仮名(ひらがな、カタカナ)対応</div>
         </section>
       </div>
     );

@@ -3,6 +3,7 @@ import { ActionType, createAction } from 'typesafe-actions';
 export const filterTabNames = {
   BASIC: '基本',
   DETAIL: '詳細',
+  STRAT: '計略',
 };
 
 export type FilterTab = keyof typeof filterTabNames;

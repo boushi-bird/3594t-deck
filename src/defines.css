@@ -27,8 +27,9 @@
   --general-skill-bg-color: #e2ab04;
   --general-skill-border-color: black;
   --general-no-skill-bg-color: rgba(0, 0, 0, 0.2);
-  --filter-tab-button-basic-color: #636;
-  --filter-tab-button-detail-color: #903;
+  --filter-tab-button-basic-color: #6048ad;
+  --filter-tab-button-detail-color: #e55ba2;
+  --filter-tab-button-strat-color: #372496;
   --action-button-color: white;
   --action-button-ok-bg-color: #e55ba2;
   --action-button-cancel-bg-color: #1656f9;
@@ -49,7 +50,7 @@
 }
 
 @custom-media --app-min screen and (max-width: 630px);
-@custom-media --small-device-w screen and (max-width: 980px);
+@custom-media --small-device-w screen and (max-width: 1080px);
 @custom-media --small-device-h screen and (max-height: 600px);
 @custom-media --small-device --small-device-w, --small-device-h;
 @custom-media --oblong-device-w screen and (min-width: 1260px);

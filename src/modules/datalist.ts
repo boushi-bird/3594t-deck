@@ -1,5 +1,11 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { BaseData, FilterItem, FilterContents } from '../services/mapBaseData';
+import {
+  General,
+  Strategy,
+  BaseData,
+  FilterItem,
+  FilterContents,
+} from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 export type FilterItem = FilterItem;
@@ -61,18 +67,49 @@ export interface DetailFilterCondition {
   pockets: string[];
 }
 
+export interface StrategiesFilterCondition {
+  /** 計略表示切り替え */
+  showStrategyExplanation: boolean;
+  /** 必要士気 最小 */
+  moraleMin: number;
+  /** 必要士気 最大 */
+  moraleMax: number;
+  /** カテゴリ */
+  strategyCategories: string[];
+  /** 範囲 */
+  strategyRanges: string[];
+  /** 効果時間 */
+  strategyTimes: string[];
+  /** 計略名検索 */
+  strategySearchName: string;
+  /** 計略説明検索 */
+  strategySearchExplanation: string;
+}
+
 export interface FilterCondition {
   basic: BasicFilterCondition;
   detail: DetailFilterCondition;
+  strategies: StrategiesFilterCondition;
 }
 
-export type AllFilterCondition = BasicFilterCondition | DetailFilterCondition;
+interface PurposeCondition {
+  purposeBoolean: boolean;
+}
+
+export type AllFilterCondition =
+  | BasicFilterCondition
+  | DetailFilterCondition
+  | StrategiesFilterCondition
+  | PurposeCondition;
 
 export type BasicFilterConditionKey = keyof BasicFilterCondition;
 export type DetailFilterConditionKey = keyof DetailFilterCondition;
+export type StrategiesFilterConditionKey = keyof StrategiesFilterCondition;
 export type AllFilterConditionKey =
   | BasicFilterConditionKey
-  | DetailFilterConditionKey;
+  | DetailFilterConditionKey
+  | StrategiesFilterConditionKey
+  | keyof PurposeCondition;
 
 const initialBasicFilterCondition: BasicFilterCondition = {
   belongStates: [],
@@ -111,9 +148,21 @@ const initialDetailFilterCondition: DetailFilterCondition = {
   pockets: [],
 };
 
+const initialStrategiesFilterCondition: StrategiesFilterCondition = {
+  showStrategyExplanation: false,
+  moraleMin: 1,
+  moraleMax: 12,
+  strategyCategories: [],
+  strategyRanges: [],
+  strategyTimes: [],
+  strategySearchName: '',
+  strategySearchExplanation: '',
+};
+
 const initialFilterCondition: FilterCondition = {
   basic: initialBasicFilterCondition,
   detail: initialDetailFilterCondition,
+  strategies: initialStrategiesFilterCondition,
 };
 
 const initialFilterContents: FilterContents = {
@@ -127,13 +176,17 @@ const initialFilterContents: FilterContents = {
   varTypes: [],
   versions: [],
   majorVersions: [],
+  strategyCategories: [],
+  strategyRanges: [],
+  strategyTimes: [],
 };
 
 export interface DatalistState {
   filterCondition: FilterCondition;
   effectiveFilterCondition: FilterCondition;
   filterContents: FilterContents;
-  generals: BaseData['generals'];
+  generals: General[];
+  strategies: Strategy[];
   currentPage: number;
   pageLimit: number;
 }
@@ -143,6 +196,7 @@ const initialState: DatalistState = {
   effectiveFilterCondition: initialFilterCondition,
   filterContents: initialFilterContents,
   generals: [],
+  strategies: [],
   currentPage: 1,
   pageLimit: 50,
 };
@@ -159,6 +213,15 @@ export const datalistActions = {
     'SET_DETAIL_CONDITION',
     action => (condition: Partial<DetailFilterCondition>) =>
       action({ condition })
+  ),
+  setStrategiesCondition: createAction(
+    'SET_STRATEGIES_CONDITION',
+    action => (condition: Partial<StrategiesFilterCondition>) =>
+      action({ condition })
+  ),
+  setShowStrategyExplanation: createAction(
+    'SET_SHOW_STRATEGY_EXPLANATION',
+    action => (show: boolean) => action(show)
   ),
   setBaseData: createAction('SET_BASE_DATA', action => (baseData: BaseData) =>
     action({ baseData })
@@ -216,9 +279,33 @@ export default function datalistReducer(
         },
       };
     }
+    case 'SET_STRATEGIES_CONDITION': {
+      return {
+        ...state,
+        filterCondition: {
+          ...state.filterCondition,
+          strategies: {
+            ...state.filterCondition.strategies,
+            ...actions.payload.condition,
+          },
+        },
+      };
+    }
+    case 'SET_SHOW_STRATEGY_EXPLANATION': {
+      return {
+        ...state,
+        filterCondition: {
+          ...state.filterCondition,
+          strategies: {
+            ...state.filterCondition.strategies,
+            showStrategyExplanation: actions.payload,
+          },
+        },
+      };
+    }
     case 'SET_BASE_DATA': {
       const baseData = actions.payload.baseData;
-      const { generals, filterContents } = baseData;
+      const { generals, strategies, filterContents } = baseData;
       return {
         ...state,
         filterCondition: initialFilterCondition,
@@ -226,6 +313,7 @@ export default function datalistReducer(
         currentPage: initialState.currentPage,
         filterContents,
         generals,
+        strategies,
       };
     }
     case 'RESET_PAGE': {

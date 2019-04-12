@@ -1,11 +1,12 @@
 import './SkillButtonList.css';
+import React from 'react';
 import classNames from 'classnames';
 import FilterButtonList from '../FilterButtonList';
 
 export default class SkillButtonList extends FilterButtonList {
   protected createButton(
     value: string,
-    label: string,
+    label: React.ReactNode | React.ReactNode[],
     style: React.CSSProperties,
     disabled: boolean,
     className: string

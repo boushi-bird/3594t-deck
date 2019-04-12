@@ -1,0 +1,10 @@
+@import '../../defines.css';
+
+.button.filter-item.strategy-range-button {
+  width: 80px;
+  height: 80px;
+
+  & .range-image {
+    height: 60px;
+  }
+}
