@@ -2064,6 +2064,8 @@
     - license: MIT
  - **[type-check@0.3.2](https://github.com/gkz/type-check)**
     - license: MIT
+ - **[type-fest@0.3.0](https://github.com/sindresorhus/type-fest)**
+    - license: (MIT OR CC0-1.0)
  - **[type-is@1.6.16](https://github.com/jshttp/type-is)**
     - license: MIT
  - **[typedarray@0.0.6](https://github.com/substack/typedarray)**
