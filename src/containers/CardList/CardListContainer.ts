@@ -25,6 +25,10 @@ interface ContainerDispatchFromProps {
   incrementPage: () => void;
 }
 
+interface PropForMergedPropsEqual {
+  activeIndex?: number;
+}
+
 const arrayEquals = <V>(a: V[], b: V[]): boolean =>
   a.length === b.length && a.every(v => b.includes(v));
 
@@ -32,7 +36,7 @@ export default connect<
   ContainerStateFromProps,
   ContainerDispatchFromProps,
   {},
-  StateFromProps & DispatchFromProps
+  StateFromProps & DispatchFromProps & PropForMergedPropsEqual
 >(
   (state: State) => ({
     generals: state.datalistReducer.generals,
@@ -114,6 +118,7 @@ export default connect<
     );
     const enabledAddDeck = isEnabledAddDeck(deckCards, activeIndex);
     return {
+      activeIndex,
       generals,
       searchedGeneralIds,
       deckPersonals,
@@ -139,6 +144,9 @@ export default connect<
   },
   {
     areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+      if (nextMergedProps.activeIndex !== prevMergedProps.activeIndex) {
+        return false;
+      }
       if (nextMergedProps.enabledAddDeck !== prevMergedProps.enabledAddDeck) {
         return false;
       }
