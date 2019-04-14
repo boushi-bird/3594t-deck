@@ -1,7 +1,7 @@
 import { Strategy } from '../../services/mapBaseData';
 import { StrategiesFilterCondition } from '../../modules/datalist';
 import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
-import toBasicLetter from 'jaco/fn/toNarrowKatakana';
+import toBasicLetter from 'jaco/fn/toBasicLetter';
 
 function includeSearchText(
   target: string | undefined,
