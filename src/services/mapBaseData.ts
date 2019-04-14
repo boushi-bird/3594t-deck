@@ -21,6 +21,7 @@ export interface Strategy {
   readonly id: string;
   readonly code: string;
   readonly explanation: string;
+  readonly rawExplanation: string;
   readonly morale: number;
   readonly name: string;
   readonly nameRuby: string;
@@ -220,6 +221,7 @@ const emptyStrategy: Strategy = {
   id: '',
   code: '',
   explanation: '',
+  rawExplanation: '',
   morale: 1,
   name: '',
   nameRuby: '',
@@ -240,6 +242,16 @@ const plain = <S>(s: (S | undefined)[]): S[] => s.filter(v => v != null) as S[];
 
 const noSkillId = '0';
 const exVerTypeId = '2';
+
+const convertStrategyExplanation = (explanation: string): string => {
+  return (
+    explanation
+      // brタグを改行化
+      .replace(/\<br\s*\/?\>/gi, '\n')
+      // imgタグを除去しaltを表記
+      .replace(/\<img.+?alt=\"(.*?)\".*?\/\>/gi, ' $1 ')
+  );
+};
 
 export default (baseData: RawBaseData): BaseData => {
   // 勢力
@@ -301,6 +313,7 @@ export default (baseData: RawBaseData): BaseData => {
     (strat, id) => {
       const {
         morale,
+        explanation: rawExplanation,
         name_ruby: nameRuby,
         strat_category: stratCategory,
         strat_range: stratRange,
@@ -310,6 +323,8 @@ export default (baseData: RawBaseData): BaseData => {
       return {
         id,
         ...otherStrat,
+        explanation: convertStrategyExplanation(rawExplanation),
+        rawExplanation,
         morale: parseInt(morale),
         nameRuby,
         stratCategory,

@@ -63,10 +63,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
     }
     const stratName = general.strategy.name;
     const stratMorale = general.strategy.morale;
-    const stratExplanation = general.strategy.explanation.replace(
-      /\<br\s*\/?\>/g,
-      '\n'
-    );
+    const stratExplanation = general.strategy.explanation;
     const stratExplanationElements: JSX.Element[] = [];
     stratExplanation.split('\n').forEach((exp, i) => {
       stratExplanationElements.push(<span key={i}>{exp}</span>);
