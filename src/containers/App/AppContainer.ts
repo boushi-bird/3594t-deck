@@ -34,7 +34,7 @@ export default connect<
       dispatch
     );
     return {
-      fetchBaseData: async (): Promise<void> => {
+      appDidLoaded: async (): Promise<void> => {
         const baseData = await loadFromApi();
         // TODO APIからかLocalからか選択してデータ取得させる
         actions.setBaseData(baseData);

@@ -23,7 +23,7 @@ export interface StateFromProps extends WindowState {
 export interface DispatchFromProps {
   clearActiveCard(): void;
   resetConditions(): void;
-  fetchBaseData(): void;
+  appDidLoaded(): void;
   openSideMenu(): void;
   closeSideMenu(): void;
   openFilter(): void;
@@ -36,7 +36,7 @@ type Props = StateFromProps & DispatchFromProps;
 
 export default class App extends React.PureComponent<Props> {
   public componentDidMount(): void {
-    this.props.fetchBaseData();
+    this.props.appDidLoaded();
   }
 
   private handleAppClick = () => {
