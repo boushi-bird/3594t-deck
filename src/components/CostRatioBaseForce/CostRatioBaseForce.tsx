@@ -56,7 +56,7 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
             itemKey="20"
             setCondition={this.handleSetCondition}
             value={costRatioBaseForces['20']}
-            max={8}
+            max={9}
             min={5}
           />
         </label>
