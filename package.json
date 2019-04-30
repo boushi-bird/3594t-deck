@@ -18,6 +18,7 @@
     "fix:es": "eslint --ext .js,.ts,.tsx --fix .",
     "lint:css": "stylelint .",
     "fix:css": "stylelint --fix .",
+    "pretest": "tsc -p extra_modules",
     "test": "jest"
   },
   "author": "boushi-bird <boushi-bird@users.noreply.github.com>",
