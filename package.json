@@ -17,7 +17,8 @@
     "lint:es": "eslint --ext .js,.ts,.tsx .",
     "fix:es": "eslint --ext .js,.ts,.tsx --fix .",
     "lint:css": "stylelint .",
-    "fix:css": "stylelint --fix ."
+    "fix:css": "stylelint --fix .",
+    "test": "jest"
   },
   "author": "boushi-bird <boushi-bird@users.noreply.github.com>",
   "license": "MIT",
@@ -50,6 +51,7 @@
     "@types/clean-webpack-plugin": "^0.1.2",
     "@types/dotenv-webpack": "^1.7.0",
     "@types/html-webpack-plugin": "^3.2.0",
+    "@types/jest": "^24.0.12",
     "@types/lodash-es": "^4.17.3",
     "@types/mini-css-extract-plugin": "^0.2.0",
     "@types/node": "^11.9.4",
@@ -78,6 +80,7 @@
     "eslint-plugin-react": "^7.12.4",
     "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.7.1",
     "js-yaml": "^3.13.1",
     "license-checker": "^25.0.1",
     "mini-css-extract-plugin": "^0.5.0",
@@ -93,6 +96,7 @@
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
     "terser-webpack-plugin": "^1.2.2",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.0.2",
     "tsconfig-paths": "^3.8.0",
@@ -100,5 +104,13 @@
     "webpack": "^4.29.4",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/js-with-babel",
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "tsx"
+    ]
   }
 }

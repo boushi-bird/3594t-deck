@@ -95,7 +95,7 @@ const createVersionLabel = (
   return `第${majorVersion}弾${add}`;
 };
 
-class GeneralImpl implements General {
+export class GeneralImpl implements General {
   public readonly id: string;
   public readonly raw: RawGeneral;
   public readonly majorVersion: number;
