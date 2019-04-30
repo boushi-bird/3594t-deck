@@ -44,6 +44,21 @@ jobs:
           name: Linting
           command: npm run lint
 
+  test:
+
+    docker:
+      - image: circleci/node:10
+
+    working_directory: ~/repo
+
+    steps:
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Unit test
+          command: npm test
+
   build:
 
     docker:
@@ -87,12 +102,16 @@ workflows:
       - lint:
           requires:
             - install
+      - test:
+          requires:
+            - install
       - build:
           requires:
             - install
       - deploy:
           requires:
             - lint
+            - test
             - build
           filters:
             branches:
