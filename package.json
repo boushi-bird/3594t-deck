@@ -107,6 +107,13 @@
   },
   "jest": {
     "preset": "ts-jest/presets/js-with-babel",
+    "moduleNameMapper": {
+      "^jaco(.*)": "<rootDir>/extra_modules/jaco$1"
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/extra_modules/"
+    ],
     "moduleFileExtensions": [
       "js",
       "ts",

@@ -1,3 +1,5 @@
+/extra_modules/*
+!/extra_modules/tsconfig.json
 
 # Created by https://www.gitignore.io/api/node,linux,windows,macos,emacs,vim,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,linux,windows,macos,emacs,vim,visualstudiocode
