@@ -153,7 +153,7 @@ export default connect<
     }
     // 魅力による士気
     const charmCount = skillCounts.get('魅力') || 0;
-    const tolalMoraleByCharm = charmCount * 50;
+    const tolalMoraleByCharm = charmCount * 40;
     // 征圧ランク
     let conquestRank;
     if (totalConquest >= 11) {
@@ -178,7 +178,7 @@ export default connect<
     }
 
     const moraleCount = genMainCounts.get('士気上昇') || 0;
-    const tolalMoraleByMainGen = moraleCount * 50;
+    const tolalMoraleByMainGen = moraleCount * 40;
 
     const wiseCount = genMainCounts.get('知力上昇') || 0;
     const intelligenceByMainGen = wiseCount * 3;
