@@ -151,10 +151,9 @@ export default connect<
       hasStateDummy = false;
       maxMorale = 6;
     }
-    // 開幕士気
-    let startMorale = 0;
+    // 魅力による士気
     const charmCount = skillCounts.get('魅力') || 0;
-    startMorale += charmCount * 0.5;
+    const tolalMoraleByCharm = charmCount * 40;
     // 征圧ランク
     let conquestRank;
     if (totalConquest >= 11) {
@@ -179,8 +178,7 @@ export default connect<
     }
 
     const moraleCount = genMainCounts.get('士気上昇') || 0;
-    const startMoraleByMainGen = moraleCount * 0.5;
-    startMorale += startMoraleByMainGen;
+    const tolalMoraleByMainGen = moraleCount * 40;
 
     const wiseCount = genMainCounts.get('知力上昇') || 0;
     const intelligenceByMainGen = wiseCount * 3;
@@ -206,8 +204,8 @@ export default connect<
       limitCost: 8,
       maxMorale,
       maxMoraleByMainGen,
-      startMorale,
-      startMoraleByMainGen,
+      tolalMoraleByCharm,
+      tolalMoraleByMainGen,
       hasDummy,
       hasStateDummy,
       ...otherActions,

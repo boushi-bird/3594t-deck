@@ -40,10 +40,10 @@ export interface StateFromProps {
   maxMorale: number;
   /** 最大士気将器加算値 */
   maxMoraleByMainGen: number;
-  /** 開幕士気 */
-  startMorale: number;
-  /** 開幕士気将器加算値 */
-  startMoraleByMainGen: number;
+  /** 魅力による士気 */
+  tolalMoraleByCharm: number;
+  /** 主将器による士気 */
+  tolalMoraleByMainGen: number;
   /** ダミー含む */
   hasDummy: boolean;
   /** 勢力未指定ダミー含む */
@@ -93,8 +93,8 @@ export default class DeckBoard extends React.Component<Props> {
       limitCost,
       maxMorale,
       maxMoraleByMainGen,
-      startMorale,
-      startMoraleByMainGen,
+      tolalMoraleByCharm,
+      tolalMoraleByMainGen,
       hasDummy,
       hasStateDummy,
       addDeckDummy,
@@ -149,6 +149,10 @@ export default class DeckBoard extends React.Component<Props> {
       costRemain *= -1;
       under = true;
     }
+    // 開幕士気
+    const startMorale = (tolalMoraleByCharm + tolalMoraleByMainGen) / 100;
+    const startMoraleByCharm = tolalMoraleByCharm / 100;
+    const startMoraleByMainGen = tolalMoraleByMainGen / 100;
     return (
       <div className="deck-board">
         <div className="deck-card-list">
@@ -269,7 +273,7 @@ export default class DeckBoard extends React.Component<Props> {
                   active: startMoraleByMainGen > 0,
                 })}
               >
-                ({startMorale - startMoraleByMainGen}
+                ({startMoraleByCharm}
                 <span className="addition-by-main-gen">
                   &#43;{startMoraleByMainGen}
                 </span>
