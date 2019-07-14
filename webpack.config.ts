@@ -1,7 +1,7 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import Dotenv from 'dotenv-webpack';
-import CleanWebpackPlugin from 'clean-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
@@ -49,11 +49,11 @@ const config: Configuration = {
   },
   plugins: [
     new Dotenv({ systemvars: true, defaults: true }),
-    new CleanWebpackPlugin(
-      isProduction
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: isProduction
         ? [path.join(distDir, 'scripts'), path.join(distDir, 'styles')]
-        : []
-    ),
+        : [],
+    }),
     new MiniCssExtractPlugin({
       filename: `styles/${fileName}.css`,
     }),
