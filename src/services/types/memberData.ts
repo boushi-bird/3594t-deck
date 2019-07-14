@@ -13,16 +13,16 @@ interface Card {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface MemberData {
-  readonly ACTIVE_JEWEL: ReadonlyArray<any>;
-  readonly BGM_CARD: ReadonlyArray<any>;
-  readonly CARD: ReadonlyArray<Card>;
-  readonly DATA: ReadonlyArray<{ readonly code: string }>;
-  readonly GENERAL_COUNT: ReadonlyArray<{
+  readonly ACTIVE_JEWEL: readonly any[];
+  readonly BGM_CARD: readonly any[];
+  readonly CARD: readonly Card[];
+  readonly DATA: readonly { readonly code: string }[];
+  readonly GENERAL_COUNT: readonly {
     readonly count: string;
     readonly idx: string;
-  }>;
-  readonly PASSIVE_JEWEL: ReadonlyArray<any>;
-  readonly STATUS: ReadonlyArray<any>;
-  readonly TACTICS: ReadonlyArray<any>;
+  }[];
+  readonly PASSIVE_JEWEL: readonly any[];
+  readonly STATUS: readonly any[];
+  readonly TACTICS: readonly any[];
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

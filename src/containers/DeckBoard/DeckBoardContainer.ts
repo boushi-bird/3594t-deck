@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { Omit } from 'type-fest';
 import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
 import {
   deckActions,

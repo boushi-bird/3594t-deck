@@ -1,5 +1,4 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { Omit } from 'type-fest';
 
 export const MAX_DECK_CARD_COUNT = 8;
 

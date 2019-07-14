@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Omit } from 'type-fest';
 import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleBasicCheckList } from '../Common/toggleCheckList';
 import {

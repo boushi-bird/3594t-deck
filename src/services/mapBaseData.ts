@@ -46,7 +46,7 @@ interface GeneralProps {
   /** コスト */
   readonly cost: Item;
   /** 主将器 */
-  readonly genMains: ReadonlyArray<FilterItem>;
+  readonly genMains: readonly FilterItem[];
   /** 官職 */
   readonly generalType: Item;
   /** 武将名 */
@@ -54,7 +54,7 @@ interface GeneralProps {
   /** レアリティ */
   readonly rarity: Item;
   /** 特技 */
-  readonly skills: ReadonlyArray<FilterItem>;
+  readonly skills: readonly FilterItem[];
   /** 勢力 */
   readonly state: Item;
   /** 兵種 */
@@ -105,11 +105,11 @@ export class GeneralImpl implements General {
   public readonly intelligence: number;
   public readonly conquest: number;
   public readonly cost: Item;
-  public readonly genMains: ReadonlyArray<FilterItem>;
+  public readonly genMains: readonly FilterItem[];
   public readonly generalType: Item;
   public readonly personal?: Personal;
   public readonly rarity: Item;
-  public readonly skills: ReadonlyArray<FilterItem>;
+  public readonly skills: readonly FilterItem[];
   public readonly state: Item;
   public readonly unitType: Item;
   public readonly strategy: Strategy;
@@ -183,7 +183,7 @@ const idIsIndex = <V>(_v: V, i: number): string => `${i}`;
 const idIsKey = <V extends { key: string }>(v: V): string => v.key;
 
 const convertIdItem = <S, D extends IdItem>(
-  array: ReadonlyArray<S>,
+  array: readonly S[],
   convertId: (s: S, i: number) => string,
   convertValue: (t: S, id: string) => D
 ): D[] => array.map((s, i) => convertValue(s, convertId(s, i)));

@@ -1,4 +1,5 @@
 node_modules/
+extra_modules/
 /bin/
 /dist/
 /docs/
