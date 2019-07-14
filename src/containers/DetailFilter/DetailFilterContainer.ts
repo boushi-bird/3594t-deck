@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Omit } from 'type-fest';
 import { setDetailConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleDetailCheckList } from '../Common/toggleCheckList';
 import { DetailFilterConditionKey } from '../../modules/datalist';
