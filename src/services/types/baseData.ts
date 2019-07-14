@@ -130,39 +130,39 @@ interface VoiceActor {
 
 export interface BaseData {
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  readonly ACTIVE_JEWEL: ReadonlyArray<any>;
-  readonly ACTIVE_JEWEL_TYPE: ReadonlyArray<any>;
-  readonly BGM: ReadonlyArray<any>;
+  readonly ACTIVE_JEWEL: readonly any[];
+  readonly ACTIVE_JEWEL_TYPE: readonly any[];
+  readonly BGM: readonly any[];
   /* eslint-enable @typescript-eslint/no-explicit-any */
   readonly COST: {
     readonly [key: number]: { readonly code: string; readonly name: string };
   };
-  readonly DATA: ReadonlyArray<{ code: string }>;
-  readonly ENISHI: ReadonlyArray<Enishi>;
-  readonly EXT: ReadonlyArray<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
-  readonly EX_RANK: ReadonlyArray<ExRank>;
-  readonly GENERAL: ReadonlyArray<General>;
-  readonly GENERAL_TYPE: ReadonlyArray<GeneralType>;
-  readonly GEN_MAIN: ReadonlyArray<GenMain>;
-  readonly GEN_SUB: ReadonlyArray<GenSub>;
-  readonly ILLUSTRATOR: ReadonlyArray<Illustrator>;
+  readonly DATA: readonly { code: string }[];
+  readonly ENISHI: readonly Enishi[];
+  readonly EXT: readonly any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  readonly EX_RANK: readonly ExRank[];
+  readonly GENERAL: readonly General[];
+  readonly GENERAL_TYPE: readonly GeneralType[];
+  readonly GEN_MAIN: readonly GenMain[];
+  readonly GEN_SUB: readonly GenSub[];
+  readonly ILLUSTRATOR: readonly Illustrator[];
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  readonly PARAM: ReadonlyArray<any>;
-  readonly PASSIVE_JEWEL: ReadonlyArray<any>;
-  readonly PATH: ReadonlyArray<any>;
+  readonly PARAM: readonly any[];
+  readonly PASSIVE_JEWEL: readonly any[];
+  readonly PATH: readonly any[];
   /* eslint-enable @typescript-eslint/no-explicit-any */
-  readonly PERSONAL: ReadonlyArray<Personal>;
+  readonly PERSONAL: readonly Personal[];
   readonly RARITY: {
     readonly [key: string]: { readonly code: string; readonly name: string };
   };
-  readonly SKILL: ReadonlyArray<Skill>;
-  readonly STATE: ReadonlyArray<State>;
-  readonly STRAT: ReadonlyArray<Strat>;
-  readonly STRAT_CATEGORY: ReadonlyArray<StratCategory>;
-  readonly STRAT_RANGE: ReadonlyArray<StratRange>;
-  readonly STRAT_TIME: ReadonlyArray<StratTime>;
-  readonly TACTICS: ReadonlyArray<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
-  readonly UNIT_TYPE: ReadonlyArray<UnitType>;
-  readonly VER_TYPE: ReadonlyArray<VerType>;
-  readonly VOICE_ACTOR: ReadonlyArray<VoiceActor>;
+  readonly SKILL: readonly Skill[];
+  readonly STATE: readonly State[];
+  readonly STRAT: readonly Strat[];
+  readonly STRAT_CATEGORY: readonly StratCategory[];
+  readonly STRAT_RANGE: readonly StratRange[];
+  readonly STRAT_TIME: readonly StratTime[];
+  readonly TACTICS: readonly any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  readonly UNIT_TYPE: readonly UnitType[];
+  readonly VER_TYPE: readonly VerType[];
+  readonly VOICE_ACTOR: readonly VoiceActor[];
 }
