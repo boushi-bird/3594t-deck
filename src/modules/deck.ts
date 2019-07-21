@@ -166,7 +166,7 @@ export default function datalistReducer(
       };
       return {
         ...state,
-        activeIndex: index,
+        activeIndex: undefined,
         deckCards,
       };
     }
