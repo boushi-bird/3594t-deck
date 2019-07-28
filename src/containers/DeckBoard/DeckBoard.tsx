@@ -5,18 +5,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
-import { DeckCard as DeckCardDummy } from '../../modules/deck';
+import { DeckCardGeneral, DeckCard as DeckCardDummy } from '../../modules/deck';
 import { General } from '../../services/mapBaseData';
 
-export interface DeckCardGeneral {
+interface DeckCardGeneralInfo
+  extends Pick<DeckCardGeneral, 'genMain' | 'pocket'> {
   general: General;
-  genMain?: string;
 }
 
-// general = generals.find(g => g.id === deckCard.general);
+export type DeckCardInfo = DeckCardGeneralInfo | DeckCardDummy;
 
 export interface StateFromProps {
-  deckCards: (DeckCardGeneral | DeckCardDummy)[];
+  deckCards: DeckCardInfo[];
   activeIndex?: number;
   enabledAddDeck: boolean;
   enableSearch: boolean;
@@ -121,7 +121,7 @@ export default class DeckBoard extends React.Component<Props> {
           />
         );
       } else {
-        const { general, genMain } = deckCard;
+        const { general, genMain, pocket } = deckCard;
         deckCardsElements.push(
           <DeckCard
             key={i}
@@ -130,6 +130,7 @@ export default class DeckBoard extends React.Component<Props> {
             search={active && enableSearch}
             genMain={genMain}
             general={general}
+            pocket={pocket}
             onSelectMainGen={selectMainGen}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}

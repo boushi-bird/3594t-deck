@@ -75,8 +75,11 @@ export interface General extends IdItem, GeneralProps {
   readonly versionValue: string;
   /** さんぽけあり */
   readonly hasPocket: boolean;
-  /** サムネイル画像URL */
-  readonly thumbUrl: string;
+  /**
+   * サムネイル画像URL取得
+   * @param pocket trueなら ぽけっと武将画像
+   */
+  thumbUrl(pocket: boolean): string;
 }
 
 const createVersionLabel = (
@@ -121,6 +124,9 @@ export class GeneralImpl implements General {
   public get code(): string {
     return this.raw.code;
   }
+  public get pocketCode(): string {
+    return this.raw.pocket_code;
+  }
   public get name(): string {
     if (!this.personal) {
       return '';
@@ -137,8 +143,9 @@ export class GeneralImpl implements General {
   public get hasPocket(): boolean {
     return this.raw.pocket_code !== '';
   }
-  public get thumbUrl(): string {
-    return `https://3594t.net/img/card_small/${this.code}.jpg`;
+  public thumbUrl(pocket: boolean): string {
+    const code = pocket ? this.pocketCode : this.code;
+    return `https://3594t.net/img/card_small/${code}.jpg`;
   }
 }
 

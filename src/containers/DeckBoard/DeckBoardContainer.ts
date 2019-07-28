@@ -1,18 +1,14 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
-import {
-  deckActions,
-  DeckState,
-  DeckCard as DeckCardDummy,
-} from '../../modules/deck';
+import { deckActions, DeckState } from '../../modules/deck';
 import { dialogActions } from '../../modules/dialog';
 import { General } from '../../services/mapBaseData';
 import { State } from '../../store';
 import DeckBoard, {
   StateFromProps,
   DispatchFromProps,
-  DeckCardGeneral,
+  DeckCardInfo,
 } from './DeckBoard';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 
@@ -95,7 +91,7 @@ export default connect<
     let totalCost = 0;
     let hasDummy = false;
     let hasStateDummy = false;
-    const deckCards: (DeckCardGeneral | DeckCardDummy)[] = [];
+    const deckCards: DeckCardInfo[] = [];
     const belongStateSet = new Set<string>();
     const genMainCounts = new Map<string, number>();
     const skillCounts = new Map<string, number>();
@@ -126,6 +122,7 @@ export default connect<
         deckCards.push({
           general,
           genMain,
+          pocket: deckCard.pocket,
         });
       } else {
         hasDummy = true;
