@@ -2,7 +2,7 @@ import './NumberSelect.css';
 import React from 'react';
 import classNames from 'classnames';
 
-interface Props<N> {
+interface Props<N extends string> {
   min: number;
   max: number;
   value: number;
@@ -14,9 +14,9 @@ interface Props<N> {
   onChangeValue: (itemNave: N, value: number, itemKey?: string) => void;
 }
 
-export default class NumberSelect<N = string> extends React.PureComponent<
-  Props<N>
-> {
+export default class NumberSelect<
+  N extends string = string
+> extends React.PureComponent<Props<N>> {
   private handleOnChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {

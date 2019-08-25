@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
 
-interface Props<N, V> {
+interface Props<N extends string, V> {
   itemName: N;
   value: V;
   checked: boolean;
@@ -13,7 +13,7 @@ interface Props<N, V> {
 }
 
 export default class RadioButton<
-  N = string,
+  N extends string = string,
   V = string
 > extends React.PureComponent<Props<N, V>> {
   private handleOnClick = () => {
