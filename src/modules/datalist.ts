@@ -1,11 +1,6 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import {
-  General,
-  Strategy,
-  BaseData,
-  FilterItem,
-  FilterContents,
-} from '../services/mapBaseData';
+import { General, Strategy, FilterItem } from '../interfaces/';
+import { BaseData, FilterContents } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 export type FilterItem = FilterItem;

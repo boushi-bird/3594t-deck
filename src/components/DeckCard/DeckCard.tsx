@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import classNames from 'classnames';
-import { DatalistState } from '../../modules/datalist';
+import { General } from '../../interfaces';
 
 interface Props {
   index: number;
   genMain?: string;
-  general: DatalistState['generals'][number];
+  general: General;
   pocket: boolean;
   active: boolean;
   search: boolean;

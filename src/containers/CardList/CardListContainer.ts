@@ -6,7 +6,7 @@ import {
   SameCardConstraint,
 } from '../../modules/datalist';
 import { deckActions, DeckCard, DeckCardGeneral } from '../../modules/deck';
-import { General, Strategy } from '../../services/mapBaseData';
+import { General, Strategy } from '../../interfaces';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';

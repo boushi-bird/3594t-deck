@@ -4,7 +4,7 @@ import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
 import { deckActions, DeckState } from '../../modules/deck';
 import { windowActions } from '../../modules/window';
 import { dialogActions } from '../../modules/dialog';
-import { General } from '../../services/mapBaseData';
+import { General } from '../../interfaces';
 import { State } from '../../store';
 import DeckBoard, {
   StateFromProps,
