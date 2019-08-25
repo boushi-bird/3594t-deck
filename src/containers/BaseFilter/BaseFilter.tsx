@@ -29,6 +29,13 @@ export interface DispatchFromProps {
 type Props = StateFromProps & DispatchFromProps;
 
 export default class BaseFilter extends React.PureComponent<Props> {
+  private handleOnChangeValue: <V>(
+    itemName: BasicFilterConditionKey,
+    value: V
+  ) => void = (itemName, value): void => {
+    this.props.setCondition({ [itemName]: value });
+  };
+
   public render(): React.ReactNode {
     const {
       filterContents,
@@ -92,17 +99,17 @@ export default class BaseFilter extends React.PureComponent<Props> {
             })}
           >
             <div className="range">
-              <NumberSelect
+              <NumberSelect<BasicFilterConditionKey>
                 itemName="forceMin"
-                setCondition={setCondition}
+                onChangeValue={this.handleOnChangeValue}
                 value={filterCondition.forceMin}
                 max={10}
                 min={1}
               />
               -
-              <NumberSelect
+              <NumberSelect<BasicFilterConditionKey>
                 itemName="forceMax"
-                setCondition={setCondition}
+                onChangeValue={this.handleOnChangeValue}
                 value={filterCondition.forceMax}
                 max={10}
                 min={1}
@@ -115,9 +122,9 @@ export default class BaseFilter extends React.PureComponent<Props> {
             })}
           >
             <div className="range">
-              <NumberSelect
+              <NumberSelect<BasicFilterConditionKey>
                 itemName="costRatioForceMin"
-                setCondition={setCondition}
+                onChangeValue={this.handleOnChangeValue}
                 value={filterCondition.costRatioForceMin}
                 max={5}
                 min={-5}
@@ -133,17 +140,17 @@ export default class BaseFilter extends React.PureComponent<Props> {
         <section className="filter-section">
           <h2 className="title">知力</h2>
           <div className="range">
-            <NumberSelect
+            <NumberSelect<BasicFilterConditionKey>
               itemName="intelligenceMin"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               value={filterCondition.intelligenceMin}
               max={10}
               min={1}
             />
             -
-            <NumberSelect
+            <NumberSelect<BasicFilterConditionKey>
               itemName="intelligenceMax"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               value={filterCondition.intelligenceMax}
               max={10}
               min={1}
@@ -153,17 +160,17 @@ export default class BaseFilter extends React.PureComponent<Props> {
         <section className="filter-section">
           <h2 className="title">征圧力</h2>
           <div className="range">
-            <NumberSelect
+            <NumberSelect<BasicFilterConditionKey>
               itemName="conquestMin"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               value={filterCondition.conquestMin}
               max={4}
               min={0}
             />
             -
-            <NumberSelect
+            <NumberSelect<BasicFilterConditionKey>
               itemName="conquestMax"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               value={filterCondition.conquestMax}
               max={4}
               min={0}

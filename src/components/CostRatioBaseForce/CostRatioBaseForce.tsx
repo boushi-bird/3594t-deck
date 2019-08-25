@@ -1,7 +1,10 @@
 import './CostRatioBaseForce.css';
 import React from 'react';
 import NumberSelect from '../NumberSelect';
-import { BasicFilterCondition } from '../../modules/datalist';
+import {
+  BasicFilterCondition,
+  BasicFilterConditionKey,
+} from '../../modules/datalist';
 
 interface Props {
   costRatioBaseForces: BasicFilterCondition['costRatioBaseForces'];
@@ -9,17 +12,21 @@ interface Props {
 }
 
 export default class CostRatioBaseForce extends React.PureComponent<Props> {
-  private handleSetCondition = (
-    condition: Partial<BasicFilterCondition>
+  private handleOnChangeValue = (
+    _: BasicFilterConditionKey,
+    value: number,
+    itemKey?: string
   ): void => {
-    const { setCondition, costRatioBaseForces } = this.props;
-    if (condition.costRatioBaseForces) {
-      condition.costRatioBaseForces = {
-        ...costRatioBaseForces,
-        ...condition.costRatioBaseForces,
-      };
+    if (!itemKey) {
+      return;
     }
-    setCondition(condition);
+    const { setCondition, costRatioBaseForces } = this.props;
+    setCondition({
+      costRatioBaseForces: {
+        ...costRatioBaseForces,
+        [itemKey]: value,
+      },
+    });
   };
 
   public render(): React.ReactNode {
@@ -29,10 +36,10 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
         <span className="title-inline">基準武力</span>
         <label>
           1.0
-          <NumberSelect
+          <NumberSelect<BasicFilterConditionKey>
             itemName="costRatioBaseForces"
             itemKey="10"
-            setCondition={this.handleSetCondition}
+            onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['10']}
             max={5}
             min={1}
@@ -43,7 +50,7 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
           <NumberSelect
             itemName="costRatioBaseForces"
             itemKey="15"
-            setCondition={this.handleSetCondition}
+            onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['15']}
             max={7}
             min={2}
@@ -54,7 +61,7 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
           <NumberSelect
             itemName="costRatioBaseForces"
             itemKey="20"
-            setCondition={this.handleSetCondition}
+            onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['20']}
             max={9}
             min={5}
@@ -65,7 +72,7 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
           <NumberSelect
             itemName="costRatioBaseForces"
             itemKey="25"
-            setCondition={this.handleSetCondition}
+            onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['25']}
             max={10}
             min={7}
@@ -76,7 +83,7 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
           <NumberSelect
             itemName="costRatioBaseForces"
             itemKey="30"
-            setCondition={this.handleSetCondition}
+            onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['30']}
             max={10}
             min={8}

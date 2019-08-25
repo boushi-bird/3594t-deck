@@ -26,6 +26,13 @@ export interface DispatchFromProps {
 type Props = StateFromProps & DispatchFromProps;
 
 export default class StrategyFilter extends React.PureComponent<Props> {
+  private handleOnChangeValue: <V>(
+    itemName: StrategiesFilterConditionKey,
+    value: V
+  ) => void = (itemName, value): void => {
+    this.props.setCondition({ [itemName]: value });
+  };
+
   public render(): React.ReactNode {
     const {
       filterContents,
@@ -67,17 +74,17 @@ export default class StrategyFilter extends React.PureComponent<Props> {
         <section className="filter-section">
           <h2 className="title">計略必要士気</h2>
           <div className="range">
-            <NumberSelect
+            <NumberSelect<StrategiesFilterConditionKey>
               itemName="moraleMin"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               value={filterCondition.moraleMin}
               max={12}
               min={1}
             />
             -
-            <NumberSelect
+            <NumberSelect<StrategiesFilterConditionKey>
               itemName="moraleMax"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               value={filterCondition.moraleMax}
               max={12}
               min={1}

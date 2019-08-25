@@ -4,19 +4,24 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
 
-interface Props<V> {
+interface Props<N, V> {
+  itemName: N;
   value: V;
   checked: boolean;
-  onClick?: (value: V) => void;
+  onClick?: (itemNave: N, value: V) => void;
   children: React.ReactNode;
 }
 
-export default class RadioButton<V> extends React.PureComponent<Props<V>> {
+export default class RadioButton<
+  N = string,
+  V = string
+> extends React.PureComponent<Props<N, V>> {
   private handleOnClick = () => {
-    if (!this.props.onClick) {
+    const { itemName, value, onClick } = this.props;
+    if (!onClick) {
       return;
     }
-    this.props.onClick(this.props.value);
+    onClick(itemName, value);
   };
 
   public render(): React.ReactNode {

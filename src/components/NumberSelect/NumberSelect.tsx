@@ -1,35 +1,28 @@
 import './NumberSelect.css';
 import React from 'react';
 import classNames from 'classnames';
-import {
-  AllFilterCondition,
-  AllFilterConditionKey,
-} from '../../modules/datalist';
 
-interface Props {
+interface Props<N> {
   min: number;
   max: number;
   value: number;
   className?: string;
-  halfStep?: boolean;
   step?: number;
-  itemName: AllFilterConditionKey;
+  itemName: N;
   itemKey?: string;
   displayText?: (value: number) => string;
-  setCondition: (condition: Partial<AllFilterCondition>) => void;
+  onChangeValue: (itemNave: N, value: number, itemKey?: string) => void;
 }
 
-export default class NumberSelect extends React.PureComponent<Props> {
-  private handleChange = (
+export default class NumberSelect<N = string> extends React.PureComponent<
+  Props<N>
+> {
+  private handleOnChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const value = parseFloat(event.currentTarget.value);
-    const { itemName, itemKey, setCondition } = this.props;
-    if (itemKey != null) {
-      setCondition({ [itemName]: { [itemKey]: value } });
-    } else {
-      setCondition({ [itemName]: value });
-    }
+    const { itemName, itemKey, onChangeValue } = this.props;
+    onChangeValue(itemName, value, itemKey);
   };
 
   public render(): React.ReactNode {
@@ -50,7 +43,7 @@ export default class NumberSelect extends React.PureComponent<Props> {
       <select
         value={value}
         className={classNames('number-select', className)}
-        onChange={this.handleChange}
+        onChange={this.handleOnChange}
       >
         {options}
       </select>
