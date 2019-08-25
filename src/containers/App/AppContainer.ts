@@ -21,6 +21,8 @@ export default connect<
   (state: State) => ({
     ...state.windowReducer,
     openedAnyModal:
+      state.windowReducer.openedDeckConfig || !state.windowReducer.ready,
+    openedAnyModalSmall:
       state.windowReducer.openedFilter || !state.windowReducer.ready,
     loading: !state.windowReducer.ready,
     activeIndex: state.deckReducer.activeIndex,

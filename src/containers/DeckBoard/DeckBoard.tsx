@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
+import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
 import { DeckCardGeneral, DeckCard as DeckCardDummy } from '../../modules/deck';
@@ -53,6 +54,7 @@ export interface StateFromProps {
 export interface DispatchFromProps {
   addDeckDummy: () => void;
   clearDeck: () => void;
+  openDeckConfig: () => void;
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
@@ -99,6 +101,7 @@ export default class DeckBoard extends React.Component<Props> {
       hasStateDummy,
       addDeckDummy,
       clearDeck,
+      openDeckConfig,
       selectMainGen,
       setActiveCard,
       removeDeck,
@@ -171,6 +174,9 @@ export default class DeckBoard extends React.Component<Props> {
             <div className="deck-clear button" onClick={clearDeck}>
               クリア
             </div>
+            <div className="open-deck-config button" onClick={openDeckConfig}>
+              <FontAwesomeIcon icon={faCog} />
+            </div>
           </div>
         </div>
         <div className="deck-total">
@@ -229,9 +235,9 @@ export default class DeckBoard extends React.Component<Props> {
             </span>
           </div>
           <div className="total total-cost" data-label="総コスト">
-            <span className="cost">{totalCost.toFixed(1)}</span>
+            <span className="cost">{(totalCost / 10).toFixed(1)}</span>
             <span className={classNames('cost-remain', { over, under })}>
-              ({costRemainText} {costRemain.toFixed(1)})
+              ({costRemainText} {(costRemain / 10).toFixed(1)})
             </span>
           </div>
           <div className="total" data-label="最大士気">

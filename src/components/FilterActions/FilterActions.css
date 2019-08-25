@@ -29,7 +29,7 @@
 }
 
 @media (--small-device) {
-  .modal .card-filter-actions .action-buton-ok {
+  .modal-small .card-filter-actions .action-buton-ok {
     display: block;
   }
 }

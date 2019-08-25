@@ -86,21 +86,27 @@ export interface StrategiesFilterCondition {
   strategySearchExplanation: string;
 }
 
+// 同名武将の制約
+// personal: 同名武将不可(通常ルール)
+// personal-strategy: 同名武将かつ同計略不可
+export type SameCardConstraint = 'personal' | 'personal-strategy';
+
+export interface DeckConstraints {
+  limitCost: number;
+  sameCard: SameCardConstraint;
+}
+
 export interface FilterCondition {
   basic: BasicFilterCondition;
   detail: DetailFilterCondition;
   strategies: StrategiesFilterCondition;
 }
 
-interface PurposeCondition {
-  purposeBoolean: boolean;
-}
-
 export type AllFilterCondition =
   | BasicFilterCondition
   | DetailFilterCondition
   | StrategiesFilterCondition
-  | PurposeCondition;
+  | DeckConstraints;
 
 export type BasicFilterConditionKey = keyof BasicFilterCondition;
 export type DetailFilterConditionKey = keyof DetailFilterCondition;
@@ -109,7 +115,7 @@ export type AllFilterConditionKey =
   | BasicFilterConditionKey
   | DetailFilterConditionKey
   | StrategiesFilterConditionKey
-  | keyof PurposeCondition;
+  | keyof DeckConstraints;
 
 const initialBasicFilterCondition: BasicFilterCondition = {
   belongStates: [],
@@ -181,10 +187,16 @@ const initialFilterContents: FilterContents = {
   strategyTimes: [],
 };
 
+const initialDeckConstraints: DeckConstraints = {
+  limitCost: 80,
+  sameCard: 'personal',
+};
+
 export interface DatalistState {
   filterCondition: FilterCondition;
   effectiveFilterCondition: FilterCondition;
   filterContents: FilterContents;
+  deckConstraints: DeckConstraints;
   generals: General[];
   strategies: Strategy[];
   currentPage: number;
@@ -195,6 +207,7 @@ const initialState: DatalistState = {
   filterCondition: initialFilterCondition,
   effectiveFilterCondition: initialFilterCondition,
   filterContents: initialFilterContents,
+  deckConstraints: initialDeckConstraints,
   generals: [],
   strategies: [],
   currentPage: 1,
@@ -218,6 +231,10 @@ export const datalistActions = {
     'SET_STRATEGIES_CONDITION',
     action => (condition: Partial<StrategiesFilterCondition>) =>
       action({ condition })
+  ),
+  setDeckConstraints: createAction(
+    'SET_DECK_CONSTRAINTS',
+    action => (condition: Partial<DeckConstraints>) => action({ condition })
   ),
   setShowStrategyExplanation: createAction(
     'SET_SHOW_STRATEGY_EXPLANATION',
@@ -288,6 +305,15 @@ export default function datalistReducer(
             ...state.filterCondition.strategies,
             ...actions.payload.condition,
           },
+        },
+      };
+    }
+    case 'SET_DECK_CONSTRAINTS': {
+      return {
+        ...state,
+        deckConstraints: {
+          ...state.deckConstraints,
+          ...actions.payload.condition,
         },
       };
     }

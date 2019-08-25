@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
 import { deckActions, DeckState } from '../../modules/deck';
+import { windowActions } from '../../modules/window';
 import { dialogActions } from '../../modules/dialog';
 import { General } from '../../services/mapBaseData';
 import { State } from '../../store';
@@ -18,6 +19,7 @@ interface ContainerStateFromProps {
   costs: BasicFilterCondition['costs'];
   belongStates: BasicFilterCondition['belongStates'];
   unitTypes: BasicFilterCondition['unitTypes'];
+  limitCost: number;
 }
 
 interface ContainerDispatchFromProps
@@ -39,12 +41,14 @@ export default connect<
     belongStates: state.datalistReducer.filterCondition.basic.belongStates,
     costs: state.datalistReducer.filterCondition.basic.costs,
     unitTypes: state.datalistReducer.filterCondition.basic.unitTypes,
+    limitCost: state.datalistReducer.deckConstraints.limitCost,
   }),
   (dispatch: Dispatch) => {
     const actions = bindActionCreators(
       {
         clearDeck: deckActions.clearDeck,
         showDialog: dialogActions.showDialog,
+        openDeckConfig: windowActions.openDeckConfig,
       },
       dispatch
     );
@@ -61,6 +65,7 @@ export default connect<
           actionBlue: () => {},
         });
       },
+      openDeckConfig: actions.openDeckConfig,
       ...bindActionCreators(
         {
           selectMainGen: deckActions.selectMainGen,
@@ -75,7 +80,14 @@ export default connect<
     };
   },
   (state, actions) => {
-    const { deckState, generals, costs, belongStates, unitTypes } = state;
+    const {
+      deckState,
+      generals,
+      costs,
+      belongStates,
+      unitTypes,
+      limitCost,
+    } = state;
     const { activeIndex, enableSearch } = deckState;
     const {
       rawAddDeckDummy,
@@ -134,7 +146,7 @@ export default connect<
         }
         deckCards.push(deckCard);
       }
-      totalCost += parseInt(cost) / 10;
+      totalCost += parseInt(cost);
     });
     // 最大士気
     const stateCount = belongStateSet.size + (hasStateDummy ? 1 : 0);
@@ -197,7 +209,7 @@ export default connect<
       conquestByMainGen,
       conquestRank,
       totalCost,
-      limitCost: 8,
+      limitCost,
       maxMorale,
       maxMoraleByMainGen,
       tolalMoraleByCharm,

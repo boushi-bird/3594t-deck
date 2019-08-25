@@ -3,19 +3,17 @@ import React from 'react';
 import { forceCheck } from 'react-lazyload';
 import classNames from 'classnames';
 import GeneralCard from '../../components/GeneralCard';
-import { DatalistState } from '../../modules/datalist';
 import { DeckCardGeneral } from '../../modules/deck';
+import { General } from '../../services/mapBaseData';
 
 export interface StateFromProps {
-  generals: DatalistState['generals'];
+  generals: General[];
   searchedGeneralIds: string[];
-  deckPersonals: string[];
   searchedAll: number;
   searchedOffset: number;
   searchedLimit: number;
   hasPrev: boolean;
   hasNext: boolean;
-  enabledAddDeck: boolean;
   showStrategyExplanation: boolean;
 }
 
@@ -23,6 +21,7 @@ export interface DispatchFromProps {
   addDeckGeneral: (card: DeckCardGeneral) => void;
   onPagePrev: () => void;
   onPageNext: () => void;
+  enabledAddDeckGeneral: (general: General) => boolean;
 }
 
 type Props = StateFromProps & DispatchFromProps;
@@ -68,21 +67,19 @@ export default class CardList extends React.PureComponent<Props> {
     const {
       generals,
       searchedGeneralIds,
-      deckPersonals,
       searchedAll,
       searchedOffset,
       searchedLimit,
       hasPrev,
       hasNext,
-      enabledAddDeck,
       showStrategyExplanation,
+      enabledAddDeckGeneral,
     } = this.props;
     const generalCards: JSX.Element[] = [];
     const count = searchedGeneralIds.length;
     generals.forEach(general => {
       const show = searchedGeneralIds.includes(general.id);
-      const enabled =
-        enabledAddDeck && !deckPersonals.includes(general.raw.personal);
+      const enabled = enabledAddDeckGeneral(general);
       generalCards.push(
         <GeneralCard
           key={general.id}

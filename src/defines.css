@@ -47,6 +47,8 @@
   --dialog-action-text-color: #f7ca7e;
   --dialog-action-red-color: #f94355;
   --dialog-action-blue-color: #1656f9;
+  --radio-button-check-color: #40a1b2;
+  --radio-button-check-bg-color: white;
 }
 
 @custom-media --app-min screen and (max-width: 630px);

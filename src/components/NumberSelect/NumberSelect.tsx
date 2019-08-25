@@ -12,8 +12,10 @@ interface Props {
   value: number;
   className?: string;
   halfStep?: boolean;
+  step?: number;
   itemName: AllFilterConditionKey;
   itemKey?: string;
+  displayText?: (value: number) => string;
   setCondition: (condition: Partial<AllFilterCondition>) => void;
 }
 
@@ -31,11 +33,11 @@ export default class NumberSelect extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { min, max, value, className, halfStep = false } = this.props;
+    const { min, max, value, className, displayText, step = 1 } = this.props;
     const minus = min < 0;
     const options: JSX.Element[] = [];
-    for (let i = min; i <= max; i += halfStep ? 0.5 : 1) {
-      const display = halfStep ? `${i.toFixed(1)}` : `${i}`;
+    for (let i = min; i <= max; i += step) {
+      const display = displayText ? displayText(i) : `${i}`;
       const displaySign = minus && i > 0 ? '+' : '';
       options.push(
         <option key={i} value={i}>
