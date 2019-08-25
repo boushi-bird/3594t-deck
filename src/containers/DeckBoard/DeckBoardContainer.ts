@@ -41,7 +41,7 @@ export default connect<
     belongStates: state.datalistReducer.filterCondition.basic.belongStates,
     costs: state.datalistReducer.filterCondition.basic.costs,
     unitTypes: state.datalistReducer.filterCondition.basic.unitTypes,
-    limitCost: state.datalistReducer.deckConstraints.limitCost,
+    limitCost: state.deckReducer.deckConstraints.limitCost,
   }),
   (dispatch: Dispatch) => {
     const actions = bindActionCreators(

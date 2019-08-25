@@ -1,6 +1,6 @@
 import './DeckConfig.css';
 import React from 'react';
-import { DeckConstraints, SameCardConstraint } from '../../modules/datalist';
+import { DeckConstraints, SameCardConstraint } from '../../modules/deck';
 import NumberSelect from '../../components/NumberSelect';
 import RadioButton from '../../components/RadioButton';
 

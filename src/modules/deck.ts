@@ -18,15 +18,30 @@ export interface DeckCard extends Omit<PartialDeckCard, 'cost' | 'pocket'> {
   pocket: boolean;
 }
 
+// 同名武将の制約
+// personal: 同名武将不可(通常ルール)
+// personal-strategy: 同名武将かつ同計略不可
+export type SameCardConstraint = 'personal' | 'personal-strategy';
+
+export interface DeckConstraints {
+  limitCost: number;
+  sameCard: SameCardConstraint;
+}
+
 export interface DeckState {
   deckCards: DeckCard[];
   activeIndex?: number;
   enableSearch: boolean;
+  deckConstraints: DeckConstraints;
 }
 
 const initialState: DeckState = {
   deckCards: [],
   enableSearch: false,
+  deckConstraints: {
+    limitCost: 80,
+    sameCard: 'personal',
+  },
 };
 
 export const deckActions = {
@@ -68,6 +83,10 @@ export const deckActions = {
   selectMainGen: createAction(
     'SELECT_MAIN_GEN',
     action => (index: number, genMain?: string) => action({ index, genMain })
+  ),
+  setDeckConstraints: createAction(
+    'SET_DECK_CONSTRAINTS',
+    action => (condition: Partial<DeckConstraints>) => action({ condition })
   ),
 };
 
@@ -182,6 +201,15 @@ export default function datalistReducer(
         ...state,
         activeIndex: undefined,
         deckCards,
+      };
+    }
+    case 'SET_DECK_CONSTRAINTS': {
+      return {
+        ...state,
+        deckConstraints: {
+          ...state.deckConstraints,
+          ...actions.payload.condition,
+        },
       };
     }
     default:
