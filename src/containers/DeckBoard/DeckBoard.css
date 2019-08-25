@@ -63,6 +63,19 @@
   flex: 1;
 }
 
+.open-deck-config {
+  font-size: 30px;
+  width: 72px;
+  min-width: 72px;
+  min-height: 50px;
+  border: solid 1px var(--normal-border-color);
+  background-color: var(--add-button-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
 .deck-total {
   min-height: 56px;
   max-height: 56px;

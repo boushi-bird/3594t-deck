@@ -177,8 +177,16 @@
   }
 }
 
+.modal {
+  &.ready {
+    & .modal-background {
+      display: block;
+    }
+  }
+}
+
 @media (--small-device) {
-  .ready.modal .modal-background {
+  .ready.modal-small .modal-background {
     display: block;
   }
 

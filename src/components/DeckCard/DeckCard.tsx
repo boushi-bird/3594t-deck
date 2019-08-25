@@ -10,6 +10,7 @@ interface Props {
   index: number;
   genMain?: string;
   general: DatalistState['generals'][number];
+  pocket: boolean;
   active: boolean;
   search: boolean;
   onSelectMainGen: (index: number, genMain?: string) => void;
@@ -49,7 +50,7 @@ export default class DeckCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { general, genMain, active, search } = this.props;
+    const { general, genMain, active, search, pocket } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thinColor,
     };
@@ -97,7 +98,7 @@ export default class DeckCard extends React.PureComponent<Props> {
         onClick={this.handleActive}
       >
         <div className="deck-card-inner-top">
-          <img className="general-thumb" src={general.thumbUrl} />
+          <img className="general-thumb" src={general.thumbUrl(pocket)} />
           <div className="shadow" style={styleShadow} />
           <span className="state" style={styleState}>
             {general.state.nameShort}

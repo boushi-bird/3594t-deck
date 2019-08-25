@@ -13,9 +13,11 @@ import SimpleFilter from '../SimpleFilter';
 import BaseFilter from '../BaseFilter';
 import DetailFilter from '../DetailFilter';
 import StrategyFilter from '../StrategyFilter';
+import DeckConfig from '../DeckConfig';
 import Dialog from '../Dialog';
 
 export interface StateFromProps extends WindowState {
+  openedAnyModalSmall: boolean;
   openedAnyModal: boolean;
   loading: boolean;
 }
@@ -60,11 +62,15 @@ export default class App extends React.PureComponent<Props> {
       changeActiveFilterTab,
       openedFilter: open,
       openedAnyModal: modal,
+      openedAnyModalSmall: modalSmall,
       activeFilter,
     } = this.props;
     return (
       <div
-        className={classNames(['app-container', { modal, ready }])}
+        className={classNames([
+          'app-container',
+          { modal, 'modal-small': modalSmall, ready },
+        ])}
         onClick={this.handleAppClick}
       >
         <div className={classNames('side-menu', { open: openedSideMenu })}>
@@ -138,6 +144,7 @@ export default class App extends React.PureComponent<Props> {
           </div>
         </div>
         <div className="modal-background" onClick={closeAllModal} />
+        <DeckConfig />
         <div className={classNames('loading-item', { loading })} />
         <Dialog />
       </div>

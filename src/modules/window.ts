@@ -12,6 +12,7 @@ export interface WindowState {
   ready: boolean;
   openedSideMenu: boolean;
   openedFilter: boolean;
+  openedDeckConfig: boolean;
   activeFilter: FilterTab;
 }
 
@@ -29,6 +30,12 @@ export const windowActions = {
   closeFilter: createAction('CHANGE_FILTER_VISIBLE', action => () =>
     action({ openedFilter: false })
   ),
+  openDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', action => () =>
+    action({ openedDeckConfig: true })
+  ),
+  closeDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', action => () =>
+    action({ openedDeckConfig: false })
+  ),
   closeAllModal: createAction('CLOSE_ALL_MODAL'),
   changeActiveFilterTab: createAction(
     'CHANGE_ACTIVE_FILTER',
@@ -40,6 +47,7 @@ const initialState: WindowState = {
   ready: false,
   openedSideMenu: false,
   openedFilter: false,
+  openedDeckConfig: false,
   activeFilter: 'BASIC',
 };
 
@@ -69,10 +77,19 @@ export default function windowReducer(
         ...state,
         openedFilter,
       };
+    case 'CHANGE_DECK_CONFIG_VISIBLE':
+      const {
+        payload: { openedDeckConfig },
+      } = actions;
+      return {
+        ...state,
+        openedDeckConfig,
+      };
     case 'CLOSE_ALL_MODAL':
       return {
         ...state,
         openedFilter: false,
+        openedDeckConfig: false,
       };
     case 'CHANGE_ACTIVE_FILTER':
       const {

@@ -27,6 +27,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
       cost: general.raw.cost,
       unitType: general.raw.unit_type,
       genMain,
+      pocket: false,
     });
   };
 
@@ -99,7 +100,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
             resize={false}
             placeholder={<div className="no-image general-thumb" />}
           >
-            <img className="general-thumb" src={general.thumbUrl} />
+            <img className="general-thumb" src={general.thumbUrl(false)} />
           </LazyLoad>
         </span>
         <span className="cost" data-label="コスト">

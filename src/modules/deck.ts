@@ -8,12 +8,14 @@ export interface DeckCardGeneral {
   belongState: string;
   cost: string;
   unitType: string;
+  pocket: boolean;
 }
 
 type PartialDeckCard = Partial<DeckCardGeneral>;
 
-export interface DeckCard extends Omit<PartialDeckCard, 'cost'> {
+export interface DeckCard extends Omit<PartialDeckCard, 'cost' | 'pocket'> {
   cost: string;
+  pocket: boolean;
 }
 
 export interface DeckState {
@@ -48,6 +50,9 @@ export const deckActions = {
     'SET_DECK_VALUE',
     action => (index: number, deckCard: PartialDeckCard) =>
       action({ index, deckCard })
+  ),
+  setDecks: createAction('SET_DECK_LIST', action => (deckCards: DeckCard[]) =>
+    action(deckCards)
   ),
   removeDeck: createAction('REMOVE_DECK', action => (index: number) =>
     action(index)
@@ -97,7 +102,10 @@ export default function datalistReducer(
         ...state,
         activeIndex: undefined,
         enableSearch: false,
-        deckCards: [...state.deckCards, { cost, belongState, unitType }],
+        deckCards: [
+          ...state.deckCards,
+          { cost, belongState, unitType, pocket: false },
+        ],
       };
     }
     case 'SET_DECK_VALUE': {
@@ -110,6 +118,12 @@ export default function datalistReducer(
       return {
         ...state,
         deckCards,
+      };
+    }
+    case 'SET_DECK_LIST': {
+      return {
+        ...state,
+        deckCards: actions.payload,
       };
     }
     case 'REMOVE_DECK': {

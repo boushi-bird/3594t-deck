@@ -1,6 +1,10 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { datalistActions, FilterCondition } from '../../modules/datalist';
+import {
+  datalistActions,
+  FilterCondition,
+  SameCardConstraint,
+} from '../../modules/datalist';
 import { deckActions, DeckCard, DeckCardGeneral } from '../../modules/deck';
 import { General, Strategy } from '../../services/mapBaseData';
 import { State } from '../../store';
@@ -18,6 +22,7 @@ interface ContainerStateFromProps {
   deckCards: DeckCard[];
   activeIndex?: number;
   enableDeckSearch: boolean;
+  sameCard: SameCardConstraint;
 }
 
 interface ContainerDispatchFromProps {
@@ -28,11 +33,20 @@ interface ContainerDispatchFromProps {
 }
 
 interface PropForMergedPropsEqual {
+  deckPersonals: { personal: string; strat: string }[];
+  enabledAddDeck: boolean;
   activeIndex?: number;
+  sameCard: SameCardConstraint;
 }
 
 const arrayEquals = <V>(a: V[], b: V[]): boolean =>
   a.length === b.length && a.every(v => b.includes(v));
+
+const objectArrayEquals = <V>(
+  a: V[],
+  b: V[],
+  eq: (va: V, vb: V) => boolean
+): boolean => a.length === b.length && a.every(va => b.some(vb => eq(va, vb)));
 
 export default connect<
   ContainerStateFromProps,
@@ -49,6 +63,7 @@ export default connect<
     deckCards: state.deckReducer.deckCards,
     activeIndex: state.deckReducer.activeIndex,
     enableDeckSearch: state.deckReducer.enableSearch,
+    sameCard: state.datalistReducer.deckConstraints.sameCard,
   }),
   (dispatch: Dispatch) =>
     bindActionCreators(
@@ -70,6 +85,7 @@ export default connect<
       deckCards,
       activeIndex,
       enableDeckSearch,
+      sameCard,
     } = state;
     const deckGenerals: string[] = [];
     deckCards.forEach((deckCard, i) => {
@@ -81,12 +97,15 @@ export default connect<
         deckGenerals.push(general);
       }
     });
-    // デッキにいる武将(武将名単位)
+    // デッキにいる武将(武将名-計略単位)
     const deckPersonals = generals
       .filter(general => {
         return deckGenerals.includes(general.id);
       })
-      .map(v => v.raw.personal);
+      .map(v => {
+        const { personal, strat } = v.raw;
+        return { personal, strat };
+      });
     const deckCard =
       activeIndex != null && enableDeckSearch
         ? deckCards[activeIndex]
@@ -138,8 +157,31 @@ export default connect<
       searchedOffset + pageLimit
     );
     const enabledAddDeck = isEnabledAddDeck(deckCards, activeIndex);
+    let enabledAddDeckGeneral: (general: General) => boolean;
+    if (!enabledAddDeck) {
+      enabledAddDeckGeneral = () => false;
+    } else if (sameCard === 'personal-strategy') {
+      enabledAddDeckGeneral = general => {
+        return (
+          enabledAddDeck &&
+          !deckPersonals.some(
+            r =>
+              r.personal === general.raw.personal &&
+              r.strat === general.raw.strat
+          )
+        );
+      };
+    } else {
+      enabledAddDeckGeneral = general => {
+        return (
+          enabledAddDeck &&
+          !deckPersonals.some(r => r.personal === general.raw.personal)
+        );
+      };
+    }
     return {
       activeIndex,
+      sameCard,
       generals,
       searchedGeneralIds,
       deckPersonals,
@@ -163,11 +205,15 @@ export default connect<
       },
       onPagePrev: actions.decrementPage,
       onPageNext: actions.incrementPage,
+      enabledAddDeckGeneral,
     };
   },
   {
     areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
       if (nextMergedProps.activeIndex !== prevMergedProps.activeIndex) {
+        return false;
+      }
+      if (nextMergedProps.sameCard !== prevMergedProps.sameCard) {
         return false;
       }
       if (nextMergedProps.enabledAddDeck !== prevMergedProps.enabledAddDeck) {
@@ -194,9 +240,10 @@ export default connect<
         return false;
       }
       if (
-        !arrayEquals(
+        !objectArrayEquals(
           nextMergedProps.deckPersonals,
-          prevMergedProps.deckPersonals
+          prevMergedProps.deckPersonals,
+          (va, vb) => va.personal === vb.personal && va.strat === vb.strat
         )
       ) {
         return false;
