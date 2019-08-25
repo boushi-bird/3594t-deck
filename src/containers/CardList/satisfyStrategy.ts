@@ -1,4 +1,4 @@
-import { Strategy } from '../../services/mapBaseData';
+import { Strategy } from '../../interfaces';
 import { StrategiesFilterCondition } from '../../modules/datalist';
 import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
 import toBasicLetter from 'jaco/fn/toBasicLetter';

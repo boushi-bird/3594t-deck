@@ -4,7 +4,7 @@ import { forceCheck } from 'react-lazyload';
 import classNames from 'classnames';
 import GeneralCard from '../../components/GeneralCard';
 import { DeckCardGeneral } from '../../modules/deck';
-import { General } from '../../services/mapBaseData';
+import { General } from '../../interfaces';
 
 export interface StateFromProps {
   generals: General[];

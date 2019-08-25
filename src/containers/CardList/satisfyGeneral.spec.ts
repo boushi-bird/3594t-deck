@@ -1,5 +1,5 @@
 import satisfyGeneral from './satisfyGeneral';
-import { GeneralImpl } from '../../services/mapBaseData';
+import { GeneralImpl } from '../../entities/generalImpl';
 
 const EXAMPLE_GENERAL = new GeneralImpl(
   '71',

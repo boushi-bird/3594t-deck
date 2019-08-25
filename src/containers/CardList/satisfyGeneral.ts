@@ -1,4 +1,4 @@
-import { General } from '../../services/mapBaseData';
+import { General } from '../../interfaces';
 import { FilterCondition } from '../../modules/datalist';
 import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
 import toBasicLetter from 'jaco/fn/toBasicLetter';

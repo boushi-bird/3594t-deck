@@ -1,7 +1,6 @@
 import './FilterButtonList.css';
 import React from 'react';
 import classNames from 'classnames';
-import { AllFilterConditionKey } from '../../modules/datalist';
 
 export interface ButtonItem {
   id: string;
@@ -11,11 +10,11 @@ export interface ButtonItem {
   color?: string;
 }
 
-interface Props {
-  itemName: AllFilterConditionKey;
+interface Props<N extends string> {
+  itemName: N;
   items: ButtonItem[];
   checkedItems: string[];
-  onClickItem: (itemName: AllFilterConditionKey, itemValue: string) => void;
+  onClickItem: (itemName: N, itemValue: string) => void;
   square?: boolean;
   addtionalClasses?: string[];
   show?: boolean;
@@ -24,11 +23,13 @@ interface Props {
 
 const defaultClasses = ['button', 'filter-item'];
 
-export default class FilterButtonList extends React.PureComponent<Props> {
+export default class FilterButtonList<
+  N extends string = string
+> extends React.PureComponent<Props<N>> {
   private buttonClasses: string[];
   private square: boolean;
 
-  public constructor(props: Props) {
+  public constructor(props: Props<N>) {
     super(props);
     this.buttonClasses = props.addtionalClasses
       ? [...defaultClasses, ...props.addtionalClasses]

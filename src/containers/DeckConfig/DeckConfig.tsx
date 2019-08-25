@@ -1,8 +1,10 @@
 import './DeckConfig.css';
 import React from 'react';
-import { DeckConstraints, SameCardConstraint } from '../../modules/datalist';
+import { DeckConstraints, SameCardConstraint } from '../../modules/deck';
 import NumberSelect from '../../components/NumberSelect';
 import RadioButton from '../../components/RadioButton';
+
+type DeckConstraintsKey = keyof DeckConstraints;
 
 export interface StateFromProps extends DeckConstraints {
   show: boolean;
@@ -20,14 +22,11 @@ export default class DeckConfig extends React.PureComponent<Props> {
     return `${value / 10}`;
   }
 
-  private handleOnSetDeckConstraints = (
-    deckConstraints: Partial<DeckConstraints>
-  ) => {
-    this.props.setDeckConstraints(deckConstraints);
-  };
-
-  private handleOnClickSameCard = (value: SameCardConstraint) => {
-    this.props.setDeckConstraints({ sameCard: value });
+  private handleOnChangeDeckConstraints: <V>(
+    itemName: DeckConstraintsKey,
+    value: V
+  ) => void = (itemName, value) => {
+    this.props.setDeckConstraints({ [itemName]: value });
   };
 
   public render(): React.ReactNode {
@@ -48,9 +47,9 @@ export default class DeckConfig extends React.PureComponent<Props> {
           <div className="deck-config-body">
             <section className="filter-section">
               <h2 className="title">コスト 上限</h2>
-              <NumberSelect
+              <NumberSelect<DeckConstraintsKey>
                 itemName="limitCost"
-                setCondition={this.handleOnSetDeckConstraints}
+                onChangeValue={this.handleOnChangeDeckConstraints}
                 value={limitCost}
                 max={250}
                 min={10}
@@ -60,17 +59,19 @@ export default class DeckConfig extends React.PureComponent<Props> {
             </section>
             <section className="filter-section same-card-constraint">
               <h2 className="title">同名武将 制限</h2>
-              <RadioButton<SameCardConstraint>
+              <RadioButton<DeckConstraintsKey, SameCardConstraint>
+                itemName="sameCard"
                 value="personal"
                 checked={sameCard === 'personal'}
-                onClick={this.handleOnClickSameCard}
+                onClick={this.handleOnChangeDeckConstraints}
               >
                 同名武将不可(通常ルール)
               </RadioButton>
-              <RadioButton<SameCardConstraint>
+              <RadioButton<DeckConstraintsKey, SameCardConstraint>
+                itemName="sameCard"
                 value="personal-strategy"
                 checked={sameCard === 'personal-strategy'}
-                onClick={this.handleOnClickSameCard}
+                onClick={this.handleOnChangeDeckConstraints}
               >
                 同名武将かつ同計略不可
               </RadioButton>

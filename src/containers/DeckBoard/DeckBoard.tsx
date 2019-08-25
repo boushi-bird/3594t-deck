@@ -7,7 +7,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
 import { DeckCardGeneral, DeckCard as DeckCardDummy } from '../../modules/deck';
-import { General } from '../../services/mapBaseData';
+import { General } from '../../interfaces';
 
 interface DeckCardGeneralInfo
   extends Pick<DeckCardGeneral, 'genMain' | 'pocket'> {

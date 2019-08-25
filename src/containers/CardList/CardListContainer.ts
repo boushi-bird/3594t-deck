@@ -1,12 +1,9 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import {
-  datalistActions,
-  FilterCondition,
-  SameCardConstraint,
-} from '../../modules/datalist';
+import { datalistActions, FilterCondition } from '../../modules/datalist';
+import { SameCardConstraint } from '../../modules/deck';
 import { deckActions, DeckCard, DeckCardGeneral } from '../../modules/deck';
-import { General, Strategy } from '../../services/mapBaseData';
+import { General, Strategy } from '../../interfaces';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
@@ -63,7 +60,7 @@ export default connect<
     deckCards: state.deckReducer.deckCards,
     activeIndex: state.deckReducer.activeIndex,
     enableDeckSearch: state.deckReducer.enableSearch,
-    sameCard: state.datalistReducer.deckConstraints.sameCard,
+    sameCard: state.deckReducer.deckConstraints.sameCard,
   }),
   (dispatch: Dispatch) =>
     bindActionCreators(

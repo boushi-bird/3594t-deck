@@ -4,7 +4,7 @@ import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
 import { deckActions, DeckState } from '../../modules/deck';
 import { windowActions } from '../../modules/window';
 import { dialogActions } from '../../modules/dialog';
-import { General } from '../../services/mapBaseData';
+import { General } from '../../interfaces';
 import { State } from '../../store';
 import DeckBoard, {
   StateFromProps,
@@ -41,7 +41,7 @@ export default connect<
     belongStates: state.datalistReducer.filterCondition.basic.belongStates,
     costs: state.datalistReducer.filterCondition.basic.costs,
     unitTypes: state.datalistReducer.filterCondition.basic.unitTypes,
-    limitCost: state.datalistReducer.deckConstraints.limitCost,
+    limitCost: state.deckReducer.deckConstraints.limitCost,
   }),
   (dispatch: Dispatch) => {
     const actions = bindActionCreators(

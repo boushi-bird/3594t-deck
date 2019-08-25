@@ -1,24 +1,22 @@
 import './SwitchItem.css';
 import React from 'react';
 import classNames from 'classnames';
-import {
-  AllFilterCondition,
-  AllFilterConditionKey,
-} from '../../modules/datalist';
 
-interface Props {
+interface Props<N extends string> {
   isOn: boolean;
   labelOff: string;
   labelOn: string;
-  itemName: AllFilterConditionKey;
-  setCondition: (condition: Partial<AllFilterCondition>) => void;
+  itemName: N;
+  onChangeValue: (itemNave: N, value: boolean) => void;
   width?: number;
 }
 
-export default class SwitchItem extends React.PureComponent<Props> {
-  private handleClickItem = (): void => {
-    const { isOn, itemName, setCondition } = this.props;
-    setCondition({ [itemName]: !isOn });
+export default class SwitchItem<
+  N extends string = string
+> extends React.PureComponent<Props<N>> {
+  private handleOnChange = (): void => {
+    const { isOn, itemName, onChangeValue } = this.props;
+    onChangeValue(itemName, !isOn);
   };
 
   public render(): React.ReactNode {
@@ -29,7 +27,7 @@ export default class SwitchItem extends React.PureComponent<Props> {
     }
     classNames('switch-button', { active: isOn });
     return (
-      <div style={style} className="switch-item" onClick={this.handleClickItem}>
+      <div style={style} className="switch-item" onClick={this.handleOnChange}>
         <div className={classNames('switch-button', { active: !isOn })}>
           <button className="switch-button-child">{labelOff}</button>
         </div>
