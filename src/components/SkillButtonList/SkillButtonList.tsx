@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import FilterButtonList from '../FilterButtonList';
 
-export default class SkillButtonList extends FilterButtonList {
+export default class SkillButtonList extends FilterButtonList<'skills'> {
   protected createButton(
     value: string,
     label: React.ReactNode | React.ReactNode[],

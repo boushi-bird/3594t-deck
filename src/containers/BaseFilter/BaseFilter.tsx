@@ -50,7 +50,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
       <div>
         <section className="filter-section">
           <h2 className="title">勢力</h2>
-          <FilterButtonList
+          <FilterButtonList<BasicFilterConditionKey>
             itemName="belongStates"
             items={filterContents.belongStates}
             checkedItems={filterCondition.belongStates}
@@ -61,7 +61,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
         </section>
         <section className="filter-section">
           <h2 className="title">コスト</h2>
-          <FilterButtonList
+          <FilterButtonList<BasicFilterConditionKey>
             itemName="costs"
             items={filterContents.costs}
             checkedItems={filterCondition.costs}
@@ -72,7 +72,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
         </section>
         <section className="filter-section">
           <h2 className="title">兵種</h2>
-          <FilterButtonList
+          <FilterButtonList<BasicFilterConditionKey>
             itemName="unitTypes"
             items={filterContents.unitTypes}
             checkedItems={filterCondition.unitTypes}
@@ -84,9 +84,9 @@ export default class BaseFilter extends React.PureComponent<Props> {
         <section className="filter-section">
           <h2 className="title">武力</h2>
           <div className="title-button">
-            <SwitchItem
+            <SwitchItem<BasicFilterConditionKey>
               itemName="useCostRatioForce"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               isOn={filterCondition.useCostRatioForce}
               labelOff="通常"
               labelOn="コスト比"
@@ -180,9 +180,9 @@ export default class BaseFilter extends React.PureComponent<Props> {
         <section className="filter-section">
           <h2 className="title">特技</h2>
           <div className="title-button">
-            <SwitchItem
+            <SwitchItem<BasicFilterConditionKey>
               itemName="skillsAnd"
-              setCondition={setCondition}
+              onChangeValue={this.handleOnChangeValue}
               isOn={filterCondition.skillsAnd}
               labelOff="OR"
               labelOn="AND"
@@ -198,10 +198,10 @@ export default class BaseFilter extends React.PureComponent<Props> {
         </section>
         <section className="filter-section">
           <h2 className="title">武将名検索</h2>
-          <SearchTextBox
+          <SearchTextBox<BasicFilterConditionKey>
             itemName="searchText"
             value={filterCondition.searchText}
-            setCondition={setCondition}
+            onChangeValue={this.handleOnChangeValue}
           />
           <div>スペース区切りでOR検索 読み仮名(ひらがな、カタカナ)対応</div>
         </section>

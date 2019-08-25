@@ -87,18 +87,9 @@ export interface FilterCondition {
   strategies: StrategiesFilterCondition;
 }
 
-export type AllFilterCondition =
-  | BasicFilterCondition
-  | DetailFilterCondition
-  | StrategiesFilterCondition;
-
 export type BasicFilterConditionKey = keyof BasicFilterCondition;
 export type DetailFilterConditionKey = keyof DetailFilterCondition;
 export type StrategiesFilterConditionKey = keyof StrategiesFilterCondition;
-export type AllFilterConditionKey =
-  | BasicFilterConditionKey
-  | DetailFilterConditionKey
-  | StrategiesFilterConditionKey;
 
 const initialBasicFilterCondition: BasicFilterCondition = {
   belongStates: [],

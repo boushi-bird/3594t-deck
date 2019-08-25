@@ -3,7 +3,9 @@ import React from 'react';
 import classNames from 'classnames';
 import FilterButtonList, { ButtonItem } from '../FilterButtonList';
 
-export default class StrategyRangeButtonList extends FilterButtonList {
+export default class StrategyRangeButtonList extends FilterButtonList<
+  'strategyRanges'
+> {
   protected createLabel(item: ButtonItem): React.ReactNode | React.ReactNode[] {
     if (item.code == null) {
       return '';

@@ -34,19 +34,14 @@ export default class StrategyFilter extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const {
-      filterContents,
-      filterCondition,
-      setCondition,
-      toggleCheckList,
-    } = this.props;
+    const { filterContents, filterCondition, toggleCheckList } = this.props;
     return (
       <div>
         <section className="filter-section">
           <h2 className="title">計略表示切り替え</h2>
-          <SwitchItem
+          <SwitchItem<StrategiesFilterConditionKey>
             itemName="showStrategyExplanation"
-            setCondition={setCondition}
+            onChangeValue={this.handleOnChangeValue}
             isOn={filterCondition.showStrategyExplanation}
             labelOff="計略名"
             labelOn="計略説明"
@@ -55,19 +50,19 @@ export default class StrategyFilter extends React.PureComponent<Props> {
         </section>
         <section className="filter-section">
           <h2 className="title">計略名検索</h2>
-          <SearchTextBox
+          <SearchTextBox<StrategiesFilterConditionKey>
             itemName="strategySearchName"
             value={filterCondition.strategySearchName}
-            setCondition={setCondition}
+            onChangeValue={this.handleOnChangeValue}
           />
           <div>スペース区切りでAND検索 読み仮名(ひらがな、カタカナ)対応</div>
         </section>
         <section className="filter-section">
           <h2 className="title">計略説明検索</h2>
-          <SearchTextBox
+          <SearchTextBox<StrategiesFilterConditionKey>
             itemName="strategySearchExplanation"
             value={filterCondition.strategySearchExplanation}
-            setCondition={setCondition}
+            onChangeValue={this.handleOnChangeValue}
           />
           <div>スペース区切りでAND検索</div>
         </section>
@@ -102,7 +97,7 @@ export default class StrategyFilter extends React.PureComponent<Props> {
         </section>
         <section className="filter-section">
           <h2 className="title">計略効果時間</h2>
-          <FilterButtonList
+          <FilterButtonList<StrategiesFilterConditionKey>
             itemName="strategyTimes"
             items={filterContents.strategyTimes}
             checkedItems={filterCondition.strategyTimes}

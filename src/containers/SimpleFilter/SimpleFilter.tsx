@@ -27,7 +27,7 @@ export default class SimpleFilter extends React.Component<Props> {
       <section className="simple-filter-section">
         <div className="simple-filter-state">
           <h2 className="title-inline">勢力</h2>
-          <FilterButtonList
+          <FilterButtonList<BasicFilterConditionKey>
             itemName="belongStates"
             items={filterContents}
             checkedItems={filterCondition}

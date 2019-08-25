@@ -5,7 +5,9 @@ import FilterButtonList from '../FilterButtonList';
 
 const BRACKET_END = '】';
 
-export default class StrategyCategoryButtonList extends FilterButtonList {
+export default class StrategyCategoryButtonList extends FilterButtonList<
+  'strategyCategories'
+> {
   protected createButton(
     value: string,
     label: React.ReactNode | React.ReactNode[],
