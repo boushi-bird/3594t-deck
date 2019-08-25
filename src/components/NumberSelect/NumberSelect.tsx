@@ -9,9 +9,8 @@ interface Props<N extends string> {
   className?: string;
   step?: number;
   itemName: N;
-  itemKey?: string;
   displayText?: (value: number) => string;
-  onChangeValue: (itemNave: N, value: number, itemKey?: string) => void;
+  onChangeValue: (itemNave: N, value: number) => void;
 }
 
 export default class NumberSelect<
@@ -21,8 +20,8 @@ export default class NumberSelect<
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const value = parseFloat(event.currentTarget.value);
-    const { itemName, itemKey, onChangeValue } = this.props;
-    onChangeValue(itemName, value, itemKey);
+    const { itemName, onChangeValue } = this.props;
+    onChangeValue(itemName, value);
   };
 
   public render(): React.ReactNode {
