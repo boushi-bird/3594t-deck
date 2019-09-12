@@ -1,5 +1,7 @@
-import { BaseData } from './types/baseData';
-import { MemberData } from './types/memberData';
+import {
+  BaseData,
+  MemberData,
+} from '@boushi-bird/3594t-net-datalist/read-only';
 
 export interface SavedLocalData {
   base_data: BaseData;

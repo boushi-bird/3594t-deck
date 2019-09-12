@@ -1,4 +1,4 @@
-import { BaseData as RawBaseData } from '../services/types/baseData';
+import { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
 import { FilterItem, Strategy, General } from '../interfaces/';
 import { DataItem as Item } from '../interfaces/dataItem';
 import { GeneralImpl, createVersionLabel } from '../entities/generalImpl';
