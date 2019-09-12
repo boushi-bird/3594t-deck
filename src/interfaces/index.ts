@@ -1,4 +1,4 @@
-import { BaseData as RawBaseData } from '../services/types/baseData';
+import { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
 import { DataItem } from './dataItem';
 
 type RawGeneral = RawBaseData['GENERAL'][number];

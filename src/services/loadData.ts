@@ -1,4 +1,4 @@
-import { BaseData as RawBaseData } from './types/baseData';
+import { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
 import loadDataFromApi from './loadDataApi';
 import loadDataFromLocalStorage from './loadDataLocalStorage';
 import mapToBaseData, { BaseData } from './mapBaseData';
