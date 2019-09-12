@@ -19,3 +19,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
+
+const about = document.getElementById('about');
+if (about && about.parentNode) {
+  about.parentNode.removeChild(about);
+}
