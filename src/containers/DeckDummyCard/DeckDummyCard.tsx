@@ -14,7 +14,14 @@ export interface OwnProps {
   search: boolean;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
-  onToggleSearch: (index: number) => void;
+  onToggleSearch: (
+    index: number,
+    condition: {
+      belongState?: string;
+      cost: string;
+      unitType?: string;
+    }
+  ) => void;
 }
 
 export interface StateFromProps {
@@ -47,8 +54,8 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
 
   private handleSearch = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, onToggleSearch } = this.props;
-    onToggleSearch(index);
+    const { index, onToggleSearch, deckCard } = this.props;
+    onToggleSearch(index, deckCard);
   };
 
   private handleChangeDeckValue = (

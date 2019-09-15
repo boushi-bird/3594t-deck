@@ -16,7 +16,14 @@ interface Props {
   onSelectMainGen: (index: number, genMain?: string) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
-  onToggleSearch: (index: number) => void;
+  onToggleSearch: (
+    index: number,
+    condition: {
+      belongState: string;
+      cost: string;
+      unitType: string;
+    }
+  ) => void;
 }
 
 export default class DeckCard extends React.PureComponent<Props> {
@@ -45,8 +52,13 @@ export default class DeckCard extends React.PureComponent<Props> {
 
   private handleSearch = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, onToggleSearch } = this.props;
-    onToggleSearch(index);
+    const { index, onToggleSearch, general } = this.props;
+    const condition = {
+      cost: general.raw.cost,
+      belongState: general.raw.state,
+      unitType: general.raw.unit_type,
+    };
+    onToggleSearch(index, condition);
   };
 
   public render(): React.ReactNode {

@@ -23,7 +23,14 @@ interface ContainerDispatchFromProps
   extends Omit<DispatchFromProps, 'addDeckDummy' | 'toggleSearch'> {
   rawAddDeckDummy: typeof deckActions['addDeckDummy'];
   resetPage: () => void;
-  searchByDeck: (index: number) => void;
+  searchByDeck: (
+    index: number,
+    condition: {
+      belongState?: string;
+      cost: string;
+      unitType?: string;
+    }
+  ) => void;
 }
 
 export default connect<
@@ -37,7 +44,7 @@ export default connect<
     generals: state.datalistReducer.generals,
     limitCost: state.deckReducer.deckConstraints.limitCost,
   }),
-  (dispatch: Dispatch) => {
+  (dispatch: Dispatch): ContainerDispatchFromProps => {
     const actions = bindActionCreators(
       {
         clearDeck: deckActions.clearDeck,
@@ -75,7 +82,8 @@ export default connect<
   },
   (state, actions) => {
     const { deckState, generals, limitCost } = state;
-    const { activeIndex, enableSearch } = deckState;
+    const { activeIndex, searchCondition } = deckState;
+    const enableSearch = searchCondition != null;
     const {
       rawAddDeckDummy,
       resetPage,
@@ -235,12 +243,12 @@ export default connect<
           clearDeck();
         }
       },
-      toggleSearch: index => {
+      toggleSearch: (index, condition) => {
         resetPage();
         if (activeIndex === index && enableSearch) {
           otherActions.setActiveCard(index);
         } else {
-          searchByDeck(index);
+          searchByDeck(index, condition);
         }
       },
     };

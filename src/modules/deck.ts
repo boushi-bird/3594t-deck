@@ -5,9 +5,6 @@ export const MAX_DECK_CARD_COUNT = 8;
 export interface DeckCardGeneral {
   general: string;
   genMain?: string;
-  belongState: string;
-  cost: string;
-  unitType: string;
   pocket: boolean;
 }
 
@@ -18,6 +15,12 @@ export interface DeckCardDummy {
 }
 
 export type DeckCard = DeckCardGeneral | DeckCardDummy;
+
+interface SearchCondition {
+  belongState?: string;
+  cost: string;
+  unitType?: string;
+}
 
 // 同名武将の制約
 // personal: 同名武将不可(通常ルール)
@@ -32,13 +35,13 @@ export interface DeckConstraints {
 export interface DeckState {
   deckCards: DeckCard[];
   activeIndex?: number;
-  enableSearch: boolean;
+  searchCondition?: SearchCondition;
   deckConstraints: DeckConstraints;
 }
 
 const initialState: DeckState = {
   deckCards: [],
-  enableSearch: false,
+  searchCondition: undefined,
   deckConstraints: {
     limitCost: 80,
     sameCard: 'personal',
@@ -77,8 +80,10 @@ export const deckActions = {
   setActiveCard: createAction('SET_ACTIVE_CARD', action => (index: number) =>
     action(index)
   ),
-  searchByDeck: createAction('SEARCH_BY_DECK', action => (index: number) =>
-    action(index)
+  searchByDeck: createAction(
+    'SEARCH_BY_DECK',
+    action => (index: number, condition: SearchCondition) =>
+      action({ index, condition })
   ),
   clearActiveCard: createAction('CLEAR_ACTIVE_CARD'),
   selectMainGen: createAction(
@@ -101,7 +106,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
-        enableSearch: false,
+        searchCondition: undefined,
         deckCards: [...state.deckCards, { ...card }],
       };
     }
@@ -112,7 +117,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
-        enableSearch: false,
+        searchCondition: undefined,
         deckCards,
       };
     }
@@ -121,7 +126,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
-        enableSearch: false,
+        searchCondition: undefined,
         deckCards: [
           ...state.deckCards,
           { cost, belongState, unitType, pocket: false },
@@ -156,7 +161,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
-        enableSearch: false,
+        searchCondition: undefined,
         deckCards,
       };
     }
@@ -164,7 +169,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
-        enableSearch: false,
+        searchCondition: undefined,
         deckCards: [],
       };
     }
@@ -173,22 +178,22 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex,
-        enableSearch: false,
+        searchCondition: undefined,
       };
     }
     case 'SEARCH_BY_DECK': {
-      const activeIndex = actions.payload;
+      const { index, condition } = actions.payload;
       return {
         ...state,
-        activeIndex,
-        enableSearch: true,
+        activeIndex: index,
+        searchCondition: condition,
       };
     }
     case 'CLEAR_ACTIVE_CARD': {
       return {
         ...state,
         activeIndex: undefined,
-        enableSearch: false,
+        searchCondition: undefined,
       };
     }
     case 'SELECT_MAIN_GEN': {
@@ -205,6 +210,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: undefined,
+        searchCondition: undefined,
         deckCards,
       };
     }

@@ -58,7 +58,14 @@ export interface DispatchFromProps {
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
-  toggleSearch: (index: number) => void;
+  toggleSearch: (
+    index: number,
+    condition: {
+      belongState?: string;
+      cost: string;
+      unitType?: string;
+    }
+  ) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;

@@ -18,7 +18,11 @@ interface ContainerStateFromProps {
   filterCondition: FilterCondition;
   deckCards: DeckCard[];
   activeIndex?: number;
-  enableDeckSearch: boolean;
+  deckSearchCondition?: {
+    belongState?: string;
+    cost: string;
+    unitType?: string;
+  };
   sameCard: SameCardConstraint;
 }
 
@@ -59,7 +63,7 @@ export default connect<
     filterCondition: state.datalistReducer.effectiveFilterCondition,
     deckCards: state.deckReducer.deckCards,
     activeIndex: state.deckReducer.activeIndex,
-    enableDeckSearch: state.deckReducer.enableSearch,
+    deckSearchCondition: state.deckReducer.searchCondition,
     sameCard: state.deckReducer.deckConstraints.sameCard,
   }),
   (dispatch: Dispatch) =>
@@ -81,7 +85,7 @@ export default connect<
       filterCondition: rawFilterCondition,
       deckCards,
       activeIndex,
-      enableDeckSearch,
+      deckSearchCondition,
       sameCard,
     } = state;
     const deckGenerals: string[] = [];
@@ -102,24 +106,20 @@ export default connect<
         const { personal, strat } = v.raw;
         return { personal, strat };
       });
-    const deckCard =
-      activeIndex != null && enableDeckSearch
-        ? deckCards[activeIndex]
-        : undefined;
     let filterCondition = rawFilterCondition;
-    if (deckCard) {
+    if (deckSearchCondition) {
       filterCondition = {
         ...filterCondition,
         basic: {
           ...filterCondition.basic,
         },
       };
-      if (deckCard.belongState != null) {
-        filterCondition.basic.belongStates = [deckCard.belongState];
+      if (deckSearchCondition.belongState != null) {
+        filterCondition.basic.belongStates = [deckSearchCondition.belongState];
       }
-      filterCondition.basic.costs = [deckCard.cost];
-      if (deckCard.unitType != null) {
-        filterCondition.basic.unitTypes = [deckCard.unitType];
+      filterCondition.basic.costs = [deckSearchCondition.cost];
+      if (deckSearchCondition.unitType != null) {
+        filterCondition.basic.unitTypes = [deckSearchCondition.unitType];
       }
     }
     const searchedStrategies = strategies.filter(strategy => {
