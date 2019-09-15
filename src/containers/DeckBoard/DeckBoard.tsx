@@ -6,7 +6,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
-import { DeckCardGeneral, DeckCard as DeckCardDummy } from '../../modules/deck';
+import { DeckCardGeneral, DeckCardDummy } from '../../modules/deck';
 import { General } from '../../interfaces';
 
 interface DeckCardGeneralInfo
@@ -110,20 +110,7 @@ export default class DeckBoard extends React.Component<Props> {
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
       const active = activeIndex === i;
-      if ('cost' in deckCard) {
-        deckCardsElements.push(
-          <DeckDummyCard
-            key={i}
-            index={i}
-            active={active}
-            search={active && enableSearch}
-            deckCard={deckCard}
-            onActive={setActiveCard}
-            onRemoveDeck={removeDeck}
-            onToggleSearch={toggleSearch}
-          />
-        );
-      } else {
+      if ('general' in deckCard) {
         const { general, genMain, pocket } = deckCard;
         deckCardsElements.push(
           <DeckCard
@@ -135,6 +122,19 @@ export default class DeckBoard extends React.Component<Props> {
             general={general}
             pocket={pocket}
             onSelectMainGen={selectMainGen}
+            onActive={setActiveCard}
+            onRemoveDeck={removeDeck}
+            onToggleSearch={toggleSearch}
+          />
+        );
+      } else {
+        deckCardsElements.push(
+          <DeckDummyCard
+            key={i}
+            index={i}
+            active={active}
+            search={active && enableSearch}
+            deckCard={deckCard}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}

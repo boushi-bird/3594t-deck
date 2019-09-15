@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { datalistActions, BasicFilterCondition } from '../../modules/datalist';
+import { datalistActions } from '../../modules/datalist';
 import { deckActions, DeckState } from '../../modules/deck';
 import { windowActions } from '../../modules/window';
 import { dialogActions } from '../../modules/dialog';
 import { General } from '../../interfaces';
-import { State } from '../../store';
+import store, { State } from '../../store';
 import DeckBoard, {
   StateFromProps,
   DispatchFromProps,
@@ -16,9 +16,6 @@ import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 interface ContainerStateFromProps {
   deckState: DeckState;
   generals: General[];
-  costs: BasicFilterCondition['costs'];
-  belongStates: BasicFilterCondition['belongStates'];
-  unitTypes: BasicFilterCondition['unitTypes'];
   limitCost: number;
 }
 
@@ -38,9 +35,6 @@ export default connect<
   (state: State) => ({
     deckState: state.deckReducer,
     generals: state.datalistReducer.generals,
-    belongStates: state.datalistReducer.filterCondition.basic.belongStates,
-    costs: state.datalistReducer.filterCondition.basic.costs,
-    unitTypes: state.datalistReducer.filterCondition.basic.unitTypes,
     limitCost: state.deckReducer.deckConstraints.limitCost,
   }),
   (dispatch: Dispatch) => {
@@ -80,14 +74,7 @@ export default connect<
     };
   },
   (state, actions) => {
-    const {
-      deckState,
-      generals,
-      costs,
-      belongStates,
-      unitTypes,
-      limitCost,
-    } = state;
+    const { deckState, generals, limitCost } = state;
     const { activeIndex, enableSearch } = deckState;
     const {
       rawAddDeckDummy,
@@ -108,12 +95,15 @@ export default connect<
     const genMainCounts = new Map<string, number>();
     const skillCounts = new Map<string, number>();
     deckState.deckCards.forEach(deckCard => {
-      const general =
-        deckCard.general != null
-          ? generals.find(g => g.id === deckCard.general)
-          : undefined;
       let cost: string;
-      if (general) {
+      if ('general' in deckCard) {
+        const general =
+          deckCard.general != null
+            ? generals.find(g => g.id === deckCard.general)
+            : undefined;
+        if (!general) {
+          return;
+        }
         totalForce += general.force;
         totalIntelligence += general.intelligence;
         totalConquest += general.conquest;
@@ -224,6 +214,11 @@ export default connect<
         let cost = '10';
         let belongState: string | undefined;
         let unitType: string | undefined;
+        const {
+          costs,
+          belongStates,
+          unitTypes,
+        } = store.getState().datalistReducer.filterCondition.basic;
         if (costs.length >= 1) {
           cost = [...costs].sort()[0];
         }

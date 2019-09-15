@@ -11,12 +11,13 @@ export interface DeckCardGeneral {
   pocket: boolean;
 }
 
-type PartialDeckCard = Partial<DeckCardGeneral>;
-
-export interface DeckCard extends Omit<PartialDeckCard, 'cost' | 'pocket'> {
+export interface DeckCardDummy {
+  belongState?: string;
   cost: string;
-  pocket: boolean;
+  unitType?: string;
 }
+
+export type DeckCard = DeckCardGeneral | DeckCardDummy;
 
 // 同名武将の制約
 // personal: 同名武将不可(通常ルール)
@@ -61,9 +62,9 @@ export const deckActions = {
       unitType?: string;
     }) => action(dummy)
   ),
-  setDeckValue: createAction(
-    'SET_DECK_VALUE',
-    action => (index: number, deckCard: PartialDeckCard) =>
+  setDeckDummyValue: createAction(
+    'SET_DECK_DUMMY_VALUE',
+    action => (index: number, deckCard: Partial<DeckCardDummy>) =>
       action({ index, deckCard })
   ),
   setDecks: createAction('SET_DECK_LIST', action => (deckCards: DeckCard[]) =>
@@ -127,11 +128,15 @@ export default function datalistReducer(
         ],
       };
     }
-    case 'SET_DECK_VALUE': {
+    case 'SET_DECK_DUMMY_VALUE': {
       const { index, deckCard } = actions.payload;
       const deckCards = [...state.deckCards];
+      const target = deckCards[index];
+      if (!target || 'general' in target) {
+        return state;
+      }
       deckCards[index] = {
-        ...deckCards[index],
+        ...target,
         ...deckCard,
       };
       return {

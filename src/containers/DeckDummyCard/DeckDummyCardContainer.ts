@@ -17,7 +17,7 @@ export default connect<StateFromProps, DispatchFromProps>(
   (dispatch: Dispatch) =>
     bindActionCreators(
       {
-        setDeckValue: deckActions.setDeckValue,
+        setDeckValue: deckActions.setDeckDummyValue,
         removeDeck: deckActions.removeDeck,
         searchByDeck: deckActions.searchByDeck,
         resetPage: datalistActions.resetPage,

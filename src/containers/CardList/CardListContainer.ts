@@ -89,9 +89,8 @@ export default connect<
       if (activeIndex === i) {
         return;
       }
-      const general = deckCard.general;
-      if (general) {
-        deckGenerals.push(general);
+      if ('general' in deckCard) {
+        deckGenerals.push(deckCard.general);
       }
     });
     // デッキにいる武将(武将名-計略単位)
