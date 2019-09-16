@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { DatalistState } from '../../modules/datalist';
-import { DeckCardDummy } from '../../modules/deck';
+import { DeckCardDummy } from '../../modules/deck/query';
 
 export interface OwnProps {
   index: number;

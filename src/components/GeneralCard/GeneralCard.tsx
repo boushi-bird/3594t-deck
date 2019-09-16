@@ -5,7 +5,7 @@ import LazyLoad from 'react-lazyload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { DatalistState } from '../../modules/datalist';
-import { DeckCardGeneral } from '../../modules/deck';
+import { DeckCardGeneral } from '../../modules/deck/query';
 
 interface Props {
   general: DatalistState['generals'][number];

@@ -1,6 +1,6 @@
 import { ActionType, createAction } from 'typesafe-actions';
 
-interface DialogInfo {
+export interface DialogInfo {
   title: string;
   message: string;
   logoUrl?: string;

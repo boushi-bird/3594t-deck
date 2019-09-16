@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { datalistActions } from '../../modules/datalist';
-import { deckActions, DeckState } from '../../modules/deck';
+import { deckActions } from '../../modules/deck/reducer';
+import { DeckQueryActions } from '../../modules/deck/query';
 import { windowActions } from '../../modules/window';
-import { dialogActions } from '../../modules/dialog';
+import { dialogActions, DialogInfo } from '../../modules/dialog';
 import { General } from '../../interfaces';
 import store, { State } from '../../store';
 import DeckBoard, {
@@ -14,15 +16,16 @@ import DeckBoard, {
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 
 interface ContainerStateFromProps {
-  deckState: DeckState;
+  enableSearch: boolean;
+  activeIndex?: number;
   generals: General[];
   limitCost: number;
 }
 
 interface ContainerDispatchFromProps
-  extends Omit<DispatchFromProps, 'addDeckDummy' | 'toggleSearch'> {
-  rawAddDeckDummy: typeof deckActions['addDeckDummy'];
-  resetPage: () => void;
+  extends Pick<DispatchFromProps, 'openDeckConfig' | 'setActiveCard'> {
+  showDialog: (dialog: DialogInfo) => void;
+  clearActiveCard: () => void;
   searchByDeck: (
     index: number,
     condition: {
@@ -31,67 +34,45 @@ interface ContainerDispatchFromProps
       unitType?: string;
     }
   ) => void;
+  resetPage: () => void;
 }
 
-export default connect<
+const container = connect<
   ContainerStateFromProps,
   ContainerDispatchFromProps,
-  {},
+  RouteComponentProps,
   StateFromProps & DispatchFromProps
 >(
   (state: State) => ({
-    deckState: state.deckReducer,
+    enableSearch: state.deckReducer.searchCondition != null,
+    activeIndex: state.deckReducer.activeIndex,
     generals: state.datalistReducer.generals,
     limitCost: state.deckReducer.deckConstraints.limitCost,
   }),
   (dispatch: Dispatch): ContainerDispatchFromProps => {
-    const actions = bindActionCreators(
+    return bindActionCreators(
       {
-        clearDeck: deckActions.clearDeck,
-        showDialog: dialogActions.showDialog,
         openDeckConfig: windowActions.openDeckConfig,
+        setActiveCard: deckActions.setActiveCard,
+        clearActiveCard: deckActions.clearActiveCard,
+        searchByDeck: deckActions.searchByDeck,
+        resetPage: datalistActions.resetPage,
+        showDialog: dialogActions.showDialog,
       },
       dispatch
     );
-    return {
-      clearDeck: () => {
-        actions.showDialog({
-          title: 'デッキクリア',
-          message: 'デッキをクリアします。',
-          redText: 'クリア',
-          actionRed: () => {
-            actions.clearDeck();
-          },
-          blueText: 'キャンセル',
-          actionBlue: () => {},
-        });
-      },
-      openDeckConfig: actions.openDeckConfig,
-      ...bindActionCreators(
-        {
-          selectMainGen: deckActions.selectMainGen,
-          setActiveCard: deckActions.setActiveCard,
-          removeDeck: deckActions.removeDeck,
-          rawAddDeckDummy: deckActions.addDeckDummy,
-          searchByDeck: deckActions.searchByDeck,
-          resetPage: datalistActions.resetPage,
-        },
-        dispatch
-      ),
-    };
   },
-  (state, actions) => {
-    const { deckState, generals, limitCost } = state;
-    const { activeIndex, searchCondition } = deckState;
-    const enableSearch = searchCondition != null;
+  (state, actions, ownProps) => {
+    const { enableSearch, activeIndex, generals, limitCost } = state;
     const {
-      rawAddDeckDummy,
-      resetPage,
+      clearActiveCard,
       searchByDeck,
-      clearDeck,
+      resetPage,
+      showDialog,
       ...otherActions
     } = actions;
-    const enabledAddDeck = isEnabledAddDeck(deckState.deckCards);
+    const deckQueryAction = new DeckQueryActions(ownProps, generals);
+    const enabledAddDeck = isEnabledAddDeck(deckQueryAction.deckCards);
     let totalForce = 0;
     let totalIntelligence = 0;
     let totalConquest = 0;
@@ -102,7 +83,7 @@ export default connect<
     const belongStateSet = new Set<string>();
     const genMainCounts = new Map<string, number>();
     const skillCounts = new Map<string, number>();
-    deckState.deckCards.forEach(deckCard => {
+    deckQueryAction.deckCards.forEach(deckCard => {
       let cost: string;
       if ('general' in deckCard) {
         const general =
@@ -236,11 +217,30 @@ export default connect<
         if (unitTypes.length === 1) {
           unitType = unitTypes[0];
         }
-        rawAddDeckDummy({ cost, belongState, unitType });
+        clearActiveCard();
+        deckQueryAction.addDeckDummy({ cost, belongState, unitType });
+      },
+      selectMainGen: (index, genMain) => {
+        clearActiveCard();
+        deckQueryAction.selectMainGen(index, genMain);
+      },
+      removeDeck: index => {
+        clearActiveCard();
+        deckQueryAction.removeDeck(index);
       },
       clearDeck: () => {
         if (deckCards.length > 0) {
-          clearDeck();
+          showDialog({
+            title: 'デッキクリア',
+            message: 'デッキをクリアします。',
+            redText: 'クリア',
+            actionRed: () => {
+              clearActiveCard();
+              deckQueryAction.clearDeck();
+            },
+            blueText: 'キャンセル',
+            actionBlue: () => {},
+          });
         }
       },
       toggleSearch: (index, condition) => {
@@ -253,5 +253,19 @@ export default connect<
       },
     };
   },
-  { areMergedPropsEqual: () => false }
+  {
+    areOwnPropsEqual: (nextOwnProps, prevOwnProps) => {
+      const nextParams = new URLSearchParams(nextOwnProps.location.search);
+      const prevParams = new URLSearchParams(prevOwnProps.location.search);
+      const nextDeck = nextParams.get('deck');
+      const prevDeck = prevParams.get('deck');
+      if (nextDeck !== prevDeck) {
+        return false;
+      }
+      return true;
+    },
+    areMergedPropsEqual: () => false,
+  }
 )(DeckBoard);
+
+export default withRouter(container);

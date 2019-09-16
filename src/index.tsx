@@ -3,6 +3,7 @@ import WebFontLoader from 'webfontloader';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './containers/App';
 import store from './store';
 
@@ -15,7 +16,9 @@ WebFontLoader.load({
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <Route component={App} />
+    </Router>
   </Provider>,
   document.getElementById('app')
 );
