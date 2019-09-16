@@ -60,6 +60,8 @@ export interface General extends IdItem, GeneralProps {
   readonly raw: RawGeneral;
   /** コード */
   readonly code: string;
+  /** ぽけっとコード */
+  readonly pocketCode: string;
   /** 武将名 */
   readonly name: string;
   /** 登場弾 */

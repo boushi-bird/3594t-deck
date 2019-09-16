@@ -30,11 +30,10 @@ export default connect<
   StateFromProps & DispatchFromProps
 >(
   (state: State) => {
-    const { activeIndex, enableSearch, deckCards } = state.deckReducer;
-    const deckCard =
-      activeIndex != null && enableSearch ? deckCards[activeIndex] : undefined;
-    const deckCardBelongState =
-      deckCard != null ? deckCard.belongState : undefined;
+    const { searchCondition } = state.deckReducer;
+    const deckCardBelongState = searchCondition
+      ? searchCondition.belongState
+      : undefined;
     return {
       belongStates: state.datalistReducer.filterContents.belongStates,
       basicFilterCondition: state.datalistReducer.filterCondition.basic,

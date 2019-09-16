@@ -1,27 +1,40 @@
 import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
-import { datalistActions } from '../../modules/datalist';
-import { deckActions } from '../../modules/deck';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { General } from '../../interfaces';
 import { State } from '../../store';
+import { DeckQueryActions } from '../../modules/deck/query';
 import DeckDummyCard, {
   StateFromProps,
   DispatchFromProps,
+  OwnProps,
 } from './DeckDummyCard';
 
-export default connect<StateFromProps, DispatchFromProps>(
+interface ContainerStateFromProps extends StateFromProps {
+  generals: General[];
+}
+
+const container = connect<
+  ContainerStateFromProps,
+  {},
+  RouteComponentProps & OwnProps,
+  StateFromProps & DispatchFromProps & OwnProps
+>(
   (state: State) => ({
+    generals: state.datalistReducer.generals,
     belongStates: state.datalistReducer.filterContents.belongStates,
     costs: state.datalistReducer.filterContents.costs,
     unitTypes: state.datalistReducer.filterContents.unitTypes,
   }),
-  (dispatch: Dispatch) =>
-    bindActionCreators(
-      {
-        setDeckValue: deckActions.setDeckValue,
-        removeDeck: deckActions.removeDeck,
-        searchByDeck: deckActions.searchByDeck,
-        resetPage: datalistActions.resetPage,
-      },
-      dispatch
-    )
+  () => ({}),
+  (state, _, ownProps) => {
+    const { generals, ...otherState } = state;
+    const deckQueryAction = new DeckQueryActions(ownProps, generals);
+    return {
+      setDeckValue: deckQueryAction.setDeckDummyValue,
+      ...otherState,
+      ...ownProps,
+    };
+  }
 )(DeckDummyCard);
+
+export default withRouter(container);

@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 import { StateType } from 'typesafe-actions';
 import datalistReducer from './modules/datalist';
-import deckReducer from './modules/deck';
+import deckReducer from './modules/deck/reducer';
 import dialogReducer from './modules/dialog';
 import windowReducer from './modules/window';
 

@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
@@ -34,11 +35,23 @@ export interface DispatchFromProps {
   changeActiveFilterTab(activeFilter: FilterTab): void;
 }
 
-type Props = StateFromProps & DispatchFromProps;
+export type OwnProps = RouteComponentProps;
+
+type Props = StateFromProps & DispatchFromProps & OwnProps;
 
 export default class App extends React.PureComponent<Props> {
+  private unregisterHistoryListen?: () => void;
   public componentDidMount(): void {
     this.props.appDidLoaded();
+    this.unregisterHistoryListen = this.props.history.listen(() => {
+      this.props.clearActiveCard();
+    });
+  }
+
+  public componentWillUnmount() {
+    if (this.unregisterHistoryListen) {
+      this.unregisterHistoryListen();
+    }
   }
 
   private handleAppClick = () => {

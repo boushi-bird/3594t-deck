@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import { deckActions } from '../../modules/deck';
+import { deckActions } from '../../modules/deck/reducer';
 import { windowActions } from '../../modules/window';
 import { State } from '../../store';
 import DeckConfig, { StateFromProps, DispatchFromProps } from './DeckConfig';

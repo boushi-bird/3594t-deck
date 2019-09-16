@@ -3,7 +3,7 @@ import React from 'react';
 import { forceCheck } from 'react-lazyload';
 import classNames from 'classnames';
 import GeneralCard from '../../components/GeneralCard';
-import { DeckCardGeneral } from '../../modules/deck';
+import { DeckCardGeneral } from '../../modules/deck/query';
 import { General } from '../../interfaces';
 
 export interface StateFromProps {

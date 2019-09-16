@@ -5,16 +5,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { DatalistState } from '../../modules/datalist';
-import { DeckCard } from '../../modules/deck';
+import { DeckCardDummy } from '../../modules/deck/query';
 
 export interface OwnProps {
   index: number;
-  deckCard: DeckCard;
+  deckCard: DeckCardDummy;
   active: boolean;
   search: boolean;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
-  onToggleSearch: (index: number) => void;
+  onToggleSearch: (
+    index: number,
+    condition: {
+      belongState?: string;
+      cost: string;
+      unitType?: string;
+    }
+  ) => void;
 }
 
 export interface StateFromProps {
@@ -47,8 +54,8 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
 
   private handleSearch = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    const { index, onToggleSearch } = this.props;
-    onToggleSearch(index);
+    const { index, onToggleSearch, deckCard } = this.props;
+    onToggleSearch(index, deckCard);
   };
 
   private handleChangeDeckValue = (

@@ -3,9 +3,9 @@ import { Dispatch, bindActionCreators } from 'redux';
 import { forceCheck } from 'react-lazyload';
 import { windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
-import { deckActions } from '../../modules/deck';
+import { deckActions } from '../../modules/deck/reducer';
 import { State } from '../../store';
-import App, { StateFromProps, DispatchFromProps } from './App';
+import App, { StateFromProps, DispatchFromProps, OwnProps } from './App';
 import { loadFromApi } from '../../services/loadData';
 
 interface ContainerStateFromProps extends StateFromProps {
@@ -15,7 +15,7 @@ interface ContainerStateFromProps extends StateFromProps {
 export default connect<
   ContainerStateFromProps,
   DispatchFromProps,
-  {},
+  OwnProps,
   StateFromProps & DispatchFromProps
 >(
   (state: State) => ({
@@ -53,11 +53,12 @@ export default connect<
       ),
     };
   },
-  (state, actions) => {
+  (state, actions, ownProps) => {
     const { activeIndex, ...otherState } = state;
     return {
       ...otherState,
       ...actions,
+      ...ownProps,
       clearActiveCard: () => {
         if (activeIndex !== undefined) {
           actions.clearActiveCard();

@@ -7,14 +7,17 @@ import {
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';
-import { DeckCard } from '../../modules/deck';
 import { State } from '../../store';
 import BaseFilter, { StateFromProps, DispatchFromProps } from './BaseFilter';
 
 interface ContainerStateFromProps {
   filterCondition: BasicFilterCondition;
   filterContents: FilterContents;
-  deckCard?: DeckCard;
+  deckSearchCondition?: {
+    belongState?: string;
+    cost: string;
+    unitType?: string;
+  };
 }
 
 export default connect<
@@ -24,34 +27,32 @@ export default connect<
   StateFromProps & DispatchFromProps
 >(
   (state: State) => {
-    const { activeIndex, enableSearch, deckCards } = state.deckReducer;
-    const deckCard =
-      activeIndex != null && enableSearch ? deckCards[activeIndex] : undefined;
+    const { searchCondition } = state.deckReducer;
     return {
       filterCondition: state.datalistReducer.filterCondition.basic,
       filterContents: state.datalistReducer.filterContents,
-      deckCard,
+      deckSearchCondition: searchCondition,
     };
   },
   (dispatch: Dispatch) => ({
     setCondition: setBasicConditionAdapter(dispatch),
   }),
   (state, actions) => {
-    const { deckCard, filterCondition, filterContents } = state;
-    if (deckCard) {
+    const { deckSearchCondition, filterCondition, filterContents } = state;
+    if (deckSearchCondition) {
       let belongStates: string[];
       let searchByDeckBelongState = false;
-      if (deckCard.belongState != null) {
-        belongStates = [deckCard.belongState];
+      if (deckSearchCondition.belongState != null) {
+        belongStates = [deckSearchCondition.belongState];
         searchByDeckBelongState = true;
       } else {
         belongStates = filterCondition.belongStates;
       }
-      const costs = [deckCard.cost];
+      const costs = [deckSearchCondition.cost];
       let unitTypes: string[];
       let searchByDeckUnitType = false;
-      if (deckCard.unitType != null) {
-        unitTypes = [deckCard.unitType];
+      if (deckSearchCondition.unitType != null) {
+        unitTypes = [deckSearchCondition.unitType];
         searchByDeckUnitType = true;
       } else {
         unitTypes = filterCondition.unitTypes;

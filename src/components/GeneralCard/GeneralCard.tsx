@@ -5,7 +5,7 @@ import LazyLoad from 'react-lazyload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { DatalistState } from '../../modules/datalist';
-import { DeckCardGeneral } from '../../modules/deck';
+import { DeckCardGeneral } from '../../modules/deck/query';
 
 interface Props {
   general: DatalistState['generals'][number];
@@ -23,9 +23,6 @@ export default class GeneralCard extends React.PureComponent<Props> {
     const genMain = event.currentTarget.dataset['genMain'];
     onAddDeck({
       general: general.id,
-      belongState: general.raw.state,
-      cost: general.raw.cost,
-      unitType: general.raw.unit_type,
       genMain,
       pocket: false,
     });

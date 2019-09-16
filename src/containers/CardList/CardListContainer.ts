@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { datalistActions, FilterCondition } from '../../modules/datalist';
-import { SameCardConstraint } from '../../modules/deck';
-import { deckActions, DeckCard, DeckCardGeneral } from '../../modules/deck';
+import { deckActions, SameCardConstraint } from '../../modules/deck/reducer';
+import { DeckCardGeneral, DeckQueryActions } from '../../modules/deck/query';
 import { General, Strategy } from '../../interfaces';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps } from './CardList';
@@ -16,15 +17,17 @@ interface ContainerStateFromProps {
   currentPage: number;
   pageLimit: number;
   filterCondition: FilterCondition;
-  deckCards: DeckCard[];
   activeIndex?: number;
-  enableDeckSearch: boolean;
+  deckSearchCondition?: {
+    belongState?: string;
+    cost: string;
+    unitType?: string;
+  };
   sameCard: SameCardConstraint;
 }
 
 interface ContainerDispatchFromProps {
-  changeDeckGeneral: (index: number, card: DeckCardGeneral) => void;
-  addDeckGeneral: (card: DeckCardGeneral) => void;
+  clearActiveCard: () => void;
   decrementPage: () => void;
   incrementPage: () => void;
 }
@@ -45,10 +48,10 @@ const objectArrayEquals = <V>(
   eq: (va: V, vb: V) => boolean
 ): boolean => a.length === b.length && a.every(va => b.some(vb => eq(va, vb)));
 
-export default connect<
+const container = connect<
   ContainerStateFromProps,
   ContainerDispatchFromProps,
-  {},
+  RouteComponentProps,
   StateFromProps & DispatchFromProps & PropForMergedPropsEqual
 >(
   (state: State) => ({
@@ -57,41 +60,39 @@ export default connect<
     currentPage: state.datalistReducer.currentPage,
     pageLimit: state.datalistReducer.pageLimit,
     filterCondition: state.datalistReducer.effectiveFilterCondition,
-    deckCards: state.deckReducer.deckCards,
     activeIndex: state.deckReducer.activeIndex,
-    enableDeckSearch: state.deckReducer.enableSearch,
+    deckSearchCondition: state.deckReducer.searchCondition,
     sameCard: state.deckReducer.deckConstraints.sameCard,
   }),
   (dispatch: Dispatch) =>
     bindActionCreators(
       {
-        changeDeckGeneral: deckActions.changeDeckGeneral,
-        addDeckGeneral: deckActions.addDeckGeneral,
+        clearActiveCard: deckActions.clearActiveCard,
         decrementPage: datalistActions.decrementPage,
         incrementPage: datalistActions.incrementPage,
       },
       dispatch
     ),
-  (state, actions) => {
+  (state, actions, ownProps) => {
     const {
       generals,
       strategies,
       currentPage,
       pageLimit,
       filterCondition: rawFilterCondition,
-      deckCards,
       activeIndex,
-      enableDeckSearch,
+      deckSearchCondition,
       sameCard,
     } = state;
+    const deckQueryActions = new DeckQueryActions(ownProps, generals);
     const deckGenerals: string[] = [];
+    const deckCards = deckQueryActions.deckCards;
     deckCards.forEach((deckCard, i) => {
       if (activeIndex === i) {
         return;
       }
-      const general = deckCard.general;
-      if (general) {
-        deckGenerals.push(general);
+      if ('general' in deckCard) {
+        deckGenerals.push(deckCard.general);
       }
     });
     // デッキにいる武将(武将名-計略単位)
@@ -103,24 +104,20 @@ export default connect<
         const { personal, strat } = v.raw;
         return { personal, strat };
       });
-    const deckCard =
-      activeIndex != null && enableDeckSearch
-        ? deckCards[activeIndex]
-        : undefined;
     let filterCondition = rawFilterCondition;
-    if (deckCard) {
+    if (deckSearchCondition) {
       filterCondition = {
         ...filterCondition,
         basic: {
           ...filterCondition.basic,
         },
       };
-      if (deckCard.belongState != null) {
-        filterCondition.basic.belongStates = [deckCard.belongState];
+      if (deckSearchCondition.belongState != null) {
+        filterCondition.basic.belongStates = [deckSearchCondition.belongState];
       }
-      filterCondition.basic.costs = [deckCard.cost];
-      if (deckCard.unitType != null) {
-        filterCondition.basic.unitTypes = [deckCard.unitType];
+      filterCondition.basic.costs = [deckSearchCondition.cost];
+      if (deckSearchCondition.unitType != null) {
+        filterCondition.basic.unitTypes = [deckSearchCondition.unitType];
       }
     }
     const searchedStrategies = strategies.filter(strategy => {
@@ -194,10 +191,11 @@ export default connect<
         if (!enabledAddDeck) {
           return;
         }
+        actions.clearActiveCard();
         if (activeIndex != null) {
-          actions.changeDeckGeneral(activeIndex, card);
+          deckQueryActions.changeDeckGeneral(activeIndex, card);
         } else {
-          actions.addDeckGeneral(card);
+          deckQueryActions.addDeckGeneral(card);
         }
       },
       onPagePrev: actions.decrementPage,
@@ -206,6 +204,16 @@ export default connect<
     };
   },
   {
+    areOwnPropsEqual: (nextOwnProps, prevOwnProps) => {
+      const nextParams = new URLSearchParams(nextOwnProps.location.search);
+      const prevParams = new URLSearchParams(prevOwnProps.location.search);
+      const nextDeck = nextParams.get('deck');
+      const prevDeck = prevParams.get('deck');
+      if (nextDeck !== prevDeck) {
+        return false;
+      }
+      return true;
+    },
     areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
       if (nextMergedProps.activeIndex !== prevMergedProps.activeIndex) {
         return false;
@@ -249,3 +257,5 @@ export default connect<
     },
   }
 )(CardList);
+
+export default withRouter(container);

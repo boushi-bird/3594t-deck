@@ -6,7 +6,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
-import { DeckCardGeneral, DeckCard as DeckCardDummy } from '../../modules/deck';
+import { DeckCardGeneral, DeckCardDummy } from '../../modules/deck/query';
 import { General } from '../../interfaces';
 
 interface DeckCardGeneralInfo
@@ -58,27 +58,19 @@ export interface DispatchFromProps {
   selectMainGen: (index: number, genMain?: string) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
-  toggleSearch: (index: number) => void;
+  toggleSearch: (
+    index: number,
+    condition: {
+      belongState?: string;
+      cost: string;
+      unitType?: string;
+    }
+  ) => void;
 }
 
 type Props = StateFromProps & DispatchFromProps;
 
 export default class DeckBoard extends React.Component<Props> {
-  public componentDidMount(): void {
-    window.addEventListener('beforeunload', this.onBeforeUnload);
-  }
-
-  public componentWillUnmount(): void {
-    window.removeEventListener('beforeunload', this.onBeforeUnload);
-  }
-
-  private onBeforeUnload = (event: Event): void => {
-    if (this.props.deckCards.length > 0) {
-      event.preventDefault();
-      event.returnValue = true;
-    }
-  };
-
   public render(): React.ReactNode {
     const {
       deckCards,
@@ -110,20 +102,7 @@ export default class DeckBoard extends React.Component<Props> {
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
       const active = activeIndex === i;
-      if ('cost' in deckCard) {
-        deckCardsElements.push(
-          <DeckDummyCard
-            key={i}
-            index={i}
-            active={active}
-            search={active && enableSearch}
-            deckCard={deckCard}
-            onActive={setActiveCard}
-            onRemoveDeck={removeDeck}
-            onToggleSearch={toggleSearch}
-          />
-        );
-      } else {
+      if ('general' in deckCard) {
         const { general, genMain, pocket } = deckCard;
         deckCardsElements.push(
           <DeckCard
@@ -135,6 +114,19 @@ export default class DeckBoard extends React.Component<Props> {
             general={general}
             pocket={pocket}
             onSelectMainGen={selectMainGen}
+            onActive={setActiveCard}
+            onRemoveDeck={removeDeck}
+            onToggleSearch={toggleSearch}
+          />
+        );
+      } else {
+        deckCardsElements.push(
+          <DeckDummyCard
+            key={i}
+            index={i}
+            active={active}
+            search={active && enableSearch}
+            deckCard={deckCard}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
