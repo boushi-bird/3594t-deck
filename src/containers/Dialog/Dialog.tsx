@@ -19,7 +19,7 @@ export interface DispatchFromProps {
   actionCancel: () => void;
 }
 
-type Props = StateFromProps & DispatchFromProps;
+export type Props = StateFromProps & DispatchFromProps;
 
 type ButtonAnimation = 'RED' | 'BLUE';
 

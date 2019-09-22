@@ -68,7 +68,7 @@ export interface DispatchFromProps {
   ) => void;
 }
 
-type Props = StateFromProps & DispatchFromProps;
+export type Props = StateFromProps & DispatchFromProps;
 
 export default class DeckBoard extends React.Component<Props> {
   public render(): React.ReactNode {

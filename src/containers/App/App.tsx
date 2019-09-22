@@ -37,7 +37,7 @@ export interface DispatchFromProps {
 
 export type OwnProps = RouteComponentProps;
 
-type Props = StateFromProps & DispatchFromProps & OwnProps;
+export type Props = StateFromProps & DispatchFromProps & OwnProps;
 
 export default class App extends React.PureComponent<Props> {
   private unregisterHistoryListen?: () => void;

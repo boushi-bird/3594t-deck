@@ -1,21 +1,30 @@
-import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { deckActions } from '../../modules/deck/reducer';
 import { windowActions } from '../../modules/window';
 import { State } from '../../store';
 import DeckConfig, { StateFromProps, DispatchFromProps } from './DeckConfig';
 
-export default connect<StateFromProps, DispatchFromProps>(
-  (state: State) => ({
-    show: state.windowReducer.openedDeckConfig,
-    ...state.deckReducer.deckConstraints,
-  }),
-  (dispatch: Dispatch) =>
-    bindActionCreators(
-      {
-        closeDeckConfig: windowActions.closeDeckConfig,
-        setDeckConstraints: deckActions.setDeckConstraints,
-      },
-      dispatch
-    )
+type OwnProps = {};
+
+type TMapStateToProps = MapStateToProps<StateFromProps, OwnProps, State>;
+type TMapDispatchToProps = MapDispatchToProps<DispatchFromProps, OwnProps>;
+
+const mapStateToProps: TMapStateToProps = state => ({
+  show: state.windowReducer.openedDeckConfig,
+  ...state.deckReducer.deckConstraints,
+});
+
+const mapDispatchToProps: TMapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      closeDeckConfig: windowActions.closeDeckConfig,
+      setDeckConstraints: deckActions.setDeckConstraints,
+    },
+    dispatch
+  );
+
+export default connect<StateFromProps, DispatchFromProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
 )(DeckConfig);

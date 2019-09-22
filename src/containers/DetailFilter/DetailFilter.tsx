@@ -20,7 +20,7 @@ export interface DispatchFromProps {
   toggleCheckList: (key: DetailFilterConditionKey, value: string) => void;
 }
 
-type Props = StateFromProps & DispatchFromProps;
+export type Props = StateFromProps & DispatchFromProps;
 
 const pockets: FilterItem[] = [
   {
