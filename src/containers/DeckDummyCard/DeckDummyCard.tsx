@@ -37,7 +37,7 @@ export interface DispatchFromProps {
   ) => void;
 }
 
-type Props = StateFromProps & OwnProps & DispatchFromProps;
+export type Props = StateFromProps & OwnProps & DispatchFromProps;
 
 export default class DeckDummyCard extends React.PureComponent<Props> {
   private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {

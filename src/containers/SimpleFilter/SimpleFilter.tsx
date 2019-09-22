@@ -13,7 +13,7 @@ export interface DispatchFromProps {
   toggleCheckList: (key: BasicFilterConditionKey, value: string) => void;
 }
 
-type Props = StateFromProps & DispatchFromProps;
+export type Props = StateFromProps & DispatchFromProps;
 
 export default class SimpleFilter extends React.Component<Props> {
   public render(): React.ReactNode {

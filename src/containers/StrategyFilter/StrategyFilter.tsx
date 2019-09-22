@@ -23,7 +23,7 @@ export interface DispatchFromProps {
   setShowStrategyExplanation: (show: boolean) => void;
 }
 
-type Props = StateFromProps & DispatchFromProps;
+export type Props = StateFromProps & DispatchFromProps;
 
 export default class StrategyFilter extends React.PureComponent<Props> {
   private handleOnChangeValue: <V>(

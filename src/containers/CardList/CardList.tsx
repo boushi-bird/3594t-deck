@@ -24,7 +24,7 @@ export interface DispatchFromProps {
   enabledAddDeckGeneral: (general: General) => boolean;
 }
 
-type Props = StateFromProps & DispatchFromProps;
+export type Props = StateFromProps & DispatchFromProps;
 
 export default class CardList extends React.PureComponent<Props> {
   private scrollArea = React.createRef<HTMLDivElement>();
