@@ -14,6 +14,7 @@ export interface WindowState {
   openedFilter: boolean;
   openedDeckConfig: boolean;
   activeFilter: FilterTab;
+  installPromptEvent: BeforeInstallPromptEvent | null;
 }
 
 export const windowActions = {
@@ -41,6 +42,10 @@ export const windowActions = {
     'CHANGE_ACTIVE_FILTER',
     action => (activeFilter: FilterTab) => action({ activeFilter })
   ),
+  storeInstallPromptEvent: createAction(
+    'STORE_INSTALL_PROMPT_EVENT',
+    action => (event: BeforeInstallPromptEvent | null) => action({ event })
+  ),
 };
 
 const initialState: WindowState = {
@@ -49,6 +54,7 @@ const initialState: WindowState = {
   openedFilter: false,
   openedDeckConfig: false,
   activeFilter: 'BASIC',
+  installPromptEvent: null,
 };
 
 export default function windowReducer(
@@ -98,6 +104,14 @@ export default function windowReducer(
       return {
         ...state,
         activeFilter,
+      };
+    case 'STORE_INSTALL_PROMPT_EVENT':
+      const {
+        payload: { event },
+      } = actions;
+      return {
+        ...state,
+        installPromptEvent: event,
       };
     default:
       return state;

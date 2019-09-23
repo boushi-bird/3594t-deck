@@ -1,1 +1,6 @@
 extends: stylelint-config-standard
+rules:
+  media-feature-name-no-unknown:
+    - true
+    - ignoreMediaFeatureNames:
+      - 'display-mode'

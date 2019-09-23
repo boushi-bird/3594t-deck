@@ -2,14 +2,18 @@ import path from 'path';
 import { Configuration } from 'webpack';
 import Dotenv from 'dotenv-webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import { GenerateSW } from 'workbox-webpack-plugin';
 
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 
 const fileName = isProduction ? '[name].[chunkhash]' : '[name]';
+
+const distDir = path.resolve(__dirname, 'dist');
 
 const appTitle = isProduction
   ? '三国志大戦デッキシミュレーター'
@@ -21,7 +25,7 @@ const config: Configuration = {
     deck: path.resolve(__dirname, 'src/index.tsx'),
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: distDir,
     filename: `scripts/${fileName}.js`,
   },
   devtool: isProduction ? false : 'inline-source-map',
@@ -48,8 +52,20 @@ const config: Configuration = {
   plugins: [
     new Dotenv({ systemvars: true, defaults: true }),
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: isProduction ? ['scripts', 'styles'] : [],
+      cleanOnceBeforeBuildPatterns: isProduction
+        ? ['scripts', 'styles', 'icons', 'service-worker.js', 'manifest.json']
+        : [],
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/icons/'),
+        to: 'icons/',
+      },
+      {
+        from: path.resolve(__dirname, 'src/manifest.json'),
+        to: '.',
+      },
+    ]),
     new MiniCssExtractPlugin({
       filename: `styles/${fileName}.css`,
     }),
@@ -61,6 +77,27 @@ const config: Configuration = {
         collapseWhitespace: isProduction,
         removeComments: isProduction,
       },
+    }),
+    new GenerateSW({
+      swDest: 'service-worker.js',
+      precacheManifestFilename: 'scripts/precache-manifest.[manifestHash].js',
+      skipWaiting: true,
+      runtimeCaching: [
+        {
+          urlPattern: /\.md5$/gi,
+          handler: 'NetworkFirst',
+        },
+        {
+          urlPattern: /^https:\/\/3594t\.net\/img\/.*\.(jpg|png|gif)$/gi,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: '3594t.net/img',
+            expiration: {
+              maxAgeSeconds: 3 * 86400,
+            },
+          },
+        },
+      ],
     }),
   ],
   module: {
