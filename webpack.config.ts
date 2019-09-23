@@ -2,6 +2,7 @@ import path from 'path';
 import { Configuration } from 'webpack';
 import Dotenv from 'dotenv-webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
@@ -51,8 +52,20 @@ const config: Configuration = {
   plugins: [
     new Dotenv({ systemvars: true, defaults: true }),
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: isProduction ? ['scripts', 'styles'] : [],
+      cleanOnceBeforeBuildPatterns: isProduction
+        ? ['scripts', 'styles', 'icons', 'service-worker.js', 'manifest.json']
+        : [],
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/icons/'),
+        to: 'icons/',
+      },
+      {
+        from: path.resolve(__dirname, 'src/manifest.json'),
+        to: '.',
+      },
+    ]),
     new MiniCssExtractPlugin({
       filename: `styles/${fileName}.css`,
     }),

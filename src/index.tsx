@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './containers/App';
 import store from './store';
+import { windowActions } from './modules/window';
 
 WebFontLoader.load({
   custom: {
@@ -19,6 +20,14 @@ if ('serviceWorker' in navigator) {
     console.error(e);
   });
 }
+
+window.addEventListener(
+  'beforeinstallprompt',
+  (event: BeforeInstallPromptEvent) => {
+    event.preventDefault();
+    store.dispatch(windowActions.storeInstallPromptEvent(event));
+  }
+);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -31,9 +31,21 @@
     align-items: center;
     color: var(--side-menu-color);
     text-decoration: none;
+    cursor: pointer;
+  }
+
+  & a.disabled {
+    cursor: default;
+    color: var(--side-menu-disabled-color);
   }
 
   & .external-link-icon {
     font-size: 10px;
+  }
+}
+
+@media all and (display-mode: standalone) {
+  .side-menu-item.pwa-install {
+    display: none;
   }
 }
