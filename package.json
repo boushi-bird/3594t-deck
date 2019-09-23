@@ -66,6 +66,7 @@
     "@types/webfontloader": "^1.6.29",
     "@types/webpack": "^4.39.1",
     "@types/webpack-dev-server": "^3.1.7",
+    "@types/workbox-webpack-plugin": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "autoprefixer": "^9.6.1",
@@ -108,7 +109,8 @@
     "typescript": "^3.6.3",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.0",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "jest": {
     "preset": "ts-jest/presets/js-with-babel",

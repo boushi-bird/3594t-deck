@@ -14,6 +14,12 @@ WebFontLoader.load({
   },
 });
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').catch(e => {
+    console.error(e);
+  });
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>

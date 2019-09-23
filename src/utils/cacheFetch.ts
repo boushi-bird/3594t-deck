@@ -19,16 +19,22 @@ async function _cacheFetch(url: string, keyName: string): Promise<any | null> {
     return null;
   }
   const cachedMd5 = localStorage.getItem(keyNameMd5);
+  let conflict = false;
   if (cachedMd5 && cachedMd5 === md5) {
     const cached = localStorage.getItem(keyName);
     if (cached) {
       return JSON.parse(cached);
     }
+    conflict = true;
+    // MD5だけある状態はおかしいので削除
+    localStorage.removeItem(keyNameMd5);
   }
   const res = await fetch(url);
   const result = await res.json();
-  localStorage.setItem(keyName, JSON.stringify(result));
-  localStorage.setItem(keyNameMd5, md5);
+  if (!conflict) {
+    localStorage.setItem(keyName, JSON.stringify(result));
+    localStorage.setItem(keyNameMd5, md5);
+  }
   return result;
 }
 
