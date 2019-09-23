@@ -1,12 +1,8 @@
 import { localStorageAvailable } from './storageAvailable';
 
-function isStatus2xx(status: number) {
-  return status >= 200 && status < 300;
-}
-
 async function fetchMd5(url: string): Promise<string | null> {
   const res: Response = await fetch(url + '.md5');
-  if (!isStatus2xx(res.status)) {
+  if (!res.ok) {
     return null;
   }
   const md5 = await res.text();
