@@ -44,6 +44,11 @@
   }
 }
 
+/* 一時的に非表示 */
+.pwa-install {
+  display: none;
+}
+
 @media all and (display-mode: standalone) {
   .side-menu-item.pwa-install {
     display: none;
