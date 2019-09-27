@@ -8,3 +8,4 @@ extra_modules/
 *.html
 *.ejs
 *.png
+*.webmanifest
