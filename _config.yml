@@ -9,5 +9,9 @@ defaults:
       path: dependencies.md
     values:
       sitemap: false
+  - scope:
+      path: updateinfo.html
+    values:
+      sitemap: false
 url: 'https://boushi-bird.github.io'
 google_tag_manager: GTM-NFHN8MZ
