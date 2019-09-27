@@ -1,5 +1,5 @@
 # 3594t-deck
 
-[![CircleCI](https://circleci.com/gh/boushi-bird/3594t-deck.svg?style=shield)](https://circleci.com/gh/boushi-bird/3594t-deck)
-![License](https://img.shields.io/github/license/boushi-bird/3594t-deck.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/boushi-bird/3594t-deck/master.svg)
+[![CircleCI](https://circleci.com/gh/3594t-deck/3594t-deck.github.io.svg?style=shield)](https://circleci.com/gh/3594t-deck/3594t-deck.github.io)
+![License](https://img.shields.io/github/license/3594t-deck/3594t-deck.github.io.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/3594t-deck/3594t-deck.github.io/develop.svg)

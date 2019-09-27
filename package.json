@@ -9,7 +9,7 @@
     "build:license": "license-checker --markdown --excludePrivatePackages --customPath=resources/license-checker.json --out dist/dependencies.md",
     "build:pages": "bin/build-pages.js",
     "deploy": "cross-env NODE_ENV=production npm run build && npm run deploy-only",
-    "deploy-only": "gh-pages -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
+    "deploy-only": "gh-pages -b master -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
     "lint": "npm-run-all lint:*",
     "fix": "npm-run-all fix:*",
@@ -25,7 +25,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boushi-bird/3594t-deck.git"
+    "url": "https://github.com/3594t-deck/3594t-deck.github.io.git"
   },
   "private": true,
   "dependencies": {
