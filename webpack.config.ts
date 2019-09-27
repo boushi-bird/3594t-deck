@@ -53,7 +53,13 @@ const config: Configuration = {
     new Dotenv({ systemvars: true, defaults: true }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: isProduction
-        ? ['scripts', 'styles', 'icons', 'service-worker.js', 'manifest.json']
+        ? [
+            'scripts',
+            'styles',
+            'icons',
+            'service-worker.js',
+            'manifest.webmanifest',
+          ]
         : [],
     }),
     new CopyWebpackPlugin([
@@ -62,7 +68,7 @@ const config: Configuration = {
         to: 'icons/',
       },
       {
-        from: path.resolve(__dirname, 'src/manifest.json'),
+        from: path.resolve(__dirname, 'src/manifest.webmanifest'),
         to: '.',
       },
     ]),
