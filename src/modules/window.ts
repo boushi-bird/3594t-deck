@@ -13,6 +13,8 @@ export interface WindowState {
   openedSideMenu: boolean;
   openedFilter: boolean;
   openedDeckConfig: boolean;
+  openedUpdateInfo: boolean;
+  showNotice: boolean;
   activeFilter: FilterTab;
   installPromptEvent: BeforeInstallPromptEvent | null;
 }
@@ -37,6 +39,18 @@ export const windowActions = {
   closeDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', action => () =>
     action({ openedDeckConfig: false })
   ),
+  openUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', action => () =>
+    action({ openedUpdateInfo: true })
+  ),
+  closeUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', action => () =>
+    action({ openedUpdateInfo: false })
+  ),
+  enableNotice: createAction('CHANGE_SHOW_NOTICE', action => () =>
+    action({ showNotice: true })
+  ),
+  disableNotice: createAction('CHANGE_SHOW_NOTICE', action => () =>
+    action({ showNotice: false })
+  ),
   closeAllModal: createAction('CLOSE_ALL_MODAL'),
   changeActiveFilterTab: createAction(
     'CHANGE_ACTIVE_FILTER',
@@ -53,6 +67,8 @@ const initialState: WindowState = {
   openedSideMenu: false,
   openedFilter: false,
   openedDeckConfig: false,
+  openedUpdateInfo: false,
+  showNotice: false,
   activeFilter: 'BASIC',
   installPromptEvent: null,
 };
@@ -91,11 +107,20 @@ export default function windowReducer(
         ...state,
         openedDeckConfig,
       };
+    case 'CHANGE_UPDATE_INFO_VISIBLE':
+      const {
+        payload: { openedUpdateInfo },
+      } = actions;
+      return {
+        ...state,
+        openedUpdateInfo,
+      };
     case 'CLOSE_ALL_MODAL':
       return {
         ...state,
         openedFilter: false,
         openedDeckConfig: false,
+        openedUpdateInfo: false,
       };
     case 'CHANGE_ACTIVE_FILTER':
       const {
@@ -104,6 +129,14 @@ export default function windowReducer(
       return {
         ...state,
         activeFilter,
+      };
+    case 'CHANGE_SHOW_NOTICE':
+      const {
+        payload: { showNotice },
+      } = actions;
+      return {
+        ...state,
+        showNotice,
       };
     case 'STORE_INSTALL_PROMPT_EVENT':
       const {

@@ -1,5 +1,6 @@
 :root {
   --app-min-width: 630px; /* アプリケーションの最小幅 */
+  --side-menu-width: 320px; /* サイドメニューの幅 */
   --app-header-bg-color: #40a1b2;
   --card-filter-min-width: 300px;
   --card-filter-bg-color: rgba(0, 0, 0, 0.8);
@@ -58,7 +59,7 @@
 @custom-media --small-device --small-device-w, --small-device-h;
 @custom-media --oblong-device-w screen and (min-width: 1260px);
 @custom-media --oblong-device --oblong-device-w and --small-device-h;
-@custom-media --large-device screen and (min-width: 1460px);
+@custom-media --large-device screen and (min-width: 1580px);
 
 @keyframes rolling {
   from {

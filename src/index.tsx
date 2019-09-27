@@ -29,6 +29,22 @@ window.addEventListener(
   }
 );
 
+const receiveNoticeChanged = (noticeEnabled?: boolean) => {
+  if (noticeEnabled) {
+    store.dispatch(windowActions.enableNotice());
+  } else {
+    store.dispatch(windowActions.disableNotice());
+  }
+};
+
+receiveNoticeChanged(window.__noticeEnabled);
+
+// タグマネージャー等他の要素からイベントを発行させる
+window.addEventListener('__receiveNoticeChanged', (event: Event) => {
+  event.preventDefault();
+  receiveNoticeChanged(window.__noticeEnabled);
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>

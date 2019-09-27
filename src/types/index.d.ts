@@ -2,6 +2,10 @@
 export {};
 
 declare global {
+  interface Window {
+    __noticeEnabled: boolean | undefined;
+  }
+
   interface BeforeInstallPromptEvent extends Event {
     readonly platforms: Array<string>;
 

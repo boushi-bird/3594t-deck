@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
@@ -15,11 +16,13 @@ import BaseFilter from '../BaseFilter';
 import DetailFilter from '../DetailFilter';
 import StrategyFilter from '../StrategyFilter';
 import DeckConfig from '../DeckConfig';
+import UpdateInfo from '../UpdateInfo';
 import Dialog from '../Dialog';
 
 export interface StateFromProps extends WindowState {
   openedAnyModalSmall: boolean;
   openedAnyModal: boolean;
+  showNotice: boolean;
   loading: boolean;
 }
 
@@ -70,6 +73,7 @@ export default class App extends React.PureComponent<Props> {
       resetConditions,
       openedSideMenu,
       openFilter,
+      showNotice,
       closeFilter,
       closeAllModal,
       changeActiveFilterTab,
@@ -101,6 +105,12 @@ export default class App extends React.PureComponent<Props> {
                 onClick={this.handleSideMenuButtonClick}
               >
                 <FontAwesomeIcon icon={faBars} />
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  className={classNames('notice', {
+                    show: showNotice,
+                  })}
+                />
               </button>
               <div className="app-header-title">
                 三国志大戦デッキシミュレーター
@@ -158,6 +168,7 @@ export default class App extends React.PureComponent<Props> {
         </div>
         <div className="modal-background" onClick={closeAllModal} />
         <DeckConfig />
+        <UpdateInfo />
         <div className={classNames('loading-item', { loading })} />
         <Dialog />
       </div>

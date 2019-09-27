@@ -33,7 +33,9 @@ type TMergeProps = MergeProps<
 const mapStateToProps: TMapStateToProps = state => ({
   ...state.windowReducer,
   openedAnyModal:
-    state.windowReducer.openedDeckConfig || !state.windowReducer.ready,
+    state.windowReducer.openedDeckConfig ||
+    state.windowReducer.openedUpdateInfo ||
+    !state.windowReducer.ready,
   openedAnyModalSmall:
     state.windowReducer.openedFilter || !state.windowReducer.ready,
   loading: !state.windowReducer.ready,

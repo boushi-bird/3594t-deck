@@ -3,16 +3,21 @@ import React from 'react';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
 
 export interface StateFromProps {
+  showNotice: boolean;
   pwaInstallEnabled: boolean;
 }
 
 export interface DispatchFromProps {
+  openUpdateInfo: () => void;
   installPrompt: () => void;
 }
 
 export type Props = StateFromProps & DispatchFromProps;
+
+const ABOUT_LINK_URL = process.env.ABOUT_LINK_URL as string;
 
 export default class SideMenu extends React.PureComponent<Props> {
   private handleInstallPrompt = (
@@ -25,16 +30,31 @@ export default class SideMenu extends React.PureComponent<Props> {
     }
   };
 
+  private handleOpenUpdateInfo = () => {
+    this.props.openUpdateInfo();
+  };
+
   public render(): React.ReactNode {
-    const { pwaInstallEnabled } = this.props;
+    const { pwaInstallEnabled, showNotice } = this.props;
     return (
       <ul className="side-menu-list">
         <li className="side-menu-item">
-          <a href="./about.html" target="_blank" rel="noopener">
+          <a href={ABOUT_LINK_URL} target="_blank" rel="noopener noreferrer">
             このツールについて
             <FontAwesomeIcon
               className="external-link-icon"
               icon={faExternalLinkAlt}
+            />
+          </a>
+        </li>
+        <li className="side-menu-item">
+          <a onClick={this.handleOpenUpdateInfo}>
+            更新情報
+            <FontAwesomeIcon
+              icon={faExclamationCircle}
+              className={classNames('notice', {
+                show: showNotice,
+              })}
             />
           </a>
         </li>
