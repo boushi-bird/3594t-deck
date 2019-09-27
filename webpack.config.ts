@@ -81,6 +81,7 @@ const config: Configuration = {
     new GenerateSW({
       swDest: 'service-worker.js',
       precacheManifestFilename: 'scripts/precache-manifest.[manifestHash].js',
+      clientsClaim: true,
       skipWaiting: true,
       runtimeCaching: [
         {
