@@ -10,10 +10,12 @@ import { State } from '../../store';
 import SideMenu, { StateFromProps, DispatchFromProps, Props } from './SideMenu';
 
 interface ContainerStateFromProps {
+  showNotice: boolean;
   installPromptEvent: BeforeInstallPromptEvent | null;
 }
 
 interface ContainerDispatchFromProps {
+  openUpdateInfo: () => void;
   storeInstallPromptEvent: (event: BeforeInstallPromptEvent | null) => void;
 }
 
@@ -36,12 +38,14 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = state => ({
+  showNotice: state.windowReducer.showNotice,
   installPromptEvent: state.windowReducer.installPromptEvent,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      openUpdateInfo: windowActions.openUpdateInfo,
       storeInstallPromptEvent: windowActions.storeInstallPromptEvent,
     },
     dispatch
@@ -49,9 +53,11 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch =>
 
 const mergeProps: TMergeProps = (state, actions) => {
   const sProps: StateFromProps = {
+    showNotice: state.showNotice,
     pwaInstallEnabled: !!state.installPromptEvent,
   };
   const dProps: DispatchFromProps = {
+    openUpdateInfo: actions.openUpdateInfo,
     installPrompt: async () => {
       if (state.installPromptEvent) {
         await state.installPromptEvent.prompt();

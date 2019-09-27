@@ -11,13 +11,14 @@
 }
 
 .side-menu-item {
-  font-size: 16px;
-  height: 60px;
+  font-size: 22px;
+  height: 80px;
   list-style: none;
   box-sizing: border-box;
   border: solid 1px var(--normal-border-color);
   border-left-width: 0;
   border-right-width: 0;
+  padding-left: 10px;
 
   &:hover {
     background-color: var(--side-menu-hover-bg-color);
@@ -41,6 +42,16 @@
 
   & .external-link-icon {
     font-size: 10px;
+  }
+
+  & .notice {
+    margin-left: 6px;
+    color: var(--danger-color);
+    display: none;
+
+    &.show {
+      display: block;
+    }
   }
 }
 
