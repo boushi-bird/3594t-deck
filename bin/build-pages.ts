@@ -1,9 +1,9 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const fs = require('fs');
-const path = require('path');
-const jsYaml = require('js-yaml');
-const cpx = require('cpx');
+import fs from 'fs';
+import fse from 'fs-extra';
+import path from 'path';
+import jsYaml from 'js-yaml';
 
 const srcDir = path.resolve(__dirname, '../docs');
 const distDir = path.resolve(__dirname, '../dist');
@@ -11,6 +11,9 @@ const distDir = path.resolve(__dirname, '../dist');
 if (!fs.existsSync(distDir)) {
   fs.mkdirSync(distDir);
 }
+
+fse.copySync(srcDir, distDir);
+console.log('output pages.');
 
 const srcConfigPath = path.resolve(srcDir, '_config.yml');
 const distConfigPath = path.resolve(distDir, '_config.yml');
@@ -26,12 +29,4 @@ if (process.env.GOOGLE_TAG_MANAGER_CONTAINER_ID) {
 }
 
 fs.writeFileSync(distConfigPath, jsYaml.safeDump(conf), 'utf8');
-
 console.log(`output ${distConfigPath}`);
-cpx.copy(path.resolve(srcDir, '**/*.{md,html,png}'), distDir, err => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  console.log('output pages.');
-});
