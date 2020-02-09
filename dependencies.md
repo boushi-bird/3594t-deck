@@ -566,8 +566,6 @@
     - license: MIT
  - **[bytes@3.1.0](https://github.com/visionmedia/bytes.js)**
     - license: MIT
- - **[cacache@11.3.3](https://github.com/zkat/cacache)**
-    - license: ISC
  - **[cacache@12.0.3](https://github.com/npm/cacache)**
     - license: ISC
  - **[cache-base@1.0.1](https://github.com/jonschlinkert/cache-base)**
@@ -702,7 +700,7 @@
     - license: ISC
  - **[copy-descriptor@0.1.1](https://github.com/jonschlinkert/copy-descriptor)**
     - license: MIT
- - **[copy-webpack-plugin@5.0.4](https://github.com/webpack-contrib/copy-webpack-plugin)**
+ - **[copy-webpack-plugin@5.1.1](https://github.com/webpack-contrib/copy-webpack-plugin)**
     - license: MIT
  - **[core-js-compat@3.2.1](https://github.com/zloirock/core-js)**
     - license: MIT
@@ -1122,7 +1120,7 @@
     - license: MIT
  - **[handle-thing@2.0.0](https://github.com/indutny/handle-thing)**
     - license: MIT
- - **[handlebars@4.3.3](https://github.com/wycats/handlebars.js)**
+ - **[handlebars@4.7.3](https://github.com/wycats/handlebars.js)**
     - license: MIT
  - **[har-schema@2.0.0](https://github.com/ahmadnassri/har-schema)**
     - license: ISC
@@ -2234,9 +2232,7 @@
     - license: ISC
  - **[send@0.17.1](https://github.com/pillarjs/send)**
     - license: MIT
- - **[serialize-javascript@1.9.1](https://github.com/yahoo/serialize-javascript)**
-    - license: BSD-3-Clause
- - **[serialize-javascript@2.1.0](https://github.com/yahoo/serialize-javascript)**
+ - **[serialize-javascript@2.1.2](https://github.com/yahoo/serialize-javascript)**
     - license: BSD-3-Clause
  - **[serve-index@1.9.1](https://github.com/expressjs/serve-index)**
     - license: MIT
@@ -2422,13 +2418,15 @@
     - license: BSD-3-Clause
  - **[tapable@1.1.3](https://github.com/webpack/tapable)**
     - license: MIT
- - **[terser-webpack-plugin@1.4.1](https://github.com/webpack-contrib/terser-webpack-plugin)**
+ - **[terser-webpack-plugin@1.4.3](https://github.com/webpack-contrib/terser-webpack-plugin)**
     - license: MIT
  - **[terser-webpack-plugin@2.0.1](https://github.com/webpack-contrib/terser-webpack-plugin)**
     - license: MIT
  - **[terser@3.17.0](https://github.com/fabiosantoscode/terser)**
     - license: BSD-2-Clause
  - **[terser@4.3.1](https://github.com/fabiosantoscode/terser)**
+    - license: BSD-2-Clause
+ - **[terser@4.6.3](https://github.com/terser/terser)**
     - license: BSD-2-Clause
  - **[test-exclude@5.2.3](https://github.com/istanbuljs/istanbuljs)**
     - license: ISC
