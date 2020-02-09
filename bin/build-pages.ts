@@ -30,3 +30,10 @@ if (process.env.GOOGLE_TAG_MANAGER_CONTAINER_ID) {
 
 fs.writeFileSync(distConfigPath, jsYaml.safeDump(conf), 'utf8');
 console.log(`output ${distConfigPath}`);
+
+if (process.env.GOOGLE_SITE_VERIFICATION) {
+  const siteVerificationFileName = `${process.env.GOOGLE_SITE_VERIFICATION}.html`;
+  const distSiteVerification = path.resolve(distDir, siteVerificationFileName);
+  fs.writeFileSync(distSiteVerification, `google-site-verification: ${siteVerificationFileName}`, 'utf8');
+  console.log(`output ${distSiteVerification}`);
+}
