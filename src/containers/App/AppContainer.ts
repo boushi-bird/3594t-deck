@@ -93,11 +93,6 @@ export default connect<
   DispatchFromProps,
   OwnProps,
   Props
->(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps,
-  {
-    areMergedPropsEqual: () => false,
-  }
-)(App);
+>(mapStateToProps, mapDispatchToProps, mergeProps, {
+  areMergedPropsEqual: () => false,
+})(App);

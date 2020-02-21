@@ -76,9 +76,6 @@ export default connect<
   ContainerDispatchFromProps,
   OwnProps,
   Props
->(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps,
-  { areMergedPropsEqual: () => false }
-)(SideMenu);
+>(mapStateToProps, mapDispatchToProps, mergeProps, {
+  areMergedPropsEqual: () => false,
+})(SideMenu);
