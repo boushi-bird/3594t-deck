@@ -24,9 +24,7 @@ rules:
     - off
   babel/no-invalid-this:
     - error
-  '@typescript-eslint/no-parameter-properties':
-    - off
-  '@typescript-eslint/no-empty-interface':
+  '@typescript-eslint/no-empty-function':
     - off
   prettier/prettier:
     - warn
