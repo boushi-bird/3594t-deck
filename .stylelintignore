@@ -4,6 +4,7 @@ extra_modules/
 /dist/
 /docs/
 /LICENSE
+/src/data/
 *.json
 *.html
 *.ejs

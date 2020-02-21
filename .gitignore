@@ -1,3 +1,4 @@
+/src/data/
 /extra_modules/*
 !/extra_modules/tsconfig.json
 
