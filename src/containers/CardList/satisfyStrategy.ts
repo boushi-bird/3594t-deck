@@ -62,8 +62,8 @@ export default (
   // 計略名検索
   if (
     searchName.length > 0 &&
-    (!includeSearchText(strategy.name, searchName) &&
-      !includeSearchTextRuby(strategy.nameRuby, searchName))
+    !includeSearchText(strategy.name, searchName) &&
+    !includeSearchTextRuby(strategy.nameRuby, searchName)
   ) {
     return false;
   }

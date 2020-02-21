@@ -120,9 +120,6 @@ export default connect<
   ContainerDispatchFromProps,
   OwnProps,
   Props
->(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps,
-  { areMergedPropsEqual: () => false }
-)(BaseFilter);
+>(mapStateToProps, mapDispatchToProps, mergeProps, {
+  areMergedPropsEqual: () => false,
+})(BaseFilter);

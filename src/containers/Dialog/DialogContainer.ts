@@ -67,9 +67,6 @@ export default connect<
   ContainerDispatchFromProps,
   OwnProps,
   StateFromProps & DispatchFromProps
->(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps,
-  { areMergedPropsEqual: () => false }
-)(Dialog);
+>(mapStateToProps, mapDispatchToProps, mergeProps, {
+  areMergedPropsEqual: () => false,
+})(Dialog);
