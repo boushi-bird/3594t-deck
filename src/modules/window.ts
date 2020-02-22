@@ -20,46 +20,46 @@ export interface WindowState {
 }
 
 export const windowActions = {
-  beReady: createAction('BE_READY'),
-  openSideMenu: createAction('CHANGE_SIDEMENU_VISIBLE', action => () =>
-    action({ openedSideMenu: true })
-  ),
-  closeSideMenu: createAction('CHANGE_SIDEMENU_VISIBLE', action => () =>
-    action({ openedSideMenu: false })
-  ),
-  openFilter: createAction('CHANGE_FILTER_VISIBLE', action => () =>
-    action({ openedFilter: true })
-  ),
-  closeFilter: createAction('CHANGE_FILTER_VISIBLE', action => () =>
-    action({ openedFilter: false })
-  ),
-  openDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', action => () =>
-    action({ openedDeckConfig: true })
-  ),
-  closeDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', action => () =>
-    action({ openedDeckConfig: false })
-  ),
-  openUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', action => () =>
-    action({ openedUpdateInfo: true })
-  ),
-  closeUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', action => () =>
-    action({ openedUpdateInfo: false })
-  ),
-  enableNotice: createAction('CHANGE_SHOW_NOTICE', action => () =>
-    action({ showNotice: true })
-  ),
-  disableNotice: createAction('CHANGE_SHOW_NOTICE', action => () =>
-    action({ showNotice: false })
-  ),
-  closeAllModal: createAction('CLOSE_ALL_MODAL'),
+  beReady: createAction('BE_READY')(),
+  openSideMenu: createAction('CHANGE_SIDEMENU_VISIBLE', () => ({
+    openedSideMenu: true,
+  }))(),
+  closeSideMenu: createAction('CHANGE_SIDEMENU_VISIBLE', () => ({
+    openedSideMenu: false,
+  }))(),
+  openFilter: createAction('CHANGE_FILTER_VISIBLE', () => ({
+    openedFilter: true,
+  }))(),
+  closeFilter: createAction('CHANGE_FILTER_VISIBLE', () => ({
+    openedFilter: false,
+  }))(),
+  openDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', () => ({
+    openedDeckConfig: true,
+  }))(),
+  closeDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', () => ({
+    openedDeckConfig: false,
+  }))(),
+  openUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', () => ({
+    openedUpdateInfo: true,
+  }))(),
+  closeUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', () => ({
+    openedUpdateInfo: false,
+  }))(),
+  enableNotice: createAction('CHANGE_SHOW_NOTICE', () => ({
+    showNotice: true,
+  }))(),
+  disableNotice: createAction('CHANGE_SHOW_NOTICE', () => ({
+    showNotice: false,
+  }))(),
+  closeAllModal: createAction('CLOSE_ALL_MODAL')(),
   changeActiveFilterTab: createAction(
     'CHANGE_ACTIVE_FILTER',
-    action => (activeFilter: FilterTab) => action({ activeFilter })
-  ),
+    (activeFilter: FilterTab) => ({ activeFilter })
+  )(),
   storeInstallPromptEvent: createAction(
     'STORE_INSTALL_PROMPT_EVENT',
-    action => (event: BeforeInstallPromptEvent | null) => action({ event })
-  ),
+    (event: BeforeInstallPromptEvent | null) => ({ event })
+  )(),
 };
 
 const initialState: WindowState = {

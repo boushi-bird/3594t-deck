@@ -20,10 +20,8 @@ export interface DialogState extends DialogInfo {
 }
 
 export const dialogActions = {
-  showDialog: createAction('SHOW_DIALOG', action => (dialog: DialogInfo) =>
-    action(dialog)
-  ),
-  closeDialog: createAction('CLOSE_DIALOG'),
+  showDialog: createAction('SHOW_DIALOG', (dialog: DialogInfo) => dialog)(),
+  closeDialog: createAction('CLOSE_DIALOG')(),
 };
 
 const initialState: DialogState = {
