@@ -324,7 +324,7 @@
     - license: MIT
  - **[@types/react-router@5.1.4](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
- - **[@types/react@16.9.21](https://github.com/DefinitelyTyped/DefinitelyTyped)**
+ - **[@types/react@16.9.22](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
  - **[@types/relateurl@0.2.28](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
@@ -2680,7 +2680,7 @@
     - license: MIT
  - **[typedarray@0.0.6](https://github.com/substack/typedarray)**
     - license: MIT
- - **[typesafe-actions@4.4.2](https://github.com/piotrwitek/typesafe-actions)**
+ - **[typesafe-actions@5.1.0](https://github.com/piotrwitek/typesafe-actions)**
     - license: MIT
  - **[typescript@3.6.5](https://github.com/Microsoft/TypeScript)**
     - license: Apache-2.0
