@@ -182,37 +182,30 @@ const initialState: DatalistState = {
 };
 
 export const datalistActions = {
-  resetConditions: createAction('RESET_CONDITIONS'),
-  applyCondition: createAction('APPLY_CONDITION'),
+  resetConditions: createAction('RESET_CONDITIONS')(),
+  applyCondition: createAction('APPLY_CONDITION')(),
   setBasicCondition: createAction(
     'SET_BASIC_CONDITION',
-    action => (condition: Partial<BasicFilterCondition>) =>
-      action({ condition })
-  ),
+    (condition: Partial<BasicFilterCondition>) => ({ condition })
+  )(),
   setDetailCondition: createAction(
     'SET_DETAIL_CONDITION',
-    action => (condition: Partial<DetailFilterCondition>) =>
-      action({ condition })
-  ),
+    (condition: Partial<DetailFilterCondition>) => ({ condition })
+  )(),
   setStrategiesCondition: createAction(
     'SET_STRATEGIES_CONDITION',
-    action => (condition: Partial<StrategiesFilterCondition>) =>
-      action({ condition })
-  ),
+    (condition: Partial<StrategiesFilterCondition>) => ({ condition })
+  )(),
   setShowStrategyExplanation: createAction(
     'SET_SHOW_STRATEGY_EXPLANATION',
-    action => (show: boolean) => action(show)
-  ),
-  setBaseData: createAction('SET_BASE_DATA', action => (baseData: BaseData) =>
-    action({ baseData })
-  ),
-  incrementPage: createAction('INCREMENT_PAGE', action => () =>
-    action({ page: 1 })
-  ),
-  resetPage: createAction('RESET_PAGE'),
-  decrementPage: createAction('DECREMENT_PAGE', action => () =>
-    action({ page: -1 })
-  ),
+    (show: boolean) => show
+  )(),
+  setBaseData: createAction('SET_BASE_DATA', (baseData: BaseData) => ({
+    baseData,
+  }))(),
+  incrementPage: createAction('INCREMENT_PAGE', () => ({ page: 1 }))(),
+  resetPage: createAction('RESET_PAGE')(),
+  decrementPage: createAction('DECREMENT_PAGE', () => ({ page: -1 }))(),
 };
 
 export default function datalistReducer(

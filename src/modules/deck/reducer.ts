@@ -33,19 +33,16 @@ const initialState: DeckState = {
 };
 
 export const deckActions = {
-  setActiveCard: createAction('SET_ACTIVE_CARD', action => (index: number) =>
-    action(index)
-  ),
+  setActiveCard: createAction('SET_ACTIVE_CARD', (index: number) => index)(),
   searchByDeck: createAction(
     'SEARCH_BY_DECK',
-    action => (index: number, condition: SearchCondition) =>
-      action({ index, condition })
-  ),
-  clearActiveCard: createAction('CLEAR_ACTIVE_CARD'),
+    (index: number, condition: SearchCondition) => ({ index, condition })
+  )(),
+  clearActiveCard: createAction('CLEAR_ACTIVE_CARD')(),
   setDeckConstraints: createAction(
     'SET_DECK_CONSTRAINTS',
-    action => (condition: Partial<DeckConstraints>) => action({ condition })
-  ),
+    (condition: Partial<DeckConstraints>) => ({ condition })
+  )(),
 };
 
 export default function datalistReducer(
