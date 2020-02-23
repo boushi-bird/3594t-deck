@@ -12,9 +12,13 @@
     - license: MIT
  - **[@babel/helper-builder-binary-assignment-operator-visitor@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-helper-builder-binary-assignment-operator-visitor)**
     - license: MIT
+ - **[@babel/helper-builder-react-jsx@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-helper-builder-react-jsx)**
+    - license: MIT
  - **[@babel/helper-call-delegate@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-helper-call-delegate)**
     - license: MIT
  - **[@babel/helper-compilation-targets@7.8.4](https://github.com/babel/babel/tree/master/packages/babel-helper-compilation-targets)**
+    - license: MIT
+ - **[@babel/helper-create-class-features-plugin@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-helper-create-class-features-plugin)**
     - license: MIT
  - **[@babel/helper-create-regexp-features-plugin@7.8.3](https://github.com/babel/babel)**
     - license: MIT
@@ -60,6 +64,8 @@
     - license: MIT
  - **[@babel/plugin-proposal-async-generator-functions@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-async-generator-functions)**
     - license: MIT
+ - **[@babel/plugin-proposal-class-properties@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-class-properties)**
+    - license: MIT
  - **[@babel/plugin-proposal-dynamic-import@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-dynamic-import)**
     - license: MIT
  - **[@babel/plugin-proposal-json-strings@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-json-strings)**
@@ -82,6 +88,8 @@
     - license: MIT
  - **[@babel/plugin-syntax-json-strings@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-json-strings)**
     - license: MIT
+ - **[@babel/plugin-syntax-jsx@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-jsx)**
+    - license: MIT
  - **[@babel/plugin-syntax-nullish-coalescing-operator@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-nullish-coalescing-operator)**
     - license: MIT
  - **[@babel/plugin-syntax-object-rest-spread@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-object-rest-spread)**
@@ -91,6 +99,8 @@
  - **[@babel/plugin-syntax-optional-chaining@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-chaining)**
     - license: MIT
  - **[@babel/plugin-syntax-top-level-await@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-top-level-await)**
+    - license: MIT
+ - **[@babel/plugin-syntax-typescript@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-typescript)**
     - license: MIT
  - **[@babel/plugin-transform-arrow-functions@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-arrow-functions)**
     - license: MIT
@@ -138,6 +148,14 @@
     - license: MIT
  - **[@babel/plugin-transform-property-literals@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-property-literals)**
     - license: MIT
+ - **[@babel/plugin-transform-react-display-name@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-display-name)**
+    - license: MIT
+ - **[@babel/plugin-transform-react-jsx-self@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self)**
+    - license: MIT
+ - **[@babel/plugin-transform-react-jsx-source@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-source)**
+    - license: MIT
+ - **[@babel/plugin-transform-react-jsx@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx)**
+    - license: MIT
  - **[@babel/plugin-transform-regenerator@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-regenerator)**
     - license: MIT
  - **[@babel/plugin-transform-reserved-words@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-reserved-words)**
@@ -152,9 +170,15 @@
     - license: MIT
  - **[@babel/plugin-transform-typeof-symbol@7.8.4](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-typeof-symbol)**
     - license: MIT
+ - **[@babel/plugin-transform-typescript@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-typescript)**
+    - license: MIT
  - **[@babel/plugin-transform-unicode-regex@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-unicode-regex)**
     - license: MIT
  - **[@babel/preset-env@7.8.4](https://github.com/babel/babel/tree/master/packages/babel-preset-env)**
+    - license: MIT
+ - **[@babel/preset-react@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-preset-react)**
+    - license: MIT
+ - **[@babel/preset-typescript@7.8.3](https://github.com/babel/babel/tree/master/packages/babel-preset-typescript)**
     - license: MIT
  - **[@babel/runtime@7.6.0](https://github.com/babel/babel/tree/master/packages/babel-runtime)**
     - license: MIT
@@ -2648,8 +2672,6 @@
     - license: MIT
  - **[ts-jest@25.2.1](https://github.com/kulshekhar/ts-jest)**
     - license: MIT
- - **[ts-loader@6.2.1](https://github.com/TypeStrong/ts-loader)**
-    - license: MIT
  - **[ts-node@8.6.2](https://github.com/TypeStrong/ts-node)**
     - license: MIT
  - **[tsconfig-paths@3.9.0](https://github.com/dividab/tsconfig-paths)**
@@ -2682,7 +2704,7 @@
     - license: MIT
  - **[typesafe-actions@5.1.0](https://github.com/piotrwitek/typesafe-actions)**
     - license: MIT
- - **[typescript@3.6.5](https://github.com/Microsoft/TypeScript)**
+ - **[typescript@3.8.2](https://github.com/Microsoft/TypeScript)**
     - license: Apache-2.0
  - **[uglify-js@3.4.10](https://github.com/mishoo/UglifyJS2)**
     - license: BSD-2-Clause
