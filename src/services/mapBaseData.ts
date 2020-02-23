@@ -101,7 +101,7 @@ export default (baseData: RawBaseData): BaseData => {
     return {
       ...dist,
       color: `rgb(${s.red}, ${s.green}, ${s.blue})`,
-      thinColor: `rgba(${s.red}, ${s.green}, ${s.blue}, 0.2)`,
+      thincolor: `rgba(${s.red}, ${s.green}, ${s.blue}, 0.2)`,
     };
   });
   // コスト

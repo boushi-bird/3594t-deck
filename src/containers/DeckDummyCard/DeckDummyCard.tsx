@@ -94,7 +94,7 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     let stateName = '';
     let hasState = false;
     if (belongState) {
-      style.backgroundColor = belongState.thinColor;
+      style.backgroundColor = belongState.thincolor;
       styleState.backgroundColor = belongState.color;
       stateId = belongState.id;
       stateName = belongState.nameShort || '';

@@ -95,7 +95,7 @@ const EXAMPLE_GENERAL = new GeneralImpl(
       name: '魏',
       nameShort: '魏',
       color: 'rgb(180, 25, 27)',
-      thinColor: 'rgba(180, 25, 27, 0.2)',
+      thincolor: 'rgba(180, 25, 27, 0.2)',
     },
     unitType: {
       // id: '2',
