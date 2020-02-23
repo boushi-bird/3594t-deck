@@ -4,10 +4,10 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
+import { General } from '3594t-deck';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
 import { DeckCardGeneral, DeckCardDummy } from '../../modules/deck/query';
-import { General } from '../../interfaces';
 
 interface DeckCardGeneralInfo
   extends Pick<DeckCardGeneral, 'genMain' | 'pocket'> {

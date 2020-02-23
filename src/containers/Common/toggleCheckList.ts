@@ -1,12 +1,11 @@
+import { FilterContents, FilterItem } from '3594t-deck';
 import {
-  FilterContents,
   BasicFilterCondition,
   BasicFilterConditionKey,
   DetailFilterCondition,
   DetailFilterConditionKey,
   StrategiesFilterCondition,
   StrategiesFilterConditionKey,
-  FilterItem,
 } from '../../modules/datalist';
 
 const toggleCheckListVersion = ({

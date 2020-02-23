@@ -1,4 +1,4 @@
-import { Strategy } from '../../interfaces';
+import { Strategy } from '3594t-deck';
 import { StrategiesFilterCondition } from '../../modules/datalist';
 import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
 import toBasicLetter from 'jaco/fn/toBasicLetter';

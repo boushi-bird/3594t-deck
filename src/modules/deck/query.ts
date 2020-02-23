@@ -1,6 +1,5 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { General } from '../../interfaces';
-import { FilterContents } from '../datalist';
+import { General, FilterContents } from '3594t-deck';
 import store from '../../store';
 
 const queryName = 'deck';

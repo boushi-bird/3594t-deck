@@ -1,39 +1,15 @@
 import { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
-import { FilterItem, Strategy, General } from '../interfaces/';
-import { DataItem as Item } from '../interfaces/dataItem';
+import {
+  FilterItem,
+  Strategy,
+  General,
+  DataItem,
+  FilterContents,
+} from '3594t-deck';
 import { GeneralImpl, createVersionLabel } from '../entities/generalImpl';
 
 interface IdItem {
   readonly id: string;
-}
-
-export interface FilterContents {
-  /** 勢力 */
-  belongStates: FilterItem[];
-  /** コスト */
-  costs: FilterItem[];
-  /** 兵種 */
-  unitTypes: FilterItem[];
-  /** 特技 */
-  skills: FilterItem[];
-  /** 主将器 */
-  genMains: FilterItem[];
-  /** レアリティ */
-  rarities: FilterItem[];
-  /** 官職 */
-  generalTypes: FilterItem[];
-  /** スターター/通常/Ex */
-  varTypes: FilterItem[];
-  /** 登場弾(メジャーバージョン) */
-  versions: FilterItem[][];
-  /** 登場弾(メジャーバージョン) */
-  majorVersions: FilterItem[];
-  /** 計略カテゴリー */
-  strategyCategories: FilterItem[];
-  /** 計略範囲 */
-  strategyRanges: FilterItem[];
-  /** 計略効果時間 */
-  strategyTimes: FilterItem[];
 }
 
 export interface BaseData {
@@ -78,7 +54,7 @@ const toItem = (
   nameShort: nameShort || shortName,
 });
 
-const emptyItem: Item = {
+const emptyItem: DataItem = {
   name: '',
 };
 
@@ -95,7 +71,7 @@ const emptyStrategy: Strategy = {
   stratTime: '',
 };
 
-const findById = (filterItems: FilterItem[], id: string): Item => {
+const findById = (filterItems: FilterItem[], id: string): DataItem => {
   const item = filterItems.find(v => v.id === id);
   if (!item) {
     return emptyItem;

@@ -7,10 +7,10 @@ import {
 } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { General, Strategy } from '3594t-deck';
 import { datalistActions, FilterCondition } from '../../modules/datalist';
 import { deckActions, SameCardConstraint } from '../../modules/deck/reducer';
 import { DeckCardGeneral, DeckQueryActions } from '../../modules/deck/query';
-import { General, Strategy } from '../../interfaces';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps, Props } from './CardList';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';

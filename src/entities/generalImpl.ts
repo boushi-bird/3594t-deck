@@ -1,5 +1,10 @@
-import { FilterItem, Strategy, GeneralProps, General } from '../interfaces/';
-import { DataItem as Item } from '../interfaces/dataItem';
+import {
+  FilterItem,
+  Strategy,
+  GeneralProps,
+  General,
+  DataItem,
+} from '3594t-deck';
 
 type RawGeneral = General['raw'];
 type Personal = General['personal'];
@@ -29,14 +34,14 @@ export class GeneralImpl implements General {
   public readonly force: number;
   public readonly intelligence: number;
   public readonly conquest: number;
-  public readonly cost: Item;
+  public readonly cost: DataItem;
   public readonly genMains: readonly FilterItem[];
-  public readonly generalType: Item;
+  public readonly generalType: DataItem;
   public readonly personal?: Personal;
-  public readonly rarity: Item;
+  public readonly rarity: DataItem;
   public readonly skills: readonly FilterItem[];
-  public readonly state: Item;
-  public readonly unitType: Item;
+  public readonly state: DataItem;
+  public readonly unitType: DataItem;
   public readonly strategy: Strategy;
   public constructor(id: string, raw: RawGeneral, option: GeneralProps) {
     this.id = id;

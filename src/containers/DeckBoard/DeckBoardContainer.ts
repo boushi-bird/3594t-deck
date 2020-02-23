@@ -7,12 +7,12 @@ import {
 } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { General } from '3594t-deck';
 import { datalistActions } from '../../modules/datalist';
 import { deckActions } from '../../modules/deck/reducer';
 import { DeckQueryActions } from '../../modules/deck/query';
 import { windowActions } from '../../modules/window';
 import { dialogActions, DialogInfo } from '../../modules/dialog';
-import { General } from '../../interfaces';
 import store, { State } from '../../store';
 import DeckBoard, {
   StateFromProps,

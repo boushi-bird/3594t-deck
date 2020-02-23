@@ -1,7 +1,7 @@
 import './StrategyFilter.css';
 import React from 'react';
+import { FilterContents } from '3594t-deck';
 import {
-  FilterContents,
   StrategiesFilterCondition,
   StrategiesFilterConditionKey,
 } from '../../modules/datalist';

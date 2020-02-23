@@ -1,6 +1,7 @@
 import './SimpleFilter.css';
 import React from 'react';
-import { BasicFilterConditionKey, FilterItem } from '../../modules/datalist';
+import { FilterItem } from '3594t-deck';
+import { BasicFilterConditionKey } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 
 export interface StateFromProps {
