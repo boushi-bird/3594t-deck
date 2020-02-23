@@ -111,7 +111,7 @@ const config: Configuration = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: ['babel-loader', 'ts-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,
