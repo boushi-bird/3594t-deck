@@ -36,7 +36,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
       showStrategyExplanation,
     } = this.props;
     const style: React.CSSProperties = {
-      backgroundColor: general.state.thinColor,
+      backgroundColor: general.state.thincolor,
     };
     const styleState: React.CSSProperties = {
       backgroundColor: general.state.color,

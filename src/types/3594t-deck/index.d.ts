@@ -13,7 +13,7 @@ declare module '3594t-deck' {
     readonly name: string;
     readonly nameShort?: string;
     readonly color?: string;
-    readonly thinColor?: string;
+    readonly thincolor?: string;
   }
 
   interface FilterItem extends DataItem, IdItem {}

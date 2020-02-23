@@ -64,20 +64,20 @@ export default class DeckCard extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const { general, genMain, active, search, pocket } = this.props;
     const style: React.CSSProperties = {
-      backgroundColor: general.state.thinColor,
+      backgroundColor: general.state.thincolor,
     };
-    const stateColor = general.state.color;
+    const statecolor = general.state.color;
     const styleState: React.CSSProperties = {
-      backgroundColor: stateColor,
+      backgroundColor: statecolor,
     };
-    const gradientColors = [
-      stateColor,
-      `${stateColor} 30px`,
+    const gradientcolors = [
+      statecolor,
+      `${statecolor} 30px`,
       'transparent 92px',
       'transparent',
-    ];
+    ].join(',');
     const styleShadow: React.CSSProperties = {
-      background: `linear-gradient(-30deg, ${gradientColors.join(',')})`,
+      background: `linear-gradient(-30deg, ${gradientcolors})`,
     };
     const skills: JSX.Element[] = [];
     general.skills.forEach(skill => {
