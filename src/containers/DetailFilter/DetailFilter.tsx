@@ -1,11 +1,10 @@
 import './DetailFilter.css';
 import React from 'react';
 import classNames from 'classnames';
+import { FilterContents, FilterItem } from '3594t-deck';
 import {
-  FilterContents,
   DetailFilterCondition,
   DetailFilterConditionKey,
-  FilterItem,
 } from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 import SwitchItem from '../../components/SwitchItem';

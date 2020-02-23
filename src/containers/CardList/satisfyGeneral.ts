@@ -1,4 +1,4 @@
-import { General } from '../../interfaces';
+import { General } from '3594t-deck';
 import { FilterCondition } from '../../modules/datalist';
 import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
 import toBasicLetter from 'jaco/fn/toBasicLetter';

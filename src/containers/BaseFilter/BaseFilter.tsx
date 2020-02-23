@@ -1,8 +1,8 @@
 import './BaseFilter.css';
 import React from 'react';
 import classNames from 'classnames';
+import { FilterContents } from '3594t-deck';
 import {
-  FilterContents,
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';

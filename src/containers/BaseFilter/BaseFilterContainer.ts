@@ -4,10 +4,10 @@ import {
   MergeProps,
   connect,
 } from 'react-redux';
+import { FilterContents } from '3594t-deck';
 import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleBasicCheckList } from '../Common/toggleCheckList';
 import {
-  FilterContents,
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';

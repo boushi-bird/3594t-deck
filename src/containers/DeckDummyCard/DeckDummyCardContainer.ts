@@ -1,6 +1,6 @@
 import { MapStateToProps, MergeProps, connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { General } from '../../interfaces';
+import { General } from '3594t-deck';
 import { State } from '../../store';
 import { DeckQueryActions } from '../../modules/deck/query';
 import DeckDummyCard, {

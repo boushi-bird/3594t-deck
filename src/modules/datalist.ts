@@ -1,10 +1,7 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { General, Strategy, FilterItem } from '../interfaces/';
-import { BaseData, FilterContents } from '../services/mapBaseData';
+import { General, Strategy, FilterContents } from '3594t-deck';
+import { BaseData } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
-
-export type FilterItem = FilterItem;
-export type FilterContents = FilterContents;
 
 export interface BasicFilterCondition {
   /** 勢力 */
