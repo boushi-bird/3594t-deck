@@ -70,7 +70,7 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
             itemName="30"
             onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['30']}
-            max={10}
+            max={11}
             min={8}
           />
         </label>

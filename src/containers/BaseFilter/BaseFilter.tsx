@@ -103,7 +103,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
                 itemName="forceMin"
                 onChangeValue={this.handleOnChangeValue}
                 value={filterCondition.forceMin}
-                max={10}
+                max={11}
                 min={1}
               />
               -
@@ -111,7 +111,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
                 itemName="forceMax"
                 onChangeValue={this.handleOnChangeValue}
                 value={filterCondition.forceMax}
-                max={10}
+                max={11}
                 min={1}
               />
             </div>
@@ -144,7 +144,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
               itemName="intelligenceMin"
               onChangeValue={this.handleOnChangeValue}
               value={filterCondition.intelligenceMin}
-              max={10}
+              max={11}
               min={1}
             />
             -
@@ -152,7 +152,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
               itemName="intelligenceMax"
               onChangeValue={this.handleOnChangeValue}
               value={filterCondition.intelligenceMax}
-              max={10}
+              max={11}
               min={1}
             />
           </div>
