@@ -7,6 +7,8 @@ const EXAMPLE_GENERAL = new GeneralImpl(
     /* eslint-disable @typescript-eslint/camelcase */
     code: '4d4d6458fbbe6b4de65cf66fe6defec2',
     pocket_code: '',
+    avatar: '8370e17cdd515abe898fdce332061ca7',
+    pocket_avatar: '',
     major_version: '2',
     add_version: '1',
     ver_type: '1',
@@ -28,6 +30,7 @@ const EXAMPLE_GENERAL = new GeneralImpl(
     strat: '63',
     illustrator: '51',
     voice_actor: '13',
+    pocket_off: true,
     belong: 0,
     not_belong: true,
     ex_rank: '0',
