@@ -11,6 +11,7 @@ import { General, Strategy } from '3594t-deck';
 import { datalistActions, FilterCondition } from '../../modules/datalist';
 import { deckActions, SameCardConstraint } from '../../modules/deck/reducer';
 import { DeckCardGeneral, DeckQueryActions } from '../../modules/deck/query';
+import { windowActions } from '../../modules/window';
 import { State } from '../../store';
 import CardList, { StateFromProps, DispatchFromProps, Props } from './CardList';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
@@ -36,6 +37,7 @@ interface ContainerDispatchFromProps {
   clearActiveCard: () => void;
   decrementPage: () => void;
   incrementPage: () => void;
+  openGeneralDetail: (general: General) => void;
 }
 
 interface PropForMergedPropsEqual {
@@ -86,6 +88,7 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch => {
       clearActiveCard: deckActions.clearActiveCard,
       decrementPage: datalistActions.decrementPage,
       incrementPage: datalistActions.incrementPage,
+      openGeneralDetail: windowActions.openGeneralDetail,
     },
     dispatch
   );
@@ -215,6 +218,7 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
     },
     onPagePrev: actions.decrementPage,
     onPageNext: actions.incrementPage,
+    showGeneralDetail: actions.openGeneralDetail,
     enabledAddDeckGeneral,
   };
 

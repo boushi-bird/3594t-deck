@@ -4,22 +4,32 @@ import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
-import { DatalistState } from '../../modules/datalist';
+import { General } from '3594t-deck';
 import { DeckCardGeneral } from '../../modules/deck/query';
 
 interface Props {
-  general: DatalistState['generals'][number];
+  general: General;
   show?: boolean;
   enabledAddDeck: boolean;
   showStrategyExplanation: boolean;
+  onShowDetail?: (general: General) => void;
   onAddDeck: (card: DeckCardGeneral) => void;
 }
 
 export default class GeneralCard extends React.PureComponent<Props> {
+  private handleGeneralClick = (): void => {
+    const { general, onShowDetail } = this.props;
+    if (!onShowDetail) {
+      return;
+    }
+    onShowDetail(general);
+  };
+
   private handleAddDeckClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     const { general, onAddDeck } = this.props;
+    event.stopPropagation();
     const genMain = event.currentTarget.dataset['genMain'];
     onAddDeck({
       general: general.id,
@@ -82,7 +92,11 @@ export default class GeneralCard extends React.PureComponent<Props> {
       );
     });
     return (
-      <div className="general-card" style={style}>
+      <div
+        className="general-card"
+        style={style}
+        onClick={this.handleGeneralClick}
+      >
         <span className="state" style={styleState}>
           {general.state.nameShort}
         </span>

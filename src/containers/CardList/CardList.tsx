@@ -18,6 +18,7 @@ export interface StateFromProps {
 }
 
 export interface DispatchFromProps {
+  showGeneralDetail: (general: General) => void;
   addDeckGeneral: (card: DeckCardGeneral) => void;
   onPagePrev: () => void;
   onPageNext: () => void;
@@ -28,6 +29,10 @@ export type Props = StateFromProps & DispatchFromProps;
 
 export default class CardList extends React.PureComponent<Props> {
   private scrollArea = React.createRef<HTMLDivElement>();
+
+  private handleOnShowDetail = (general: General) => {
+    this.props.showGeneralDetail(general);
+  };
 
   private handleOnAddDeck = (card: DeckCardGeneral) => {
     this.props.addDeckGeneral(card);
@@ -84,6 +89,7 @@ export default class CardList extends React.PureComponent<Props> {
         <GeneralCard
           key={general.id}
           general={general}
+          onShowDetail={this.handleOnShowDetail}
           onAddDeck={this.handleOnAddDeck}
           show={show}
           enabledAddDeck={enabled}
