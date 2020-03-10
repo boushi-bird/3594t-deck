@@ -33,6 +33,7 @@
   width: var(--general-card-width);
   height: var(--general-card-height);
   position: relative;
+  cursor: pointer;
 
   & > * {
     position: absolute;

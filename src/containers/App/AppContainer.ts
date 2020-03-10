@@ -35,6 +35,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   openedAnyModal:
     state.windowReducer.openedDeckConfig ||
     state.windowReducer.openedUpdateInfo ||
+    !!state.windowReducer.detailGeneral ||
     !state.windowReducer.ready,
   openedAnyModalSmall:
     state.windowReducer.openedFilter || !state.windowReducer.ready,
