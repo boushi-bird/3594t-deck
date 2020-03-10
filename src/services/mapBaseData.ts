@@ -107,11 +107,12 @@ export default (baseData: RawBaseData): BaseData => {
   // コスト
   const costs = objectToIdItems(baseData.COST, toItem);
   // 兵種
+  const UNIT_TYPE_ALIAS: { [key: string]: string } = { ['連弩兵']: '弩' };
   const unitTypes = convertIdItem(baseData.UNIT_TYPE, idIsKey, (s, id) => {
     const dist = toItem(s, id);
     return {
       ...dist,
-      nameShort: s.name[0],
+      nameShort: UNIT_TYPE_ALIAS[s.name] || s.name[0],
     };
   });
   // 特技
