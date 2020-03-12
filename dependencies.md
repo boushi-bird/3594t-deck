@@ -206,7 +206,7 @@
     - license: MIT
  - **[@bcoe/v8-coverage@0.2.3](https://github.com/demurgos/v8-coverage)**
     - license: MIT
- - **[@boushi-bird/3594t-net-datalist@0.0.3](https://github.com/boushi-bird/3594t-net-datalist)**
+ - **[@boushi-bird/3594t-net-datalist@0.0.5](https://github.com/boushi-bird/3594t-net-datalist)**
     - license: MIT
  - **[@cnakazawa/watch@1.0.4](https://github.com/mikeal/watch)**
     - license: Apache-2.0
