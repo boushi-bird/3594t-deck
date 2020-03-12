@@ -1,6 +1,7 @@
 import './StrategyFilter.css';
 import React from 'react';
-import { FilterContents } from '3594t-deck';
+import classNames from 'classnames';
+import { SearchMode, FilterContents } from '3594t-deck';
 import {
   StrategiesFilterCondition,
   StrategiesFilterConditionKey,
@@ -13,6 +14,7 @@ import StrategyRangeButtonList from '../../components/StrategyRangeButtonList';
 import NumberSelect from '../../components/NumberSelect';
 
 export interface StateFromProps {
+  searchMode: SearchMode;
   filterCondition: StrategiesFilterCondition;
   filterContents: FilterContents;
 }
@@ -34,10 +36,16 @@ export default class StrategyFilter extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { filterContents, filterCondition, toggleCheckList } = this.props;
+    const {
+      searchMode,
+      filterContents,
+      filterCondition,
+      toggleCheckList,
+    } = this.props;
+    const generalModeOff = searchMode !== 'general';
     return (
-      <div>
-        <section className="filter-section">
+      <div className={classNames({ 'general-mode-off': generalModeOff })}>
+        <section className="filter-section general-mode-only">
           <h2 className="title">計略表示切り替え</h2>
           <SwitchItem<StrategiesFilterConditionKey>
             itemName="showStrategyExplanation"
@@ -48,7 +56,7 @@ export default class StrategyFilter extends React.PureComponent<Props> {
             width={200}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">計略名検索</h2>
           <SearchTextBox<StrategiesFilterConditionKey>
             itemName="strategySearchName"
@@ -57,7 +65,7 @@ export default class StrategyFilter extends React.PureComponent<Props> {
           />
           <div>スペース区切りでAND検索 読み仮名(ひらがな、カタカナ)対応</div>
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">計略説明検索</h2>
           <SearchTextBox<StrategiesFilterConditionKey>
             itemName="strategySearchExplanation"
@@ -66,7 +74,7 @@ export default class StrategyFilter extends React.PureComponent<Props> {
           />
           <div>スペース区切りでAND検索</div>
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">計略必要士気</h2>
           <div className="range">
             <NumberSelect<StrategiesFilterConditionKey>
@@ -86,7 +94,7 @@ export default class StrategyFilter extends React.PureComponent<Props> {
             />
           </div>
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">計略カテゴリー</h2>
           <StrategyCategoryButtonList
             itemName="strategyCategories"
@@ -95,7 +103,7 @@ export default class StrategyFilter extends React.PureComponent<Props> {
             onClickItem={toggleCheckList}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">計略効果時間</h2>
           <FilterButtonList<StrategiesFilterConditionKey>
             itemName="strategyTimes"
@@ -104,7 +112,7 @@ export default class StrategyFilter extends React.PureComponent<Props> {
             onClickItem={toggleCheckList}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">計略範囲</h2>
           <StrategyRangeButtonList
             itemName="strategyRanges"

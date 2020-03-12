@@ -1,41 +1,41 @@
 import React from 'react';
-import { General } from '3594t-deck';
+import { AssistGeneral } from '3594t-deck';
 import CardListBase, {
   StateBaseProps,
   DispatchBaseProps,
-} from './CardListBase';
-import GeneralCard from '../../components/GeneralCard';
+} from '../CardList/CardListBase';
+import AssistGeneralCard from '../../components/AssistGeneralCard';
 
 export interface StateFromProps extends StateBaseProps {
-  generals: General[];
-  searchedGeneralIds: string[];
+  assistGenerals: AssistGeneral[];
+  searchedAssistGeneralIds: string[];
   showStrategyExplanation: boolean;
 }
 
 export interface DispatchFromProps extends DispatchBaseProps {
-  showGeneralDetail: (general: General) => void;
+  showGeneralDetail: (assistGgeneral: AssistGeneral) => void;
 }
 
 export type Props = StateFromProps & DispatchFromProps;
 
-export default class CardList extends CardListBase<Props> {
-  private handleOnShowDetail = (general: General) => {
-    this.props.showGeneralDetail(general);
+export default class AssitCardList extends CardListBase<Props> {
+  private handleOnShowDetail = (assistGgeneral: AssistGeneral) => {
+    this.props.showGeneralDetail(assistGgeneral);
   };
 
   protected createCardElements(): JSX.Element[] {
     const {
-      generals,
-      searchedGeneralIds,
+      assistGenerals,
+      searchedAssistGeneralIds,
       showStrategyExplanation,
     } = this.props;
     const generalCards: JSX.Element[] = [];
-    generals.forEach(general => {
-      const show = searchedGeneralIds.includes(general.id);
+    assistGenerals.forEach(assistGeneral => {
+      const show = searchedAssistGeneralIds.includes(assistGeneral.id);
       generalCards.push(
-        <GeneralCard
-          key={general.id}
-          general={general}
+        <AssistGeneralCard
+          key={assistGeneral.id}
+          general={assistGeneral}
           onShowDetail={this.handleOnShowDetail}
           show={show}
           showStrategyExplanation={showStrategyExplanation}
@@ -47,8 +47,8 @@ export default class CardList extends CardListBase<Props> {
   }
 
   protected isChangedList(prevProps: Readonly<Props>): boolean {
-    const next = this.props.searchedGeneralIds;
-    const prev = prevProps.searchedGeneralIds;
+    const next = this.props.searchedAssistGeneralIds;
+    const prev = prevProps.searchedAssistGeneralIds;
     const notChanged =
       next.length === prev.length && next.every(v => prev.includes(v));
     return !notChanged;

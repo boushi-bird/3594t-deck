@@ -5,12 +5,14 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
+import { SearchMode } from '3594t-deck';
 import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
 import SideMenu from '../SideMenu';
 import DeckBoard from '../DeckBoard';
 import CardList from '../CardList';
+import AssistCardList from '../AssistCardList';
 import SimpleFilter from '../SimpleFilter';
 import BaseFilter from '../BaseFilter';
 import DetailFilter from '../DetailFilter';
@@ -25,6 +27,7 @@ export interface StateFromProps extends WindowState {
   openedAnyModal: boolean;
   showNotice: boolean;
   loading: boolean;
+  searchMode: SearchMode;
 }
 
 export interface DispatchFromProps {
@@ -82,7 +85,10 @@ export default class App extends React.PureComponent<Props> {
       openedAnyModal: modal,
       openedAnyModalSmall: modalSmall,
       activeFilter,
+      searchMode,
     } = this.props;
+    const CardListElm =
+      searchMode === 'general' ? <CardList /> : <AssistCardList />;
     return (
       <div
         className={classNames([
@@ -126,7 +132,7 @@ export default class App extends React.PureComponent<Props> {
                 絞込
               </button>
             </div>
-            <CardList />
+            {CardListElm}
           </div>
           <div className={classNames(['card-filter-container', { open }])}>
             <h1 className="card-filter-title">絞り込みメニュー</h1>

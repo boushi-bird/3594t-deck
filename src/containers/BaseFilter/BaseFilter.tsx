@@ -33,6 +33,10 @@ export default class BaseFilter extends React.PureComponent<Props> {
     itemName: BasicFilterConditionKey,
     value: V
   ) => void = (itemName, value): void => {
+    if (itemName === 'searchMode') {
+      this.props.setCondition({ ['searchMode']: value ? 'assist' : 'general' });
+      return;
+    }
     this.props.setCondition({ [itemName]: value });
   };
 
@@ -46,8 +50,20 @@ export default class BaseFilter extends React.PureComponent<Props> {
       setCondition,
       toggleCheckList,
     } = this.props;
+    const generalModeOff = filterCondition.searchMode !== 'general';
     return (
-      <div>
+      <div className={classNames({ 'general-mode-off': generalModeOff })}>
+        <section className="filter-section">
+          <h2 className="title">武将/遊軍切り替え</h2>
+          <SwitchItem<BasicFilterConditionKey>
+            itemName="searchMode"
+            onChangeValue={this.handleOnChangeValue}
+            isOn={generalModeOff}
+            labelOff="武将"
+            labelOn="遊軍"
+            width={160}
+          />
+        </section>
         <section className="filter-section">
           <h2 className="title">勢力</h2>
           <FilterButtonList<BasicFilterConditionKey>
@@ -59,7 +75,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             disabled={searchByDeckBelongState}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">コスト</h2>
           <FilterButtonList<BasicFilterConditionKey>
             itemName="costs"
@@ -70,7 +86,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             disabled={searchByDeckCost}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">兵種</h2>
           <FilterButtonList<BasicFilterConditionKey>
             itemName="unitTypes"
@@ -81,7 +97,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             disabled={searchByDeckUnitType}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">武力</h2>
           <div className="title-button">
             <SwitchItem<BasicFilterConditionKey>
@@ -137,7 +153,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             />
           </div>
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">知力</h2>
           <div className="range">
             <NumberSelect<BasicFilterConditionKey>
@@ -157,7 +173,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             />
           </div>
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">征圧力</h2>
           <div className="range">
             <NumberSelect<BasicFilterConditionKey>
@@ -177,7 +193,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             />
           </div>
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">特技</h2>
           <div className="title-button">
             <SwitchItem<BasicFilterConditionKey>
@@ -196,7 +212,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
             square={true}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">武将名検索</h2>
           <SearchTextBox<BasicFilterConditionKey>
             itemName="searchText"

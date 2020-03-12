@@ -1,0 +1,198 @@
+@import '../../defines.css';
+
+:root {
+  --assist-general-card-width: 600px;
+  --assist-general-card-height: 92px;
+  --assist-general-card-thumb-size: 48px;
+  --assist-general-card-col1-width: 40px;
+  --assist-general-card-col2-left: var(--assist-general-card-col1-width);
+  --assist-general-card-col2-width: 82px;
+  --assist-general-card-col3-left: calc(var(--assist-general-card-col2-left) + var(--assist-general-card-col2-width));
+  --assist-general-card-col3-width: var(--assist-general-card-thumb-size);
+  --assist-general-card-col4-left: calc(var(--assist-general-card-col3-left) + var(--assist-general-card-col3-width));
+  --assist-general-card-col4-width: 230px;
+  --assist-general-card-col5-left: calc(var(--assist-general-card-col4-left) + var(--assist-general-card-col4-width));
+  --assist-general-card-col5-width: 68px;
+  --assist-general-card-col6-left: calc(var(--assist-general-card-col5-left) + var(--assist-general-card-col5-width));
+  --assist-general-card-col6-width: 90px;
+  --assist-general-card-col7-left: calc(var(--assist-general-card-col6-left) + var(--assist-general-card-col6-width));
+  --assist-general-card-col7-width: 42px;
+  --assist-strategy-category-height: 30px;
+}
+
+.assist-general-card {
+  display: block;
+  font-size: 20px;
+  margin: 5px auto;
+  width: var(--assist-general-card-width);
+  height: var(--assist-general-card-height);
+  position: relative;
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  & > * {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    height: calc(var(--assist-general-card-height) / 2);
+  }
+
+  & *[data-label]::before {
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    content: attr(data-label);
+  }
+
+  & *[data-label1][data-label2]::before {
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    content: attr(data-label1) '\A' attr(data-label2);
+    white-space: pre;
+  }
+
+  & .state {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--general-state-bg-color);
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+  }
+
+  & .rarity {
+    font-size: 18px;
+    font-weight: bold;
+    top: calc(var(--assist-general-card-height) / 2);
+    left: 0;
+    width: var(--assist-general-card-col1-width);
+    justify-content: flex-end;
+  }
+
+  & .version {
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 3px;
+    top: 0;
+    left: var(--assist-general-card-col2-left);
+    width: var(--assist-general-card-col2-width);
+    justify-content: flex-start;
+  }
+
+  & .name {
+    font-weight: bold;
+    font-size: 26px;
+    padding-left: 3px;
+    top: calc(var(--assist-general-card-height) / 2);
+    left: var(--assist-general-card-col2-left);
+    width: calc(var(--assist-general-card-col2-width) + var(--assist-general-card-col3-width));
+    justify-content: flex-start;
+  }
+
+  & .image {
+    top: 2px;
+    left: var(--assist-general-card-col3-left);
+    width: var(--assist-general-card-col3-width);
+    height: var(--assist-general-card-thumb-size);
+  }
+
+  & .no-image {
+    background: var(--normal-border-color);
+  }
+
+  & .general-thumb {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--assist-general-card-thumb-size);
+    height: var(--assist-general-card-thumb-size);
+    border: solid 1px var(--normal-border-color);
+  }
+
+  & .strategy {
+    display: none;
+    padding: 10px 10px 0;
+    top: 0;
+    left: var(--assist-general-card-col4-left);
+    width: var(--assist-general-card-col4-width);
+    height: calc(var(--assist-general-card-height) - var(--assist-strategy-category-height));
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    &.show {
+      display: flex;
+    }
+  }
+
+  & .strategy-category {
+    font-size: 12px;
+    display: none;
+    padding: 1px 10px;
+    top: calc(var(--assist-general-card-height) - var(--assist-strategy-category-height));
+    left: var(--assist-general-card-col4-left);
+    width: var(--assist-general-card-col4-width);
+    height: var(--assist-strategy-category-height);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    &.show {
+      display: flex;
+    }
+  }
+
+  & .strategy-explanation {
+    display: none;
+    font-size: 12px;
+    font-weight: normal;
+    padding-left: 3px;
+    padding-right: 3px;
+    top: 0;
+    left: var(--assist-general-card-col4-left);
+    width: var(--assist-general-card-col4-width);
+    height: var(--assist-general-card-height);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+
+    &.show {
+      display: flex;
+    }
+  }
+
+  & .strategy-range {
+    left: var(--assist-general-card-col5-left);
+    width: var(--assist-general-card-col5-width);
+    height: var(--assist-general-card-height);
+
+    & .range-image {
+      height: 60px;
+    }
+  }
+
+  & .buttons {
+    top: 0;
+    left: var(--assist-general-card-col7-left);
+    width: var(--assist-general-card-col7-width);
+    height: var(--assist-general-card-height);
+    display: flex;
+    flex-direction: column;
+    padding-top: 11px;
+  }
+
+  & .externals {
+    font-size: 8px;
+    top: 0;
+    left: var(--assist-general-card-col7-left);
+    width: var(--assist-general-card-col7-width);
+    height: var(--assist-general-card-height);
+    display: flex;
+    flex-direction: column;
+  }
+}

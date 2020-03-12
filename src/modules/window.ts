@@ -1,5 +1,5 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { General } from '3594t-deck';
+import { General, AssistGeneral } from '3594t-deck';
 
 export const filterTabNames = {
   BASIC: '基本',
@@ -18,6 +18,7 @@ export interface WindowState {
   showNotice: boolean;
   activeFilter: FilterTab;
   detailGeneral?: General;
+  detailAssistGeneral?: AssistGeneral;
   installPromptEvent: BeforeInstallPromptEvent | null;
 }
 
@@ -57,9 +58,10 @@ export const windowActions = {
     'CHANGE_GENERAL_DETAIL',
     (general: General) => ({ detailGeneral: general })
   )(),
-  closeGeneralDetail: createAction('CHANGE_GENERAL_DETAIL', () => ({
-    detailGeneral: undefined,
-  }))(),
+  openAssistGeneralDetail: createAction(
+    'CHANGE_ASSIST_GENERAL_DETAIL',
+    (assistGeneral: AssistGeneral) => ({ detailAssistGeneral: assistGeneral })
+  )(),
   closeAllModal: createAction('CLOSE_ALL_MODAL')(),
   changeActiveFilterTab: createAction(
     'CHANGE_ACTIVE_FILTER',
@@ -132,6 +134,7 @@ export default function windowReducer(
         openedDeckConfig: false,
         openedUpdateInfo: false,
         detailGeneral: undefined,
+        detailAssistGeneral: undefined,
       };
     case 'CHANGE_ACTIVE_FILTER':
       const {
@@ -156,6 +159,14 @@ export default function windowReducer(
       return {
         ...state,
         detailGeneral,
+      };
+    case 'CHANGE_ASSIST_GENERAL_DETAIL':
+      const {
+        payload: { detailAssistGeneral },
+      } = actions;
+      return {
+        ...state,
+        detailAssistGeneral,
       };
     case 'STORE_INSTALL_PROMPT_EVENT':
       const {

@@ -1,5 +1,9 @@
 @import '../../defines.css';
 
+.general-mode-off .general-mode-only {
+  display: none;
+}
+
 .filter-section {
   animation: fadeIn 0.5s ease 0s 1 normal;
   position: relative;

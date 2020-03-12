@@ -1,3 +1,4 @@
+import { SearchMode } from '3594t-deck';
 import satisfyGeneral from './satisfyGeneral';
 import { GeneralImpl } from '../../entities/generalImpl';
 
@@ -31,9 +32,6 @@ const EXAMPLE_GENERAL = new GeneralImpl(
     illustrator: '51',
     voice_actor: '13',
     pocket_off: true,
-    belong: 0,
-    not_belong: true,
-    ex_rank: '0',
     /* eslint-enable @typescript-eslint/camelcase */
   },
   {
@@ -118,14 +116,19 @@ const EXAMPLE_GENERAL = new GeneralImpl(
       morale: 4,
       nameRuby: 'ｹﾂｺｳﾉﾒｻﾒ',
       stratCategory: '1',
+      stratCategoryName: '強化',
       stratRange: '1',
+      stratRangeCode: '5dcd68487fa8097b64a8a0b1e723abd0',
       stratTime: '0',
     },
   }
 );
 
+const searchMode: SearchMode = 'general';
+
 const DEFAULT_FILTER = {
   basic: {
+    searchMode,
     belongStates: [],
     costs: [],
     unitTypes: [],
