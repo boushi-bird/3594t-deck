@@ -31,9 +31,6 @@ const EXAMPLE_GENERAL = new GeneralImpl(
     illustrator: '51',
     voice_actor: '13',
     pocket_off: true,
-    belong: 0,
-    not_belong: true,
-    ex_rank: '0',
     /* eslint-enable @typescript-eslint/camelcase */
   },
   {

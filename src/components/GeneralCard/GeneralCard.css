@@ -3,11 +3,12 @@
 :root {
   --general-card-width: 600px;
   --general-card-height: 92px;
+  --general-card-thumb-size: 48px;
   --general-card-col1-width: 40px;
   --general-card-col2-left: var(--general-card-col1-width);
-  --general-card-col2-width: 110px;
+  --general-card-col2-width: 82px;
   --general-card-col3-left: calc(var(--general-card-col2-left) + var(--general-card-col2-width));
-  --general-card-col3-width: 46px;
+  --general-card-col3-width: var(--general-card-thumb-size);
   --general-card-col4-left: calc(var(--general-card-col3-left) + var(--general-card-col3-width));
   --general-card-col4-width: 36px;
   --general-card-col5-left: calc(var(--general-card-col4-left) + var(--general-card-col4-width));
@@ -21,9 +22,9 @@
   --general-card-col9-left: calc(var(--general-card-col8-left) + var(--general-card-col8-width));
   --general-card-col9-width: 32px;
   --general-card-col10-left: calc(var(--general-card-col9-left) + var(--general-card-col9-width));
-  --general-card-col10-width: 70px;
+  --general-card-col10-width: 90px;
   --general-card-col11-left: calc(var(--general-card-col10-left) + var(--general-card-col10-width));
-  --general-card-col11-width: 38px;
+  --general-card-col11-width: 42px;
 }
 
 .general-card {
@@ -78,6 +79,7 @@
   }
 
   & .version {
+    font-size: 18px;
     font-weight: bold;
     padding-left: 3px;
     top: 0;
@@ -92,15 +94,15 @@
     padding-left: 3px;
     top: calc(var(--general-card-height) / 2);
     left: var(--general-card-col2-left);
-    width: var(--general-card-col2-width);
+    width: calc(var(--general-card-col2-width) + var(--general-card-col3-width));
     justify-content: flex-start;
   }
 
   & .image {
-    top: 0;
+    top: 2px;
     left: var(--general-card-col3-left);
     width: var(--general-card-col3-width);
-    height: var(--general-card-height);
+    height: var(--general-card-thumb-size);
   }
 
   & .no-image {
@@ -112,8 +114,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 40px;
-    height: 64px;
+    width: var(--general-card-thumb-size);
+    height: var(--general-card-thumb-size);
     border: solid 1px var(--normal-border-color);
   }
 

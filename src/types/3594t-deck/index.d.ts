@@ -83,6 +83,11 @@ declare module '3594t-deck' {
      * @param pocket trueなら ぽけっと武将画像
      */
     thumbUrl(pocket: boolean): string;
+    /**
+     * アバター画像URL取得
+     * @param pocket trueなら ぽけっと武将画像
+     */
+    avatarUrl(pocket: boolean): string;
   }
 
   interface FilterContents {

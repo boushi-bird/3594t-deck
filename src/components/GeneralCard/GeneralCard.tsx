@@ -2,18 +2,15 @@ import './GeneralCard.css';
 import React from 'react';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { General } from '3594t-deck';
-import { DeckCardGeneral } from '../../modules/deck/query';
+import AddButtonContainer from './AddButtonContainer';
 
 interface Props {
   general: General;
   show?: boolean;
-  enabledAddDeck: boolean;
   showStrategyExplanation: boolean;
+  showAddButtons: boolean;
   onShowDetail?: (general: General) => void;
-  onAddDeck: (card: DeckCardGeneral) => void;
 }
 
 export default class GeneralCard extends React.PureComponent<Props> {
@@ -25,25 +22,12 @@ export default class GeneralCard extends React.PureComponent<Props> {
     onShowDetail(general);
   };
 
-  private handleAddDeckClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    const { general, onAddDeck } = this.props;
-    event.stopPropagation();
-    const genMain = event.currentTarget.dataset['genMain'];
-    onAddDeck({
-      general: general.id,
-      genMain,
-      pocket: false,
-    });
-  };
-
   public render(): React.ReactNode {
     const {
       general,
       show,
-      enabledAddDeck,
       showStrategyExplanation,
+      showAddButtons,
     } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
@@ -76,21 +60,11 @@ export default class GeneralCard extends React.PureComponent<Props> {
     stratExplanation.split('\n').forEach((exp, i) => {
       stratExplanationElements.push(<span key={i}>{exp}</span>);
     });
-    const genMains: JSX.Element[] = [];
-    general.genMains.forEach((genMain, i) => {
-      genMains.push(
-        <button
-          className="gen-main"
-          key={i}
-          disabled={!enabledAddDeck}
-          data-gen-main={genMain.id}
-          onClick={this.handleAddDeckClick}
-        >
-          {genMain.nameShort}
-          <FontAwesomeIcon icon={faPlusCircle} />
-        </button>
-      );
-    });
+    const addButtonArea: JSX.Element = showAddButtons ? (
+      <AddButtonContainer general={general} />
+    ) : (
+      <></>
+    );
     return (
       <div
         className="general-card"
@@ -111,7 +85,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
             resize={false}
             placeholder={<div className="no-image general-thumb" />}
           >
-            <img className="general-thumb" src={general.thumbUrl(false)} />
+            <img className="general-thumb" src={general.avatarUrl(false)} />
           </LazyLoad>
         </span>
         <span className="cost" data-label="コスト">
@@ -147,18 +121,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
         <span className="strategy-morale" data-label1="必要" data-label2="士気">
           {stratMorale}
         </span>
-        <span className="gen-mains" data-label="主将器">
-          {genMains}
-        </span>
-        <span className="buttons">
-          <button
-            className="add-deck"
-            disabled={!enabledAddDeck}
-            onClick={this.handleAddDeckClick}
-          >
-            <FontAwesomeIcon icon={faPlusCircle} />
-          </button>
-        </span>
+        {addButtonArea}
       </div>
     );
   }

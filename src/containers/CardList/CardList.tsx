@@ -4,7 +4,6 @@ import { forceCheck } from 'react-lazyload';
 import classNames from 'classnames';
 import { General } from '3594t-deck';
 import GeneralCard from '../../components/GeneralCard';
-import { DeckCardGeneral } from '../../modules/deck/query';
 
 export interface StateFromProps {
   generals: General[];
@@ -19,10 +18,8 @@ export interface StateFromProps {
 
 export interface DispatchFromProps {
   showGeneralDetail: (general: General) => void;
-  addDeckGeneral: (card: DeckCardGeneral) => void;
   onPagePrev: () => void;
   onPageNext: () => void;
-  enabledAddDeckGeneral: (general: General) => boolean;
 }
 
 export type Props = StateFromProps & DispatchFromProps;
@@ -32,10 +29,6 @@ export default class CardList extends React.PureComponent<Props> {
 
   private handleOnShowDetail = (general: General) => {
     this.props.showGeneralDetail(general);
-  };
-
-  private handleOnAddDeck = (card: DeckCardGeneral) => {
-    this.props.addDeckGeneral(card);
   };
 
   private handleOnPagePrev = (
@@ -78,22 +71,19 @@ export default class CardList extends React.PureComponent<Props> {
       hasPrev,
       hasNext,
       showStrategyExplanation,
-      enabledAddDeckGeneral,
     } = this.props;
     const generalCards: JSX.Element[] = [];
     const count = searchedGeneralIds.length;
     generals.forEach(general => {
       const show = searchedGeneralIds.includes(general.id);
-      const enabled = enabledAddDeckGeneral(general);
       generalCards.push(
         <GeneralCard
           key={general.id}
           general={general}
           onShowDetail={this.handleOnShowDetail}
-          onAddDeck={this.handleOnAddDeck}
           show={show}
-          enabledAddDeck={enabled}
           showStrategyExplanation={showStrategyExplanation}
+          showAddButtons={true}
         />
       );
     });

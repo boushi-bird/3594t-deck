@@ -74,4 +74,8 @@ export class GeneralImpl implements General {
     const code = pocket ? this.pocketCode : this.code;
     return `https://3594t.net/img/card_small/${code}.jpg`;
   }
+  public avatarUrl(pocket: boolean): string {
+    const code = pocket ? this.raw.pocket_avatar : this.raw.avatar;
+    return `https://3594t.net/img/avatar/${code}.png`;
+  }
 }
