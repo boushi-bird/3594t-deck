@@ -41,6 +41,7 @@ const mapStateToProps: TMapStateToProps = state => ({
     state.windowReducer.openedFilter || !state.windowReducer.ready,
   loading: !state.windowReducer.ready,
   activeIndex: state.deckReducer.activeIndex,
+  searchMode: state.datalistReducer.effectiveFilterCondition.basic.searchMode,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = dispatch => {

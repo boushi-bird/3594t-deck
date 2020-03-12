@@ -66,5 +66,9 @@
     position: relative;
     min-width: 100px;
     min-height: 100px;
+
+    & .range-image {
+      height: 60px;
+    }
   }
 }

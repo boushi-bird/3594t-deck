@@ -134,6 +134,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   );
   const sProps: StateFromProps = {
     generals,
+    count: searchedGeneralIds.length,
     searchedGeneralIds,
     searchedAll,
     searchedOffset,

@@ -1,9 +1,17 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { General, Strategy, FilterContents } from '3594t-deck';
+import {
+  General,
+  Strategy,
+  AssistGeneral,
+  FilterContents,
+  SearchMode,
+} from '3594t-deck';
 import { BaseData } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 export interface BasicFilterCondition {
+  /** 検索モード */
+  searchMode: SearchMode;
   /** 勢力 */
   belongStates: string[];
   /** コスト */
@@ -89,6 +97,7 @@ export type DetailFilterConditionKey = keyof DetailFilterCondition;
 export type StrategiesFilterConditionKey = keyof StrategiesFilterCondition;
 
 const initialBasicFilterCondition: BasicFilterCondition = {
+  searchMode: 'assist',
   belongStates: [],
   costs: [],
   unitTypes: [],
@@ -156,6 +165,7 @@ const initialFilterContents: FilterContents = {
   strategyCategories: [],
   strategyRanges: [],
   strategyTimes: [],
+  assistStrategyCategories: [],
 };
 
 export interface DatalistState {
@@ -164,6 +174,7 @@ export interface DatalistState {
   filterContents: FilterContents;
   generals: General[];
   strategies: Strategy[];
+  assistGenerals: AssistGeneral[];
   currentPage: number;
   pageLimit: number;
 }
@@ -174,6 +185,7 @@ const initialState: DatalistState = {
   filterContents: initialFilterContents,
   generals: [],
   strategies: [],
+  assistGenerals: [],
   currentPage: 1,
   pageLimit: 50,
 };
@@ -275,7 +287,7 @@ export default function datalistReducer(
     }
     case 'SET_BASE_DATA': {
       const baseData = actions.payload.baseData;
-      const { generals, strategies, filterContents } = baseData;
+      const { generals, strategies, assistGenerals, filterContents } = baseData;
       return {
         ...state,
         filterCondition: initialFilterCondition,
@@ -284,6 +296,7 @@ export default function datalistReducer(
         filterContents,
         generals,
         strategies,
+        assistGenerals,
       };
     }
     case 'RESET_PAGE': {

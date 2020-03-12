@@ -7,6 +7,12 @@ declare module '3594t-deck' {
 
   type RawGeneral = RawBaseData['GENERAL'][number];
   type Personal = RawBaseData['PERSONAL'][number];
+  type RawAssistGeneral = RawBaseData['ASSIST'][number];
+
+  // 検索モード
+  // general: 武将
+  // assist: 遊軍
+  type SearchMode = 'general' | 'assist';
 
   interface DataItem {
     readonly code?: string;
@@ -94,6 +100,50 @@ declare module '3594t-deck' {
     avatarUrl(pocket: boolean): string;
   }
 
+  interface AssistStrategy {
+    readonly id: string;
+    readonly code: string;
+    readonly explanation: string;
+    readonly rawExplanation: string;
+    readonly name: string;
+    readonly nameRuby: string;
+    readonly category?: FilterItem;
+    readonly range?: FilterItem;
+  }
+
+  interface AssistGeneralProps {
+    /** 登場弾(メジャー) */
+    readonly majorVersion: number;
+    /** 登場弾(追加) */
+    readonly addVersion: number;
+    /** EXカード */
+    readonly isEx: boolean;
+    /** 武将名 */
+    readonly personal?: Personal;
+    /** 勢力 */
+    readonly state: DataItem;
+    /** 計略 */
+    readonly strategy: AssistStrategy;
+  }
+
+  interface AssistGeneral extends IdItem, AssistGeneralProps {
+    readonly raw: RawAssistGeneral;
+    /** コード */
+    readonly code: string;
+    /** 武将名 */
+    readonly name: string;
+    /** 登場弾 */
+    readonly version: string;
+    /** 登場弾(内部値) */
+    readonly versionValue: string;
+    /** 公式ページへのURL */
+    readonly officialUrl: string;
+    /** サムネイル画像URL */
+    readonly thumbUrl: string;
+    /** アバター画像URL */
+    readonly avatarUrl: string;
+  }
+
   interface FilterContents {
     /** 勢力 */
     belongStates: FilterItem[];
@@ -121,5 +171,7 @@ declare module '3594t-deck' {
     strategyRanges: FilterItem[];
     /** 計略効果時間 */
     strategyTimes: FilterItem[];
+    /** 遊軍計略カテゴリー */
+    assistStrategyCategories: FilterItem[];
   }
 }

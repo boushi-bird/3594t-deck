@@ -3,10 +3,14 @@ import {
   FilterItem,
   Strategy,
   General,
+  AssistStrategy,
+  AssistGeneral,
   DataItem,
   FilterContents,
 } from '3594t-deck';
-import { GeneralImpl, createVersionLabel } from '../entities/generalImpl';
+import { GeneralImpl } from '../entities/generalImpl';
+import { AssistGeneralImpl } from '../entities/assistGeneralImpl';
+import { createVersionLabel } from '../entities/createVersionLabel';
 
 interface IdItem {
   readonly id: string;
@@ -18,6 +22,10 @@ export interface BaseData {
   generals: General[];
   /** 計略 */
   strategies: Strategy[];
+  /** 遊軍 */
+  assistGenerals: AssistGeneral[];
+  /** 遊軍計略 */
+  assistStrategies: AssistStrategy[];
 }
 
 const idIsIndex = <V>(_v: V, i: number): string => `${i}`;
@@ -71,6 +79,15 @@ const emptyStrategy: Strategy = {
   stratRange: '',
   stratRangeCode: '',
   stratTime: '',
+};
+
+const emptyAssistStrategy: AssistStrategy = {
+  id: '',
+  code: '',
+  explanation: '',
+  rawExplanation: '',
+  name: '',
+  nameRuby: '',
 };
 
 const findById = (filterItems: FilterItem[], id: string): DataItem => {
@@ -247,6 +264,69 @@ export default (baseData: RawBaseData): BaseData => {
     versions[major].sort(sortNumber);
   });
   const strategyTimes = convertIdItem(baseData.STRAT_TIME, idIsIndex, toItem);
+  // 遊軍計略カテゴリ
+  const assistStrategyCategories = convertIdItem(
+    baseData.ASSIST_STRAT_CATEGORY,
+    idIsKey,
+    toItem
+  );
+  // 遊軍計略
+  const assistStrategies: AssistStrategy[] = convertIdItem(
+    baseData.ASSIST_STRAT,
+    idIsKey,
+    (strat, id) => {
+      const {
+        code,
+        key,
+        name,
+        explanation: rawExplanation,
+        name_ruby: nameRuby,
+        assist_strat_category: stratCategoryId,
+        strat_range: stratRange,
+      } = strat;
+      const category = assistStrategyCategories.find(
+        sc => sc.id === stratCategoryId
+      );
+      const range = strategyRanges.find(sr => sr.id === stratRange);
+      return {
+        id,
+        code,
+        key,
+        name,
+        explanation: convertStrategyExplanation(rawExplanation),
+        rawExplanation,
+        nameRuby,
+        category,
+        range,
+      };
+    }
+  );
+  // 遊軍
+  const assistGenerals = convertIdItem(
+    baseData.ASSIST,
+    idIsIndex,
+    (raw, id) => {
+      const majorVersion = parseInt(raw.major_version);
+      const addVersion = parseInt(raw.add_version);
+      const isEx = false;
+      if (!versions[majorVersion]) {
+        versions[majorVersion] = [];
+      }
+      if (!isEx && !versions[majorVersion].includes(addVersion)) {
+        versions[majorVersion].push(addVersion);
+      }
+      return new AssistGeneralImpl(id, raw, {
+        majorVersion,
+        addVersion,
+        isEx,
+        personal: baseData.PERSONAL[parseInt(raw.personal)],
+        state: findById(belongStates, raw.state),
+        strategy:
+          assistStrategies.find(v => v.id === raw.assist_strat) ||
+          emptyAssistStrategy,
+      });
+    }
+  );
   return {
     filterContents: {
       belongStates,
@@ -277,8 +357,11 @@ export default (baseData: RawBaseData): BaseData => {
       strategyCategories,
       strategyRanges,
       strategyTimes,
+      assistStrategyCategories,
     },
     generals,
     strategies,
+    assistGenerals,
+    assistStrategies,
   };
 };

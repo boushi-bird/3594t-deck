@@ -5,25 +5,10 @@ import {
   General,
   DataItem,
 } from '3594t-deck';
+import { createVersionLabel } from './createVersionLabel';
 
 type RawGeneral = General['raw'];
 type Personal = General['personal'];
-
-export const createVersionLabel = (
-  majorVersion: number | string,
-  addVersion = 0,
-  isEx = false
-): string => {
-  let add: string;
-  if (isEx) {
-    add = '-EX';
-  } else if (addVersion > 0) {
-    add = `-${addVersion}`;
-  } else {
-    add = '';
-  }
-  return `第${majorVersion}弾${add}`;
-};
 
 export class GeneralImpl implements General {
   public readonly id: string;

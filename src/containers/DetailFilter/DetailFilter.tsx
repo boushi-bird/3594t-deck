@@ -1,7 +1,7 @@
 import './DetailFilter.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterContents, FilterItem } from '3594t-deck';
+import { FilterContents, FilterItem, SearchMode } from '3594t-deck';
 import {
   DetailFilterCondition,
   DetailFilterConditionKey,
@@ -10,6 +10,7 @@ import FilterButtonList from '../../components/FilterButtonList';
 import SwitchItem from '../../components/SwitchItem';
 
 export interface StateFromProps {
+  searchMode: SearchMode;
   filterCondition: DetailFilterCondition;
   filterContents: FilterContents;
 }
@@ -41,7 +42,13 @@ export default class DetailFilter extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { filterContents, filterCondition, toggleCheckList } = this.props;
+    const {
+      searchMode,
+      filterContents,
+      filterCondition,
+      toggleCheckList,
+    } = this.props;
+    const generalModeOff = searchMode !== 'general';
     const versionElements: JSX.Element[] = [];
     filterContents.versions.forEach((version, i) => {
       versionElements.push(
@@ -55,8 +62,8 @@ export default class DetailFilter extends React.PureComponent<Props> {
       );
     });
     return (
-      <div>
-        <section className="filter-section">
+      <div className={classNames({ 'general-mode-off': generalModeOff })}>
+        <section className="filter-section general-mode-only">
           <h2 className="title">登場弾</h2>
           <div className="title-button">
             <SwitchItem<DetailFilterConditionKey>
@@ -88,7 +95,7 @@ export default class DetailFilter extends React.PureComponent<Props> {
             {versionElements}
           </div>
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">将器主効果候補</h2>
           <div className="title-button">
             <SwitchItem<DetailFilterConditionKey>
@@ -106,7 +113,7 @@ export default class DetailFilter extends React.PureComponent<Props> {
             onClickItem={toggleCheckList}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">レアリティ</h2>
           <FilterButtonList<DetailFilterConditionKey>
             itemName="rarities"
@@ -116,7 +123,7 @@ export default class DetailFilter extends React.PureComponent<Props> {
             square={true}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">官職</h2>
           <FilterButtonList<DetailFilterConditionKey>
             itemName="generalTypes"
@@ -125,7 +132,7 @@ export default class DetailFilter extends React.PureComponent<Props> {
             onClickItem={toggleCheckList}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">カード種別</h2>
           <FilterButtonList<DetailFilterConditionKey>
             itemName="varTypes"
@@ -134,7 +141,7 @@ export default class DetailFilter extends React.PureComponent<Props> {
             onClickItem={toggleCheckList}
           />
         </section>
-        <section className="filter-section">
+        <section className="filter-section general-mode-only">
           <h2 className="title">ぽけっと武将</h2>
           <FilterButtonList<DetailFilterConditionKey>
             itemName="pockets"
