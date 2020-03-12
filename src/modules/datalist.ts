@@ -97,7 +97,7 @@ export type DetailFilterConditionKey = keyof DetailFilterCondition;
 export type StrategiesFilterConditionKey = keyof StrategiesFilterCondition;
 
 const initialBasicFilterCondition: BasicFilterCondition = {
-  searchMode: 'assist',
+  searchMode: 'general',
   belongStates: [],
   costs: [],
   unitTypes: [],
