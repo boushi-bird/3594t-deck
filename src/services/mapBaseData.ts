@@ -67,7 +67,9 @@ const emptyStrategy: Strategy = {
   name: '',
   nameRuby: '',
   stratCategory: '',
+  stratCategoryName: '',
   stratRange: '',
+  stratRangeCode: '',
   stratTime: '',
 };
 
@@ -148,6 +150,22 @@ export default (baseData: RawBaseData): BaseData => {
       return v;
     }
   );
+  // 計略カテゴリ
+  const strategyCategories = convertIdItem(
+    baseData.STRAT_CATEGORY,
+    idIsKey,
+    toItem
+  );
+  // 計略範囲
+  const strategyRanges = convertIdItem(
+    baseData.STRAT_RANGE,
+    idIsIndex,
+    (s, id) => ({
+      id,
+      code: s.code,
+      name: '',
+    })
+  );
   // 計略
   const strategies: Strategy[] = convertIdItem(
     baseData.STRAT,
@@ -162,6 +180,10 @@ export default (baseData: RawBaseData): BaseData => {
         strat_time: stratTime,
         ...otherStrat
       } = strat;
+      const stratCategoryName =
+        strategyCategories.find(sc => sc.id === stratCategory)?.name || '';
+      const stratRangeCode =
+        strategyRanges.find(sr => sr.id === stratRange)?.code || '';
       return {
         id,
         ...otherStrat,
@@ -170,7 +192,9 @@ export default (baseData: RawBaseData): BaseData => {
         morale: parseInt(morale),
         nameRuby,
         stratCategory,
+        stratCategoryName,
         stratRange,
+        stratRangeCode,
         stratTime,
       };
     }
@@ -222,20 +246,6 @@ export default (baseData: RawBaseData): BaseData => {
   majorVersions.forEach(major => {
     versions[major].sort(sortNumber);
   });
-  const strategyCategories = convertIdItem(
-    baseData.STRAT_CATEGORY,
-    idIsKey,
-    toItem
-  );
-  const strategyRanges = convertIdItem(
-    baseData.STRAT_RANGE,
-    idIsIndex,
-    (s, id) => ({
-      id,
-      code: s.code,
-      name: '',
-    })
-  );
   const strategyTimes = convertIdItem(baseData.STRAT_TIME, idIsIndex, toItem);
   return {
     filterContents: {

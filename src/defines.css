@@ -51,6 +51,8 @@
   --dialog-action-blue-color: #1656f9;
   --radio-button-check-color: #40a1b2;
   --radio-button-check-bg-color: white;
+  --general-label-bg-color: #e2ab04;
+  --general-label-border-color: black;
 }
 
 @custom-media --app-min screen and (max-width: 630px);

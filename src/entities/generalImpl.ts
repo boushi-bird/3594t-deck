@@ -70,12 +70,16 @@ export class GeneralImpl implements General {
   public get hasPocket(): boolean {
     return this.raw.pocket_code !== '';
   }
+  public get officialUrl(): string {
+    return `https://3594t.net/datalist/?v=GENERAL&s=POPUP_GENERAL&c=${this.code}`;
+  }
   public thumbUrl(pocket: boolean): string {
-    const code = pocket ? this.pocketCode : this.code;
+    const code = pocket && this.hasPocket ? this.pocketCode : this.code;
     return `https://3594t.net/img/card_small/${code}.jpg`;
   }
   public avatarUrl(pocket: boolean): string {
-    const code = pocket ? this.raw.pocket_avatar : this.raw.avatar;
+    const code =
+      pocket && this.hasPocket ? this.raw.pocket_avatar : this.raw.avatar;
     return `https://3594t.net/img/avatar/${code}.png`;
   }
 }

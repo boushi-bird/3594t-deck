@@ -30,22 +30,41 @@
   height: 100%;
   margin: 5px auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   & *[data-label]::before {
     font-size: 12px;
     position: absolute;
-    top: 0;
+    top: -16px;
     content: attr(data-label);
   }
 
   & *[data-label] {
-    margin-top: 12px;
+    margin-top: 16px;
+  }
+
+  & .row {
+    display: flex;
+    margin-top: 6px;
   }
 
   & .strategy-explanation {
+    position: relative;
     font-size: 18px;
     font-weight: normal;
     padding-left: 3px;
-    padding-right: 3px;
+    padding-right: 10px;
+    flex: 1;
+    min-height: 100px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  & .strategy-range {
+    position: relative;
+    min-width: 100px;
+    min-height: 100px;
   }
 }

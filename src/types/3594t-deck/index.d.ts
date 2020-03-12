@@ -27,7 +27,9 @@ declare module '3594t-deck' {
     readonly name: string;
     readonly nameRuby: string;
     readonly stratCategory: string;
+    readonly stratCategoryName: string;
     readonly stratRange: string;
+    readonly stratRangeCode: string;
     readonly stratTime: string;
   }
 
@@ -78,6 +80,8 @@ declare module '3594t-deck' {
     readonly versionValue: string;
     /** さんぽけあり */
     readonly hasPocket: boolean;
+    /** 公式ページへのURL */
+    readonly officialUrl: string;
     /**
      * サムネイル画像URL取得
      * @param pocket trueなら ぽけっと武将画像

@@ -25,6 +25,7 @@
   --general-card-col10-width: 90px;
   --general-card-col11-left: calc(var(--general-card-col10-left) + var(--general-card-col10-width));
   --general-card-col11-width: 42px;
+  --strategy-category-height: 30px;
 }
 
 .general-card {
@@ -34,7 +35,10 @@
   width: var(--general-card-width);
   height: var(--general-card-height);
   position: relative;
-  cursor: pointer;
+
+  &.clickable {
+    cursor: pointer;
+  }
 
   & > * {
     position: absolute;
@@ -185,13 +189,29 @@
   }
 
   & .strategy {
+    font-size: 18px;
     display: none;
-    padding-left: 3px;
-    padding-right: 3px;
+    padding-top: 10px;
     top: 0;
     left: var(--general-card-col8-left);
     width: var(--general-card-col8-width);
-    height: var(--general-card-height);
+    height: calc(var(--general-card-height) - var(--strategy-category-height));
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    &.show {
+      display: flex;
+    }
+  }
+
+  & .strategy-category {
+    font-size: 12px;
+    display: none;
+    padding: 1px 0;
+    top: calc(var(--general-card-height) - var(--strategy-category-height));
+    left: var(--general-card-col8-left);
+    width: var(--general-card-col8-width);
+    height: var(--strategy-category-height);
     justify-content: flex-start;
     flex-wrap: wrap;
 
@@ -250,6 +270,20 @@
     height: 33%;
   }
 
+  & .gen-main-readonly {
+    margin-top: 1px;
+    background-color: var(--general-label-bg-color);
+    border: solid 2px var(--general-label-border-color);
+    border-radius: 6px;
+    font-size: 16px;
+    width: 90%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
   & .buttons {
     top: 0;
     left: var(--general-card-col11-left);
@@ -266,6 +300,16 @@
     border-color: var(--add-button-color);
     width: 100%;
     height: 100%;
+  }
+
+  & .externals {
+    font-size: 8px;
+    top: 0;
+    left: var(--general-card-col11-left);
+    width: var(--general-card-col11-width);
+    height: var(--general-card-height);
+    display: flex;
+    flex-direction: column;
   }
 }
 

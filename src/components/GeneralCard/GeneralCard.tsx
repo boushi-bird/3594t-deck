@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
 import { General } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
+import GenMains from './GenMains';
 
 interface Props {
   general: General;
@@ -29,6 +30,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
       showStrategyExplanation,
       showAddButtons,
     } = this.props;
+    const clickable = showAddButtons;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
     };
@@ -54,20 +56,21 @@ export default class GeneralCard extends React.PureComponent<Props> {
       );
     }
     const stratName = general.strategy.name;
+    const stratCaterogyName = general.strategy.stratCategoryName;
     const stratMorale = general.strategy.morale;
     const stratExplanation = general.strategy.explanation;
     const stratExplanationElements: JSX.Element[] = [];
     stratExplanation.split('\n').forEach((exp, i) => {
       stratExplanationElements.push(<span key={i}>{exp}</span>);
     });
-    const addButtonArea: JSX.Element = showAddButtons ? (
+    const extraArea: JSX.Element = showAddButtons ? (
       <AddButtonContainer general={general} />
     ) : (
-      <></>
+      <GenMains genMains={general.genMains} officialUrl={general.officialUrl} />
     );
     return (
       <div
-        className="general-card"
+        className={classNames('general-card', { clickable })}
         style={style}
         onClick={this.handleGeneralClick}
       >
@@ -112,6 +115,13 @@ export default class GeneralCard extends React.PureComponent<Props> {
           {stratName}
         </span>
         <span
+          className={classNames('strategy-category', {
+            show: !showStrategyExplanation,
+          })}
+        >
+          [{stratCaterogyName}]
+        </span>
+        <span
           className={classNames('strategy-explanation', {
             show: showStrategyExplanation,
           })}
@@ -121,7 +131,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
         <span className="strategy-morale" data-label1="必要" data-label2="士気">
           {stratMorale}
         </span>
-        {addButtonArea}
+        {extraArea}
       </div>
     );
   }

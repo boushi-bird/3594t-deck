@@ -18,6 +18,7 @@ export default class GeneralDetail extends React.PureComponent<Props> {
     stratExplanation.split('\n').forEach((exp, i) => {
       stratExplanationElements.push(<span key={i}>{exp}</span>);
     });
+    const strategyRangeUrl = `https://3594t.net/img/strat_range/${general.strategy.stratRangeCode}.png`;
     return (
       <div className="general-detail">
         <div className="general-detail-inner">
@@ -27,8 +28,13 @@ export default class GeneralDetail extends React.PureComponent<Props> {
             showAddButtons={false}
           />
           <div className="general-detail-body">
-            <div className="strategy-explanation" data-label="計略説明">
-              {stratExplanationElements}
+            <div className="row">
+              <div className="strategy-explanation" data-label="計略説明">
+                {stratExplanationElements}
+              </div>
+              <div className="strategy-range" data-label="計略範囲">
+                <img className="range-image" src={strategyRangeUrl} />
+              </div>
             </div>
           </div>
         </div>
