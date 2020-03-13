@@ -42,6 +42,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   loading: !state.windowReducer.ready,
   activeIndex: state.deckReducer.activeIndex,
   searchMode: state.datalistReducer.effectiveFilterCondition.basic.searchMode,
+  deckSelected: state.deckReducer.activeIndex != null,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = dispatch => {

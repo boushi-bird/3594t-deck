@@ -28,6 +28,7 @@ export interface StateFromProps extends WindowState {
   showNotice: boolean;
   loading: boolean;
   searchMode: SearchMode;
+  deckSelected: boolean;
 }
 
 export interface DispatchFromProps {
@@ -86,6 +87,7 @@ export default class App extends React.PureComponent<Props> {
       openedAnyModalSmall: modalSmall,
       activeFilter,
       searchMode,
+      deckSelected,
     } = this.props;
     const CardListElm =
       searchMode === 'general' ? <CardList /> : <AssistCardList />;
@@ -93,7 +95,12 @@ export default class App extends React.PureComponent<Props> {
       <div
         className={classNames([
           'app-container',
-          { modal, 'modal-small': modalSmall, ready },
+          {
+            modal,
+            'modal-small': modalSmall,
+            ready,
+            'deck-selected': deckSelected,
+          },
         ])}
         onClick={this.handleAppClick}
       >
