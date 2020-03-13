@@ -34,17 +34,6 @@ interface OwnProps {
 
 type Props = StateFromProps & DispatchFromProps & OwnProps;
 
-// ボタンのアイコン部分だけ
-const AddButtonIcon = connect(
-  (state: State) => ({
-    replaceButton: state.deckReducer.activeIndex != null,
-  }),
-  {}
-)(({ replaceButton }: { replaceButton: boolean }) => {
-  const addDeckIcon = replaceButton ? faSyncAlt : faPlusCircle;
-  return <FontAwesomeIcon icon={addDeckIcon} />;
-});
-
 class AddButton extends React.PureComponent<Props> {
   private handleAddDeckClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -72,7 +61,8 @@ class AddButton extends React.PureComponent<Props> {
           onClick={this.handleAddDeckClick}
         >
           {genMain.nameShort}
-          <AddButtonIcon />
+          <FontAwesomeIcon className="add-icon" icon={faPlusCircle} />
+          <FontAwesomeIcon className="change-icon" icon={faSyncAlt} />
         </button>
       );
     });
@@ -87,7 +77,8 @@ class AddButton extends React.PureComponent<Props> {
             disabled={!enabledAddDeck}
             onClick={this.handleAddDeckClick}
           >
-            <AddButtonIcon />
+            <FontAwesomeIcon className="add-icon" icon={faPlusCircle} />
+            <FontAwesomeIcon className="change-icon" icon={faSyncAlt} />
           </button>
         </span>
       </>

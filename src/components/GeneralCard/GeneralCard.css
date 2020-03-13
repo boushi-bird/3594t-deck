@@ -323,3 +323,19 @@
   align-items: center;
   justify-content: center;
 }
+
+.add-icon {
+  display: inline-block;
+
+  @nest .deck-selected .general-card & {
+    display: none;
+  }
+}
+
+.change-icon {
+  display: none;
+
+  @nest .deck-selected .general-card & {
+    display: inline-block;
+  }
+}
