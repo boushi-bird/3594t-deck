@@ -30,6 +30,7 @@ type DispatchFromProps = {
 
 interface OwnProps {
   general: General;
+  show?: boolean;
 }
 
 type Props = StateFromProps & DispatchFromProps & OwnProps;
@@ -196,13 +197,10 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
       }
     },
   };
-  const oProps: OwnProps = {
-    general,
-  };
   return {
     ...sProps,
     ...dProps,
-    ...oProps,
+    ...ownProps,
   };
 };
 
@@ -212,7 +210,13 @@ const container = connect<
   RouteComponentProps & OwnProps,
   Props
 >(mapStateToProps, mapDispatchToProps, mergeProps, {
-  areMergedPropsEqual: () => false,
+  areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+    // 前回・今回共に非表示なら再描画しない
+    if (!nextMergedProps.show && !prevMergedProps.show) {
+      return true;
+    }
+    return false;
+  },
 })(AddButton);
 
 export default withRouter(container);

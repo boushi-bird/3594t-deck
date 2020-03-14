@@ -1,14 +1,7 @@
 import './FilterButtonList.css';
 import React from 'react';
 import classNames from 'classnames';
-
-export interface ButtonItem {
-  id: string;
-  name: string;
-  code?: string;
-  nameShort?: string;
-  color?: string;
-}
+import { ButtonItem } from '3594t-deck';
 
 interface Props<N extends string> {
   itemName: N;

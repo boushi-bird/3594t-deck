@@ -24,6 +24,14 @@ declare module '3594t-deck' {
 
   interface FilterItem extends DataItem, IdItem {}
 
+  interface ButtonItem {
+    id: string;
+    name: string;
+    code?: string;
+    nameShort?: string;
+    color?: string;
+  }
+
   interface Strategy {
     readonly id: string;
     readonly code: string;
