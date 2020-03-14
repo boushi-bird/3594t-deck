@@ -64,7 +64,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
       stratExplanationElements.push(<span key={i}>{exp}</span>);
     });
     const extraArea: JSX.Element = showAddButtons ? (
-      <AddButtonContainer general={general} />
+      <AddButtonContainer general={general} show={show} />
     ) : (
       <GenMains genMains={general.genMains} officialUrl={general.officialUrl} />
     );
