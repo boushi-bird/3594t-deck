@@ -14,7 +14,7 @@ import App, { StateFromProps, DispatchFromProps, OwnProps, Props } from './App';
 import { loadFromApi } from '../../services/loadData';
 
 interface ContainerStateFromProps extends StateFromProps {
-  activeIndex?: number;
+  activeIndex: number | null;
 }
 
 type TMapStateToProps = MapStateToProps<

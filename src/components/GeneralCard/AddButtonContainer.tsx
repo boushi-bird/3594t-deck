@@ -89,7 +89,7 @@ class AddButton extends React.PureComponent<Props> {
 
 interface ContainerStateFromProps {
   generals: General[];
-  activeIndex?: number;
+  activeIndex: number | null;
   sameCard: SameCardConstraint;
 }
 

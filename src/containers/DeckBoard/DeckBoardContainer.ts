@@ -24,7 +24,7 @@ import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 
 interface ContainerStateFromProps {
   enableSearch: boolean;
-  activeIndex?: number;
+  activeIndex: number | null;
   generals: General[];
   limitCost: number;
 }

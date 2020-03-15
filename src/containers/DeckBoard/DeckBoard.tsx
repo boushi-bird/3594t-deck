@@ -18,7 +18,7 @@ export type DeckCardInfo = DeckCardGeneralInfo | DeckCardDummy;
 
 export interface StateFromProps {
   deckCards: DeckCardInfo[];
-  activeIndex?: number;
+  activeIndex: number | null;
   enabledAddDeck: boolean;
   enableSearch: boolean;
   /** 総武力 */

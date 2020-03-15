@@ -19,12 +19,13 @@ export interface DeckConstraints {
 }
 
 interface DeckState {
-  activeIndex?: number;
+  activeIndex: number | null;
   searchCondition?: SearchCondition;
   deckConstraints: DeckConstraints;
 }
 
 const initialState: DeckState = {
+  activeIndex: null,
   searchCondition: undefined,
   deckConstraints: {
     limitCost: 80,
@@ -69,7 +70,7 @@ export default function datalistReducer(
     case 'CLEAR_ACTIVE_CARD': {
       return {
         ...state,
-        activeIndex: undefined,
+        activeIndex: null,
         searchCondition: undefined,
       };
     }
