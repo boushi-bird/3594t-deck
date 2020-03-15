@@ -1,5 +1,17 @@
 import './CostRatioBaseForce.css';
 import React from 'react';
+import {
+  MIN_FORCE_10,
+  MAX_FORCE_10,
+  MIN_FORCE_15,
+  MAX_FORCE_15,
+  MIN_FORCE_20,
+  MAX_FORCE_20,
+  MIN_FORCE_25,
+  MAX_FORCE_25,
+  MIN_FORCE_30,
+  MAX_FORCE_30,
+} from '../../const';
 import NumberSelect from '../NumberSelect';
 import { BasicFilterCondition } from '../../modules/datalist';
 
@@ -30,8 +42,8 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
             itemName="10"
             onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['10']}
-            max={5}
-            min={1}
+            max={MAX_FORCE_10}
+            min={MIN_FORCE_10}
           />
         </label>
         <label>
@@ -40,8 +52,8 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
             itemName="15"
             onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['15']}
-            max={7}
-            min={2}
+            max={MAX_FORCE_15}
+            min={MIN_FORCE_15}
           />
         </label>
         <label>
@@ -50,8 +62,8 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
             itemName="20"
             onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['20']}
-            max={9}
-            min={5}
+            max={MAX_FORCE_20}
+            min={MIN_FORCE_20}
           />
         </label>
         <label>
@@ -60,8 +72,8 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
             itemName="25"
             onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['25']}
-            max={10}
-            min={7}
+            max={MAX_FORCE_25}
+            min={MIN_FORCE_25}
           />
         </label>
         <label>
@@ -70,8 +82,8 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
             itemName="30"
             onChangeValue={this.handleOnChangeValue}
             value={costRatioBaseForces['30']}
-            max={11}
-            min={8}
+            max={MAX_FORCE_30}
+            min={MIN_FORCE_30}
           />
         </label>
       </div>

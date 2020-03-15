@@ -8,6 +8,14 @@ import {
 } from '3594t-deck';
 import { BaseData } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
+import {
+  MIN_FORCE,
+  MAX_FORCE,
+  MIN_INTELIGENCE,
+  MAX_INTELIGENCE,
+  MIN_CONQUEST,
+  MAX_CONQUEST,
+} from '../const';
 
 export interface BasicFilterCondition {
   /** 検索モード */
@@ -101,8 +109,8 @@ const initialBasicFilterCondition: BasicFilterCondition = {
   belongStates: [],
   costs: [],
   unitTypes: [],
-  forceMin: 1,
-  forceMax: 11,
+  forceMin: MIN_FORCE,
+  forceMax: MAX_FORCE,
   useCostRatioForce: false,
   costRatioForceMin: -4,
   costRatioForceMax: 5,
@@ -113,10 +121,10 @@ const initialBasicFilterCondition: BasicFilterCondition = {
     '25': 9,
     '30': 10,
   },
-  intelligenceMin: 1,
-  intelligenceMax: 11,
-  conquestMin: 0,
-  conquestMax: 4,
+  intelligenceMin: MIN_INTELIGENCE,
+  intelligenceMax: MAX_INTELIGENCE,
+  conquestMin: MIN_CONQUEST,
+  conquestMax: MAX_CONQUEST,
   skills: [],
   skillsAnd: false,
   searchText: '',

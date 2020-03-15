@@ -8,6 +8,7 @@ import {
 import { bindActionCreators } from 'redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { General } from '3594t-deck';
+import { MAX_MORALE_LIMIT, CHARM_MORALE, GEN_MAIN_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
 import { deckActions } from '../../modules/deck/reducer';
 import { DeckQueryActions } from '../../modules/deck/query';
@@ -158,7 +159,7 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
   const stateCount = belongStateSet.size + (hasStateDummy ? 1 : 0);
   let maxMorale;
   if (stateCount === 1) {
-    maxMorale = 12;
+    maxMorale = MAX_MORALE_LIMIT;
   } else if (stateCount === 2) {
     maxMorale = 9;
   } else {
@@ -167,7 +168,7 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
   }
   // 魅力による士気
   const charmCount = skillCounts.get('魅力') || 0;
-  const tolalMoraleByCharm = charmCount * 40;
+  const tolalMoraleByCharm = charmCount * CHARM_MORALE;
   // 征圧ランク
   let conquestRank;
   if (totalConquest >= 11) {
@@ -184,15 +185,15 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
 
   const allyCount = genMainCounts.get('同盟者') || 0;
   let maxMoraleByMainGen = allyCount * 2;
-  if (maxMorale + maxMoraleByMainGen >= 12) {
-    maxMoraleByMainGen = 12 - maxMorale;
-    maxMorale = 12;
+  if (maxMorale + maxMoraleByMainGen >= MAX_MORALE_LIMIT) {
+    maxMoraleByMainGen = MAX_MORALE_LIMIT - maxMorale;
+    maxMorale = MAX_MORALE_LIMIT;
   } else {
     maxMorale += maxMoraleByMainGen;
   }
 
   const moraleCount = genMainCounts.get('士気上昇') || 0;
-  const tolalMoraleByMainGen = moraleCount * 40;
+  const tolalMoraleByMainGen = moraleCount * GEN_MAIN_MORALE;
 
   const wiseCount = genMainCounts.get('知力上昇') || 0;
   const intelligenceByMainGen = wiseCount * 3;

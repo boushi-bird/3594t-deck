@@ -1,7 +1,5 @@
 import { ActionType, createAction } from 'typesafe-actions';
 
-export const MAX_DECK_CARD_COUNT = 8;
-
 interface SearchCondition {
   belongState?: string;
   cost: string;
