@@ -6,7 +6,6 @@ import {
   connect,
 } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons/faSyncAlt';
@@ -14,10 +13,10 @@ import { General } from '3594t-deck';
 import { State } from '../../store';
 import {
   DeckCardGeneral,
-  DeckQueryActions,
   DeckCard,
-} from '../../modules/deck/query';
-import { deckActions, SameCardConstraint } from '../../modules/deck/reducer';
+  SameCardConstraint,
+  deckActions,
+} from '../../modules/deck';
 import isEnabledAddDeck from '../../containers/Common/isEnabledAddDeck';
 
 interface StateFromProps {
@@ -89,17 +88,19 @@ class AddButton extends React.PureComponent<Props> {
 
 interface ContainerStateFromProps {
   generals: General[];
+  deckCards: DeckCard[];
   activeIndex: number | null;
   sameCard: SameCardConstraint;
 }
 
 interface ContainerDispatchFromProps {
-  clearActiveCard: () => void;
+  addDeckGeneral: (card: DeckCardGeneral) => void;
+  changeDeckGeneral: (index: number, card: DeckCardGeneral) => void;
 }
 
 type TMapStateToProps = MapStateToProps<
   ContainerStateFromProps,
-  RouteComponentProps & OwnProps,
+  OwnProps,
   State
 >;
 type TMapDispatchToProps = MapDispatchToProps<
@@ -109,12 +110,13 @@ type TMapDispatchToProps = MapDispatchToProps<
 type TMergeProps = MergeProps<
   ContainerStateFromProps,
   ContainerDispatchFromProps,
-  RouteComponentProps & OwnProps,
+  OwnProps,
   Props
 >;
 
 const mapStateToProps: TMapStateToProps = state => ({
   generals: state.datalistReducer.generals,
+  deckCards: state.deckReducer.deckCards,
   activeIndex: state.deckReducer.activeIndex,
   sameCard: state.deckReducer.deckConstraints.sameCard,
 });
@@ -122,7 +124,8 @@ const mapStateToProps: TMapStateToProps = state => ({
 const mapDispatchToProps: TMapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      clearActiveCard: deckActions.clearActiveCard,
+      addDeckGeneral: deckActions.addDeckGeneral,
+      changeDeckGeneral: deckActions.changeDeckGeneral,
     },
     dispatch
   );
@@ -173,13 +176,12 @@ function isEnabledAddDeckGeneral(
 }
 
 const mergeProps: TMergeProps = (state, actions, ownProps) => {
-  const { generals, activeIndex, sameCard } = state;
+  const { deckCards, activeIndex, sameCard } = state;
   const { general } = ownProps;
-  const deckQueryActions = new DeckQueryActions(ownProps, generals);
   // デッキにいる武将(武将名-計略単位)
-  const deckPersonals = createDeckPersonals(state, deckQueryActions.deckCards);
+  const deckPersonals = createDeckPersonals(state, deckCards);
   const enabledAddDeck =
-    isEnabledAddDeck(deckQueryActions.deckCards, activeIndex) &&
+    isEnabledAddDeck(deckCards, activeIndex) &&
     isEnabledAddDeckGeneral(general, deckPersonals, sameCard);
   const sProps: StateFromProps = {
     enabledAddDeck,
@@ -189,11 +191,10 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
       if (!enabledAddDeck) {
         return;
       }
-      actions.clearActiveCard();
       if (activeIndex != null) {
-        deckQueryActions.changeDeckGeneral(activeIndex, card);
+        actions.changeDeckGeneral(activeIndex, card);
       } else {
-        deckQueryActions.addDeckGeneral(card);
+        actions.addDeckGeneral(card);
       }
     },
   };
@@ -204,10 +205,10 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
   };
 };
 
-const container = connect<
+export default connect<
   ContainerStateFromProps,
   ContainerDispatchFromProps,
-  RouteComponentProps & OwnProps,
+  OwnProps,
   Props
 >(mapStateToProps, mapDispatchToProps, mergeProps, {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
@@ -218,5 +219,3 @@ const container = connect<
     return false;
   },
 })(AddButton);
-
-export default withRouter(container);

@@ -1,9 +1,11 @@
 import './DeckConfig.css';
 import React from 'react';
 import {
-  DeckConstraints,
-  SameCardConstraint,
-} from '../../modules/deck/reducer';
+  MIN_DECK_COST_LIMIT,
+  MAX_DECK_COST_LIMIT,
+  STEP_DECK_COST_LIMIT,
+} from '../../const';
+import { DeckConstraints, SameCardConstraint } from '../../modules/deck';
 import NumberSelect from '../../components/NumberSelect';
 import RadioButton from '../../components/RadioButton';
 
@@ -54,9 +56,9 @@ export default class DeckConfig extends React.PureComponent<Props> {
                 itemName="limitCost"
                 onChangeValue={this.handleOnChangeDeckConstraints}
                 value={limitCost}
-                max={250}
-                min={10}
-                step={5}
+                max={MAX_DECK_COST_LIMIT}
+                min={MIN_DECK_COST_LIMIT}
+                step={STEP_DECK_COST_LIMIT}
                 displayText={this.costDisplayText}
               />
             </section>

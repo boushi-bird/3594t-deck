@@ -8,7 +8,8 @@ import { bindActionCreators } from 'redux';
 import { forceCheck } from 'react-lazyload';
 import { windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
-import { deckActions } from '../../modules/deck/reducer';
+import { deckActions } from '../../modules/deck';
+import querySync from '../../modules/querySync';
 import { State } from '../../store';
 import App, { StateFromProps, DispatchFromProps, OwnProps, Props } from './App';
 import { loadFromApi } from '../../services/loadData';
@@ -58,6 +59,7 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch => {
       const baseData = await loadFromApi();
       // TODO APIからかLocalからか選択してデータ取得させる
       actions.setBaseData(baseData);
+      querySync();
       actions.beReady();
       forceCheck();
     },

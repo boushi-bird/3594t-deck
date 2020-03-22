@@ -39,6 +39,14 @@ export const CHARM_MORALE = 40;
 /** 主将器:士気による士気 */
 export const GEN_MAIN_MORALE = 40;
 
+/** デッキのコスト(既定値) */
+export const DEFAULT_DECK_COST_LIMIT = 80;
+/** デッキのコスト(最大値) */
+export const MIN_DECK_COST_LIMIT = 10;
+/** デッキのコスト(最大値) */
+export const MAX_DECK_COST_LIMIT = 250;
+/** デッキのコスト(刻み値) */
+export const STEP_DECK_COST_LIMIT = 5;
 /** デッキに入れられる武将カード最大数 */
 export const MAX_DECK_GENERAL_CARD_COUNT = 8;
 /** デッキに入れられる遊軍カード数 */
