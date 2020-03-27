@@ -14,9 +14,9 @@
   --assist-general-card-col5-left: calc(var(--assist-general-card-col4-left) + var(--assist-general-card-col4-width));
   --assist-general-card-col5-width: 68px;
   --assist-general-card-col6-left: calc(var(--assist-general-card-col5-left) + var(--assist-general-card-col5-width));
-  --assist-general-card-col6-width: 90px;
+  --assist-general-card-col6-width: 70px;
   --assist-general-card-col7-left: calc(var(--assist-general-card-col6-left) + var(--assist-general-card-col6-width));
-  --assist-general-card-col7-width: 42px;
+  --assist-general-card-col7-width: 62px;
   --assist-strategy-category-height: 30px;
 }
 
@@ -59,7 +59,7 @@
   & .state {
     font-size: 26px;
     font-weight: bold;
-    color: var(--general-state-bg-color);
+    color: var(--general-state-color);
     top: 0;
     left: 0;
     width: 40px;
@@ -186,6 +186,14 @@
     padding-top: 11px;
   }
 
+  & .add-deck {
+    font-size: 20px;
+    background-color: var(--add-button-bg-color);
+    border-color: var(--add-button-color);
+    width: 100%;
+    height: 100%;
+  }
+
   & .externals {
     font-size: 8px;
     top: 0;
@@ -194,5 +202,21 @@
     height: var(--assist-general-card-height);
     display: flex;
     flex-direction: column;
+  }
+}
+
+.add-icon {
+  display: inline-block;
+
+  @nest .deck-selected .assist-general-card & {
+    display: none;
+  }
+}
+
+.change-icon {
+  display: none;
+
+  @nest .deck-selected .assist-general-card & {
+    display: inline-block;
   }
 }

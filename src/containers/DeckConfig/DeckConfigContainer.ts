@@ -20,6 +20,7 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch =>
     {
       closeDeckConfig: windowActions.closeDeckConfig,
       setDeckConstraints: deckActions.setDeckConstraints,
+      sliceDeckAssist: deckActions.sliceDeckAssist,
     },
     dispatch
   );

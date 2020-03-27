@@ -6,10 +6,10 @@ import {
   connect,
 } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { General, FilterContents } from '3594t-deck';
+import { General, AssistGeneral, FilterContents } from '3594t-deck';
 import { MAX_MORALE_LIMIT, CHARM_MORALE, GEN_MAIN_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
-import { deckActions, DeckCard } from '../../modules/deck';
+import { deckActions, DeckCard, DeckCardAssist } from '../../modules/deck';
 import { windowActions } from '../../modules/window';
 import { dialogActions, DialogInfo } from '../../modules/dialog';
 import store, { State } from '../../store';
@@ -17,28 +17,26 @@ import DeckBoard, {
   StateFromProps,
   DispatchFromProps,
   DeckCardInfo,
+  DeckCardAssistInfo,
   Props,
 } from './DeckBoard';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 
 interface ContainerStateFromProps {
   deckCards: DeckCard[];
+  assistDeckCards: DeckCardAssist[];
   enableSearch: boolean;
   activeIndex: number | null;
+  activeAssistIndex: number | null;
   generals: General[];
+  assistGenerals: AssistGeneral[];
   filterContents: FilterContents;
   limitCost: number;
+  assistCardLimit: number;
 }
 
 interface ContainerDispatchFromProps
-  extends Pick<
-    DispatchFromProps,
-    | 'openDeckConfig'
-    | 'selectMainGen'
-    | 'setActiveCard'
-    | 'removeDeck'
-    | 'clearDeck'
-  > {
+  extends Omit<DispatchFromProps, 'addDeckDummy' | 'toggleSearch'> {
   rawAddDeckDummy: typeof deckActions['addDeckDummy'];
   showDialog: (dialog: DialogInfo) => void;
   searchByDeck: (
@@ -78,11 +76,15 @@ type ConnectorOptions = Options<
 
 const mapStateToProps: TMapStateToProps = state => ({
   deckCards: state.deckReducer.deckCards,
+  assistDeckCards: state.deckReducer.assistDeckCards,
   enableSearch: state.deckReducer.searchCondition != null,
   activeIndex: state.deckReducer.activeIndex,
+  activeAssistIndex: state.deckReducer.activeAssistIndex,
   generals: state.datalistReducer.generals,
+  assistGenerals: state.datalistReducer.assistGenerals,
   filterContents: state.datalistReducer.filterContents,
   limitCost: state.deckReducer.deckConstraints.limitCost,
+  assistCardLimit: state.deckReducer.deckConstraints.assistCardLimit,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = dispatch => {
@@ -93,6 +95,8 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch => {
       setActiveCard: deckActions.setActiveCard,
       removeDeck: deckActions.removeDeck,
       rawAddDeckDummy: deckActions.addDeckDummy,
+      setActiveAssistCard: deckActions.setActiveAssistCard,
+      removeDeckAssist: deckActions.removeDeckAssist,
       clearDeck: deckActions.clearDeck,
       searchByDeck: deckActions.searchByDeck,
       resetPage: datalistActions.resetPage,
@@ -105,10 +109,14 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch => {
 const mergeProps: TMergeProps = (state, actions) => {
   const {
     deckCards: rawDeckCards,
+    assistDeckCards: rawAssistDeckCards,
     enableSearch,
     activeIndex,
+    activeAssistIndex,
     generals,
+    assistGenerals,
     limitCost,
+    assistCardLimit,
   } = state;
   const {
     rawAddDeckDummy,
@@ -126,6 +134,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   let hasDummy = false;
   let hasStateDummy = false;
   const deckCards: DeckCardInfo[] = [];
+  const assistDeckCards: DeckCardAssistInfo[] = [];
   const belongStateSet = new Set<string>();
   const genMainCounts = new Map<string, number>();
   const skillCounts = new Map<string, number>();
@@ -173,6 +182,20 @@ const mergeProps: TMergeProps = (state, actions) => {
     }
     totalCost += parseInt(cost);
   });
+  rawAssistDeckCards.forEach(({ assist: id }) => {
+    const assist = assistGenerals.find(a => a.id === id);
+    if (assist && assistDeckCards.length < assistCardLimit) {
+      assistDeckCards.push({ assist });
+      belongStateSet.add(assist.raw.state);
+    }
+  });
+  // assistCardLimitの数になるまで空の遊軍設置
+  if (assistDeckCards.length < assistCardLimit) {
+    const fillCount = assistCardLimit - assistDeckCards.length;
+    for (let index = 0; index < fillCount; index++) {
+      assistDeckCards.push({ assist: null });
+    }
+  }
   // 最大士気
   const stateCount = belongStateSet.size + (hasStateDummy ? 1 : 0);
   let maxMorale;
@@ -223,7 +246,9 @@ const mergeProps: TMergeProps = (state, actions) => {
 
   const sProps: StateFromProps = {
     deckCards,
+    assistDeckCards,
     activeIndex,
+    activeAssistIndex,
     enabledAddDeck,
     enableSearch,
     totalForce,

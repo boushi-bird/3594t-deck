@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
 import { AssistGeneral } from '3594t-deck';
+import AddButtonContainer from './AddButtonContainer';
 
 interface Props {
   general: AssistGeneral;
@@ -26,7 +27,7 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
       general,
       show,
       showStrategyExplanation,
-      // showAddButtons,
+      showAddButtons,
     } = this.props;
     // const clickable = showAddButtons;
     // TODO 詳細表示
@@ -51,6 +52,11 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
     const strategyRangeUrl = rangeCode
       ? `https://3594t.net/img/strat_range/${rangeCode}.png`
       : '';
+    const extraArea: JSX.Element = showAddButtons ? (
+      <AddButtonContainer assist={general} show={show} />
+    ) : (
+      <></>
+    );
     return (
       <div
         className={classNames('assist-general-card', { clickable })}
@@ -98,7 +104,7 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
         <span className="strategy-range" data-label="効果範囲">
           <img className="range-image" src={strategyRangeUrl} />
         </span>
-        <span className="buttons">調整中</span>
+        {extraArea}
       </div>
     );
   }

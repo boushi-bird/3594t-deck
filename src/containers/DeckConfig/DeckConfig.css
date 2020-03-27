@@ -1,5 +1,10 @@
 @import '../../defines.css';
 
+:root {
+  --deck-config-title-height: 60px;
+  --deck-config-buttons-height: 40px;
+}
+
 .same-card-constraint {
   font-size: 20px;
   color: var(--card-filter-label-color);
@@ -10,10 +15,11 @@
   position: fixed;
   border-radius: 6px;
   background-color: var(--card-filter-bg-color);
-  top: 20px;
+  top: 0;
   left: 0;
   right: 0;
-  margin: auto;
+  bottom: 0;
+  margin: 20px auto;
   min-width: 300px;
   width: 80%;
   max-width: 600px;
@@ -33,7 +39,7 @@
   font-size: 24px;
   color: var(--card-filter-label-color);
   text-shadow: 0 0 5px var(--card-filter-label-color);
-  height: 60px;
+  height: var(--deck-config-title-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +54,7 @@
     margin: 3px;
     font-size: 18px;
     width: 88px;
-    height: 40px;
+    height: var(--deck-config-buttons-height);
     font-weight: bold;
     color: var(--action-button-color);
     border-style: solid;
@@ -66,8 +72,9 @@
 .deck-config-body {
   background-color: var(--card-filter-content-bg-color);
   min-height: 200px;
+  height: calc(100% - var(--deck-config-title-height) - var(--deck-config-buttons-height));
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
   padding: 0 10px 20px;
+  overflow-y: auto;
 }

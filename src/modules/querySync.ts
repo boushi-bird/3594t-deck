@@ -1,16 +1,19 @@
 import reduxQuerySync, { ParamsOptions } from 'redux-query-sync';
-import { General, FilterContents } from '3594t-deck';
+import { General, AssistGeneral, FilterContents } from '3594t-deck';
 import {
   DEFAULT_DECK_COST_LIMIT,
   MIN_DECK_COST_LIMIT,
   MAX_DECK_COST_LIMIT,
   STEP_DECK_COST_LIMIT,
+  DEFAULT_DECK_ASSIST_CARD_COUNT,
+  MAX_DECK_ASSIST_CARD_COUNT,
 } from '../const';
 import store, { State } from '../store';
 import {
   DeckCard,
   DeckCardGeneral,
   DeckCardDummy,
+  DeckCardAssist,
   SameCardConstraint,
   isSameCardConstraint,
   defaultSameCardConstraint,
@@ -134,6 +137,7 @@ const parseDeckCard = ({ generals, filterContents }: DataContents) => {
 
 // defaultValue と=== 比較で一致する場合にparameterがなくなるので空を同一インスタンスに
 const emptyDecks: DeckCard[] = [];
+const emptyAssistDecks: DeckCardAssist[] = [];
 
 const deckParam: ParamsOptions<State, DeckCard[]> = {
   action: deckActions.setDecks,
@@ -169,6 +173,68 @@ const deckParam: ParamsOptions<State, DeckCard[]> = {
   },
 };
 
+interface DataAssistContents {
+  assistGenerals: AssistGeneral[];
+}
+
+const toQueryDeckCardAssist = ({ assistGenerals }: DataAssistContents) => {
+  return (deckCardAssist: DeckCardAssist): string => {
+    const assistGeneral = assistGenerals.find(
+      a => a.id === deckCardAssist.assist
+    );
+    if (!assistGeneral) {
+      return '';
+    }
+    return assistGeneral.code;
+  };
+};
+
+const parseDeckCardAssist = ({ assistGenerals }: DataAssistContents) => {
+  return (code: string): DeckCardAssist | null => {
+    const assistGeneral = assistGenerals.find(a => a.code === code);
+    const assist = assistGeneral?.id ?? null;
+    if (!assist) {
+      return null;
+    }
+    return { assist };
+  };
+};
+
+const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
+  action: deckActions.setAssists,
+  selector: state => {
+    const assistDeckCards = state.deckReducer.assistDeckCards;
+    if (assistDeckCards.length === 0) {
+      return emptyAssistDecks;
+    }
+    return assistDeckCards;
+  },
+  defaultValue: emptyAssistDecks,
+  valueToString: assistDeckCards => {
+    const dataState = store.getState().datalistReducer;
+    const toQuery = toQueryDeckCardAssist({
+      assistGenerals: dataState.assistGenerals,
+    });
+    return assistDeckCards
+      .map(toQuery)
+      .filter(r => r)
+      .join('|');
+  },
+  stringToValue: s => {
+    if (!s) {
+      return emptyAssistDecks;
+    }
+    const dataState = store.getState().datalistReducer;
+    const parse = parseDeckCardAssist({
+      assistGenerals: dataState.assistGenerals,
+    });
+    return s
+      .split('|')
+      .map(parse)
+      .filter((d): d is DeckCardAssist => !!d);
+  },
+};
+
 const costParam: ParamsOptions<State, number> = {
   action: limitCost => deckActions.setDeckConstraints({ limitCost }),
   selector: state => state.deckReducer.deckConstraints.limitCost,
@@ -200,6 +266,26 @@ const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
   },
 };
 
+const assistLimitParam: ParamsOptions<State, number> = {
+  action: assistCardLimit =>
+    deckActions.setDeckConstraints({ assistCardLimit }),
+  selector: state => state.deckReducer.deckConstraints.assistCardLimit,
+  defaultValue: DEFAULT_DECK_ASSIST_CARD_COUNT,
+  stringToValue: s => {
+    try {
+      const assistCardLimit = parseInt(s);
+      if (
+        assistCardLimit >= 0 &&
+        assistCardLimit <= MAX_DECK_ASSIST_CARD_COUNT &&
+        assistCardLimit % 1 === 0
+      ) {
+        return assistCardLimit;
+      }
+    } catch (e) {}
+    return DEFAULT_DECK_ASSIST_CARD_COUNT;
+  },
+};
+
 let init = false;
 
 export default function() {
@@ -210,8 +296,10 @@ export default function() {
     store,
     params: {
       deck: deckParam,
+      assist: assistParam,
       cost: costParam,
       ['same_card']: sameCardParam,
+      ['assist_limit']: assistLimitParam,
     },
     initialTruth: 'location',
   });

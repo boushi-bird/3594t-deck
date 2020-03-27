@@ -1,5 +1,8 @@
 import { ActionType, createAction } from 'typesafe-actions';
-import { DEFAULT_DECK_COST_LIMIT } from '../const';
+import {
+  DEFAULT_DECK_COST_LIMIT,
+  DEFAULT_DECK_ASSIST_CARD_COUNT,
+} from '../const';
 
 export interface DeckCardGeneral {
   general: string;
@@ -15,6 +18,10 @@ export interface DeckCardDummy {
 
 export type DeckCard = DeckCardGeneral | DeckCardDummy;
 
+export interface DeckCardAssist {
+  assist: string;
+}
+
 interface SearchCondition {
   belongState?: string;
   cost: string;
@@ -22,9 +29,16 @@ interface SearchCondition {
 }
 
 // 同名武将の制約
-// personal: 同名武将不可(通常ルール)
-// personal-strategy: 同名武将かつ同計略不可
-const sameCardConstraints = ['personal', 'personal-strategy'] as const;
+// personal: 同名武将不可・同名遊軍不可(通常ルール)
+// personal-strategy-exclude-assist: 同名武将かつ同計略不可・同名遊軍不可
+// personal-assist: 同名武将不可・同名遊軍可
+// personal-strategy: 同名武将かつ同計略不可・同名遊軍可
+const sameCardConstraints = [
+  'personal',
+  'personal-strategy-exclude-assist',
+  'personal-assist',
+  'personal-strategy',
+] as const;
 export type SameCardConstraint = typeof sameCardConstraints[number];
 export const defaultSameCardConstraint: SameCardConstraint = 'personal';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,22 +49,28 @@ export function isSameCardConstraint(s: any): s is SameCardConstraint {
 export interface DeckConstraints {
   limitCost: number;
   sameCard: SameCardConstraint;
+  assistCardLimit: number;
 }
 
 interface DeckState {
   deckCards: DeckCard[];
+  assistDeckCards: DeckCardAssist[];
   activeIndex: number | null;
+  activeAssistIndex: number | null;
   searchCondition?: SearchCondition;
   deckConstraints: DeckConstraints;
 }
 
 const initialState: DeckState = {
   deckCards: [],
+  assistDeckCards: [],
   activeIndex: null,
+  activeAssistIndex: null,
   searchCondition: undefined,
   deckConstraints: {
     limitCost: DEFAULT_DECK_COST_LIMIT,
     sameCard: defaultSameCardConstraint,
+    assistCardLimit: DEFAULT_DECK_ASSIST_CARD_COUNT,
   },
 };
 
@@ -76,8 +96,29 @@ export const deckActions = {
     (deckCards: DeckCard[]) => deckCards
   )(),
   removeDeck: createAction('REMOVE_DECK', (index: number) => index)(),
+  addDeckAssist: createAction(
+    'ADD_DECK_ASSIST',
+    (card: DeckCardAssist) => card
+  )(),
+  changeDeckAssist: createAction(
+    'CHANGE_DECK_ASSIST',
+    (index: number, card: DeckCardAssist) => ({ index, card })
+  )(),
+  setAssists: createAction(
+    'SET_ASSIST_LIST',
+    (assistDeckCards: DeckCardAssist[]) => assistDeckCards
+  )(),
+  removeDeckAssist: createAction(
+    'REMOVE_DECK_ASSIST',
+    (index: number) => index
+  )(),
+  sliceDeckAssist: createAction('SLICE_DECK_ASSIST')(),
   clearDeck: createAction('CLEAR_DECK')(),
   setActiveCard: createAction('SET_ACTIVE_CARD', (index: number) => index)(),
+  setActiveAssistCard: createAction(
+    'SET_ACTIVE_ASSIST_CARD',
+    (index: number) => index
+  )(),
   searchByDeck: createAction(
     'SEARCH_BY_DECK',
     (index: number, condition: SearchCondition) => ({ index, condition })
@@ -103,6 +144,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: null,
+        activeAssistIndex: null,
         searchCondition: undefined,
         deckCards: [...state.deckCards, { ...card }],
       };
@@ -114,6 +156,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: null,
+        activeAssistIndex: null,
         searchCondition: undefined,
         deckCards,
       };
@@ -123,6 +166,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: null,
+        activeAssistIndex: null,
         searchCondition: undefined,
         deckCards: [
           ...state.deckCards,
@@ -158,16 +202,76 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: null,
+        activeAssistIndex: null,
         searchCondition: undefined,
         deckCards,
       };
     }
+    case 'ADD_DECK_ASSIST': {
+      const card = actions.payload;
+      return {
+        ...state,
+        activeIndex: null,
+        activeAssistIndex: null,
+        searchCondition: undefined,
+        assistDeckCards: [...state.assistDeckCards, { ...card }],
+      };
+    }
+    case 'CHANGE_DECK_ASSIST': {
+      const { index, card } = actions.payload;
+      const assistDeckCards = [...state.assistDeckCards];
+      assistDeckCards[index] = { ...card };
+      return {
+        ...state,
+        activeIndex: null,
+        activeAssistIndex: null,
+        searchCondition: undefined,
+        assistDeckCards,
+      };
+    }
+    case 'SET_ASSIST_LIST': {
+      return {
+        ...state,
+        assistDeckCards: actions.payload,
+      };
+    }
+    case 'REMOVE_DECK_ASSIST': {
+      const index = actions.payload;
+      const assistDeckCards = state.assistDeckCards.filter(
+        (_v, i) => i !== index
+      );
+      return {
+        ...state,
+        activeIndex: null,
+        activeAssistIndex: null,
+        searchCondition: undefined,
+        assistDeckCards,
+      };
+    }
+    case 'SLICE_DECK_ASSIST': {
+      const {
+        assistDeckCards: current,
+        deckConstraints: { assistCardLimit },
+      } = state;
+      if (current.length <= assistCardLimit) {
+        return {
+          ...state,
+        };
+      }
+      const assistDeckCards = current.slice(0, assistCardLimit);
+      return {
+        ...state,
+        assistDeckCards,
+      };
+  }
     case 'CLEAR_DECK': {
       return {
         ...state,
         activeIndex: null,
+        activeAssistIndex: null,
         searchCondition: undefined,
         deckCards: [],
+        assistDeckCards: [],
       };
     }
     case 'SET_ACTIVE_CARD': {
@@ -175,6 +279,16 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex,
+        activeAssistIndex: null,
+        searchCondition: undefined,
+      };
+    }
+    case 'SET_ACTIVE_ASSIST_CARD': {
+      const activeAssistIndex = actions.payload;
+      return {
+        ...state,
+        activeIndex: null,
+        activeAssistIndex,
         searchCondition: undefined,
       };
     }
@@ -183,6 +297,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: index,
+        activeAssistIndex: null,
         searchCondition: condition,
       };
     }
@@ -190,6 +305,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: null,
+        activeAssistIndex: null,
         searchCondition: undefined,
       };
     }
@@ -207,6 +323,7 @@ export default function datalistReducer(
       return {
         ...state,
         activeIndex: null,
+        activeAssistIndex: null,
         searchCondition: undefined,
         deckCards,
       };

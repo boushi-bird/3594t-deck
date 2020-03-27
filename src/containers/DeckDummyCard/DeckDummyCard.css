@@ -1,18 +1,11 @@
 @import '../../defines.css';
 
-:root {
-  --deck-dummy-card-width: 72px;
-  --deck-dummy-card-height: 250px;
-  --deck-dummy-card-inner-top-height: 136px;
-  --deck-dummy-card-inner-bottom-height: 114px;
-}
-
 .deck-dummy-card {
   margin: 3px;
   font-size: 16px;
-  width: var(--deck-dummy-card-width);
-  min-width: var(--deck-dummy-card-width);
-  height: var(--deck-dummy-card-height);
+  width: var(--deck-card-width);
+  min-width: var(--deck-card-width);
+  height: var(--deck-card-height);
   cursor: pointer;
   box-sizing: content-box;
   border: 1px solid var(--normal-border-color);
@@ -34,13 +27,13 @@
 
   & .deck-card-inner-top {
     width: 100%;
-    height: var(--deck-dummy-card-inner-top-height);
+    height: var(--deck-card-inner-top-height);
     position: relative;
     user-select: none;
     background-color: var(--deck-card-top-bg-color);
 
     @nest .has-state& {
-      color: var(--general-state-bg-color);
+      color: var(--general-state-color);
     }
 
     & > * {
@@ -86,7 +79,7 @@
 
   & .deck-card-inner-bottom {
     position: relative;
-    height: var(--deck-dummy-card-inner-bottom-height);
+    height: var(--deck-card-inner-bottom-height);
 
     & > * {
       position: absolute;

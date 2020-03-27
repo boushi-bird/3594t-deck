@@ -67,7 +67,7 @@
   & .state {
     font-size: 26px;
     font-weight: bold;
-    color: var(--general-state-bg-color);
+    color: var(--general-state-color);
     top: 0;
     left: 0;
     width: 40px;

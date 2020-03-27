@@ -1,0 +1,125 @@
+@import '../../defines.css';
+
+:root {
+  --assist-deck-card-width: 232px;
+  --assist-deck-card-height: 52px;
+  --assist-state-witdh: calc(var(--assist-deck-card-height) / 2);
+  --assist-card-thumb-size: 48px;
+  --assist-card-col1-width: var(--assist-card-thumb-size);
+  --assist-card-col2-left: var(--assist-card-col1-width);
+  --assist-card-col2-width: var(--assist-state-witdh);
+  --assist-card-col3-left: calc(var(--assist-card-col2-left) + var(--assist-card-col2-width));
+  --assist-card-col3-width: 30px;
+  --assist-card-col4-left: calc(var(--assist-card-col3-left) + var(--assist-card-col3-width));
+  --assist-card-col4-width: calc(var(--assist-deck-card-width) - var(--assist-card-col4-left));
+}
+
+.assist-deck-card {
+  margin: 4px;
+  min-width: var(--assist-deck-card-width);
+  height: var(--assist-deck-card-height);
+  cursor: pointer;
+  box-sizing: content-box;
+  position: relative;
+  background-color: var(--deck-card-top-bg-color);
+
+  @nest .active& {
+    cursor: default;
+    margin: 0;
+    border: 4px solid var(--active-color);
+  }
+
+  & > * {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    height: calc(var(--assist-deck-card-height) / 2);
+  }
+
+  & .image {
+    top: 0;
+    left: 0;
+    width: var(--assist-card-col1-width);
+    height: var(--assist-deck-card-height);
+  }
+
+  & .assist-thumb {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--assist-card-thumb-size);
+    height: var(--assist-card-thumb-size);
+    border: solid 1px var(--normal-border-color);
+  }
+
+  & .state {
+    font-size: 18px;
+    color: var(--general-state-color);
+    top: 0;
+    left: var(--assist-card-col2-left);
+    width: var(--assist-state-witdh);
+  }
+
+  & .card-type {
+    font-size: 12px;
+    top: 0;
+    left: var(--assist-card-col3-left);
+    width: var(--assist-card-col3-width);
+  }
+
+  & .name {
+    font-size: 16px;
+    top: 0;
+    left: var(--assist-card-col4-left);
+    width: var(--assist-card-col4-width);
+    justify-content: flex-start;
+  }
+
+  & .strategy {
+    top: calc(var(--assist-deck-card-height) / 2);
+    left: var(--assist-card-col2-left);
+    width: calc(var(--assist-deck-card-width) - var(--assist-card-col2-left));
+    justify-content: flex-start;
+  }
+
+  & .tool-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+
+    & .tool-button {
+      position: absolute;
+      cursor: pointer;
+      font-size: 20px;
+      width: 36px;
+      height: 36px;
+      border-style: none;
+      border-radius: 50%;
+      background-clip: content-box;
+      outline: 0;
+      padding: 6px;
+    }
+
+    & .remove {
+      top: -10px;
+      right: -10px;
+      color: var(--danger-color);
+      background-color: white;
+      display: none;
+
+      @nest .active& {
+        display: block;
+      }
+
+      @nest .active.no-assist& {
+        display: none;
+      }
+    }
+  }
+}
