@@ -222,6 +222,10 @@
       display: block;
     }
   }
+
+  body {
+    min-height: 680px;
+  }
 }
 
 @media (--large-device) {
@@ -234,6 +238,10 @@
 @media (--oblong-device) {
   .app-deck-block {
     flex-wrap: wrap;
+  }
+
+  body {
+    min-height: var(--app-min-height);
   }
 }
 

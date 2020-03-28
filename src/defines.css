@@ -1,6 +1,6 @@
 :root {
   --app-min-width: 630px; /* アプリケーションの最小幅 */
-  --app-min-height: 568px; /* アプリケーションの最小高さ */
+  --app-min-height: 600px; /* アプリケーションの最小高さ */
   --side-menu-width: 320px; /* サイドメニューの幅 */
   --app-header-bg-color: #40a1b2;
   --card-filter-min-width: 300px;
@@ -64,7 +64,7 @@
 
 @custom-media --app-min screen and (max-width: 630px);
 @custom-media --small-device-w screen and (max-width: 1080px);
-@custom-media --small-device-h screen and (max-height: 600px);
+@custom-media --small-device-h screen and (max-height: 680px);
 @custom-media --small-device --small-device-w, --small-device-h;
 @custom-media --oblong-device-w screen and (min-width: 1260px);
 @custom-media --oblong-device --oblong-device-w and --small-device-h;
