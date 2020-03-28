@@ -1,8 +1,16 @@
 import './BaseFilter.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterContents } from '3594t-deck';
+import type { FilterContents } from '3594t-deck';
 import {
+  MIN_FORCE,
+  MAX_FORCE,
+  MIN_INTELIGENCE,
+  MAX_INTELIGENCE,
+  MIN_CONQUEST,
+  MAX_CONQUEST,
+} from '../../const';
+import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';
@@ -119,16 +127,16 @@ export default class BaseFilter extends React.PureComponent<Props> {
                 itemName="forceMin"
                 onChangeValue={this.handleOnChangeValue}
                 value={filterCondition.forceMin}
-                max={11}
-                min={1}
+                max={MAX_FORCE}
+                min={MIN_FORCE}
               />
               -
               <NumberSelect<BasicFilterConditionKey>
                 itemName="forceMax"
                 onChangeValue={this.handleOnChangeValue}
                 value={filterCondition.forceMax}
-                max={11}
-                min={1}
+                max={MAX_FORCE}
+                min={MIN_FORCE}
               />
             </div>
           </div>
@@ -160,16 +168,16 @@ export default class BaseFilter extends React.PureComponent<Props> {
               itemName="intelligenceMin"
               onChangeValue={this.handleOnChangeValue}
               value={filterCondition.intelligenceMin}
-              max={11}
-              min={1}
+              max={MAX_INTELIGENCE}
+              min={MIN_INTELIGENCE}
             />
             -
             <NumberSelect<BasicFilterConditionKey>
               itemName="intelligenceMax"
               onChangeValue={this.handleOnChangeValue}
               value={filterCondition.intelligenceMax}
-              max={11}
-              min={1}
+              max={MAX_INTELIGENCE}
+              min={MIN_INTELIGENCE}
             />
           </div>
         </section>
@@ -180,16 +188,16 @@ export default class BaseFilter extends React.PureComponent<Props> {
               itemName="conquestMin"
               onChangeValue={this.handleOnChangeValue}
               value={filterCondition.conquestMin}
-              max={4}
-              min={0}
+              max={MAX_CONQUEST}
+              min={MIN_CONQUEST}
             />
             -
             <NumberSelect<BasicFilterConditionKey>
               itemName="conquestMax"
               onChangeValue={this.handleOnChangeValue}
               value={filterCondition.conquestMax}
-              max={4}
-              min={0}
+              max={MAX_CONQUEST}
+              min={MIN_CONQUEST}
             />
           </div>
         </section>

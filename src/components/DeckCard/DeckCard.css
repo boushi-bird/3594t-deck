@@ -1,10 +1,6 @@
 @import '../../defines.css';
 
 :root {
-  --deck-card-width: 72px;
-  --deck-card-height: 250px;
-  --deck-card-inner-top-height: 136px;
-  --deck-card-inner-bottom-height: 114px;
   --deck-card-row1-top: 4px;
   --deck-card-row1-height: 38px;
   --deck-card-row2-top: calc(var(--deck-card-row1-top) + var(--deck-card-row1-height) - 4px);

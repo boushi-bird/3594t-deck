@@ -3,7 +3,6 @@ import WebFontLoader from 'webfontloader';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './containers/App';
 import store from './store';
 import { windowActions } from './modules/window';
@@ -16,7 +15,7 @@ WebFontLoader.load({
 });
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js').catch(e => {
+  navigator.serviceWorker.register('service-worker.js').catch((e) => {
     console.error(e);
   });
 }
@@ -47,9 +46,7 @@ window.addEventListener('__receiveNoticeChanged', (event: Event) => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Route component={App} />
-    </Router>
+    <App />
   </Provider>,
   document.getElementById('app')
 );

@@ -1,8 +1,8 @@
 import './DetailFilter.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterContents, FilterItem, SearchMode } from '3594t-deck';
-import {
+import type { FilterContents, FilterItem, SearchMode } from '3594t-deck';
+import type {
   DetailFilterCondition,
   DetailFilterConditionKey,
 } from '../../modules/datalist';

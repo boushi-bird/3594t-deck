@@ -1,22 +1,19 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
-import { FilterItem } from '3594t-deck';
+import { connect } from 'react-redux';
+import type { FilterItem } from '3594t-deck';
 import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleBasicCheckList } from '../Common/toggleCheckList';
-import {
+import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';
-import { State } from '../../store';
-import SimpleFilter, {
-  StateFromProps,
-  DispatchFromProps,
-  Props,
-} from './SimpleFilter';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps, Props } from './SimpleFilter';
+import SimpleFilter from './SimpleFilter';
 
 interface ContainerStateFromProps {
   belongStates: FilterItem[];
@@ -46,7 +43,7 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => {
+const mapStateToProps: TMapStateToProps = (state) => {
   const { searchCondition } = state.deckReducer;
   const deckCardBelongState = searchCondition
     ? searchCondition.belongState
@@ -58,7 +55,7 @@ const mapStateToProps: TMapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => ({
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => ({
   setCondition: setBasicConditionAdapter(dispatch),
 });
 
@@ -74,8 +71,10 @@ const mergeProps: TMergeProps = (state, actions) => {
     filterContents: belongStates,
     filterCondition,
     searchByDeck,
+    searchMode: basicFilterCondition.searchMode,
   };
   const dProps: DispatchFromProps = {
+    setCondition: actions.setCondition,
     toggleCheckList: (key: BasicFilterConditionKey, value: string) => {
       actions.setCondition(
         toggleBasicCheckList(basicFilterCondition, key, value)

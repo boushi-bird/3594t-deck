@@ -1,6 +1,12 @@
-import { MAX_DECK_CARD_COUNT } from '../../modules/deck/reducer';
-import { DeckCard } from '../../modules/deck/query';
+import { MAX_DECK_GENERAL_CARD_COUNT } from '../../const';
+import type { DeckCard } from '../../modules/deck';
 
-export default function(deckCards: DeckCard[], activeIndex?: number): boolean {
-  return deckCards.length - (activeIndex != null ? 1 : 0) < MAX_DECK_CARD_COUNT;
+export default function (
+  deckCards: DeckCard[],
+  activeIndex: number | null = null
+): boolean {
+  return (
+    deckCards.length - (activeIndex != null ? 1 : 0) <
+    MAX_DECK_GENERAL_CARD_COUNT
+  );
 }

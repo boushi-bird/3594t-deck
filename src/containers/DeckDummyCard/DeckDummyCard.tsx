@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
-import { DatalistState } from '../../modules/datalist';
-import { DeckCardDummy } from '../../modules/deck/query';
+import type { DatalistState } from '../../modules/datalist';
+import type { DeckCardDummy } from '../../modules/deck';
 
 export interface OwnProps {
   index: number;
@@ -82,13 +82,13 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     const style: React.CSSProperties = {};
     const styleState: React.CSSProperties = {};
     const belongState = deckCard.belongState
-      ? belongStates.find(v => v.id === deckCard.belongState)
+      ? belongStates.find((v) => v.id === deckCard.belongState)
       : undefined;
     const cost = deckCard.cost
-      ? costs.find(v => v.id === deckCard.cost)
+      ? costs.find((v) => v.id === deckCard.cost)
       : undefined;
     const unitType = deckCard.unitType
-      ? unitTypes.find(v => v.id === deckCard.unitType)
+      ? unitTypes.find((v) => v.id === deckCard.unitType)
       : undefined;
     let stateId = '';
     let stateName = '';

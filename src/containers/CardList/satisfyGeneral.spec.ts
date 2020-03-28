@@ -1,4 +1,4 @@
-import { SearchMode } from '3594t-deck';
+import type { SearchMode } from '3594t-deck';
 import satisfyGeneral from './satisfyGeneral';
 import { GeneralImpl } from '../../entities/generalImpl';
 

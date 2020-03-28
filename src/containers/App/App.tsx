@@ -1,12 +1,12 @@
 import './App.css';
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
-import { SearchMode } from '3594t-deck';
-import { WindowState, filterTabNames, FilterTab } from '../../modules/window';
+import type { SearchMode } from '3594t-deck';
+import type { WindowState, FilterTab } from '../../modules/window';
+import { filterTabNames } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
 import FilterActions from '../../components/FilterActions';
 import SideMenu from '../SideMenu';
@@ -43,23 +43,13 @@ export interface DispatchFromProps {
   changeActiveFilterTab(activeFilter: FilterTab): void;
 }
 
-export type OwnProps = RouteComponentProps;
+export type OwnProps = {};
 
 export type Props = StateFromProps & DispatchFromProps & OwnProps;
 
 export default class App extends React.PureComponent<Props> {
-  private unregisterHistoryListen?: () => void;
   public componentDidMount(): void {
     this.props.appDidLoaded();
-    this.unregisterHistoryListen = this.props.history.listen(() => {
-      this.props.clearActiveCard();
-    });
-  }
-
-  public componentWillUnmount() {
-    if (this.unregisterHistoryListen) {
-      this.unregisterHistoryListen();
-    }
   }
 
   private handleAppClick = () => {

@@ -39,7 +39,7 @@ async function _cacheFetch(url: string, keyName: string): Promise<any | null> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function(url: string, keyName: string): Promise<any> {
+export default async function (url: string, keyName: string): Promise<any> {
   if (localStorageAvailable()) {
     const result = await _cacheFetch(url, keyName);
     if (result) {

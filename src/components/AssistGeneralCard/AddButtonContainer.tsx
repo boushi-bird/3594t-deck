@@ -12,24 +12,22 @@ import { faSyncAlt } from '@fortawesome/free-solid-svg-icons/faSyncAlt';
 import type { General, AssistGeneral } from '3594t-deck';
 import type { State } from '../../store';
 import type {
-  DeckCardGeneral,
   DeckCard,
   DeckCardAssist,
   SameCardConstraint,
 } from '../../modules/deck';
 import { deckActions } from '../../modules/deck';
-import isEnabledAddDeck from '../../containers/Common/isEnabledAddDeck';
 
 interface StateFromProps {
   enabledAddDeck: boolean;
 }
 
 type DispatchFromProps = {
-  onAddDeck: (card: DeckCardGeneral) => void;
+  onAddDeck: (card: DeckCardAssist) => void;
 };
 
 interface OwnProps {
-  general: General;
+  assist: AssistGeneral;
   show?: boolean;
 }
 
@@ -39,50 +37,26 @@ class AddButton extends React.PureComponent<Props> {
   private handleAddDeckClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
-    const { general, onAddDeck } = this.props;
+    const { assist, onAddDeck } = this.props;
     event.stopPropagation();
-    const genMain = event.currentTarget.dataset['genMain'];
     onAddDeck({
-      general: general.id,
-      genMain,
-      pocket: false,
+      assist: assist.id,
     });
   };
 
   public render(): React.ReactNode {
-    const { general, enabledAddDeck } = this.props;
-    const genMains: JSX.Element[] = [];
-    general.genMains.forEach((genMain, i) => {
-      genMains.push(
+    const { enabledAddDeck } = this.props;
+    return (
+      <span className="buttons">
         <button
-          className="gen-main"
-          key={i}
+          className="add-deck"
           disabled={!enabledAddDeck}
-          data-gen-main={genMain.id}
           onClick={this.handleAddDeckClick}
         >
-          {genMain.nameShort}
           <FontAwesomeIcon className="add-icon" icon={faPlusCircle} />
           <FontAwesomeIcon className="change-icon" icon={faSyncAlt} />
         </button>
-      );
-    });
-    return (
-      <>
-        <span className="gen-mains" data-label="主将器">
-          {genMains}
-        </span>
-        <span className="buttons">
-          <button
-            className="add-deck"
-            disabled={!enabledAddDeck}
-            onClick={this.handleAddDeckClick}
-          >
-            <FontAwesomeIcon className="add-icon" icon={faPlusCircle} />
-            <FontAwesomeIcon className="change-icon" icon={faSyncAlt} />
-          </button>
-        </span>
-      </>
+      </span>
     );
   }
 }
@@ -99,8 +73,8 @@ interface ContainerStateFromProps {
 }
 
 interface ContainerDispatchFromProps {
-  addDeckGeneral: (card: DeckCardGeneral) => void;
-  changeDeckGeneral: (index: number, card: DeckCardGeneral) => void;
+  addDeckAssist: (card: DeckCardAssist) => void;
+  changeDeckAssist: (index: number, card: DeckCardAssist) => void;
 }
 
 type TMapStateToProps = MapStateToProps<
@@ -133,23 +107,18 @@ const mapStateToProps: TMapStateToProps = (state) => ({
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
-      addDeckGeneral: deckActions.addDeckGeneral,
-      changeDeckGeneral: deckActions.changeDeckGeneral,
+      addDeckAssist: deckActions.addDeckAssist,
+      changeDeckAssist: deckActions.changeDeckAssist,
     },
     dispatch
   );
 };
 
-interface DeckPersonalStrat {
-  personal: string;
-  strat: string;
-}
-
-// デッキに含まれている武将名IDと計略IDの配列を返す
+// デッキに含まれている武将名IDの配列を返す
 function createDeckPersonals(
   state: ContainerStateFromProps,
   deckCards: DeckCard[]
-): DeckPersonalStrat[] {
+): string[] {
   const { generals, activeIndex } = state;
   const deckGenerals: string[] = [];
   deckCards.forEach((deckCard, i) => {
@@ -164,10 +133,7 @@ function createDeckPersonals(
     .filter((general) => {
       return deckGenerals.includes(general.id);
     })
-    .map((v) => {
-      const { personal, strat } = v.raw;
-      return { personal, strat };
-    });
+    .map((g) => g.raw.personal);
 }
 
 // 遊軍に含まれている武将名IDの配列を返す
@@ -186,36 +152,43 @@ function createAssistDeckPersonals(
     .map((ag) => ag.raw.personal);
 }
 
-function isEnabledAddDeckGeneral(
-  general: General,
-  deckPersonals: DeckPersonalStrat[],
+function isEnabledAddDeck(
+  assistDeckCards: DeckCardAssist[],
+  assistCardLimit: number,
+  activeAssistIndex: number | null = null
+): boolean {
+  if (assistCardLimit === 0) {
+    return false;
+  }
+  if (activeAssistIndex !== null) {
+    return true;
+  }
+  const deckAssists: string[] = assistDeckCards
+    .filter((ad, i) => i < assistCardLimit)
+    .map((ad) => ad.assist);
+  return deckAssists.length < assistCardLimit;
+}
+
+function isEnabledAddDeckAssist(
+  assist: AssistGeneral,
+  deckPersonals: string[],
   deckAssistPersonals: string[],
   sameCard: SameCardConstraint
 ): boolean {
   // 遊軍の同名カード判別
-  if (sameCard !== 'personal-strategy' && sameCard !== 'personal-assist') {
-    const hasSameCard = deckAssistPersonals.some(
-      (p) => p === general.raw.personal
-    );
-    if (hasSameCard) {
-      return false;
-    }
+  // TODO: 複数枚遊軍登録可能になり、さらに同名遊軍が登場した場合は要対応
+  const hasSameCard = deckAssistPersonals.some(
+    (p) => p === assist.raw.personal
+  );
+  if (hasSameCard) {
+    return false;
   }
 
-  // 武将カードの同名カード判別
-  if (
-    sameCard === 'personal-strategy' ||
-    sameCard === 'personal-strategy-exclude-assist'
-  ) {
-    // 武将と計略が一致したときに同名カード扱い
-    return !deckPersonals.some(
-      (r) =>
-        r.personal === general.raw.personal && r.strat === general.raw.strat
-    );
-  } else {
-    // 武将が一致したときに同名カード扱い
-    return !deckPersonals.some((r) => r.personal === general.raw.personal);
+  if (sameCard === 'personal-strategy' || sameCard === 'personal-assist') {
+    return true;
   }
+  // 武将カードに同名カードがあるか判別する
+  return !deckPersonals.some((p) => p === assist.raw.personal);
 }
 
 const mergeProps: TMergeProps = (state, actions, ownProps) => {
@@ -225,16 +198,16 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
     activeIndex,
     activeAssistIndex,
     sameCard,
+    assistCardLimit,
   } = state;
-  const { general } = ownProps;
-  // デッキにいる武将(武将名-計略単位)
+  const { assist } = ownProps;
   const deckPersonals = createDeckPersonals(state, deckCards);
   const deckAssistPersonals = createAssistDeckPersonals(state, assistDeckCards);
   const enabledAddDeck =
-    activeAssistIndex == null &&
-    isEnabledAddDeck(deckCards, activeIndex) &&
-    isEnabledAddDeckGeneral(
-      general,
+    activeIndex == null &&
+    isEnabledAddDeck(assistDeckCards, assistCardLimit, activeAssistIndex) &&
+    isEnabledAddDeckAssist(
+      assist,
       deckPersonals,
       deckAssistPersonals,
       sameCard
@@ -243,14 +216,17 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
     enabledAddDeck,
   };
   const dProps: DispatchFromProps = {
-    onAddDeck: (card: DeckCardGeneral) => {
+    onAddDeck: (card: DeckCardAssist) => {
       if (!enabledAddDeck) {
         return;
       }
-      if (activeIndex != null) {
-        actions.changeDeckGeneral(activeIndex, card);
+      if (
+        activeAssistIndex != null &&
+        assistDeckCards.length > activeAssistIndex
+      ) {
+        actions.changeDeckAssist(activeAssistIndex, card);
       } else {
-        actions.addDeckGeneral(card);
+        actions.addDeckAssist(card);
       }
     },
   };

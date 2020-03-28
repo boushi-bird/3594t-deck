@@ -1,7 +1,8 @@
-import { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
+import type { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
 import loadDataFromApi from './loadDataApi';
 import loadDataFromLocalStorage from './loadDataLocalStorage';
-import mapToBaseData, { BaseData } from './mapBaseData';
+import type { BaseData } from './mapBaseData';
+import mapToBaseData from './mapBaseData';
 
 interface AllData {
   baseData: BaseData;

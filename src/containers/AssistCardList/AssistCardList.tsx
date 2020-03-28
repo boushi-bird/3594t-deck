@@ -1,9 +1,10 @@
 import React from 'react';
-import { AssistGeneral } from '3594t-deck';
-import CardListBase, {
+import type { AssistGeneral } from '3594t-deck';
+import type {
   StateBaseProps,
   DispatchBaseProps,
 } from '../CardList/CardListBase';
+import CardListBase from '../CardList/CardListBase';
 import AssistGeneralCard from '../../components/AssistGeneralCard';
 
 export interface StateFromProps extends StateBaseProps {
@@ -30,7 +31,7 @@ export default class AssitCardList extends CardListBase<Props> {
       showStrategyExplanation,
     } = this.props;
     const generalCards: JSX.Element[] = [];
-    assistGenerals.forEach(assistGeneral => {
+    assistGenerals.forEach((assistGeneral) => {
       const show = searchedAssistGeneralIds.includes(assistGeneral.id);
       generalCards.push(
         <AssistGeneralCard
@@ -50,7 +51,7 @@ export default class AssitCardList extends CardListBase<Props> {
     const next = this.props.searchedAssistGeneralIds;
     const prev = prevProps.searchedAssistGeneralIds;
     const notChanged =
-      next.length === prev.length && next.every(v => prev.includes(v));
+      next.length === prev.length && next.every((v) => prev.includes(v));
     return !notChanged;
   }
 }

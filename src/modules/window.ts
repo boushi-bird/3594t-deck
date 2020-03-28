@@ -1,5 +1,6 @@
-import { ActionType, createAction } from 'typesafe-actions';
-import { General, AssistGeneral } from '3594t-deck';
+import type { ActionType } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
+import type { General, AssistGeneral } from '3594t-deck';
 
 export const filterTabNames = {
   BASIC: '基本',

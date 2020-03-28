@@ -1,7 +1,7 @@
 import './FilterButtonList.css';
 import React from 'react';
 import classNames from 'classnames';
-import { ButtonItem } from '3594t-deck';
+import type { ButtonItem } from '3594t-deck';
 
 interface Props<N extends string> {
   itemName: N;
@@ -68,7 +68,7 @@ export default class FilterButtonList<
     const square = this.square;
     const buttons: JSX.Element[] = [];
     const disabled = propDisabled != null && propDisabled;
-    items.forEach(item => {
+    items.forEach((item) => {
       const value = item.id;
       const label = this.createLabel(item);
       const style: React.CSSProperties = {};

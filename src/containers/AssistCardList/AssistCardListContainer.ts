@@ -1,26 +1,28 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
   Options,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral } from '3594t-deck';
 import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
-import { State } from '../../store';
-import AssistCardList, {
+import type { State } from '../../store';
+import type {
   StateFromProps,
   DispatchFromProps,
   Props,
 } from './AssistCardList';
+import AssistCardList from './AssistCardList';
 
 interface ContainerStateFromProps {
   assistGenerals: AssistGeneral[];
   currentPage: number;
   pageLimit: number;
   belongStates: string[];
+  enableSearchByDeck: boolean;
 }
 
 interface ContainerDispatchFromProps {
@@ -53,15 +55,16 @@ type ConnectorOptions = Options<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   assistGenerals: state.datalistReducer.assistGenerals,
   currentPage: state.datalistReducer.currentPage,
   pageLimit: state.datalistReducer.pageLimit,
   belongStates:
     state.datalistReducer.effectiveFilterCondition.basic.belongStates,
+  enableSearchByDeck: state.deckReducer.searchCondition != null,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       decrementPage: datalistActions.decrementPage,
@@ -73,19 +76,28 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch => {
 };
 
 const mergeProps: TMergeProps = (state, actions) => {
-  const { assistGenerals, currentPage, pageLimit, belongStates } = state;
-  let searchedAssistGeneralIds: string[] = assistGenerals
-    .filter(general => {
-      // 勢力
-      if (
-        belongStates.length > 0 &&
-        !belongStates.includes(general.raw.state)
-      ) {
-        return false;
-      }
-      return true;
-    })
-    .map(general => general.id);
+  const {
+    assistGenerals,
+    currentPage,
+    pageLimit,
+    belongStates,
+    enableSearchByDeck,
+  } = state;
+  let searchedAssistGeneralIds: string[] = [];
+  if (!enableSearchByDeck) {
+    searchedAssistGeneralIds = assistGenerals
+      .filter((general) => {
+        // 勢力
+        if (
+          belongStates.length > 0 &&
+          !belongStates.includes(general.raw.state)
+        ) {
+          return false;
+        }
+        return true;
+      })
+      .map((general) => general.id);
+  }
   const searchedAll = searchedAssistGeneralIds.length;
   const searchedOffset = (currentPage - 1) * pageLimit;
   const hasPrev = searchedOffset > 0;
@@ -119,7 +131,7 @@ const mergeProps: TMergeProps = (state, actions) => {
 };
 
 const arrayEquals = <V>(a: V[], b: V[]): boolean =>
-  a.length === b.length && a.every(v => b.includes(v));
+  a.length === b.length && a.every((v) => b.includes(v));
 
 const options: ConnectorOptions = {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {

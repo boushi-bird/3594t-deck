@@ -1,13 +1,14 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { windowActions } from '../../modules/window';
-import { State } from '../../store';
-import SideMenu, { StateFromProps, DispatchFromProps, Props } from './SideMenu';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps, Props } from './SideMenu';
+import SideMenu from './SideMenu';
 
 interface ContainerStateFromProps {
   showNotice: boolean;
@@ -37,12 +38,12 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   showNotice: state.windowReducer.showNotice,
   installPromptEvent: state.windowReducer.installPromptEvent,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch =>
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       openUpdateInfo: windowActions.openUpdateInfo,

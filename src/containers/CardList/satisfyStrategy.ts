@@ -1,5 +1,5 @@
-import { Strategy } from '3594t-deck';
-import { StrategiesFilterCondition } from '../../modules/datalist';
+import type { Strategy } from '3594t-deck';
+import type { StrategiesFilterCondition } from '../../modules/datalist';
 import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
 import toBasicLetter from 'jaco/fn/toBasicLetter';
 
@@ -10,8 +10,8 @@ function includeSearchText(
   if (target == null) {
     return false;
   }
-  const search = searchText.split(/\s+/g).filter(s => s.length > 0);
-  return search.every(s => target.includes(s));
+  const search = searchText.split(/\s+/g).filter((s) => s.length > 0);
+  return search.every((s) => target.includes(s));
 }
 
 function includeSearchTextRuby(
@@ -23,9 +23,9 @@ function includeSearchTextRuby(
   }
   const search = searchText
     .split(/\s+/g)
-    .filter(s => s.length > 0)
-    .map(s => toNarrowKatakana(toBasicLetter(s), true).replace(/[ﾞﾟ]/g, ''));
-  return search.every(s => targetRuby.includes(s));
+    .filter((s) => s.length > 0)
+    .map((s) => toNarrowKatakana(toBasicLetter(s), true).replace(/[ﾞﾟ]/g, ''));
+  return search.every((s) => targetRuby.includes(s));
 }
 
 export default (

@@ -1,5 +1,5 @@
-import { General } from '3594t-deck';
-import { FilterCondition } from '../../modules/datalist';
+import type { General } from '3594t-deck';
+import type { FilterCondition } from '../../modules/datalist';
 import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
 import toBasicLetter from 'jaco/fn/toBasicLetter';
 
@@ -10,8 +10,8 @@ function includeSearchText(
   if (target == null) {
     return false;
   }
-  const search = searchText.split(/\s+/g).filter(s => s.length > 0);
-  return search.some(s => target.includes(s));
+  const search = searchText.split(/\s+/g).filter((s) => s.length > 0);
+  return search.some((s) => target.includes(s));
 }
 
 function includeSearchTextRuby(
@@ -23,9 +23,9 @@ function includeSearchTextRuby(
   }
   const search = searchText
     .split(/\s+/g)
-    .filter(s => s.length > 0)
-    .map(s => toNarrowKatakana(toBasicLetter(s), true).replace(/[ﾞﾟ]/g, ''));
-  return search.some(s => targetRuby.includes(s));
+    .filter((s) => s.length > 0)
+    .map((s) => toNarrowKatakana(toBasicLetter(s), true).replace(/[ﾞﾟ]/g, ''));
+  return search.some((s) => targetRuby.includes(s));
 }
 
 export default (
@@ -104,7 +104,7 @@ export default (
       if (v === '0') {
         return general.skills.length === 0;
       }
-      return general.skills.map(s => s.id).includes(v);
+      return general.skills.map((s) => s.id).includes(v);
     };
     if (skillsAnd) {
       if (!skills.every(hasSkill)) {
@@ -147,7 +147,7 @@ export default (
   // 主将器
   if (genMains.length > 0) {
     const hasGenMain = (v: string): boolean =>
-      general.genMains.map(s => s.id).includes(v);
+      general.genMains.map((s) => s.id).includes(v);
     if (genMainsAnd) {
       if (!genMains.every(hasGenMain)) {
         return false;

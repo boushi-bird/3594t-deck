@@ -3,7 +3,7 @@ interface IdItem {
 }
 
 declare module '3594t-deck' {
-  import { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
+  import type { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
 
   type RawGeneral = RawBaseData['GENERAL'][number];
   type Personal = RawBaseData['PERSONAL'][number];

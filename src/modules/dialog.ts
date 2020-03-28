@@ -1,4 +1,5 @@
-import { ActionType, createAction } from 'typesafe-actions';
+import type { ActionType } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 export interface DialogInfo {
   title: string;

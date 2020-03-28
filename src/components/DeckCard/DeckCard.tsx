@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import classNames from 'classnames';
-import { General } from '3594t-deck';
+import type { General } from '3594t-deck';
 
 interface Props {
   index: number;
@@ -80,7 +80,7 @@ export default class DeckCard extends React.PureComponent<Props> {
       background: `linear-gradient(-30deg, ${gradientcolors})`,
     };
     const skills: JSX.Element[] = [];
-    general.skills.forEach(skill => {
+    general.skills.forEach((skill) => {
       skills.push(
         <span className="skill" key={skill.id}>
           {skill.nameShort}
