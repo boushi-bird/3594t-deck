@@ -6,7 +6,7 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral, SearchMode } from '3594t-deck';
 import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
 import type { State } from '../../store';
@@ -23,6 +23,7 @@ interface ContainerStateFromProps {
   pageLimit: number;
   belongStates: string[];
   enableSearchByDeck: boolean;
+  searchMode: SearchMode;
 }
 
 interface ContainerDispatchFromProps {
@@ -62,6 +63,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   belongStates:
     state.datalistReducer.effectiveFilterCondition.basic.belongStates,
   enableSearchByDeck: state.deckReducer.searchCondition != null,
+  searchMode: state.datalistReducer.effectiveFilterCondition.basic.searchMode,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -82,6 +84,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     pageLimit,
     belongStates,
     enableSearchByDeck,
+    searchMode,
   } = state;
   let searchedAssistGeneralIds: string[] = [];
   if (!enableSearchByDeck) {
@@ -115,6 +118,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     searchedLimit: pageLimit,
     hasPrev,
     hasNext,
+    show: searchMode === 'assist',
     showStrategyExplanation: false, // TODO
   };
 
@@ -135,6 +139,9 @@ const arrayEquals = <V>(a: V[], b: V[]): boolean =>
 
 const options: ConnectorOptions = {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+    if (nextMergedProps.show !== prevMergedProps.show) {
+      return false;
+    }
     if (
       nextMergedProps.showStrategyExplanation !==
       prevMergedProps.showStrategyExplanation

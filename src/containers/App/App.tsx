@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
-import type { SearchMode } from '3594t-deck';
 import type { WindowState, FilterTab } from '../../modules/window';
 import { filterTabNames } from '../../modules/window';
 import FilterTabs from '../../components/FilterTabs';
@@ -27,7 +26,6 @@ export interface StateFromProps extends WindowState {
   openedAnyModal: boolean;
   showNotice: boolean;
   loading: boolean;
-  searchMode: SearchMode;
   deckSelected: boolean;
 }
 
@@ -76,11 +74,8 @@ export default class App extends React.PureComponent<Props> {
       openedAnyModal: modal,
       openedAnyModalSmall: modalSmall,
       activeFilter,
-      searchMode,
       deckSelected,
     } = this.props;
-    const CardListElm =
-      searchMode === 'general' ? <CardList /> : <AssistCardList />;
     return (
       <div
         className={classNames([
@@ -129,7 +124,8 @@ export default class App extends React.PureComponent<Props> {
                 絞込
               </button>
             </div>
-            {CardListElm}
+            <CardList />
+            <AssistCardList />
           </div>
           <div className={classNames(['card-filter-container', { open }])}>
             <h1 className="card-filter-title">絞り込みメニュー</h1>
