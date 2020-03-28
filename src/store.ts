@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
 import type { StateType } from 'typesafe-actions';
-import type datalistReducer from './modules/datalist';
-import type deckReducer from './modules/deck';
-import type dialogReducer from './modules/dialog';
-import type windowReducer from './modules/window';
+import datalistReducer from './modules/datalist';
+import deckReducer from './modules/deck';
+import dialogReducer from './modules/dialog';
+import windowReducer from './modules/window';
 
 const reducers = { datalistReducer, deckReducer, dialogReducer, windowReducer };
 
