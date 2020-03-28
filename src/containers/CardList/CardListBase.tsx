@@ -10,6 +10,7 @@ export interface StateBaseProps {
   searchedLimit: number;
   hasPrev: boolean;
   hasNext: boolean;
+  show: boolean;
 }
 
 export interface DispatchBaseProps {
@@ -62,6 +63,7 @@ export default abstract class CardListBase<
       searchedLimit,
       hasPrev,
       hasNext,
+      show,
     } = this.props;
     const cards: JSX.Element[] = this.createCardElements();
     if (count === 0) {
@@ -76,8 +78,16 @@ export default abstract class CardListBase<
     if (end > searchedAll) {
       end = searchedAll;
     }
+    const style: React.CSSProperties = {};
+    if (!show) {
+      style.display = 'none';
+    }
     return (
-      <div className="cardlist-container" onScroll={this.handleOnScroll}>
+      <div
+        className="cardlist-container"
+        style={style}
+        onScroll={this.handleOnScroll}
+      >
         <div className="cardlist-paging">
           <button
             className={classNames('paging-button', 'prev', { active: hasPrev })}

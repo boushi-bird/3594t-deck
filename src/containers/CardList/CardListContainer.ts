@@ -143,6 +143,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     searchedLimit: pageLimit,
     hasPrev,
     hasNext,
+    show: filterCondition.basic.searchMode === 'general',
     showStrategyExplanation: filterCondition.strategies.showStrategyExplanation,
   };
 
@@ -163,6 +164,9 @@ const arrayEquals = <V>(a: V[], b: V[]): boolean =>
 
 const options: ConnectorOptions = {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+    if (nextMergedProps.show !== prevMergedProps.show) {
+      return false;
+    }
     if (
       nextMergedProps.showStrategyExplanation !==
       prevMergedProps.showStrategyExplanation

@@ -15,9 +15,7 @@ import type { StateFromProps, DispatchFromProps, OwnProps, Props } from './App';
 import App from './App';
 import { loadFromApi } from '../../services/loadData';
 
-interface ContainerStateFromProps extends StateFromProps {
-  activeIndex: number | null;
-}
+type ContainerStateFromProps = StateFromProps;
 
 type TMapStateToProps = MapStateToProps<
   ContainerStateFromProps,
@@ -42,8 +40,6 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   openedAnyModalSmall:
     state.windowReducer.openedFilter || !state.windowReducer.ready,
   loading: !state.windowReducer.ready,
-  activeIndex: state.deckReducer.activeIndex,
-  searchMode: state.datalistReducer.effectiveFilterCondition.basic.searchMode,
   deckSelected:
     state.deckReducer.activeIndex != null ||
     state.deckReducer.activeAssistIndex != null,
@@ -78,18 +74,17 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
 };
 
 const mergeProps: TMergeProps = (state, actions, ownProps) => {
-  const { activeIndex, ...otherState } = state;
   return {
-    ...otherState,
+    ...state,
     ...actions,
     ...ownProps,
     clearActiveCard: () => {
-      if (activeIndex !== undefined) {
+      if (state.deckSelected) {
         actions.clearActiveCard();
       }
     },
     closeSideMenu: () => {
-      if (otherState.openedSideMenu) {
+      if (state.openedSideMenu) {
         actions.closeSideMenu();
       }
     },
