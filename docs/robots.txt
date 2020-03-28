@@ -1,3 +1,4 @@
 User-agent: *
+Disallow: /google*.html
 
 Sitemap: https://3594t-deck.github.io/sitemap.xml
