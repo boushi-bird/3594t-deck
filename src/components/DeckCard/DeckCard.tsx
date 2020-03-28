@@ -80,7 +80,7 @@ export default class DeckCard extends React.PureComponent<Props> {
       background: `linear-gradient(-30deg, ${gradientcolors})`,
     };
     const skills: JSX.Element[] = [];
-    general.skills.forEach(skill => {
+    general.skills.forEach((skill) => {
       skills.push(
         <span className="skill" key={skill.id}>
           {skill.nameShort}

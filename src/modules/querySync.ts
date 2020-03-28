@@ -28,12 +28,12 @@ interface DataContents {
 const toQueryDeckCard = ({ generals, filterContents }: DataContents) => {
   return (deckCard: DeckCard): string => {
     if ('general' in deckCard) {
-      const general = generals.find(g => g.id === deckCard.general);
+      const general = generals.find((g) => g.id === deckCard.general);
       if (!general) {
         return '';
       }
       const genMain = filterContents.genMains.find(
-        r => r.id === deckCard.genMain
+        (r) => r.id === deckCard.genMain
       );
       const code = deckCard.pocket ? general.pocketCode : general.code;
       const genMainCode = genMain ? genMain.code : '';
@@ -41,11 +41,11 @@ const toQueryDeckCard = ({ generals, filterContents }: DataContents) => {
       return [code, genMainCode].join('_');
     }
     const belongState = filterContents.belongStates.find(
-      r => r.id === deckCard.belongState
+      (r) => r.id === deckCard.belongState
     );
     const belongStateNameShort = belongState ? belongState.nameShort : '';
     const unitType = filterContents.unitTypes.find(
-      r => r.id === deckCard.unitType
+      (r) => r.id === deckCard.unitType
     );
     const unitTypeName = unitType ? unitType.name[0] : '';
     // ダミー __(cost)_(belongStateNameShort)_(unitTypeName[先頭1文字])
@@ -68,12 +68,14 @@ const parseDeckCardGeneral = (
   if (!code) {
     return null;
   }
-  const general = generals.find(g => g.code === code || g.pocketCode === code);
+  const general = generals.find(
+    (g) => g.code === code || g.pocketCode === code
+  );
   if (!general) {
     return null;
   }
   const pocket = general.code !== code;
-  const genMain = filterContents.genMains.find(g => g.code === genMainCode);
+  const genMain = filterContents.genMains.find((g) => g.code === genMainCode);
   let genMainid: string | undefined = undefined;
   if (genMain && general.genMains.includes(genMain)) {
     genMainid = genMain.id;
@@ -98,11 +100,11 @@ const parseDeckCardDummy = (
   content: FilterContents
 ): DeckCardDummy => {
   const belongState = content.belongStates.find(
-    r => r.nameShort === belongStateNameShort
+    (r) => r.nameShort === belongStateNameShort
   );
-  const unitType = content.unitTypes.find(r => r.name[0] === unitTypeName);
+  const unitType = content.unitTypes.find((r) => r.name[0] === unitTypeName);
   return {
-    cost: cost && content.costs.findIndex(r => r.code === cost) ? cost : '10',
+    cost: cost && content.costs.findIndex((r) => r.code === cost) ? cost : '10',
     belongState: belongState ? belongState.id : undefined,
     unitType: unitType ? unitType.id : undefined,
   };
@@ -141,7 +143,7 @@ const emptyAssistDecks: DeckCardAssist[] = [];
 
 const deckParam: ParamsOptions<State, DeckCard[]> = {
   action: deckActions.setDecks,
-  selector: state => {
+  selector: (state) => {
     const deckCards = state.deckReducer.deckCards;
     if (deckCards.length === 0) {
       return emptyDecks;
@@ -149,7 +151,7 @@ const deckParam: ParamsOptions<State, DeckCard[]> = {
     return deckCards;
   },
   defaultValue: emptyDecks,
-  valueToString: deckCards => {
+  valueToString: (deckCards) => {
     const dataState = store.getState().datalistReducer;
     const toQuery = toQueryDeckCard({
       generals: dataState.generals,
@@ -157,10 +159,10 @@ const deckParam: ParamsOptions<State, DeckCard[]> = {
     });
     return deckCards
       .map(toQuery)
-      .filter(r => r)
+      .filter((r) => r)
       .join('|');
   },
-  stringToValue: s => {
+  stringToValue: (s) => {
     if (!s) {
       return emptyDecks;
     }
@@ -180,7 +182,7 @@ interface DataAssistContents {
 const toQueryDeckCardAssist = ({ assistGenerals }: DataAssistContents) => {
   return (deckCardAssist: DeckCardAssist): string => {
     const assistGeneral = assistGenerals.find(
-      a => a.id === deckCardAssist.assist
+      (a) => a.id === deckCardAssist.assist
     );
     if (!assistGeneral) {
       return '';
@@ -191,7 +193,7 @@ const toQueryDeckCardAssist = ({ assistGenerals }: DataAssistContents) => {
 
 const parseDeckCardAssist = ({ assistGenerals }: DataAssistContents) => {
   return (code: string): DeckCardAssist | null => {
-    const assistGeneral = assistGenerals.find(a => a.code === code);
+    const assistGeneral = assistGenerals.find((a) => a.code === code);
     const assist = assistGeneral?.id ?? null;
     if (!assist) {
       return null;
@@ -202,7 +204,7 @@ const parseDeckCardAssist = ({ assistGenerals }: DataAssistContents) => {
 
 const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
   action: deckActions.setAssists,
-  selector: state => {
+  selector: (state) => {
     const assistDeckCards = state.deckReducer.assistDeckCards;
     if (assistDeckCards.length === 0) {
       return emptyAssistDecks;
@@ -210,17 +212,17 @@ const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
     return assistDeckCards;
   },
   defaultValue: emptyAssistDecks,
-  valueToString: assistDeckCards => {
+  valueToString: (assistDeckCards) => {
     const dataState = store.getState().datalistReducer;
     const toQuery = toQueryDeckCardAssist({
       assistGenerals: dataState.assistGenerals,
     });
     return assistDeckCards
       .map(toQuery)
-      .filter(r => r)
+      .filter((r) => r)
       .join('|');
   },
-  stringToValue: s => {
+  stringToValue: (s) => {
     if (!s) {
       return emptyAssistDecks;
     }
@@ -236,10 +238,10 @@ const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
 };
 
 const costParam: ParamsOptions<State, number> = {
-  action: limitCost => deckActions.setDeckConstraints({ limitCost }),
-  selector: state => state.deckReducer.deckConstraints.limitCost,
+  action: (limitCost) => deckActions.setDeckConstraints({ limitCost }),
+  selector: (state) => state.deckReducer.deckConstraints.limitCost,
   defaultValue: DEFAULT_DECK_COST_LIMIT,
-  stringToValue: s => {
+  stringToValue: (s) => {
     try {
       const limitCost = parseInt(s);
       if (
@@ -255,10 +257,10 @@ const costParam: ParamsOptions<State, number> = {
 };
 
 const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
-  action: sameCard => deckActions.setDeckConstraints({ sameCard }),
-  selector: state => state.deckReducer.deckConstraints.sameCard,
+  action: (sameCard) => deckActions.setDeckConstraints({ sameCard }),
+  selector: (state) => state.deckReducer.deckConstraints.sameCard,
   defaultValue: defaultSameCardConstraint,
-  stringToValue: s => {
+  stringToValue: (s) => {
     if (isSameCardConstraint(s)) {
       return s;
     }
@@ -267,11 +269,11 @@ const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
 };
 
 const assistLimitParam: ParamsOptions<State, number> = {
-  action: assistCardLimit =>
+  action: (assistCardLimit) =>
     deckActions.setDeckConstraints({ assistCardLimit }),
-  selector: state => state.deckReducer.deckConstraints.assistCardLimit,
+  selector: (state) => state.deckReducer.deckConstraints.assistCardLimit,
   defaultValue: DEFAULT_DECK_ASSIST_CARD_COUNT,
-  stringToValue: s => {
+  stringToValue: (s) => {
     try {
       const assistCardLimit = parseInt(s);
       if (
@@ -288,7 +290,7 @@ const assistLimitParam: ParamsOptions<State, number> = {
 
 let init = false;
 
-export default function() {
+export default function () {
   if (init) {
     return;
   }

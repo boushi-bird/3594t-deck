@@ -27,9 +27,9 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => state.dialogReducer;
+const mapStateToProps: TMapStateToProps = (state) => state.dialogReducer;
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch =>
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       closeDialog: dialogActions.closeDialog,

@@ -54,7 +54,7 @@ type ConnectorOptions = Options<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   assistGenerals: state.datalistReducer.assistGenerals,
   currentPage: state.datalistReducer.currentPage,
   pageLimit: state.datalistReducer.pageLimit,
@@ -63,7 +63,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   enableSearchByDeck: state.deckReducer.searchCondition != null,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       decrementPage: datalistActions.decrementPage,
@@ -85,7 +85,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   let searchedAssistGeneralIds: string[] = [];
   if (!enableSearchByDeck) {
     searchedAssistGeneralIds = assistGenerals
-      .filter(general => {
+      .filter((general) => {
         // 勢力
         if (
           belongStates.length > 0 &&
@@ -95,7 +95,7 @@ const mergeProps: TMergeProps = (state, actions) => {
         }
         return true;
       })
-      .map(general => general.id);
+      .map((general) => general.id);
   }
   const searchedAll = searchedAssistGeneralIds.length;
   const searchedOffset = (currentPage - 1) * pageLimit;
@@ -130,7 +130,7 @@ const mergeProps: TMergeProps = (state, actions) => {
 };
 
 const arrayEquals = <V>(a: V[], b: V[]): boolean =>
-  a.length === b.length && a.every(v => b.includes(v));
+  a.length === b.length && a.every((v) => b.includes(v));
 
 const options: ConnectorOptions = {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {

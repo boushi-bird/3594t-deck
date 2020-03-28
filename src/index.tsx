@@ -15,7 +15,7 @@ WebFontLoader.load({
 });
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js').catch(e => {
+  navigator.serviceWorker.register('service-worker.js').catch((e) => {
     console.error(e);
   });
 }

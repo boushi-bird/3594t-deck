@@ -48,7 +48,7 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => {
+const mapStateToProps: TMapStateToProps = (state) => {
   const { searchCondition } = state.deckReducer;
   return {
     filterCondition: state.datalistReducer.filterCondition.basic,
@@ -57,7 +57,7 @@ const mapStateToProps: TMapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => ({
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => ({
   setCondition: setBasicConditionAdapter(dispatch),
 });
 

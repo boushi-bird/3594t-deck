@@ -82,13 +82,13 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     const style: React.CSSProperties = {};
     const styleState: React.CSSProperties = {};
     const belongState = deckCard.belongState
-      ? belongStates.find(v => v.id === deckCard.belongState)
+      ? belongStates.find((v) => v.id === deckCard.belongState)
       : undefined;
     const cost = deckCard.cost
-      ? costs.find(v => v.id === deckCard.cost)
+      ? costs.find((v) => v.id === deckCard.cost)
       : undefined;
     const unitType = deckCard.unitType
-      ? unitTypes.find(v => v.id === deckCard.unitType)
+      ? unitTypes.find((v) => v.id === deckCard.unitType)
       : undefined;
     let stateId = '';
     let stateName = '';

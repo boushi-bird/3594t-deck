@@ -20,13 +20,13 @@ const toggleCheckListVersion = ({
   checked: boolean;
 }): string[] => {
   // 一旦該当のチェックをすべて外す
-  let versions = filterCondition.filter(v => !v.startsWith(`${value}-`));
+  let versions = filterCondition.filter((v) => !v.startsWith(`${value}-`));
   if (!checked) {
     // 該当のチェックをすべて入れる
     const versionItems = ([] as FilterItem[])
       .concat(...filterContents)
-      .filter(v => v.id.startsWith(`${value}-`));
-    versions = versions.concat(versionItems.map(v => v.id));
+      .filter((v) => v.id.startsWith(`${value}-`));
+    versions = versions.concat(versionItems.map((v) => v.id));
   }
   return versions;
 };
@@ -42,15 +42,17 @@ const toggleCheckListMajorVersion = (
   const majorVersion = value.split('-')[0];
   if (checked) {
     // 該当のチェックが全て外れている場合
-    if (!versions.some(version => version.startsWith(`${majorVersion}-`))) {
-      majorVersions = majorVersions.filter(version => version !== majorVersion);
+    if (!versions.some((version) => version.startsWith(`${majorVersion}-`))) {
+      majorVersions = majorVersions.filter(
+        (version) => version !== majorVersion
+      );
     }
   } else if (!majorVersions.includes(majorVersion)) {
     const versionItems = ([] as FilterItem[])
       .concat(...filterContents)
-      .filter(v => v.id.startsWith(`${majorVersion}-`));
+      .filter((v) => v.id.startsWith(`${majorVersion}-`));
     // 該当のチェックが全て入っている場合
-    if (versionItems.every(v => versions.includes(v.id))) {
+    if (versionItems.every((v) => versions.includes(v.id))) {
       majorVersions.push(majorVersion);
     }
   }
@@ -65,7 +67,7 @@ function toggleCheckList(
   let targetValue;
   if (checked) {
     // チェック外す
-    targetValue = targetCondition.filter(v => v !== value);
+    targetValue = targetCondition.filter((v) => v !== value);
   } else {
     // チェック入れる
     targetValue = [...targetCondition, value];

@@ -57,7 +57,7 @@ type ConnectorOptions = Options<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   generals: state.datalistReducer.generals,
   strategies: state.datalistReducer.strategies,
   currentPage: state.datalistReducer.currentPage,
@@ -66,7 +66,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   deckSearchCondition: state.deckReducer.searchCondition,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       decrementPage: datalistActions.decrementPage,
@@ -102,7 +102,7 @@ const mergeProps: TMergeProps = (state, actions) => {
       filterCondition.basic.unitTypes = [deckSearchCondition.unitType];
     }
   }
-  const searchedStrategies = strategies.filter(strategy => {
+  const searchedStrategies = strategies.filter((strategy) => {
     return satisfyStrategy(strategy, filterCondition.strategies);
   });
   let searchedGeneralIds: string[] = [];
@@ -110,10 +110,10 @@ const mergeProps: TMergeProps = (state, actions) => {
     // 計略が総計略数と同じなら計略IDによる絞り込みはしない
     const searchedStrategyIds: string[] | undefined =
       searchedStrategies.length !== strategies.length
-        ? searchedStrategies.map(v => v.id)
+        ? searchedStrategies.map((v) => v.id)
         : undefined;
     searchedGeneralIds = generals
-      .filter(general => {
+      .filter((general) => {
         if (
           searchedStrategyIds &&
           !searchedStrategyIds.includes(general.strategy.id)
@@ -122,7 +122,7 @@ const mergeProps: TMergeProps = (state, actions) => {
         }
         return satisfyGeneral(general, filterCondition);
       })
-      .map(v => v.id);
+      .map((v) => v.id);
   }
   const searchedAll = searchedGeneralIds.length;
   const searchedOffset = (currentPage - 1) * pageLimit;
@@ -157,7 +157,7 @@ const mergeProps: TMergeProps = (state, actions) => {
 };
 
 const arrayEquals = <V>(a: V[], b: V[]): boolean =>
-  a.length === b.length && a.every(v => b.includes(v));
+  a.length === b.length && a.every((v) => b.includes(v));
 
 const options: ConnectorOptions = {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {

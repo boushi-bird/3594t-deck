@@ -31,7 +31,7 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   ...state.windowReducer,
   openedAnyModal:
     state.windowReducer.openedDeckConfig ||
@@ -48,7 +48,7 @@ const mapStateToProps: TMapStateToProps = state => ({
     state.deckReducer.activeAssistIndex != null,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   const actions = bindActionCreators(
     {
       setBaseData: datalistActions.setBaseData,

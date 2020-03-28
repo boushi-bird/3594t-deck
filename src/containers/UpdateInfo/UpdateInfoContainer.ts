@@ -9,11 +9,11 @@ type OwnProps = {};
 type TMapStateToProps = MapStateToProps<StateFromProps, OwnProps, State>;
 type TMapDispatchToProps = MapDispatchToProps<DispatchFromProps, OwnProps>;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   show: state.windowReducer.openedUpdateInfo,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch =>
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       closeUpdateInfo: windowActions.closeUpdateInfo,

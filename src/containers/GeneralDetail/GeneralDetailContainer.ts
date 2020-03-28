@@ -6,7 +6,7 @@ type OwnProps = {};
 
 type TMapStateToProps = MapStateToProps<Props, OwnProps, State>;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   general: state.windowReducer.detailGeneral,
 });
 

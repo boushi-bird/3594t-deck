@@ -93,7 +93,7 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   generals: state.datalistReducer.generals,
   assistGenerals: state.datalistReducer.assistGenerals,
   deckCards: state.deckReducer.deckCards,
@@ -104,7 +104,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   sameCard: state.deckReducer.deckConstraints.sameCard,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       addDeckAssist: deckActions.addDeckAssist,
@@ -130,10 +130,10 @@ function createDeckPersonals(
     }
   });
   return generals
-    .filter(general => {
+    .filter((general) => {
       return deckGenerals.includes(general.id);
     })
-    .map(g => g.raw.personal);
+    .map((g) => g.raw.personal);
 }
 
 // 遊軍に含まれている武将名IDの配列を返す
@@ -144,12 +144,12 @@ function createAssistDeckPersonals(
   const { assistGenerals, assistCardLimit } = state;
   const deckAssists: string[] = assistDeckCards
     .filter((ad, i) => i < assistCardLimit)
-    .map(ad => ad.assist);
+    .map((ad) => ad.assist);
   return assistGenerals
-    .filter(assistGeneral => {
+    .filter((assistGeneral) => {
       return deckAssists.includes(assistGeneral.id);
     })
-    .map(ag => ag.raw.personal);
+    .map((ag) => ag.raw.personal);
 }
 
 function isEnabledAddDeck(
@@ -165,7 +165,7 @@ function isEnabledAddDeck(
   }
   const deckAssists: string[] = assistDeckCards
     .filter((ad, i) => i < assistCardLimit)
-    .map(ad => ad.assist);
+    .map((ad) => ad.assist);
   return deckAssists.length < assistCardLimit;
 }
 
@@ -177,7 +177,9 @@ function isEnabledAddDeckAssist(
 ): boolean {
   // 遊軍の同名カード判別
   // TODO: 複数枚遊軍登録可能になり、さらに同名遊軍が登場した場合は要対応
-  const hasSameCard = deckAssistPersonals.some(p => p === assist.raw.personal);
+  const hasSameCard = deckAssistPersonals.some(
+    (p) => p === assist.raw.personal
+  );
   if (hasSameCard) {
     return false;
   }
@@ -186,7 +188,7 @@ function isEnabledAddDeckAssist(
     return true;
   }
   // 武将カードに同名カードがあるか判別する
-  return !deckPersonals.some(p => p === assist.raw.personal);
+  return !deckPersonals.some((p) => p === assist.raw.personal);
 }
 
 const mergeProps: TMergeProps = (state, actions, ownProps) => {

@@ -91,14 +91,15 @@ const emptyAssistStrategy: AssistStrategy = {
 };
 
 const findById = (filterItems: FilterItem[], id: string): DataItem => {
-  const item = filterItems.find(v => v.id === id);
+  const item = filterItems.find((v) => v.id === id);
   if (!item) {
     return emptyItem;
   }
   return item;
 };
 
-const plain = <S>(s: (S | undefined)[]): S[] => s.filter(v => v != null) as S[];
+const plain = <S>(s: (S | undefined)[]): S[] =>
+  s.filter((v) => v != null) as S[];
 
 const noSkillId = '0';
 const exVerTypeId = '2';
@@ -157,7 +158,7 @@ export default (baseData: RawBaseData): BaseData => {
   );
   // スターター/通常/Ex
   const varTypes = convertIdItem(baseData.VER_TYPE, idIsIndex, toItem).map(
-    v => {
+    (v) => {
       if (v.name === 'Ex') {
         return {
           ...v,
@@ -198,9 +199,9 @@ export default (baseData: RawBaseData): BaseData => {
         ...otherStrat
       } = strat;
       const stratCategoryName =
-        strategyCategories.find(sc => sc.id === stratCategory)?.name || '';
+        strategyCategories.find((sc) => sc.id === stratCategory)?.name || '';
       const stratRangeCode =
-        strategyRanges.find(sr => sr.id === stratRange)?.code || '';
+        strategyRanges.find((sr) => sr.id === stratRange)?.code || '';
       return {
         id,
         ...otherStrat,
@@ -239,28 +240,28 @@ export default (baseData: RawBaseData): BaseData => {
       cost: findById(costs, raw.cost),
       genMains: plain(
         [raw.gen_main0, raw.gen_main1, raw.gen_main2]
-          .filter(v => v !== '')
-          .map(v => genMains.find(g => g.id === v))
+          .filter((v) => v !== '')
+          .map((v) => genMains.find((g) => g.id === v))
       ),
       generalType: findById(generalTypes, raw.general_type),
       personal: baseData.PERSONAL[parseInt(raw.personal)],
       rarity: findById(rarities, raw.rarity),
       skills: plain(
         [raw.skill0, raw.skill1, raw.skill2]
-          .filter(v => v !== '' && v !== noSkillId)
-          .map(v => skills.find(g => g.id === v))
+          .filter((v) => v !== '' && v !== noSkillId)
+          .map((v) => skills.find((g) => g.id === v))
       ),
       state: findById(belongStates, raw.state),
       unitType: findById(unitTypes, raw.unit_type),
-      strategy: strategies.find(v => v.id === raw.strat) || emptyStrategy,
+      strategy: strategies.find((v) => v.id === raw.strat) || emptyStrategy,
     });
   });
-  const majorVersions = Object.keys(versions).map(v => parseInt(v));
+  const majorVersions = Object.keys(versions).map((v) => parseInt(v));
   const sortNumber = (a: number, b: number): number => {
     return a - b;
   };
   majorVersions.sort(sortNumber);
-  majorVersions.forEach(major => {
+  majorVersions.forEach((major) => {
     versions[major].sort(sortNumber);
   });
   const strategyTimes = convertIdItem(baseData.STRAT_TIME, idIsIndex, toItem);
@@ -285,9 +286,9 @@ export default (baseData: RawBaseData): BaseData => {
         strat_range: stratRange,
       } = strat;
       const category = assistStrategyCategories.find(
-        sc => sc.id === stratCategoryId
+        (sc) => sc.id === stratCategoryId
       );
-      const range = strategyRanges.find(sr => sr.id === stratRange);
+      const range = strategyRanges.find((sr) => sr.id === stratRange);
       return {
         id,
         code,
@@ -322,7 +323,7 @@ export default (baseData: RawBaseData): BaseData => {
         personal: baseData.PERSONAL[parseInt(raw.personal)],
         state: findById(belongStates, raw.state),
         strategy:
-          assistStrategies.find(v => v.id === raw.assist_strat) ||
+          assistStrategies.find((v) => v.id === raw.assist_strat) ||
           emptyAssistStrategy,
       });
     }
@@ -340,7 +341,7 @@ export default (baseData: RawBaseData): BaseData => {
       versions: Object.entries(versions).map(([k, addVersions]) => {
         const items = convertIdItem(
           addVersions,
-          v => `${k}-${v}`,
+          (v) => `${k}-${v}`,
           (v, id) => ({ id, name: createVersionLabel(k, v) })
         );
         items.push({
@@ -351,7 +352,7 @@ export default (baseData: RawBaseData): BaseData => {
       }),
       majorVersions: convertIdItem(
         majorVersions,
-        v => `${v}`,
+        (v) => `${v}`,
         (v, id) => ({ id, name: createVersionLabel(v) })
       ),
       strategyCategories,

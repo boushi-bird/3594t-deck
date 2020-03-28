@@ -36,14 +36,14 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   generals: state.datalistReducer.generals,
   belongStates: state.datalistReducer.filterContents.belongStates,
   costs: state.datalistReducer.filterContents.costs,
   unitTypes: state.datalistReducer.filterContents.unitTypes,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       setDeckDummyValue: deckActions.setDeckDummyValue,

@@ -119,7 +119,7 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   generals: state.datalistReducer.generals,
   assistGenerals: state.datalistReducer.assistGenerals,
   deckCards: state.deckReducer.deckCards,
@@ -130,7 +130,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   sameCard: state.deckReducer.deckConstraints.sameCard,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       addDeckGeneral: deckActions.addDeckGeneral,
@@ -161,10 +161,10 @@ function createDeckPersonals(
     }
   });
   return generals
-    .filter(general => {
+    .filter((general) => {
       return deckGenerals.includes(general.id);
     })
-    .map(v => {
+    .map((v) => {
       const { personal, strat } = v.raw;
       return { personal, strat };
     });
@@ -178,12 +178,12 @@ function createAssistDeckPersonals(
   const { assistGenerals, assistCardLimit } = state;
   const deckAssists: string[] = assistDeckCards
     .filter((ad, i) => i < assistCardLimit)
-    .map(ad => ad.assist);
+    .map((ad) => ad.assist);
   return assistGenerals
-    .filter(assistGeneral => {
+    .filter((assistGeneral) => {
       return deckAssists.includes(assistGeneral.id);
     })
-    .map(ag => ag.raw.personal);
+    .map((ag) => ag.raw.personal);
 }
 
 function isEnabledAddDeckGeneral(
@@ -195,7 +195,7 @@ function isEnabledAddDeckGeneral(
   // 遊軍の同名カード判別
   if (sameCard !== 'personal-strategy' && sameCard !== 'personal-assist') {
     const hasSameCard = deckAssistPersonals.some(
-      p => p === general.raw.personal
+      (p) => p === general.raw.personal
     );
     if (hasSameCard) {
       return false;
@@ -209,11 +209,12 @@ function isEnabledAddDeckGeneral(
   ) {
     // 武将と計略が一致したときに同名カード扱い
     return !deckPersonals.some(
-      r => r.personal === general.raw.personal && r.strat === general.raw.strat
+      (r) =>
+        r.personal === general.raw.personal && r.strat === general.raw.strat
     );
   } else {
     // 武将が一致したときに同名カード扱い
-    return !deckPersonals.some(r => r.personal === general.raw.personal);
+    return !deckPersonals.some((r) => r.personal === general.raw.personal);
   }
 }
 

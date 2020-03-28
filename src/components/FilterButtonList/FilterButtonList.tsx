@@ -68,7 +68,7 @@ export default class FilterButtonList<
     const square = this.square;
     const buttons: JSX.Element[] = [];
     const disabled = propDisabled != null && propDisabled;
-    items.forEach(item => {
+    items.forEach((item) => {
       const value = item.id;
       const label = this.createLabel(item);
       const style: React.CSSProperties = {};

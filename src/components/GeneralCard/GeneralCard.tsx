@@ -41,7 +41,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
       style.display = 'none';
     }
     const skills: JSX.Element[] = [];
-    general.skills.forEach(skill => {
+    general.skills.forEach((skill) => {
       skills.push(
         <span className="skill" key={skill.id}>
           {skill.nameShort}

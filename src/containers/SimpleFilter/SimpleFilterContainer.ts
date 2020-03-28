@@ -46,7 +46,7 @@ type TMergeProps = MergeProps<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => {
+const mapStateToProps: TMapStateToProps = (state) => {
   const { searchCondition } = state.deckReducer;
   const deckCardBelongState = searchCondition
     ? searchCondition.belongState
@@ -58,7 +58,7 @@ const mapStateToProps: TMapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => ({
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => ({
   setCondition: setBasicConditionAdapter(dispatch),
 });
 

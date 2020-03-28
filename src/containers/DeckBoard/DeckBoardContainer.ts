@@ -74,7 +74,7 @@ type ConnectorOptions = Options<
   Props
 >;
 
-const mapStateToProps: TMapStateToProps = state => ({
+const mapStateToProps: TMapStateToProps = (state) => ({
   deckCards: state.deckReducer.deckCards,
   assistDeckCards: state.deckReducer.assistDeckCards,
   enableSearch: state.deckReducer.searchCondition != null,
@@ -87,7 +87,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   assistCardLimit: state.deckReducer.deckConstraints.assistCardLimit,
 });
 
-const mapDispatchToProps: TMapDispatchToProps = dispatch => {
+const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       openDeckConfig: windowActions.openDeckConfig,
@@ -138,12 +138,12 @@ const mergeProps: TMergeProps = (state, actions) => {
   const belongStateSet = new Set<string>();
   const genMainCounts = new Map<string, number>();
   const skillCounts = new Map<string, number>();
-  rawDeckCards.forEach(deckCard => {
+  rawDeckCards.forEach((deckCard) => {
     let cost: string;
     if ('general' in deckCard) {
       const general =
         deckCard.general != null
-          ? generals.find(g => g.id === deckCard.general)
+          ? generals.find((g) => g.id === deckCard.general)
           : undefined;
       if (!general) {
         return;
@@ -155,13 +155,13 @@ const mergeProps: TMergeProps = (state, actions) => {
       belongStateSet.add(general.raw.state);
       const genMain = deckCard.genMain;
       if (genMain != null) {
-        const gm = general.genMains.find(g => g.id === genMain);
+        const gm = general.genMains.find((g) => g.id === genMain);
         if (gm) {
           const count = genMainCounts.get(gm.name) || 0;
           genMainCounts.set(gm.name, count + 1);
         }
       }
-      general.skills.forEach(s => {
+      general.skills.forEach((s) => {
         const count = skillCounts.get(s.name) || 0;
         skillCounts.set(s.name, count + 1);
       });
@@ -183,7 +183,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     totalCost += parseInt(cost);
   });
   rawAssistDeckCards.forEach(({ assist: id }) => {
-    const assist = assistGenerals.find(a => a.id === id);
+    const assist = assistGenerals.find((a) => a.id === id);
     if (assist && assistDeckCards.length < assistCardLimit) {
       assistDeckCards.push({ assist });
       belongStateSet.add(assist.raw.state);
