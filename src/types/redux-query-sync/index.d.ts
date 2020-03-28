@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'redux-query-sync' {
-  import { Store } from 'redux';
-  // import { History } from 'history';
-  import { TypeConstant, PayloadAction } from 'typesafe-actions';
+  import type { Store } from 'redux';
+  import type { TypeConstant, PayloadAction } from 'typesafe-actions';
 
   function ReduxQuerySync<S>(options: Options<S>): () => void;
 

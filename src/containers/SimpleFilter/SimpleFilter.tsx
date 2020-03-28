@@ -1,8 +1,8 @@
 import './SimpleFilter.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterItem, SearchMode } from '3594t-deck';
-import {
+import type { FilterItem, SearchMode } from '3594t-deck';
+import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';

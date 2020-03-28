@@ -1,20 +1,21 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
   Options,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral } from '3594t-deck';
 import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
-import { State } from '../../store';
-import AssistCardList, {
+import type { State } from '../../store';
+import type {
   StateFromProps,
   DispatchFromProps,
   Props,
 } from './AssistCardList';
+import AssistCardList from './AssistCardList';
 
 interface ContainerStateFromProps {
   assistGenerals: AssistGeneral[];

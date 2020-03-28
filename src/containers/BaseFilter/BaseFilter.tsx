@@ -1,7 +1,7 @@
 import './BaseFilter.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterContents } from '3594t-deck';
+import type { FilterContents } from '3594t-deck';
 import {
   MIN_FORCE,
   MAX_FORCE,
@@ -10,7 +10,7 @@ import {
   MIN_CONQUEST,
   MAX_CONQUEST,
 } from '../../const';
-import {
+import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';

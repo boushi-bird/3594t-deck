@@ -1,5 +1,5 @@
-import { FilterContents, FilterItem } from '3594t-deck';
-import {
+import type { FilterContents, FilterItem } from '3594t-deck';
+import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
   DetailFilterCondition,

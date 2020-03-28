@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
-import { General, AssistGeneral } from '3594t-deck';
+import type { General, AssistGeneral } from '3594t-deck';
 import AssistDeckCard from '../../components/AssistDeckCard';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
-import { DeckCardGeneral, DeckCardDummy } from '../../modules/deck';
+import type { DeckCardGeneral, DeckCardDummy } from '../../modules/deck';
 
 interface DeckCardGeneralInfo
   extends Pick<DeckCardGeneral, 'genMain' | 'pocket'> {

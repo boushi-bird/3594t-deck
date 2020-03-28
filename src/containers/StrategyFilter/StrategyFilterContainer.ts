@@ -1,22 +1,21 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setStrategiesFilterConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleStrategyCheckList } from '../Common/toggleCheckList';
-import {
-  StrategiesFilterConditionKey,
-  datalistActions,
-} from '../../modules/datalist';
-import { State } from '../../store';
-import DetailFilter, {
+import type { StrategiesFilterConditionKey } from '../../modules/datalist';
+import { datalistActions } from '../../modules/datalist';
+import type { State } from '../../store';
+import type {
   StateFromProps,
   DispatchFromProps,
   Props,
 } from './StrategyFilter';
+import DetailFilter from './StrategyFilter';
 
 type ContainerDispatchFromProps = Omit<DispatchFromProps, 'toggleCheckList'>;
 

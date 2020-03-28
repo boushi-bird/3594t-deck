@@ -2,7 +2,7 @@ import './AssistGeneralCard.css';
 import React from 'react';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
-import { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
 
 interface Props {

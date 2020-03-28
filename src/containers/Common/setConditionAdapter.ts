@@ -1,11 +1,10 @@
 import { Dispatch } from 'redux';
-
-import {
-  datalistActions,
+import type {
   BasicFilterCondition,
   DetailFilterCondition,
   StrategiesFilterCondition,
 } from '../../modules/datalist';
+import { datalistActions } from '../../modules/datalist';
 
 let handleId: NodeJS.Timeout;
 const delayTime = 500;

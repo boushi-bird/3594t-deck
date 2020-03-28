@@ -1,9 +1,11 @@
-import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import type { MapStateToProps, MapDispatchToProps } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deckActions } from '../../modules/deck';
 import { windowActions } from '../../modules/window';
-import { State } from '../../store';
-import DeckConfig, { StateFromProps, DispatchFromProps } from './DeckConfig';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps } from './DeckConfig';
+import DeckConfig from './DeckConfig';
 
 type OwnProps = {};
 

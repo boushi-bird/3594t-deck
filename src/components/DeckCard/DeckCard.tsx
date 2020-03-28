@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import classNames from 'classnames';
-import { General } from '3594t-deck';
+import type { General } from '3594t-deck';
 
 interface Props {
   index: number;

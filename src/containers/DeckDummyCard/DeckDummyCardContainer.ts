@@ -1,17 +1,18 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
-import { State } from '../../store';
+import { connect } from 'react-redux';
+import type { State } from '../../store';
 import { deckActions } from '../../modules/deck';
-import DeckDummyCard, {
+import type {
   StateFromProps,
   DispatchFromProps,
   OwnProps,
   Props,
 } from './DeckDummyCard';
+import DeckDummyCard from './DeckDummyCard';
 import { bindActionCreators } from 'redux';
 
 type ContainerStateFromProps = StateFromProps;

@@ -1,13 +1,15 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { dialogActions, DialogState } from '../../modules/dialog';
-import { State } from '../../store';
-import Dialog, { StateFromProps, DispatchFromProps, Props } from './Dialog';
+import type { DialogState } from '../../modules/dialog';
+import { dialogActions } from '../../modules/dialog';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps, Props } from './Dialog';
+import Dialog from './Dialog';
 
 interface ContainerDispatchFromProps {
   closeDialog: () => void;

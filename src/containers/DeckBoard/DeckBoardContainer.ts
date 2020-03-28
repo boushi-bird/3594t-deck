@@ -1,25 +1,29 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
   Options,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { General, AssistGeneral, FilterContents } from '3594t-deck';
+import type { General, AssistGeneral, FilterContents } from '3594t-deck';
 import { MAX_MORALE_LIMIT, CHARM_MORALE, GEN_MAIN_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
-import { deckActions, DeckCard, DeckCardAssist } from '../../modules/deck';
+import type { DeckCard, DeckCardAssist } from '../../modules/deck';
+import { deckActions } from '../../modules/deck';
 import { windowActions } from '../../modules/window';
-import { dialogActions, DialogInfo } from '../../modules/dialog';
-import store, { State } from '../../store';
-import DeckBoard, {
+import type { DialogInfo } from '../../modules/dialog';
+import { dialogActions } from '../../modules/dialog';
+import type { State } from '../../store';
+import store from '../../store';
+import type {
   StateFromProps,
   DispatchFromProps,
   DeckCardInfo,
   DeckCardAssistInfo,
   Props,
 } from './DeckBoard';
+import DeckBoard from './DeckBoard';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 
 interface ContainerStateFromProps {

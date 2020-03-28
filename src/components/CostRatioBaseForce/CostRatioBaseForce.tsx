@@ -13,7 +13,7 @@ import {
   MAX_FORCE_30,
 } from '../../const';
 import NumberSelect from '../NumberSelect';
-import { BasicFilterCondition } from '../../modules/datalist';
+import type { BasicFilterCondition } from '../../modules/datalist';
 
 interface Props {
   costRatioBaseForces: BasicFilterCondition['costRatioBaseForces'];

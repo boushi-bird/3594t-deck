@@ -2,7 +2,7 @@ import './GeneralCard.css';
 import React from 'react';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
-import { General } from '3594t-deck';
+import type { General } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
 import GenMains from './GenMains';
 

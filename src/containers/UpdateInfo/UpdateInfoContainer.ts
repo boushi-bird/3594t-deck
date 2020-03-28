@@ -1,8 +1,10 @@
-import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import type { MapStateToProps, MapDispatchToProps } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { windowActions } from '../../modules/window';
-import { State } from '../../store';
-import UpdateInfo, { StateFromProps, DispatchFromProps } from './UpdateInfo';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps } from './UpdateInfo';
+import UpdateInfo from './UpdateInfo';
 
 type OwnProps = {};
 

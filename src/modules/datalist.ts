@@ -1,12 +1,13 @@
-import { ActionType, createAction } from 'typesafe-actions';
-import {
+import type { ActionType } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
+import type {
   General,
   Strategy,
   AssistGeneral,
   FilterContents,
   SearchMode,
 } from '3594t-deck';
-import { BaseData } from '../services/mapBaseData';
+import type { BaseData } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
 import {
   MIN_FORCE,

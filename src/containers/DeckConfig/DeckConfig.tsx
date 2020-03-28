@@ -6,7 +6,7 @@ import {
   STEP_DECK_COST_LIMIT,
   MAX_DECK_ASSIST_CARD_COUNT,
 } from '../../const';
-import { DeckConstraints, SameCardConstraint } from '../../modules/deck';
+import type { DeckConstraints, SameCardConstraint } from '../../modules/deck';
 import NumberSelect from '../../components/NumberSelect';
 import RadioButton from '../../components/RadioButton';
 

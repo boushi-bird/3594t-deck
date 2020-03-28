@@ -1,5 +1,6 @@
-import reduxQuerySync, { ParamsOptions } from 'redux-query-sync';
-import { General, AssistGeneral, FilterContents } from '3594t-deck';
+import type { ParamsOptions } from 'redux-query-sync';
+import reduxQuerySync from 'redux-query-sync';
+import type { General, AssistGeneral, FilterContents } from '3594t-deck';
 import {
   DEFAULT_DECK_COST_LIMIT,
   MIN_DECK_COST_LIMIT,
@@ -8,13 +9,16 @@ import {
   DEFAULT_DECK_ASSIST_CARD_COUNT,
   MAX_DECK_ASSIST_CARD_COUNT,
 } from '../const';
-import store, { State } from '../store';
-import {
+import type { State } from '../store';
+import store from '../store';
+import type {
   DeckCard,
   DeckCardGeneral,
   DeckCardDummy,
   DeckCardAssist,
   SameCardConstraint,
+} from './deck';
+import {
   isSameCardConstraint,
   defaultSameCardConstraint,
   deckActions,

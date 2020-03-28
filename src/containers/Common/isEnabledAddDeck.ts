@@ -1,5 +1,5 @@
 import { MAX_DECK_GENERAL_CARD_COUNT } from '../../const';
-import { DeckCard } from '../../modules/deck';
+import type { DeckCard } from '../../modules/deck';
 
 export default function (
   deckCards: DeckCard[],

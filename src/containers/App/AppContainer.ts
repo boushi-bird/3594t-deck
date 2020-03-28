@@ -1,17 +1,18 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { forceCheck } from 'react-lazyload';
 import { windowActions } from '../../modules/window';
 import { datalistActions } from '../../modules/datalist';
 import { deckActions } from '../../modules/deck';
 import querySync from '../../modules/querySync';
-import { State } from '../../store';
-import App, { StateFromProps, DispatchFromProps, OwnProps, Props } from './App';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps, OwnProps, Props } from './App';
+import App from './App';
 import { loadFromApi } from '../../services/loadData';
 
 interface ContainerStateFromProps extends StateFromProps {

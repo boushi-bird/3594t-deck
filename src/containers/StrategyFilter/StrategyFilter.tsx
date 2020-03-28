@@ -1,8 +1,8 @@
 import './StrategyFilter.css';
 import React from 'react';
 import classNames from 'classnames';
-import { SearchMode, FilterContents } from '3594t-deck';
-import {
+import type { SearchMode, FilterContents } from '3594t-deck';
+import type {
   StrategiesFilterCondition,
   StrategiesFilterConditionKey,
 } from '../../modules/datalist';

@@ -3,7 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import classNames from 'classnames';
-import { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral } from '3594t-deck';
 
 interface Props {
   index: number;

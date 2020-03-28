@@ -1,5 +1,5 @@
-import { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
-import {
+import type { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
+import type {
   FilterItem,
   Strategy,
   General,

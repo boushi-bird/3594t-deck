@@ -1,16 +1,18 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
   Options,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { General, Strategy } from '3594t-deck';
-import { datalistActions, FilterCondition } from '../../modules/datalist';
+import type { General, Strategy } from '3594t-deck';
+import type { FilterCondition } from '../../modules/datalist';
+import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
-import { State } from '../../store';
-import CardList, { StateFromProps, DispatchFromProps, Props } from './CardList';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps, Props } from './CardList';
+import CardList from './CardList';
 import satisfyStrategy from './satisfyStrategy';
 import satisfyGeneral from './satisfyGeneral';
 

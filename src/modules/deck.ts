@@ -1,4 +1,5 @@
-import { ActionType, createAction } from 'typesafe-actions';
+import type { ActionType } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 import {
   DEFAULT_DECK_COST_LIMIT,
   DEFAULT_DECK_ASSIST_CARD_COUNT,

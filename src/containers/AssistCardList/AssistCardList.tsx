@@ -1,9 +1,10 @@
 import React from 'react';
-import { AssistGeneral } from '3594t-deck';
-import CardListBase, {
+import type { AssistGeneral } from '3594t-deck';
+import type {
   StateBaseProps,
   DispatchBaseProps,
 } from '../CardList/CardListBase';
+import CardListBase from '../CardList/CardListBase';
 import AssistGeneralCard from '../../components/AssistGeneralCard';
 
 export interface StateFromProps extends StateBaseProps {

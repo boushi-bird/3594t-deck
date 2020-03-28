@@ -1,23 +1,23 @@
 import React from 'react';
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons/faSyncAlt';
-import { General, AssistGeneral } from '3594t-deck';
-import { State } from '../../store';
-import {
+import type { General, AssistGeneral } from '3594t-deck';
+import type { State } from '../../store';
+import type {
   DeckCardGeneral,
   DeckCard,
   DeckCardAssist,
   SameCardConstraint,
-  deckActions,
 } from '../../modules/deck';
+import { deckActions } from '../../modules/deck';
 import isEnabledAddDeck from '../../containers/Common/isEnabledAddDeck';
 
 interface StateFromProps {

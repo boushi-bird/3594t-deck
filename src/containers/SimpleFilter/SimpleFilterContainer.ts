@@ -1,22 +1,19 @@
-import {
+import type {
   MapStateToProps,
   MapDispatchToProps,
   MergeProps,
-  connect,
 } from 'react-redux';
-import { FilterItem } from '3594t-deck';
+import { connect } from 'react-redux';
+import type { FilterItem } from '3594t-deck';
 import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleBasicCheckList } from '../Common/toggleCheckList';
-import {
+import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
 } from '../../modules/datalist';
-import { State } from '../../store';
-import SimpleFilter, {
-  StateFromProps,
-  DispatchFromProps,
-  Props,
-} from './SimpleFilter';
+import type { State } from '../../store';
+import type { StateFromProps, DispatchFromProps, Props } from './SimpleFilter';
+import SimpleFilter from './SimpleFilter';
 
 interface ContainerStateFromProps {
   belongStates: FilterItem[];

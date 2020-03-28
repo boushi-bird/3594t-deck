@@ -1,7 +1,7 @@
 import './StrategyRangeButtonList.css';
 import React from 'react';
 import classNames from 'classnames';
-import { ButtonItem } from '3594t-deck';
+import type { ButtonItem } from '3594t-deck';
 import FilterButtonList from '../FilterButtonList';
 
 export default class StrategyRangeButtonList extends FilterButtonList<

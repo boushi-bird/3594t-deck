@@ -1,6 +1,6 @@
 import './GeneralDetail.css';
 import React from 'react';
-import { General } from '3594t-deck';
+import type { General } from '3594t-deck';
 import GeneralCard from '../../components/GeneralCard';
 
 export interface Props {
