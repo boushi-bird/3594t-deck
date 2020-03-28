@@ -263,7 +263,7 @@ export default function datalistReducer(
         ...state,
         assistDeckCards,
       };
-  }
+    }
     case 'CLEAR_DECK': {
       return {
         ...state,

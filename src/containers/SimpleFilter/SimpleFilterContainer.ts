@@ -74,8 +74,10 @@ const mergeProps: TMergeProps = (state, actions) => {
     filterContents: belongStates,
     filterCondition,
     searchByDeck,
+    searchMode: basicFilterCondition.searchMode,
   };
   const dProps: DispatchFromProps = {
+    setCondition: actions.setCondition,
     toggleCheckList: (key: BasicFilterConditionKey, value: string) => {
       actions.setCondition(
         toggleBasicCheckList(basicFilterCondition, key, value)

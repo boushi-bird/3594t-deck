@@ -1,29 +1,49 @@
 import './SimpleFilter.css';
 import React from 'react';
-import { FilterItem } from '3594t-deck';
-import { BasicFilterConditionKey } from '../../modules/datalist';
+import classNames from 'classnames';
+import { FilterItem, SearchMode } from '3594t-deck';
+import {
+  BasicFilterCondition,
+  BasicFilterConditionKey,
+} from '../../modules/datalist';
 import FilterButtonList from '../../components/FilterButtonList';
 
 export interface StateFromProps {
   filterCondition: string[];
   filterContents: FilterItem[];
   searchByDeck: boolean;
+  searchMode: SearchMode;
 }
 
 export interface DispatchFromProps {
+  setCondition: (condition: Partial<BasicFilterCondition>) => void;
   toggleCheckList: (key: BasicFilterConditionKey, value: string) => void;
 }
 
 export type Props = StateFromProps & DispatchFromProps;
 
 export default class SimpleFilter extends React.Component<Props> {
+  private handleToggleCheckList = (
+    key: BasicFilterConditionKey,
+    value: string
+  ) => {
+    this.props.toggleCheckList(key, value);
+  };
+
+  private handleOnClickToggleSearchMode = () => {
+    const { searchMode, setCondition } = this.props;
+    const newSearchMode = searchMode === 'general' ? 'assist' : 'general';
+    setCondition({ searchMode: newSearchMode });
+  };
+
   public render(): React.ReactNode {
     const {
       filterContents,
       filterCondition,
       searchByDeck,
-      toggleCheckList,
+      searchMode,
     } = this.props;
+    const modeGeneral = searchMode === 'general';
     return (
       <section className="simple-filter-section">
         <div className="simple-filter-state">
@@ -32,10 +52,19 @@ export default class SimpleFilter extends React.Component<Props> {
             itemName="belongStates"
             items={filterContents}
             checkedItems={filterCondition}
-            onClickItem={toggleCheckList}
+            onClickItem={this.handleToggleCheckList}
             square={true}
             disabled={searchByDeck}
           />
+        </div>
+        <div
+          className={classNames('search-mode', {
+            'mode-general': modeGeneral,
+          })}
+          onClick={this.handleOnClickToggleSearchMode}
+        >
+          <span className="mode-item mode-item-general">武将</span>
+          <span className="mode-item mode-item-assist">遊軍</span>
         </div>
       </section>
     );

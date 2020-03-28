@@ -21,6 +21,7 @@ interface ContainerStateFromProps {
   currentPage: number;
   pageLimit: number;
   belongStates: string[];
+  enableSearchByDeck: boolean;
 }
 
 interface ContainerDispatchFromProps {
@@ -59,6 +60,7 @@ const mapStateToProps: TMapStateToProps = state => ({
   pageLimit: state.datalistReducer.pageLimit,
   belongStates:
     state.datalistReducer.effectiveFilterCondition.basic.belongStates,
+  enableSearchByDeck: state.deckReducer.searchCondition != null,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = dispatch => {
@@ -73,19 +75,28 @@ const mapDispatchToProps: TMapDispatchToProps = dispatch => {
 };
 
 const mergeProps: TMergeProps = (state, actions) => {
-  const { assistGenerals, currentPage, pageLimit, belongStates } = state;
-  let searchedAssistGeneralIds: string[] = assistGenerals
-    .filter(general => {
-      // 勢力
-      if (
-        belongStates.length > 0 &&
-        !belongStates.includes(general.raw.state)
-      ) {
-        return false;
-      }
-      return true;
-    })
-    .map(general => general.id);
+  const {
+    assistGenerals,
+    currentPage,
+    pageLimit,
+    belongStates,
+    enableSearchByDeck,
+  } = state;
+  let searchedAssistGeneralIds: string[] = [];
+  if (!enableSearchByDeck) {
+    searchedAssistGeneralIds = assistGenerals
+      .filter(general => {
+        // 勢力
+        if (
+          belongStates.length > 0 &&
+          !belongStates.includes(general.raw.state)
+        ) {
+          return false;
+        }
+        return true;
+      })
+      .map(general => general.id);
+  }
   const searchedAll = searchedAssistGeneralIds.length;
   const searchedOffset = (currentPage - 1) * pageLimit;
   const hasPrev = searchedOffset > 0;
