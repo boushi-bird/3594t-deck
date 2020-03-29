@@ -9,7 +9,7 @@
     "build:license": "license-checker --markdown --excludePrivatePackages --customPath=resources/license-checker.json --out dist/dependencies.md",
     "build:pages": "ts-node --project tsconfig-for-webpack-config.json bin/build-pages.ts",
     "deploy": "cross-env NODE_ENV=production npm run build && npm run deploy-only",
-    "deploy-only": "gh-pages -b master -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
+    "deploy-only": "gh-pages -b gh-pages-april-fool-2020 -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
     "lint": "npm-run-all lint:*",
     "fix": "npm-run-all fix:*",
