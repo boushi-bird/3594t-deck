@@ -5,6 +5,11 @@ import type {
   DataItem,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
+import {
+  assistOfficiallUrl,
+  assistThumbUrl,
+  assistAvatarUrl,
+} from '../utils/externalUrl';
 
 type RawAssistGeneral = AssistGeneral['raw'];
 type Personal = AssistGeneral['personal'];
@@ -61,16 +66,15 @@ export class AssistGeneralImpl implements AssistGeneral {
   }
   /** 公式ページへのURL */
   public get officialUrl(): string {
-    return `https://3594t.net/datalist/?v=ASSIST&s=POPUP_ASSIST&c=${this.code}`;
+    return assistOfficiallUrl(this.code);
   }
   /** サムネイル画像URL */
   public get thumbUrl(): string {
-    const code = this.code;
-    return `https://3594t.net/img/card_small/${code}.jpg`;
+    return assistThumbUrl(this.code);
   }
   /** アバター画像URL */
   public get avatarUrl(): string {
-    const code = this.raw.avatar;
-    return `https://3594t.net/img/avatar/${code}.png`;
+    const avatar = this.raw.avatar;
+    return assistAvatarUrl(avatar);
   }
 }

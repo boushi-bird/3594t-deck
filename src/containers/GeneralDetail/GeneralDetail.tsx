@@ -2,6 +2,7 @@ import './GeneralDetail.css';
 import React from 'react';
 import type { General } from '3594t-deck';
 import GeneralCard from '../../components/GeneralCard';
+import { strategyRangeImageUrl } from '../../utils/externalUrl';
 
 export interface Props {
   general?: General;
@@ -18,7 +19,9 @@ export default class GeneralDetail extends React.PureComponent<Props> {
     stratExplanation.split('\n').forEach((exp, i) => {
       stratExplanationElements.push(<span key={i}>{exp}</span>);
     });
-    const strategyRangeUrl = `https://3594t.net/img/strat_range/${general.strategy.stratRangeCode}.png`;
+    const strategyRangeUrl = strategyRangeImageUrl(
+      general.strategy.stratRangeCode
+    );
     return (
       <div className="general-detail">
         <div className="general-detail-inner">

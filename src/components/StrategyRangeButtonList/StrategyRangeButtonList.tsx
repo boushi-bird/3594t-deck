@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import type { ButtonItem } from '3594t-deck';
 import FilterButtonList from '../FilterButtonList';
+import { strategyRangeImageUrl } from '../../utils/externalUrl';
 
 export default class StrategyRangeButtonList extends FilterButtonList<
   'strategyRanges'
@@ -11,7 +12,7 @@ export default class StrategyRangeButtonList extends FilterButtonList<
     if (item.code == null) {
       return '';
     }
-    const src = `https://3594t.net/img/strat_range/${item.code}.png`;
+    const src = strategyRangeImageUrl(item.code);
     return <img className="range-image" src={src} />;
   }
 

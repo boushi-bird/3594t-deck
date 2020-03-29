@@ -6,6 +6,11 @@ import type {
   DataItem,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
+import {
+  generalThumbUrl,
+  generalAvatarUrl,
+  generalOfficiallUrl,
+} from '../utils/externalUrl';
 
 type RawGeneral = General['raw'];
 type Personal = General['personal'];
@@ -56,15 +61,15 @@ export class GeneralImpl implements General {
     return this.raw.pocket_code !== '';
   }
   public get officialUrl(): string {
-    return `https://3594t.net/datalist/?v=GENERAL&s=POPUP_GENERAL&c=${this.code}`;
+    return generalOfficiallUrl(this.code);
   }
   public thumbUrl(pocket: boolean): string {
     const code = pocket && this.hasPocket ? this.pocketCode : this.code;
-    return `https://3594t.net/img/card_small/${code}.jpg`;
+    return generalThumbUrl(code);
   }
   public avatarUrl(pocket: boolean): string {
     const code =
       pocket && this.hasPocket ? this.raw.pocket_avatar : this.raw.avatar;
-    return `https://3594t.net/img/avatar/${code}.png`;
+    return generalAvatarUrl(code);
   }
 }
