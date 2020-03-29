@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
 import type { AssistGeneral } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
+import { strategyRangeImageUrl } from '../../utils/externalUrl';
 
 interface Props {
   general: AssistGeneral;
@@ -49,9 +50,7 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
       stratExplanationElements.push(<span key={i}>{exp}</span>);
     });
     const rangeCode = general.strategy.range?.code;
-    const strategyRangeUrl = rangeCode
-      ? `https://3594t.net/img/strat_range/${rangeCode}.png`
-      : '';
+    const strategyRangeUrl = rangeCode ? strategyRangeImageUrl(rangeCode) : '';
     const extraArea: JSX.Element = showAddButtons ? (
       <AddButtonContainer assist={general} show={show} />
     ) : (

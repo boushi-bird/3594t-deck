@@ -15,12 +15,9 @@ interface Props {
 
 const DEFAULT_ASSIST: {
   readonly name: string;
-  // readonly avatarUrl: string;
   readonly strategyName: string;
 } = {
   name: '軍師',
-  // avatarUrl:
-  //   'https://3594t.net/img/avatar/a4c3a6d8dd66957355edbb41cf7bdd26.png',
   strategyName: '控えめな正兵',
 };
 
