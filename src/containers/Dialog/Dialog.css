@@ -194,3 +194,18 @@
     transform: scale(1, 1);
   }
 }
+
+.dialog-background.poison {
+  background: #6048ad;
+  animation: poison 0.2s linear 0s 1 normal;
+}
+
+@keyframes poison {
+  from {
+    background: var(--modal-bg-color);
+  }
+
+  to {
+    background: #6048ad;
+  }
+}

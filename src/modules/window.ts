@@ -1,6 +1,6 @@
 import type { ActionType } from 'typesafe-actions';
 import { createAction } from 'typesafe-actions';
-import type { General, AssistGeneral } from '3594t-deck';
+import type { General, AssistGeneral, AprilFoolGeneral } from '3594t-deck';
 
 export const filterTabNames = {
   BASIC: '基本',
@@ -21,6 +21,7 @@ export interface WindowState {
   detailGeneral?: General;
   detailAssistGeneral?: AssistGeneral;
   installPromptEvent: BeforeInstallPromptEvent | null;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 export const windowActions = {
@@ -72,6 +73,15 @@ export const windowActions = {
     'STORE_INSTALL_PROMPT_EVENT',
     (event: BeforeInstallPromptEvent | null) => ({ event })
   )(),
+  enableAprilFool: createAction(
+    'CHANGE_APRIL_FOOL',
+    (aprilFoolGeneral: AprilFoolGeneral) => ({
+      aprilFoolGeneral,
+    })
+  )(),
+  disableAprilFool: createAction('CHANGE_APRIL_FOOL', () => ({
+    aprilFoolGeneral: null,
+  }))(),
 };
 
 const initialState: WindowState = {
@@ -84,6 +94,7 @@ const initialState: WindowState = {
   activeFilter: 'BASIC',
   detailGeneral: undefined,
   installPromptEvent: null,
+  aprilFoolGeneral: null,
 };
 
 export default function windowReducer(
@@ -177,6 +188,13 @@ export default function windowReducer(
         ...state,
         installPromptEvent: event,
       };
+    case 'CHANGE_APRIL_FOOL': {
+      const { aprilFoolGeneral } = actions.payload;
+      return {
+        ...state,
+        aprilFoolGeneral,
+      };
+    }
     default:
       return state;
   }

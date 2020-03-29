@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import classNames from 'classnames';
-import type { General } from '3594t-deck';
+import type { General, AprilFoolGeneral } from '3594t-deck';
+import { generalThumbUrl } from '../../utils/externalUrl';
 
 interface Props {
   index: number;
@@ -13,6 +14,7 @@ interface Props {
   pocket: boolean;
   active: boolean;
   search: boolean;
+  aprilFoolGeneral: AprilFoolGeneral | null;
   onSelectMainGen: (index: number, genMain?: string) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
@@ -62,7 +64,16 @@ export default class DeckCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { general, genMain, active, search, pocket } = this.props;
+    const {
+      general,
+      genMain,
+      active,
+      search,
+      pocket,
+      aprilFoolGeneral,
+    } = this.props;
+    const aprilFoolThumb =
+      aprilFoolGeneral != null ? generalThumbUrl(aprilFoolGeneral.code) : null;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
     };
@@ -110,7 +121,10 @@ export default class DeckCard extends React.PureComponent<Props> {
         onClick={this.handleActive}
       >
         <div className="deck-card-inner-top">
-          <img className="general-thumb" src={general.thumbUrl(pocket)} />
+          <img
+            className="general-thumb"
+            src={aprilFoolThumb ?? general.thumbUrl(pocket)}
+          />
           <div className="shadow" style={styleShadow} />
           <span className="state" style={styleState}>
             {general.state.nameShort}
@@ -126,7 +140,7 @@ export default class DeckCard extends React.PureComponent<Props> {
           </span>
           <span className="name">
             <span className="rarity">{general.rarity.name}</span>
-            {general.name}
+            {aprilFoolGeneral?.name ?? general.name}
           </span>
         </div>
         <div className="deck-card-inner-bottom">

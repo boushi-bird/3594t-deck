@@ -26,6 +26,7 @@ export default class CardList extends CardListBase<Props> {
       generals,
       searchedGeneralIds,
       showStrategyExplanation,
+      aprilFoolGeneral,
     } = this.props;
     const generalCards: JSX.Element[] = [];
     generals.forEach((general) => {
@@ -38,6 +39,7 @@ export default class CardList extends CardListBase<Props> {
           show={show}
           showStrategyExplanation={showStrategyExplanation}
           showAddButtons={true}
+          aprilFoolGeneral={aprilFoolGeneral}
         />
       );
     });

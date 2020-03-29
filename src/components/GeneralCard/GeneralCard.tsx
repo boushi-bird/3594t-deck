@@ -2,9 +2,10 @@ import './GeneralCard.css';
 import React from 'react';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
-import type { General } from '3594t-deck';
+import type { General, AprilFoolGeneral } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
 import GenMains from './GenMains';
+import { generalAvatarUrl } from '../../utils/externalUrl';
 
 interface Props {
   general: General;
@@ -12,6 +13,7 @@ interface Props {
   showStrategyExplanation: boolean;
   showAddButtons: boolean;
   onShowDetail?: (general: General) => void;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 export default class GeneralCard extends React.PureComponent<Props> {
@@ -29,7 +31,12 @@ export default class GeneralCard extends React.PureComponent<Props> {
       show,
       showStrategyExplanation,
       showAddButtons,
+      aprilFoolGeneral,
     } = this.props;
+    const aprilFoolThumb =
+      aprilFoolGeneral != null
+        ? generalAvatarUrl(aprilFoolGeneral.avatar)
+        : null;
     const clickable = showAddButtons;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
@@ -79,7 +86,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
         </span>
         <span className="version">{general.version}</span>
         <span className="rarity">{general.rarity.name}</span>
-        <span className="name">{general.name}</span>
+        <span className="name">{aprilFoolGeneral?.name ?? general.name}</span>
         <span className="image">
           <LazyLoad
             height={64}
@@ -88,7 +95,10 @@ export default class GeneralCard extends React.PureComponent<Props> {
             resize={false}
             placeholder={<div className="no-image general-thumb" />}
           >
-            <img className="general-thumb" src={general.avatarUrl(false)} />
+            <img
+              className="general-thumb"
+              src={aprilFoolThumb ?? general.avatarUrl(false)}
+            />
           </LazyLoad>
         </span>
         <span className="cost" data-label="コスト">

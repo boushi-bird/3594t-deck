@@ -2,6 +2,7 @@ import './CardList.css';
 import React from 'react';
 import { forceCheck } from 'react-lazyload';
 import classNames from 'classnames';
+import { AprilFoolGeneral } from '3594t-deck';
 
 export interface StateBaseProps {
   count: number;
@@ -11,6 +12,7 @@ export interface StateBaseProps {
   hasPrev: boolean;
   hasNext: boolean;
   show: boolean;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 export interface DispatchBaseProps {

@@ -6,7 +6,12 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { General, AssistGeneral, FilterContents } from '3594t-deck';
+import type {
+  General,
+  AssistGeneral,
+  FilterContents,
+  AprilFoolGeneral,
+} from '3594t-deck';
 import { MAX_MORALE_LIMIT, CHARM_MORALE, GEN_MAIN_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
 import type { DeckCard, DeckCardAssist } from '../../modules/deck';
@@ -37,6 +42,7 @@ interface ContainerStateFromProps {
   filterContents: FilterContents;
   limitCost: number;
   assistCardLimit: number;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 interface ContainerDispatchFromProps
@@ -89,6 +95,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   filterContents: state.datalistReducer.filterContents,
   limitCost: state.deckReducer.deckConstraints.limitCost,
   assistCardLimit: state.deckReducer.deckConstraints.assistCardLimit,
+  aprilFoolGeneral: state.windowReducer.aprilFoolGeneral,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -121,6 +128,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     assistGenerals,
     limitCost,
     assistCardLimit,
+    aprilFoolGeneral,
   } = state;
   const {
     rawAddDeckDummy,
@@ -269,6 +277,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     tolalMoraleByMainGen,
     hasDummy,
     hasStateDummy,
+    aprilFoolGeneral,
   };
 
   const dProps: DispatchFromProps = {

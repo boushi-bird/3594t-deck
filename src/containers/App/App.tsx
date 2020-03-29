@@ -20,6 +20,7 @@ import DeckConfig from '../DeckConfig';
 import UpdateInfo from '../UpdateInfo';
 import GeneralDetail from '../GeneralDetail';
 import Dialog from '../Dialog';
+import { AprilFoolGeneral } from '3594t-deck';
 
 export interface StateFromProps extends WindowState {
   openedAnyModalSmall: boolean;
@@ -27,6 +28,7 @@ export interface StateFromProps extends WindowState {
   showNotice: boolean;
   loading: boolean;
   deckSelected: boolean;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 export interface DispatchFromProps {
@@ -39,6 +41,7 @@ export interface DispatchFromProps {
   closeFilter(): void;
   closeAllModal(): void;
   changeActiveFilterTab(activeFilter: FilterTab): void;
+  disableAprilFool(): void;
 }
 
 export type OwnProps = {};
@@ -75,7 +78,20 @@ export default class App extends React.PureComponent<Props> {
       openedAnyModalSmall: modalSmall,
       activeFilter,
       deckSelected,
+      aprilFoolGeneral,
+      disableAprilFool,
     } = this.props;
+    const aprilFool = !!aprilFoolGeneral;
+    const stylePurge: React.CSSProperties = {
+      display: 'none',
+    };
+    if (aprilFool) {
+      stylePurge.display = 'block';
+      stylePurge.position = 'fixed';
+      stylePurge.top = '40px';
+      stylePurge.left = '80px';
+      stylePurge.fontSize = '20px';
+    }
     return (
       <div
         className={classNames([
@@ -166,6 +182,9 @@ export default class App extends React.PureComponent<Props> {
             </div>
           </div>
         </div>
+        <button style={stylePurge} onClick={disableAprilFool}>
+          浄化する
+        </button>
         <div className="modal-background" onClick={closeAllModal} />
         <GeneralDetail />
         <DeckConfig />

@@ -3,12 +3,14 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import classNames from 'classnames';
-import type { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral, AprilFoolGeneral } from '3594t-deck';
+import { assistAvatarUrl } from '../../utils/externalUrl';
 
 interface Props {
   index: number;
   assist: AssistGeneral | null;
   active: boolean;
+  aprilFoolGeneral: AprilFoolGeneral | null;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
 }
@@ -38,7 +40,7 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { index, active, assist } = this.props;
+    const { index, active, assist, aprilFoolGeneral } = this.props;
     const style: React.CSSProperties = {};
     const styleState: React.CSSProperties = {};
     const styleThumb: React.CSSProperties = {};
@@ -49,10 +51,15 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
       styleState.display = 'none';
     }
     const stateShortName = assist?.state?.nameShort ?? '';
-    const name = assist?.name ?? (index === 0 ? DEFAULT_ASSIST.name : '');
-    const avatarUrl = assist?.avatarUrl ?? undefined;
+    let name = assist?.name ?? (index === 0 ? DEFAULT_ASSIST.name : '');
+    if (name !== '' && aprilFoolGeneral) {
+      name = aprilFoolGeneral.name;
+    }
+    let avatarUrl = assist?.avatarUrl ?? undefined;
     if (!avatarUrl) {
       styleThumb.display = 'none';
+    } else if (aprilFoolGeneral) {
+      avatarUrl = assistAvatarUrl(aprilFoolGeneral.avatar);
     }
     const stratName =
       assist?.strategy?.name ??

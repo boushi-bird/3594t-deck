@@ -2,15 +2,19 @@ import './AssistGeneralCard.css';
 import React from 'react';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
-import type { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral, AprilFoolGeneral } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
-import { strategyRangeImageUrl } from '../../utils/externalUrl';
+import {
+  strategyRangeImageUrl,
+  assistAvatarUrl,
+} from '../../utils/externalUrl';
 
 interface Props {
   general: AssistGeneral;
   show?: boolean;
   showStrategyExplanation: boolean;
   showAddButtons: boolean;
+  aprilFoolGeneral: AprilFoolGeneral | null;
   onShowDetail?: (general: AssistGeneral) => void;
 }
 
@@ -29,7 +33,12 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
       show,
       showStrategyExplanation,
       showAddButtons,
+      aprilFoolGeneral,
     } = this.props;
+    const aprilFoolThumb =
+      aprilFoolGeneral != null
+        ? assistAvatarUrl(aprilFoolGeneral.avatar)
+        : null;
     // const clickable = showAddButtons;
     // TODO 詳細表示
     const clickable = false;
@@ -67,7 +76,7 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
         </span>
         <span className="version">{general.version}</span>
         <span className="rarity">遊軍</span>
-        <span className="name">{general.name}</span>
+        <span className="name">{aprilFoolGeneral?.name ?? general.name}</span>
         <span className="image">
           <LazyLoad
             height={64}
@@ -76,7 +85,10 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
             resize={false}
             placeholder={<div className="no-image general-thumb" />}
           >
-            <img className="general-thumb" src={general.avatarUrl} />
+            <img
+              className="general-thumb"
+              src={aprilFoolThumb ?? general.avatarUrl}
+            />
           </LazyLoad>
         </span>
         <span

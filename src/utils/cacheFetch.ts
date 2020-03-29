@@ -1,9 +1,28 @@
 import { localStorageAvailable } from './storageAvailable';
 
+const APRIL = 3;
+
+function checkAprilFool(res: Response) {
+  const hDate = res.headers.get('date');
+  if (!hDate) {
+    return;
+  }
+  const date = new Date(hDate);
+  if (date.getMonth() === APRIL && date.getDate() === 1) {
+    window.__aprilFool = true;
+  }
+  console.log(`API date: ${date}`, date.getMonth(), date.getDate());
+}
+
 async function fetchMd5(url: string): Promise<string | null> {
   const res: Response = await fetch(url + '.md5');
   if (!res.ok) {
     return null;
+  }
+  try {
+    checkAprilFool(res);
+  } catch (e) {
+    console.log(e);
   }
   const md5 = await res.text();
   return md5.trim();

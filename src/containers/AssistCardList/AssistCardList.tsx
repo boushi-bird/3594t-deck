@@ -29,6 +29,7 @@ export default class AssitCardList extends CardListBase<Props> {
       assistGenerals,
       searchedAssistGeneralIds,
       showStrategyExplanation,
+      aprilFoolGeneral,
     } = this.props;
     const generalCards: JSX.Element[] = [];
     assistGenerals.forEach((assistGeneral) => {
@@ -41,6 +42,7 @@ export default class AssitCardList extends CardListBase<Props> {
           show={show}
           showStrategyExplanation={showStrategyExplanation}
           showAddButtons={true}
+          aprilFoolGeneral={aprilFoolGeneral}
         />
       );
     });

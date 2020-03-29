@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
-import type { General, AssistGeneral } from '3594t-deck';
+import type { General, AssistGeneral, AprilFoolGeneral } from '3594t-deck';
 import AssistDeckCard from '../../components/AssistDeckCard';
 import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
@@ -56,6 +56,7 @@ export interface StateFromProps {
   hasDummy: boolean;
   /** 勢力未指定ダミー含む */
   hasStateDummy: boolean;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 export interface DispatchFromProps {
@@ -96,6 +97,7 @@ export default class DeckBoard extends React.Component<Props> {
       activeAssistIndex,
       setActiveAssistCard,
       removeDeckAssist,
+      aprilFoolGeneral,
     } = this.props;
     const assistDeckCardsElements: JSX.Element[] = [];
     assistDeckCards.forEach((assistDeckCard, i) => {
@@ -108,6 +110,7 @@ export default class DeckBoard extends React.Component<Props> {
           active={active}
           onActive={setActiveAssistCard}
           onRemoveDeck={removeDeckAssist}
+          aprilFoolGeneral={aprilFoolGeneral}
         />
       );
     });
@@ -127,6 +130,7 @@ export default class DeckBoard extends React.Component<Props> {
       deckCards,
       activeIndex,
       enableSearch,
+      aprilFoolGeneral,
       enabledAddDeck,
       addDeckDummy,
       clearDeck,
@@ -150,6 +154,7 @@ export default class DeckBoard extends React.Component<Props> {
             genMain={genMain}
             general={general}
             pocket={pocket}
+            aprilFoolGeneral={aprilFoolGeneral}
             onSelectMainGen={selectMainGen}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}

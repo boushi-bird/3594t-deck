@@ -6,7 +6,7 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { General, Strategy } from '3594t-deck';
+import type { General, Strategy, AprilFoolGeneral } from '3594t-deck';
 import type { FilterCondition } from '../../modules/datalist';
 import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
@@ -27,6 +27,7 @@ interface ContainerStateFromProps {
     cost: string;
     unitType?: string;
   };
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 interface ContainerDispatchFromProps {
@@ -66,6 +67,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   pageLimit: state.datalistReducer.pageLimit,
   filterCondition: state.datalistReducer.effectiveFilterCondition,
   deckSearchCondition: state.deckReducer.searchCondition,
+  aprilFoolGeneral: state.windowReducer.aprilFoolGeneral,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -87,6 +89,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     pageLimit,
     filterCondition: rawFilterCondition,
     deckSearchCondition,
+    aprilFoolGeneral,
   } = state;
   let filterCondition = rawFilterCondition;
   if (deckSearchCondition) {
@@ -145,6 +148,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     hasNext,
     show: filterCondition.basic.searchMode === 'general',
     showStrategyExplanation: filterCondition.strategies.showStrategyExplanation,
+    aprilFoolGeneral,
   };
 
   const dProps: DispatchFromProps = {
@@ -164,6 +168,9 @@ const arrayEquals = <V>(a: V[], b: V[]): boolean =>
 
 const options: ConnectorOptions = {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+    if (nextMergedProps.aprilFoolGeneral !== prevMergedProps.aprilFoolGeneral) {
+      return false;
+    }
     if (nextMergedProps.show !== prevMergedProps.show) {
       return false;
     }

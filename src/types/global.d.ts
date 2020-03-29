@@ -4,6 +4,7 @@ export {};
 declare global {
   interface Window {
     __noticeEnabled: boolean | undefined;
+    __aprilFool: boolean | undefined;
   }
 
   interface BeforeInstallPromptEvent extends Event {

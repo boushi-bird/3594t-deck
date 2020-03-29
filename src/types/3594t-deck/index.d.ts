@@ -182,4 +182,10 @@ declare module '3594t-deck' {
     /** 遊軍計略カテゴリー */
     assistStrategyCategories: FilterItem[];
   }
+
+  interface AprilFoolGeneral {
+    code: string;
+    avatar: string;
+    name: string;
+  }
 }

@@ -6,7 +6,7 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { AssistGeneral, SearchMode } from '3594t-deck';
+import type { AssistGeneral, SearchMode, AprilFoolGeneral } from '3594t-deck';
 import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
 import type { State } from '../../store';
@@ -24,6 +24,7 @@ interface ContainerStateFromProps {
   belongStates: string[];
   enableSearchByDeck: boolean;
   searchMode: SearchMode;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 interface ContainerDispatchFromProps {
@@ -64,6 +65,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
     state.datalistReducer.effectiveFilterCondition.basic.belongStates,
   enableSearchByDeck: state.deckReducer.searchCondition != null,
   searchMode: state.datalistReducer.effectiveFilterCondition.basic.searchMode,
+  aprilFoolGeneral: state.windowReducer.aprilFoolGeneral,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -85,6 +87,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     belongStates,
     enableSearchByDeck,
     searchMode,
+    aprilFoolGeneral,
   } = state;
   let searchedAssistGeneralIds: string[] = [];
   if (!enableSearchByDeck) {
@@ -120,6 +123,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     hasNext,
     show: searchMode === 'assist',
     showStrategyExplanation: false, // TODO
+    aprilFoolGeneral,
   };
 
   const dProps: DispatchFromProps = {
@@ -139,6 +143,9 @@ const arrayEquals = <V>(a: V[], b: V[]): boolean =>
 
 const options: ConnectorOptions = {
   areMergedPropsEqual: (nextMergedProps, prevMergedProps) => {
+    if (nextMergedProps.aprilFoolGeneral !== prevMergedProps.aprilFoolGeneral) {
+      return false;
+    }
     if (nextMergedProps.show !== prevMergedProps.show) {
       return false;
     }

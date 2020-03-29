@@ -9,6 +9,7 @@ export interface DialogInfo {
   blueText: string;
   cancelable?: boolean;
   animation?: boolean;
+  poisonAnimationIfBlue?: boolean;
   actionRed: () => void;
   actionBlue: () => void;
   actionCancel?: () => void;

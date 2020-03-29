@@ -11,6 +11,7 @@ export interface StateFromProps {
   blueText: string;
   cancelable: boolean;
   animation: boolean;
+  poisonAnimationIfBlue?: boolean;
 }
 
 export interface DispatchFromProps {
@@ -27,16 +28,25 @@ const delay = 500;
 
 interface LocalState {
   buttonAnimation?: ButtonAnimation;
+  poison: boolean;
 }
 
 export default class Dialog extends React.PureComponent<Props, LocalState> {
-  public state: Readonly<LocalState> = {};
+  public state: Readonly<LocalState> = { poison: false };
 
   private actionWithAnimation = (
     buttonAnimation: ButtonAnimation,
     action: () => void
   ) => {
     if (this.state.buttonAnimation) {
+      return;
+    }
+    if (this.props.poisonAnimationIfBlue && buttonAnimation === 'BLUE') {
+      this.setState({ poison: true });
+      setTimeout(() => {
+        action();
+        this.setState({ poison: false });
+      }, delay);
       return;
     }
     if (!this.props.animation) {
@@ -87,7 +97,7 @@ export default class Dialog extends React.PureComponent<Props, LocalState> {
       cancelable,
       animation,
     } = this.props;
-    const { buttonAnimation } = this.state;
+    const { buttonAnimation, poison } = this.state;
     let animationText = '';
     let red = false;
     let blue = false;
@@ -105,7 +115,10 @@ export default class Dialog extends React.PureComponent<Props, LocalState> {
     return (
       <div className="dialog-container" style={style}>
         <div className="dialog-base">
-          <div className="dialog-background" onClick={this.handleCancelClick} />
+          <div
+            className={classNames('dialog-background', { poison })}
+            onClick={this.handleCancelClick}
+          />
           <div className="dialog">
             <div className="dialog-inner">
               <div className="dialog-title">{title}</div>
