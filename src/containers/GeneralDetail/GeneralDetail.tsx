@@ -1,16 +1,17 @@
 import './GeneralDetail.css';
 import React from 'react';
-import type { General } from '3594t-deck';
+import type { General, AprilFoolGeneral } from '3594t-deck';
 import GeneralCard from '../../components/GeneralCard';
 import { strategyRangeImageUrl } from '../../utils/externalUrl';
 
 export interface Props {
   general?: General;
+  aprilFoolGeneral: AprilFoolGeneral | null;
 }
 
 export default class GeneralDetail extends React.PureComponent<Props> {
   public render(): React.ReactNode {
-    const { general } = this.props;
+    const { general, aprilFoolGeneral } = this.props;
     if (!general) {
       return <></>;
     }
@@ -29,6 +30,7 @@ export default class GeneralDetail extends React.PureComponent<Props> {
             general={general}
             showStrategyExplanation={false}
             showAddButtons={false}
+            aprilFoolGeneral={aprilFoolGeneral}
           />
           <div className="general-detail-body">
             <div className="row">

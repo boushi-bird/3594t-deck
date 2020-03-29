@@ -10,6 +10,7 @@ type TMapStateToProps = MapStateToProps<Props, OwnProps, State>;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
   general: state.windowReducer.detailGeneral,
+  aprilFoolGeneral: state.windowReducer.aprilFoolGeneral,
 });
 
 export default connect<Props, {}>(mapStateToProps, {})(Dialog);
