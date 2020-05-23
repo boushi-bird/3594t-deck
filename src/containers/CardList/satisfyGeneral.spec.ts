@@ -5,7 +5,6 @@ import { GeneralImpl } from '../../entities/generalImpl';
 const EXAMPLE_GENERAL = new GeneralImpl(
   '71',
   {
-    /* eslint-disable @typescript-eslint/camelcase */
     code: '4d4d6458fbbe6b4de65cf66fe6defec2',
     pocket_code: '',
     avatar: '8370e17cdd515abe898fdce332061ca7',
@@ -32,7 +31,6 @@ const EXAMPLE_GENERAL = new GeneralImpl(
     illustrator: '51',
     voice_actor: '13',
     pocket_off: true,
-    /* eslint-enable @typescript-eslint/camelcase */
   },
   {
     majorVersion: 2,
@@ -73,9 +71,9 @@ const EXAMPLE_GENERAL = new GeneralImpl(
     },
     personal: {
       name: '夏侯月姫',
-      name_ruby: 'ｶｺｳｹﾂｷ', // eslint-disable-line @typescript-eslint/camelcase
+      name_ruby: 'ｶｺｳｹﾂｷ',
       azana: '',
-      azana_ruby: '', // eslint-disable-line @typescript-eslint/camelcase
+      azana_ruby: '',
     },
     rarity: {
       // id: 'R',

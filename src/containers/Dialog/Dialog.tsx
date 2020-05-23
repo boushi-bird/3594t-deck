@@ -35,7 +35,7 @@ export default class Dialog extends React.PureComponent<Props, LocalState> {
   private actionWithAnimation = (
     buttonAnimation: ButtonAnimation,
     action: () => void
-  ) => {
+  ): void => {
     if (this.state.buttonAnimation) {
       return;
     }
@@ -52,21 +52,21 @@ export default class Dialog extends React.PureComponent<Props, LocalState> {
 
   private handleRedClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  ): void => {
     event.stopPropagation();
     this.actionWithAnimation('RED', this.props.actionRed);
   };
 
   private handleBlueClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  ): void => {
     event.stopPropagation();
     this.actionWithAnimation('BLUE', this.props.actionBlue);
   };
 
   private handleCancelClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  ): void => {
     event.stopPropagation();
     if (this.state.buttonAnimation) {
       return;

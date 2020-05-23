@@ -51,8 +51,10 @@ const toItem = (
   }: {
     code: string;
     name: string;
+    /* eslint-disable camelcase */
     name_short?: string;
     short_name?: string;
+    /* eslint-enable camelcase */
   },
   id: string
 ): FilterItem => ({

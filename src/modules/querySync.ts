@@ -294,7 +294,7 @@ const assistLimitParam: ParamsOptions<State, number> = {
 
 let init = false;
 
-export default function () {
+export default function (): void {
   if (init) {
     return;
   }
