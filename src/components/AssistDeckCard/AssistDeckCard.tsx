@@ -22,13 +22,17 @@ const DEFAULT_ASSIST: {
 };
 
 export default class AssistDeckCard extends React.PureComponent<Props> {
-  private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleActive = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onActive } = this.props;
     onActive(index);
   };
 
-  private handleRemove = (event: React.MouseEvent<Element, MouseEvent>) => {
+  private handleRemove = (
+    event: React.MouseEvent<Element, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onRemoveDeck, assist } = this.props;
     if (!assist) {

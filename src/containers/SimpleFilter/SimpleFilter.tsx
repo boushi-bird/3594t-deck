@@ -26,11 +26,11 @@ export default class SimpleFilter extends React.Component<Props> {
   private handleToggleCheckList = (
     key: BasicFilterConditionKey,
     value: string
-  ) => {
+  ): void => {
     this.props.toggleCheckList(key, value);
   };
 
-  private handleOnClickToggleSearchMode = () => {
+  private handleOnClickToggleSearchMode = (): void => {
     const { searchMode, setCondition } = this.props;
     const newSearchMode = searchMode === 'general' ? 'assist' : 'general';
     setCondition({ searchMode: newSearchMode });

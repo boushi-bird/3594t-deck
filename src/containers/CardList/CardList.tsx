@@ -17,7 +17,7 @@ export interface DispatchFromProps extends DispatchBaseProps {
 export type Props = StateFromProps & DispatchFromProps;
 
 export default class CardList extends CardListBase<Props> {
-  private handleOnShowDetail = (general: General) => {
+  private handleOnShowDetail = (general: General): void => {
     this.props.showGeneralDetail(general);
   };
 

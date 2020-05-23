@@ -27,19 +27,19 @@ export default abstract class CardListBase<
 
   protected handleOnPagePrev = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  ): void => {
     event.stopPropagation();
     this.props.onPagePrev();
   };
 
   protected handleOnPageNext = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  ): void => {
     event.stopPropagation();
     this.props.onPageNext();
   };
 
-  protected handleOnScroll = () => {
+  protected handleOnScroll = (): void => {
     forceCheck();
   };
 

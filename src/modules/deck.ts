@@ -42,7 +42,7 @@ const sameCardConstraints = [
 ] as const;
 export type SameCardConstraint = typeof sameCardConstraints[number];
 export const defaultSameCardConstraint: SameCardConstraint = 'personal';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export function isSameCardConstraint(s: any): s is SameCardConstraint {
   return sameCardConstraints.includes(s);
 }

@@ -20,7 +20,7 @@ export interface DispatchFromProps extends DispatchBaseProps {
 export type Props = StateFromProps & DispatchFromProps;
 
 export default class AssitCardList extends CardListBase<Props> {
-  private handleOnShowDetail = (assistGgeneral: AssistGeneral) => {
+  private handleOnShowDetail = (assistGgeneral: AssistGeneral): void => {
     this.props.showGeneralDetail(assistGgeneral);
   };
 

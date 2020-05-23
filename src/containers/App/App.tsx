@@ -41,6 +41,7 @@ export interface DispatchFromProps {
   changeActiveFilterTab(activeFilter: FilterTab): void;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type OwnProps = {};
 
 export type Props = StateFromProps & DispatchFromProps & OwnProps;
@@ -50,12 +51,12 @@ export default class App extends React.PureComponent<Props> {
     this.props.appDidLoaded();
   }
 
-  private handleAppClick = () => {
+  private handleAppClick = (): void => {
     this.props.clearActiveCard();
     this.props.closeSideMenu();
   };
 
-  private handleSideMenuButtonClick = () => {
+  private handleSideMenuButtonClick = (): void => {
     this.props.openSideMenu();
   };
 

@@ -16,7 +16,7 @@ export default class RadioButton<
   N extends string = string,
   V = string
 > extends React.PureComponent<Props<N, V>> {
-  private handleOnClick = () => {
+  private handleOnClick = (): void => {
     const { itemName, value, onClick } = this.props;
     if (!onClick) {
       return;

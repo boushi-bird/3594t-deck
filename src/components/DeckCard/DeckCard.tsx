@@ -29,7 +29,7 @@ interface Props {
 export default class DeckCard extends React.PureComponent<Props> {
   private handleSelectMainGen = (
     event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  ): void => {
     const { index, onSelectMainGen } = this.props;
     let value: string | undefined = event.currentTarget.value;
     if (value == null || value === '') {
@@ -38,19 +38,25 @@ export default class DeckCard extends React.PureComponent<Props> {
     onSelectMainGen(index, value);
   };
 
-  private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleActive = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onActive } = this.props;
     onActive(index);
   };
 
-  private handleRemove = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleRemove = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onRemoveDeck } = this.props;
     onRemoveDeck(index);
   };
 
-  private handleSearch = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleSearch = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onToggleSearch, general } = this.props;
     const condition = {

@@ -12,7 +12,7 @@ const delayTime = 500;
 export function setBasicConditionAdapter(
   dispatch: Dispatch
 ): (condition: Partial<BasicFilterCondition>) => void {
-  return (condition: Partial<BasicFilterCondition>) => {
+  return (condition: Partial<BasicFilterCondition>): void => {
     dispatch(datalistActions.setBasicCondition(condition));
     clearTimeout(handleId);
     handleId = setTimeout(() => {
@@ -24,7 +24,7 @@ export function setBasicConditionAdapter(
 export function setDetailConditionAdapter(
   dispatch: Dispatch
 ): (condition: Partial<DetailFilterCondition>) => void {
-  return (condition: Partial<DetailFilterCondition>) => {
+  return (condition: Partial<DetailFilterCondition>): void => {
     dispatch(datalistActions.setDetailCondition(condition));
     clearTimeout(handleId);
     handleId = setTimeout(() => {
@@ -36,7 +36,7 @@ export function setDetailConditionAdapter(
 export function setStrategiesFilterConditionAdapter(
   dispatch: Dispatch
 ): (condition: Partial<StrategiesFilterCondition>) => void {
-  return (condition: Partial<StrategiesFilterCondition>) => {
+  return (condition: Partial<StrategiesFilterCondition>): void => {
     dispatch(datalistActions.setStrategiesCondition(condition));
     clearTimeout(handleId);
     handleId = setTimeout(() => {

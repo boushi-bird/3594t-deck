@@ -40,19 +40,25 @@ export interface DispatchFromProps {
 export type Props = StateFromProps & OwnProps & DispatchFromProps;
 
 export default class DeckDummyCard extends React.PureComponent<Props> {
-  private handleActive = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleActive = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onActive } = this.props;
     onActive(index);
   };
 
-  private handleRemove = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleRemove = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onRemoveDeck } = this.props;
     onRemoveDeck(index);
   };
 
-  private handleSearch = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  private handleSearch = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     event.stopPropagation();
     const { index, onToggleSearch, deckCard } = this.props;
     onToggleSearch(index, deckCard);
@@ -60,7 +66,7 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
 
   private handleChangeDeckValue = (
     event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  ): void => {
     const { index, setDeckValue } = this.props;
     const key = event.currentTarget.name as 'belongState' | 'cost' | 'unitType';
     let value: string | undefined = event.currentTarget.value;

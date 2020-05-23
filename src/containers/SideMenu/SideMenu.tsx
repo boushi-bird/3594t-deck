@@ -22,7 +22,7 @@ const ABOUT_LINK_URL = process.env.ABOUT_LINK_URL as string;
 export default class SideMenu extends React.PureComponent<Props> {
   private handleInstallPrompt = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  ): void => {
     if (this.props.pwaInstallEnabled) {
       this.props.installPrompt();
     } else {
@@ -30,7 +30,7 @@ export default class SideMenu extends React.PureComponent<Props> {
     }
   };
 
-  private handleOpenUpdateInfo = () => {
+  private handleOpenUpdateInfo = (): void => {
     this.props.openUpdateInfo();
   };
 
