@@ -21,8 +21,9 @@ export interface DispatchBaseProps {
 type BaseProps = StateBaseProps & DispatchBaseProps;
 
 export default abstract class CardListBase<
-  PROP extends BaseProps
-> extends React.PureComponent<PROP> {
+  PROP extends BaseProps,
+  STAT = {}
+> extends React.PureComponent<PROP, STAT> {
   protected scrollArea = React.createRef<HTMLDivElement>();
 
   protected handleOnPagePrev = (
@@ -54,6 +55,10 @@ export default abstract class CardListBase<
 
   protected abstract createCardElements(): JSX.Element[];
   protected abstract isChangedList(prevProps: Readonly<PROP>): boolean;
+
+  protected extraPartRender(): JSX.Element {
+    return <></>;
+  }
 
   public render(): React.ReactNode {
     const {
@@ -88,6 +93,7 @@ export default abstract class CardListBase<
         style={style}
         onScroll={this.handleOnScroll}
       >
+        {this.extraPartRender()}
         <div className="cardlist-paging">
           <button
             className={classNames('paging-button', 'prev', { active: hasPrev })}

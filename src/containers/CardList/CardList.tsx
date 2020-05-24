@@ -1,5 +1,6 @@
 import React from 'react';
 import type { General } from '3594t-deck';
+import { nextTick } from '../../utils/sleep';
 import type { StateBaseProps, DispatchBaseProps } from './CardListBase';
 import CardListBase from './CardListBase';
 import GeneralCard from '../../components/GeneralCard';
@@ -16,10 +17,43 @@ export interface DispatchFromProps extends DispatchBaseProps {
 
 export type Props = StateFromProps & DispatchFromProps;
 
-export default class CardList extends CardListBase<Props> {
+interface LocalState {
+  renderingCount: number;
+}
+
+export default class CardList extends CardListBase<Props, LocalState> {
+  state: Readonly<LocalState> = { renderingCount: 0 };
+
+  public async componentDidUpdate(prevProps: Readonly<Props>): Promise<void> {
+    const { generals } = this.props;
+    if (generals.length !== prevProps.generals.length) {
+      // 武将リストのレンダリングが重すぎるので少しずつレンダリングさせる。
+      const incRender = 25;
+      await nextTick();
+      for (let r = 0; r < generals.length; r += incRender) {
+        this.setState({ renderingCount: r });
+        await nextTick();
+      }
+      this.setState({ renderingCount: generals.length });
+    }
+  }
+
   private handleOnShowDetail = (general: General): void => {
     this.props.showGeneralDetail(general);
   };
+
+  protected extraPartRender(): JSX.Element {
+    const all = this.props.generals.length;
+    const count = this.state.renderingCount;
+    if (all === count) {
+      return <></>;
+    }
+    return (
+      <div className="reading-generals">
+        武将読み込み中 {count}/{all}
+      </div>
+    );
+  }
 
   protected createCardElements(): JSX.Element[] {
     const {
@@ -27,8 +61,12 @@ export default class CardList extends CardListBase<Props> {
       searchedGeneralIds,
       showStrategyExplanation,
     } = this.props;
+    const { renderingCount } = this.state;
     const generalCards: JSX.Element[] = [];
-    generals.forEach((general) => {
+    generals.forEach((general, index) => {
+      if (renderingCount <= index) {
+        return;
+      }
       const show = searchedGeneralIds.includes(general.id);
       generalCards.push(
         <GeneralCard
