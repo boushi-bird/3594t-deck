@@ -62,16 +62,18 @@ const config: Configuration = {
           ]
         : [],
     }),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, 'src/icons/'),
-        to: 'icons/',
-      },
-      {
-        from: path.resolve(__dirname, 'src/manifest.webmanifest'),
-        to: '.',
-      },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/icons/'),
+          to: 'icons/',
+        },
+        {
+          from: path.resolve(__dirname, 'src/manifest.webmanifest'),
+          to: '.',
+        },
+      ],
+    }),
     new MiniCssExtractPlugin({
       filename: `styles/${fileName}.css`,
     }),
