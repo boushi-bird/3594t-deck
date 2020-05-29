@@ -41,7 +41,6 @@ export interface DispatchFromProps {
   changeActiveFilterTab(activeFilter: FilterTab): void;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type OwnProps = {};
 
 export type Props = StateFromProps & DispatchFromProps & OwnProps;
