@@ -5,7 +5,7 @@ import GeneralCard from '../../components/GeneralCard';
 import { strategyRangeImageUrl } from '../../utils/externalUrl';
 
 export interface Props {
-  general?: General;
+  general: General | null;
 }
 
 export default class GeneralDetail extends React.PureComponent<Props> {

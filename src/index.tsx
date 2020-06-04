@@ -29,11 +29,9 @@ window.addEventListener(
 );
 
 const receiveNoticeChanged = (noticeEnabled?: boolean) => {
-  if (noticeEnabled) {
-    store.dispatch(windowActions.enableNotice());
-  } else {
-    store.dispatch(windowActions.disableNotice());
-  }
+  store.dispatch(
+    windowActions.changeShowNotice({ showNotice: !!noticeEnabled })
+  );
 };
 
 receiveNoticeChanged(window.__noticeEnabled);

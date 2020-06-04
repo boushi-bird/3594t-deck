@@ -31,18 +31,16 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  ...state.windowReducer,
+  ...state.window,
   openedAnyModal:
-    state.windowReducer.openedDeckConfig ||
-    state.windowReducer.openedUpdateInfo ||
-    !!state.windowReducer.detailGeneral ||
-    !state.windowReducer.ready,
-  openedAnyModalSmall:
-    state.windowReducer.openedFilter || !state.windowReducer.ready,
-  loading: !state.windowReducer.ready,
+    state.window.openedDeckConfig ||
+    state.window.openedUpdateInfo ||
+    !!state.window.detailGeneral ||
+    !state.window.ready,
+  openedAnyModalSmall: state.window.openedFilter || !state.window.ready,
+  loading: !state.window.ready,
   deckSelected:
-    state.deckReducer.activeIndex != null ||
-    state.deckReducer.activeAssistIndex != null,
+    state.deck.activeIndex != null || state.deck.activeAssistIndex != null,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -66,7 +64,20 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
       {
         clearActiveCard: deckActions.clearActiveCard,
         resetConditions: datalistActions.resetConditions,
-        ...windowActions,
+        openSideMenu: () =>
+          windowActions.changeSideMenuVisible({
+            openedSideMenu: true,
+          }),
+        closeSideMenu: () =>
+          windowActions.changeSideMenuVisible({
+            openedSideMenu: false,
+          }),
+        openFilter: () =>
+          windowActions.changeFilterVisible({ openedFilter: true }),
+        closeFilter: () =>
+          windowActions.changeFilterVisible({ openedFilter: false }),
+        closeAllModal: windowActions.closeAllModal,
+        changeActiveFilterTab: windowActions.changeActiveFilterTab,
       },
       dispatch
     ),

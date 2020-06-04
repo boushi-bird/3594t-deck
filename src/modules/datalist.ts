@@ -1,5 +1,5 @@
-import type { ActionType } from 'typesafe-actions';
-import { createAction } from 'typesafe-actions';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import type {
   General,
   Strategy,
@@ -199,104 +199,95 @@ const initialState: DatalistState = {
   pageLimit: 50,
 };
 
-export const datalistActions = {
-  resetConditions: createAction('RESET_CONDITIONS')(),
-  applyCondition: createAction('APPLY_CONDITION')(),
-  setBasicCondition: createAction(
-    'SET_BASIC_CONDITION',
-    (condition: Partial<BasicFilterCondition>) => ({ condition })
-  )(),
-  setDetailCondition: createAction(
-    'SET_DETAIL_CONDITION',
-    (condition: Partial<DetailFilterCondition>) => ({ condition })
-  )(),
-  setStrategiesCondition: createAction(
-    'SET_STRATEGIES_CONDITION',
-    (condition: Partial<StrategiesFilterCondition>) => ({ condition })
-  )(),
-  setShowStrategyExplanation: createAction(
-    'SET_SHOW_STRATEGY_EXPLANATION',
-    (show: boolean) => show
-  )(),
-  setBaseData: createAction('SET_BASE_DATA', (baseData: BaseData) => ({
-    baseData,
-  }))(),
-  incrementPage: createAction('INCREMENT_PAGE', () => ({ page: 1 }))(),
-  resetPage: createAction('RESET_PAGE')(),
-  decrementPage: createAction('DECREMENT_PAGE', () => ({ page: -1 }))(),
-};
-
-export default function datalistReducer(
-  state: DatalistState = initialState,
-  actions: ActionType<typeof datalistActions>
-): DatalistState {
-  switch (actions.type) {
-    case 'RESET_CONDITIONS': {
+export const datalistModule = createSlice({
+  name: 'datalist',
+  initialState,
+  reducers: {
+    resetConditions(state: DatalistState): DatalistState {
       return {
         ...state,
         filterCondition: initialFilterCondition,
         effectiveFilterCondition: initialFilterCondition,
         currentPage: initialState.currentPage,
       };
-    }
-    case 'APPLY_CONDITION': {
+    },
+    applyCondition(state: DatalistState): DatalistState {
       return {
         ...state,
         effectiveFilterCondition: cloneDeep(state.filterCondition),
         currentPage: initialState.currentPage,
       };
-    }
-    case 'SET_BASIC_CONDITION': {
+    },
+    setBasicCondition(
+      state: DatalistState,
+      action: PayloadAction<Partial<BasicFilterCondition>>
+    ): DatalistState {
       return {
         ...state,
         filterCondition: {
           ...state.filterCondition,
           basic: {
             ...state.filterCondition.basic,
-            ...actions.payload.condition,
+            ...action.payload,
           },
         },
       };
-    }
-    case 'SET_DETAIL_CONDITION': {
+    },
+    setDetailCondition(
+      state: DatalistState,
+      action: PayloadAction<Partial<DetailFilterCondition>>
+    ): DatalistState {
       return {
         ...state,
         filterCondition: {
           ...state.filterCondition,
           detail: {
             ...state.filterCondition.detail,
-            ...actions.payload.condition,
+            ...action.payload,
           },
         },
       };
-    }
-    case 'SET_STRATEGIES_CONDITION': {
+    },
+    setStrategiesCondition(
+      state: DatalistState,
+      action: PayloadAction<Partial<StrategiesFilterCondition>>
+    ): DatalistState {
       return {
         ...state,
         filterCondition: {
           ...state.filterCondition,
           strategies: {
             ...state.filterCondition.strategies,
-            ...actions.payload.condition,
+            ...action.payload,
           },
         },
       };
-    }
-    case 'SET_SHOW_STRATEGY_EXPLANATION': {
+    },
+    setShowStrategyExplanation(
+      state: DatalistState,
+      action: PayloadAction<boolean>
+    ): DatalistState {
       return {
         ...state,
         filterCondition: {
           ...state.filterCondition,
           strategies: {
             ...state.filterCondition.strategies,
-            showStrategyExplanation: actions.payload,
+            showStrategyExplanation: action.payload,
           },
         },
       };
-    }
-    case 'SET_BASE_DATA': {
-      const baseData = actions.payload.baseData;
-      const { generals, strategies, assistGenerals, filterContents } = baseData;
+    },
+    setBaseData(
+      state: DatalistState,
+      action: PayloadAction<BaseData>
+    ): DatalistState {
+      const {
+        generals,
+        strategies,
+        assistGenerals,
+        filterContents,
+      } = action.payload;
       return {
         ...state,
         filterCondition: initialFilterCondition,
@@ -307,22 +298,26 @@ export default function datalistReducer(
         strategies,
         assistGenerals,
       };
-    }
-    case 'RESET_PAGE': {
+    },
+    incrementPage(state: DatalistState): DatalistState {
+      return {
+        ...state,
+        currentPage: state.currentPage + 1,
+      };
+    },
+    decrementPage(state: DatalistState): DatalistState {
+      return {
+        ...state,
+        currentPage: state.currentPage - 1,
+      };
+    },
+    resetPage(state: DatalistState): DatalistState {
       return {
         ...state,
         currentPage: initialState.currentPage,
       };
-    }
-    case 'INCREMENT_PAGE':
-    case 'DECREMENT_PAGE': {
-      const page = actions.payload.page;
-      return {
-        ...state,
-        currentPage: state.currentPage + page,
-      };
-    }
-    default:
-      return state;
-  }
-}
+    },
+  },
+});
+
+export const datalistActions = datalistModule.actions;

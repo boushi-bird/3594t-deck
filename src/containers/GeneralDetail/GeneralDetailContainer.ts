@@ -9,7 +9,7 @@ type OwnProps = {};
 type TMapStateToProps = MapStateToProps<Props, OwnProps, State>;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  general: state.windowReducer.detailGeneral,
+  general: state.window.detailGeneral,
 });
 
 export default connect<Props, {}>(mapStateToProps, {})(Dialog);

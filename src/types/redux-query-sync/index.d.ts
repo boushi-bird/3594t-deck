@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'redux-query-sync' {
   import type { Store } from 'redux';
-  import type { TypeConstant, PayloadAction } from 'typesafe-actions';
+  import type { PayloadAction } from '@reduxjs/toolkit';
 
   function ReduxQuerySync<S>(options: Options<S>): () => void;
 
   export interface ParamsOptions<S, V = any> {
-    action: (value: V) => PayloadAction<TypeConstant, any>;
+    action: (value: V) => PayloadAction<any>;
     selector: (state: S) => V;
     defaultValue?: V;
     valueToString?: (value: V) => string;

@@ -60,12 +60,12 @@ type ConnectorOptions = Options<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  generals: state.datalistReducer.generals,
-  strategies: state.datalistReducer.strategies,
-  currentPage: state.datalistReducer.currentPage,
-  pageLimit: state.datalistReducer.pageLimit,
-  filterCondition: state.datalistReducer.effectiveFilterCondition,
-  deckSearchCondition: state.deckReducer.searchCondition,
+  generals: state.datalist.generals,
+  strategies: state.datalist.strategies,
+  currentPage: state.datalist.currentPage,
+  pageLimit: state.datalist.pageLimit,
+  filterCondition: state.datalist.effectiveFilterCondition,
+  deckSearchCondition: state.deck.searchCondition,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {

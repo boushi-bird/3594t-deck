@@ -46,10 +46,10 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => {
-  const { searchCondition } = state.deckReducer;
+  const { searchCondition } = state.deck;
   return {
-    filterCondition: state.datalistReducer.filterCondition.basic,
-    filterContents: state.datalistReducer.filterContents,
+    filterCondition: state.datalist.filterCondition.basic,
+    filterContents: state.datalist.filterContents,
     deckSearchCondition: searchCondition,
   };
 };

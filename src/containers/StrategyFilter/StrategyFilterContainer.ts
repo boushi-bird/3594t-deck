@@ -34,9 +34,9 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  searchMode: state.datalistReducer.filterCondition.basic.searchMode,
-  filterCondition: state.datalistReducer.filterCondition.strategies,
-  filterContents: state.datalistReducer.filterContents,
+  searchMode: state.datalist.filterCondition.basic.searchMode,
+  filterCondition: state.datalist.filterCondition.strategies,
+  filterContents: state.datalist.filterContents,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => ({
