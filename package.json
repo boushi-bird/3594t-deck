@@ -5,12 +5,12 @@
   "main": "src/index.tsx",
   "scripts": {
     "build": "npm-run-all build:*",
-    "build:ts": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
+    "build:ts": "cross-env TS_NODE_PROJECT=\"tsconfig-for-ts-node-config.json\" webpack",
     "build:license": "license-checker --markdown --excludePrivatePackages --customPath=resources/license-checker.json --out dist/dependencies.md",
-    "build:pages": "ts-node --project tsconfig-for-webpack-config.json bin/build-pages.ts",
+    "build:pages": "ts-node --project tsconfig-for-ts-node-config.json bin/build-pages.ts",
     "deploy": "cross-env NODE_ENV=production npm run build && npm run deploy-only",
     "deploy-only": "gh-pages -b master -d dist -m \"Built from commit $(git log -n 1 --format=%h) [ci skip]\"",
-    "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server",
+    "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-ts-node-config.json\" webpack-dev-server",
     "lint": "npm-run-all lint:*",
     "fix": "npm-run-all fix:*",
     "lint:ts": "tsc --noEmit",
@@ -117,6 +117,11 @@
     "workbox-webpack-plugin": "^4.3.1"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig-for-ts-node-config.json"
+      }
+    },
     "preset": "ts-jest/presets/js-with-babel",
     "moduleNameMapper": {
       "^jaco(.*)": "<rootDir>/extra_modules/jaco$1"
