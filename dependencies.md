@@ -266,6 +266,8 @@
     - license: MIT
  - **[@npmcli/move-file@1.0.1](https://github.com/npm/move-file)**
     - license: MIT
+ - **[@reduxjs/toolkit@1.3.6](https://github.com/reduxjs/redux-toolkit)**
+    - license: MIT
  - **[@sinonjs/commons@1.8.0](https://github.com/sinonjs/commons)**
     - license: BSD-3-Clause
  - **[@sinonjs/fake-timers@6.0.1](https://github.com/sinonjs/fake-timers)**
@@ -1334,6 +1336,8 @@
     - license: MIT
  - **[ignore@5.1.8](https://github.com/kaelzhang/node-ignore)**
     - license: MIT
+ - **[immer@6.0.9](https://github.com/immerjs/immer)**
+    - license: MIT
  - **[import-cwd@2.1.0](https://github.com/sindresorhus/import-cwd)**
     - license: MIT
  - **[import-fresh@2.0.0](https://github.com/sindresorhus/import-fresh)**
@@ -2254,6 +2258,8 @@
     - license: MIT
  - **[redux-query-sync@0.1.9](https://github.com/Treora/redux-query-sync)**
     - license: Unlicense
+ - **[redux-thunk@2.3.0](https://github.com/reduxjs/redux-thunk)**
+    - license: MIT
  - **[redux@4.0.5](https://github.com/reduxjs/redux)**
     - license: MIT
  - **[regenerate-unicode-properties@8.2.0](https://github.com/mathiasbynens/regenerate-unicode-properties)**
@@ -2307,6 +2313,8 @@
  - **[require-main-filename@2.0.0](https://github.com/yargs/require-main-filename)**
     - license: ISC
  - **[requires-port@1.0.0](https://github.com/unshiftio/requires-port)**
+    - license: MIT
+ - **[reselect@4.0.0](https://github.com/reduxjs/reselect)**
     - license: MIT
  - **[resolve-cwd@2.0.0](https://github.com/sindresorhus/resolve-cwd)**
     - license: MIT
@@ -2699,8 +2707,6 @@
  - **[typedarray-to-buffer@3.1.5](https://github.com/feross/typedarray-to-buffer)**
     - license: MIT
  - **[typedarray@0.0.6](https://github.com/substack/typedarray)**
-    - license: MIT
- - **[typesafe-actions@5.1.0](https://github.com/piotrwitek/typesafe-actions)**
     - license: MIT
  - **[typescript@3.9.5](https://github.com/Microsoft/TypeScript)**
     - license: Apache-2.0
