@@ -120,14 +120,14 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  generals: state.datalistReducer.generals,
-  assistGenerals: state.datalistReducer.assistGenerals,
-  deckCards: state.deckReducer.deckCards,
-  assistDeckCards: state.deckReducer.assistDeckCards,
-  assistCardLimit: state.deckReducer.deckConstraints.assistCardLimit,
-  activeIndex: state.deckReducer.activeIndex,
-  activeAssistIndex: state.deckReducer.activeAssistIndex,
-  sameCard: state.deckReducer.deckConstraints.sameCard,
+  generals: state.datalist.generals,
+  assistGenerals: state.datalist.assistGenerals,
+  deckCards: state.deck.deckCards,
+  assistDeckCards: state.deck.assistDeckCards,
+  assistCardLimit: state.deck.deckConstraints.assistCardLimit,
+  activeIndex: state.deck.activeIndex,
+  activeAssistIndex: state.deck.activeAssistIndex,
+  sameCard: state.deck.deckConstraints.sameCard,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {

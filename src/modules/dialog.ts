@@ -1,5 +1,5 @@
-import type { ActionType } from 'typesafe-actions';
-import { createAction } from 'typesafe-actions';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface DialogInfo {
   title: string;
@@ -20,11 +20,6 @@ export interface DialogState extends DialogInfo {
   animation: boolean;
 }
 
-export const dialogActions = {
-  showDialog: createAction('SHOW_DIALOG', (dialog: DialogInfo) => dialog)(),
-  closeDialog: createAction('CLOSE_DIALOG')(),
-};
-
 const initialState: DialogState = {
   show: false,
   title: '',
@@ -39,24 +34,26 @@ const initialState: DialogState = {
   actionCancel: undefined,
 };
 
-export default function windowReducer(
-  state: DialogState = initialState,
-  actions: ActionType<typeof dialogActions>
-): DialogState {
-  switch (actions.type) {
-    case 'SHOW_DIALOG': {
-      const { cancelable, animation, ...otherSate } = actions.payload;
+export const dialogModule = createSlice({
+  name: 'dialog',
+  initialState,
+  reducers: {
+    showDialog(
+      state: DialogState,
+      action: PayloadAction<DialogInfo>
+    ): DialogState {
+      const { cancelable, animation, ...otherSate } = action.payload;
       return {
         ...otherSate,
         show: true,
         cancelable: cancelable != null ? cancelable : true,
         animation: animation != null ? animation : true,
       };
-    }
-    case 'CLOSE_DIALOG': {
+    },
+    closeDialog(): DialogState {
       return initialState;
-    }
-    default:
-      return state;
-  }
-}
+    },
+  },
+});
+
+export const dialogActions = dialogModule.actions;

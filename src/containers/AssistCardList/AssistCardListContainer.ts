@@ -57,13 +57,12 @@ type ConnectorOptions = Options<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  assistGenerals: state.datalistReducer.assistGenerals,
-  currentPage: state.datalistReducer.currentPage,
-  pageLimit: state.datalistReducer.pageLimit,
-  belongStates:
-    state.datalistReducer.effectiveFilterCondition.basic.belongStates,
-  enableSearchByDeck: state.deckReducer.searchCondition != null,
-  searchMode: state.datalistReducer.effectiveFilterCondition.basic.searchMode,
+  assistGenerals: state.datalist.assistGenerals,
+  currentPage: state.datalist.currentPage,
+  pageLimit: state.datalist.pageLimit,
+  belongStates: state.datalist.effectiveFilterCondition.basic.belongStates,
+  enableSearchByDeck: state.deck.searchCondition != null,
+  searchMode: state.datalist.effectiveFilterCondition.basic.searchMode,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {

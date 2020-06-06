@@ -1,12 +1,18 @@
-import { createStore, combineReducers } from 'redux';
-import type { StateType } from 'typesafe-actions';
-import datalistReducer from './modules/datalist';
-import deckReducer from './modules/deck';
-import dialogReducer from './modules/dialog';
-import windowReducer from './modules/window';
+import { configureStore } from '@reduxjs/toolkit';
+import { datalistModule } from './modules/datalist';
+import { deckModule } from './modules/deck';
+import { dialogModule } from './modules/dialog';
+import { windowModule } from './modules/window';
 
-const reducers = { datalistReducer, deckReducer, dialogReducer, windowReducer };
+const store = configureStore({
+  reducer: {
+    datalist: datalistModule.reducer,
+    deck: deckModule.reducer,
+    dialog: dialogModule.reducer,
+    window: windowModule.reducer,
+  },
+});
 
-export type State = StateType<typeof reducers>;
+export type State = ReturnType<typeof store.getState>;
 
-export default createStore(combineReducers<State>(reducers));
+export default store;

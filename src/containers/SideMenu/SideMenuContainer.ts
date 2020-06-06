@@ -39,14 +39,17 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  showNotice: state.windowReducer.showNotice,
-  installPromptEvent: state.windowReducer.installPromptEvent,
+  showNotice: state.window.showNotice,
+  installPromptEvent: state.window.installPromptEvent,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      openUpdateInfo: windowActions.openUpdateInfo,
+      openUpdateInfo: () =>
+        windowActions.changeUpdateInfoVisible({
+          openedUpdateInfo: true,
+        }),
       storeInstallPromptEvent: windowActions.storeInstallPromptEvent,
     },
     dispatch

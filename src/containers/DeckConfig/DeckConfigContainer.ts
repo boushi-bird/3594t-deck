@@ -13,14 +13,17 @@ type TMapStateToProps = MapStateToProps<StateFromProps, OwnProps, State>;
 type TMapDispatchToProps = MapDispatchToProps<DispatchFromProps, OwnProps>;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  show: state.windowReducer.openedDeckConfig,
-  ...state.deckReducer.deckConstraints,
+  show: state.window.openedDeckConfig,
+  ...state.deck.deckConstraints,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      closeDeckConfig: windowActions.closeDeckConfig,
+      closeDeckConfig: () =>
+        windowActions.changeDeckConfigVisible({
+          openedDeckConfig: false,
+        }),
       setDeckConstraints: deckActions.setDeckConstraints,
       sliceDeckAssist: deckActions.sliceDeckAssist,
     },

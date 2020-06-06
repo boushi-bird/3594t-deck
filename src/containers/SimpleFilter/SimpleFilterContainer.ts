@@ -44,13 +44,13 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => {
-  const { searchCondition } = state.deckReducer;
+  const { searchCondition } = state.deck;
   const deckCardBelongState = searchCondition
     ? searchCondition.belongState
     : undefined;
   return {
-    belongStates: state.datalistReducer.filterContents.belongStates,
-    basicFilterCondition: state.datalistReducer.filterCondition.basic,
+    belongStates: state.datalist.filterContents.belongStates,
+    basicFilterCondition: state.datalist.filterCondition.basic,
     deckCardBelongState,
   };
 };

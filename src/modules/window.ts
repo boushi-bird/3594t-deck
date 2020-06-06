@@ -1,5 +1,5 @@
-import type { ActionType } from 'typesafe-actions';
-import { createAction } from 'typesafe-actions';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import type { General, AssistGeneral } from '3594t-deck';
 
 export const filterTabNames = {
@@ -18,61 +18,10 @@ export interface WindowState {
   openedUpdateInfo: boolean;
   showNotice: boolean;
   activeFilter: FilterTab;
-  detailGeneral?: General;
-  detailAssistGeneral?: AssistGeneral;
+  detailGeneral: General | null;
+  detailAssistGeneral: AssistGeneral | null;
   installPromptEvent: BeforeInstallPromptEvent | null;
 }
-
-export const windowActions = {
-  beReady: createAction('BE_READY')(),
-  openSideMenu: createAction('CHANGE_SIDEMENU_VISIBLE', () => ({
-    openedSideMenu: true,
-  }))(),
-  closeSideMenu: createAction('CHANGE_SIDEMENU_VISIBLE', () => ({
-    openedSideMenu: false,
-  }))(),
-  openFilter: createAction('CHANGE_FILTER_VISIBLE', () => ({
-    openedFilter: true,
-  }))(),
-  closeFilter: createAction('CHANGE_FILTER_VISIBLE', () => ({
-    openedFilter: false,
-  }))(),
-  openDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', () => ({
-    openedDeckConfig: true,
-  }))(),
-  closeDeckConfig: createAction('CHANGE_DECK_CONFIG_VISIBLE', () => ({
-    openedDeckConfig: false,
-  }))(),
-  openUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', () => ({
-    openedUpdateInfo: true,
-  }))(),
-  closeUpdateInfo: createAction('CHANGE_UPDATE_INFO_VISIBLE', () => ({
-    openedUpdateInfo: false,
-  }))(),
-  enableNotice: createAction('CHANGE_SHOW_NOTICE', () => ({
-    showNotice: true,
-  }))(),
-  disableNotice: createAction('CHANGE_SHOW_NOTICE', () => ({
-    showNotice: false,
-  }))(),
-  openGeneralDetail: createAction(
-    'CHANGE_GENERAL_DETAIL',
-    (general: General) => ({ detailGeneral: general })
-  )(),
-  openAssistGeneralDetail: createAction(
-    'CHANGE_ASSIST_GENERAL_DETAIL',
-    (assistGeneral: AssistGeneral) => ({ detailAssistGeneral: assistGeneral })
-  )(),
-  closeAllModal: createAction('CLOSE_ALL_MODAL')(),
-  changeActiveFilterTab: createAction(
-    'CHANGE_ACTIVE_FILTER',
-    (activeFilter: FilterTab) => ({ activeFilter })
-  )(),
-  storeInstallPromptEvent: createAction(
-    'STORE_INSTALL_PROMPT_EVENT',
-    (event: BeforeInstallPromptEvent | null) => ({ event })
-  )(),
-};
 
 const initialState: WindowState = {
   ready: false,
@@ -82,102 +31,128 @@ const initialState: WindowState = {
   openedUpdateInfo: false,
   showNotice: false,
   activeFilter: 'BASIC',
-  detailGeneral: undefined,
+  detailGeneral: null,
+  detailAssistGeneral: null,
   installPromptEvent: null,
 };
 
-export default function windowReducer(
-  state: WindowState = initialState,
-  actions: ActionType<typeof windowActions>
-): WindowState {
-  switch (actions.type) {
-    case 'BE_READY':
+export const windowModule = createSlice({
+  name: 'window',
+  initialState,
+  reducers: {
+    beReady(state: WindowState): WindowState {
       return {
         ...state,
         ready: true,
       };
-    case 'CHANGE_SIDEMENU_VISIBLE':
+    },
+    changeSideMenuVisible(
+      state: WindowState,
+      action: PayloadAction<{ openedSideMenu: boolean }>
+    ): WindowState {
       const {
         payload: { openedSideMenu },
-      } = actions;
+      } = action;
       return {
         ...state,
         openedSideMenu,
       };
-    case 'CHANGE_FILTER_VISIBLE':
+    },
+    changeFilterVisible(
+      state: WindowState,
+      action: PayloadAction<{ openedFilter: boolean }>
+    ): WindowState {
       const {
         payload: { openedFilter },
-      } = actions;
+      } = action;
       return {
         ...state,
         openedFilter,
       };
-    case 'CHANGE_DECK_CONFIG_VISIBLE':
+    },
+    changeDeckConfigVisible(
+      state: WindowState,
+      action: PayloadAction<{ openedDeckConfig: boolean }>
+    ): WindowState {
       const {
         payload: { openedDeckConfig },
-      } = actions;
+      } = action;
       return {
         ...state,
         openedDeckConfig,
       };
-    case 'CHANGE_UPDATE_INFO_VISIBLE':
+    },
+    changeUpdateInfoVisible(
+      state: WindowState,
+      action: PayloadAction<{ openedUpdateInfo: boolean }>
+    ): WindowState {
       const {
         payload: { openedUpdateInfo },
-      } = actions;
+      } = action;
       return {
         ...state,
         openedUpdateInfo,
       };
-    case 'CLOSE_ALL_MODAL':
+    },
+    closeAllModal(state: WindowState): WindowState {
       return {
         ...state,
         openedFilter: false,
         openedDeckConfig: false,
         openedUpdateInfo: false,
-        detailGeneral: undefined,
-        detailAssistGeneral: undefined,
+        detailGeneral: null,
+        detailAssistGeneral: null,
       };
-    case 'CHANGE_ACTIVE_FILTER':
-      const {
-        payload: { activeFilter },
-      } = actions;
+    },
+    changeActiveFilterTab(
+      state: WindowState,
+      action: PayloadAction<FilterTab>
+    ): WindowState {
       return {
         ...state,
-        activeFilter,
+        activeFilter: action.payload,
       };
-    case 'CHANGE_SHOW_NOTICE':
+    },
+    changeShowNotice(
+      state: WindowState,
+      action: PayloadAction<{ showNotice: boolean }>
+    ): WindowState {
       const {
         payload: { showNotice },
-      } = actions;
+      } = action;
       return {
         ...state,
         showNotice,
       };
-    case 'CHANGE_GENERAL_DETAIL':
-      const {
-        payload: { detailGeneral },
-      } = actions;
+    },
+    openGeneralDetail(
+      state: WindowState,
+      action: PayloadAction<General>
+    ): WindowState {
       return {
         ...state,
-        detailGeneral,
+        detailGeneral: action.payload,
       };
-    case 'CHANGE_ASSIST_GENERAL_DETAIL':
-      const {
-        payload: { detailAssistGeneral },
-      } = actions;
+    },
+    openAssistGeneralDetail(
+      state: WindowState,
+      action: PayloadAction<AssistGeneral>
+    ): WindowState {
       return {
         ...state,
-        detailAssistGeneral,
+        detailAssistGeneral: action.payload,
       };
-    case 'STORE_INSTALL_PROMPT_EVENT':
-      const {
-        payload: { event },
-      } = actions;
+    },
+    storeInstallPromptEvent(
+      state: WindowState,
+      action: PayloadAction<BeforeInstallPromptEvent | null>
+    ): WindowState {
       return {
         ...state,
-        installPromptEvent: event,
+        installPromptEvent: action.payload,
       };
-    default:
-      return state;
-  }
-}
+    },
+  },
+});
+
+export const windowActions = windowModule.actions;

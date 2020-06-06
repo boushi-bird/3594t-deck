@@ -3,6 +3,7 @@ import type {
   MapDispatchToProps,
   MergeProps,
 } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import type { State } from '../../store';
 import { deckActions } from '../../modules/deck';
@@ -13,7 +14,6 @@ import type {
   Props,
 } from './DeckDummyCard';
 import DeckDummyCard from './DeckDummyCard';
-import { bindActionCreators } from 'redux';
 
 type ContainerStateFromProps = StateFromProps;
 
@@ -38,10 +38,10 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  generals: state.datalistReducer.generals,
-  belongStates: state.datalistReducer.filterContents.belongStates,
-  costs: state.datalistReducer.filterContents.costs,
-  unitTypes: state.datalistReducer.filterContents.unitTypes,
+  generals: state.datalist.generals,
+  belongStates: state.datalist.filterContents.belongStates,
+  costs: state.datalist.filterContents.costs,
+  unitTypes: state.datalist.filterContents.unitTypes,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {

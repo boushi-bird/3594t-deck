@@ -79,22 +79,25 @@ type ConnectorOptions = Options<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  deckCards: state.deckReducer.deckCards,
-  assistDeckCards: state.deckReducer.assistDeckCards,
-  enableSearch: state.deckReducer.searchCondition != null,
-  activeIndex: state.deckReducer.activeIndex,
-  activeAssistIndex: state.deckReducer.activeAssistIndex,
-  generals: state.datalistReducer.generals,
-  assistGenerals: state.datalistReducer.assistGenerals,
-  filterContents: state.datalistReducer.filterContents,
-  limitCost: state.deckReducer.deckConstraints.limitCost,
-  assistCardLimit: state.deckReducer.deckConstraints.assistCardLimit,
+  deckCards: state.deck.deckCards,
+  assistDeckCards: state.deck.assistDeckCards,
+  enableSearch: state.deck.searchCondition != null,
+  activeIndex: state.deck.activeIndex,
+  activeAssistIndex: state.deck.activeAssistIndex,
+  generals: state.datalist.generals,
+  assistGenerals: state.datalist.assistGenerals,
+  filterContents: state.datalist.filterContents,
+  limitCost: state.deck.deckConstraints.limitCost,
+  assistCardLimit: state.deck.deckConstraints.assistCardLimit,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
-      openDeckConfig: windowActions.openDeckConfig,
+      openDeckConfig: () =>
+        windowActions.changeDeckConfigVisible({
+          openedDeckConfig: true,
+        }),
       selectMainGen: deckActions.selectMainGen,
       setActiveCard: deckActions.setActiveCard,
       removeDeck: deckActions.removeDeck,
@@ -284,7 +287,7 @@ const mergeProps: TMergeProps = (state, actions) => {
         costs,
         belongStates,
         unitTypes,
-      } = store.getState().datalistReducer.filterCondition.basic;
+      } = store.getState().datalist.filterCondition.basic;
       if (costs.length >= 1) {
         cost = [...costs].sort()[0];
       }

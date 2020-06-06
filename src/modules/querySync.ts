@@ -148,7 +148,7 @@ const emptyAssistDecks: DeckCardAssist[] = [];
 const deckParam: ParamsOptions<State, DeckCard[]> = {
   action: deckActions.setDecks,
   selector: (state) => {
-    const deckCards = state.deckReducer.deckCards;
+    const deckCards = state.deck.deckCards;
     if (deckCards.length === 0) {
       return emptyDecks;
     }
@@ -156,10 +156,10 @@ const deckParam: ParamsOptions<State, DeckCard[]> = {
   },
   defaultValue: emptyDecks,
   valueToString: (deckCards) => {
-    const dataState = store.getState().datalistReducer;
+    const { datalist } = store.getState();
     const toQuery = toQueryDeckCard({
-      generals: dataState.generals,
-      filterContents: dataState.filterContents,
+      generals: datalist.generals,
+      filterContents: datalist.filterContents,
     });
     return deckCards
       .map(toQuery)
@@ -170,10 +170,10 @@ const deckParam: ParamsOptions<State, DeckCard[]> = {
     if (!s) {
       return emptyDecks;
     }
-    const dataState = store.getState().datalistReducer;
+    const { datalist } = store.getState();
     const parse = parseDeckCard({
-      generals: dataState.generals,
-      filterContents: dataState.filterContents,
+      generals: datalist.generals,
+      filterContents: datalist.filterContents,
     });
     return s.split('|').map(parse);
   },
@@ -209,7 +209,7 @@ const parseDeckCardAssist = ({ assistGenerals }: DataAssistContents) => {
 const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
   action: deckActions.setAssists,
   selector: (state) => {
-    const assistDeckCards = state.deckReducer.assistDeckCards;
+    const assistDeckCards = state.deck.assistDeckCards;
     if (assistDeckCards.length === 0) {
       return emptyAssistDecks;
     }
@@ -217,9 +217,9 @@ const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
   },
   defaultValue: emptyAssistDecks,
   valueToString: (assistDeckCards) => {
-    const dataState = store.getState().datalistReducer;
+    const { datalist } = store.getState();
     const toQuery = toQueryDeckCardAssist({
-      assistGenerals: dataState.assistGenerals,
+      assistGenerals: datalist.assistGenerals,
     });
     return assistDeckCards
       .map(toQuery)
@@ -230,9 +230,9 @@ const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
     if (!s) {
       return emptyAssistDecks;
     }
-    const dataState = store.getState().datalistReducer;
+    const { datalist } = store.getState();
     const parse = parseDeckCardAssist({
-      assistGenerals: dataState.assistGenerals,
+      assistGenerals: datalist.assistGenerals,
     });
     return s
       .split('|')
@@ -243,7 +243,7 @@ const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
 
 const costParam: ParamsOptions<State, number> = {
   action: (limitCost) => deckActions.setDeckConstraints({ limitCost }),
-  selector: (state) => state.deckReducer.deckConstraints.limitCost,
+  selector: (state) => state.deck.deckConstraints.limitCost,
   defaultValue: DEFAULT_DECK_COST_LIMIT,
   stringToValue: (s) => {
     try {
@@ -262,7 +262,7 @@ const costParam: ParamsOptions<State, number> = {
 
 const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
   action: (sameCard) => deckActions.setDeckConstraints({ sameCard }),
-  selector: (state) => state.deckReducer.deckConstraints.sameCard,
+  selector: (state) => state.deck.deckConstraints.sameCard,
   defaultValue: defaultSameCardConstraint,
   stringToValue: (s) => {
     if (isSameCardConstraint(s)) {
@@ -275,7 +275,7 @@ const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
 const assistLimitParam: ParamsOptions<State, number> = {
   action: (assistCardLimit) =>
     deckActions.setDeckConstraints({ assistCardLimit }),
-  selector: (state) => state.deckReducer.deckConstraints.assistCardLimit,
+  selector: (state) => state.deck.deckConstraints.assistCardLimit,
   defaultValue: DEFAULT_DECK_ASSIST_CARD_COUNT,
   stringToValue: (s) => {
     try {
