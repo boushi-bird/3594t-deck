@@ -82,7 +82,7 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
         <span className="strategy">{stratName}</span>
         <div className="tool-box">
           <button className="tool-button remove" onClick={this.handleRemove}>
-            <FontAwesomeIcon icon={faMinusCircle} />
+            <FontAwesomeIcon icon={faMinusCircle} className="circle-icon" />
           </button>
         </div>
       </div>

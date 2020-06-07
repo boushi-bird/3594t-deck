@@ -159,10 +159,11 @@ export default class DeckCard extends React.PureComponent<Props> {
         </div>
         <div className="tool-box">
           <button className="remove" onClick={this.handleRemove}>
-            <FontAwesomeIcon icon={faMinusCircle} />
+            <FontAwesomeIcon icon={faMinusCircle} className="circle-icon" />
           </button>
           <button
-            className={classNames('search', { enable: search })}
+            className={classNames('tool-button', 'search', { enable: search })}
+            title="勢力・コスト・兵種で絞り込み"
             onClick={this.handleSearch}
           >
             <FontAwesomeIcon icon={faSearch} />

@@ -22,6 +22,7 @@
   @nest .active& {
     margin: 0;
     border: 4px solid var(--active-color);
+    cursor: default;
   }
 
   & .deck-card-inner-top {
@@ -80,15 +81,15 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 40px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
     padding: 2px 0;
-    background-color: var(--deck-card-tool-bg-color);
+    pointer-events: none;
 
     @nest .active& {
       display: flex;
@@ -96,23 +97,51 @@
 
     & > * {
       font-size: 20px;
+      pointer-events: auto;
+    }
+
+    & .tool-button {
+      position: absolute;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-style: none;
+      background-color: var(--deck-card-tool-box-button-color);
+      outline: 0;
+      background-clip: content-box;
+      padding: 2px;
+      opacity: 80%;
     }
 
     & .remove {
-      color: var(--danger-color);
+      position: absolute;
+      cursor: pointer;
       width: 36px;
       height: 36px;
-      background-color: var(--deck-card-tool-box-button-color);
+      top: -10px;
+      right: -10px;
+      color: var(--danger-color);
+      background-color: white;
+      border-style: none;
+      border-radius: 50%;
+      background-clip: content-box;
+      outline: 0;
+      padding: 6px;
     }
 
     & .search {
-      width: 36px;
-      height: 36px;
-      background-color: var(--deck-card-tool-box-button-color);
+      top: 158px;
+      right: auto;
+      left: auto;
 
       &.enable {
         color: var(--active-color);
       }
+    }
+
+    & .circle-icon {
+      padding-top: 2px;
+      padding-bottom: 2px;
     }
   }
 
@@ -233,5 +262,6 @@
     min-width: 116px;
     height: 48px;
     transform: scale(0.62);
+    cursor: pointer;
   }
 }
