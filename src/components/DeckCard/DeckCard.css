@@ -110,7 +110,7 @@
       outline: 0;
       background-clip: content-box;
       padding: 2px;
-      opacity: 80%;
+      opacity: 0.8;
     }
 
     & .remove {
