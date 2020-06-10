@@ -36,6 +36,7 @@ export default class CardList extends CardListBase<Props, LocalState> {
       }
       this.setState({ renderingCount: generals.length });
     }
+    super.componentDidUpdate(prevProps);
   }
 
   private handleOnShowDetail = (general: General): void => {
