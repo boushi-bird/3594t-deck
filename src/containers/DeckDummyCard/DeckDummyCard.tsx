@@ -145,7 +145,7 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     });
     return (
       <div
-        className={classNames('deck-dummy-card', {
+        className={classNames('deck-card', 'deck-dummy-card', {
           'has-state': hasState,
           active,
         })}
@@ -160,53 +160,53 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
           <span className="unit" style={styleUnitType} data-label="兵種">
             {unitTypeName}
           </span>
-          <div className="edit">
-            <span className="select-item-container" data-label="勢力">
-              <select
-                className="select-item"
-                name="belongState"
-                value={stateId}
-                onChange={this.handleChangeDeckValue}
-              >
-                <option value="" />
-                {belongStatesOptions}
-              </select>
-            </span>
-            <span className="select-item-container" data-label="コスト">
-              <select
-                className="select-item"
-                name="cost"
-                value={deckCard.cost}
-                onChange={this.handleChangeDeckValue}
-              >
-                {costsOptions}
-              </select>
-            </span>
-            <span className="select-item-container" data-label="兵種">
-              <select
-                className="select-item"
-                name="unitType"
-                value={unitTypeId}
-                onChange={this.handleChangeDeckValue}
-              >
-                <option value="" />
-                {unitTypesOptions}
-              </select>
-            </span>
-          </div>
         </div>
-        <div className="deck-card-inner-bottom">
-          <div className="tool-box">
-            <button className="remove" onClick={this.handleRemove}>
-              <FontAwesomeIcon icon={faMinusCircle} />
-            </button>
-            <button
-              className={classNames('search', { enable: search })}
-              onClick={this.handleSearch}
+        <div className="deck-card-inner-bottom" />
+        <div className="deck-dummy-edit">
+          <span className="select-item-container" data-label="勢力">
+            <select
+              className="select-item"
+              name="belongState"
+              value={stateId}
+              onChange={this.handleChangeDeckValue}
             >
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
-          </div>
+              <option value="" />
+              {belongStatesOptions}
+            </select>
+          </span>
+          <span className="select-item-container" data-label="コスト">
+            <select
+              className="select-item"
+              name="cost"
+              value={deckCard.cost}
+              onChange={this.handleChangeDeckValue}
+            >
+              {costsOptions}
+            </select>
+          </span>
+          <span className="select-item-container" data-label="兵種">
+            <select
+              className="select-item"
+              name="unitType"
+              value={unitTypeId}
+              onChange={this.handleChangeDeckValue}
+            >
+              <option value="" />
+              {unitTypesOptions}
+            </select>
+          </span>
+        </div>
+        <div className="tool-box">
+          <button className="remove" onClick={this.handleRemove}>
+            <FontAwesomeIcon icon={faMinusCircle} className="circle-icon" />
+          </button>
+          <button
+            className={classNames('tool-button', 'search', { enable: search })}
+            title="勢力・コスト・兵種で絞り込み"
+            onClick={this.handleSearch}
+          >
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
         </div>
       </div>
     );

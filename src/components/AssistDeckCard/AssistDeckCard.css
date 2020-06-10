@@ -121,5 +121,9 @@
         display: none;
       }
     }
+
+    & .circle-icon {
+      padding-top: 2px;
+    }
   }
 }
