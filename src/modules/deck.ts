@@ -5,19 +5,29 @@ import {
   DEFAULT_DECK_ASSIST_CARD_COUNT,
 } from '../const';
 
+// デッキのユニークIDとして使う揮発的な数値
+let currentDeckKey = 0;
+
 export interface DeckCardGeneral {
+  key: number;
   general: string;
   genMain?: string;
   pocket: boolean;
 }
 
 export interface DeckCardDummy {
+  key: number;
   belongState?: string;
   cost: string;
   unitType?: string;
 }
 
 export type DeckCard = DeckCardGeneral | DeckCardDummy;
+
+export type KeyLessDeckCardGeneral = Omit<DeckCardGeneral, 'key'>;
+export type KeyLessDeckCardDummy = Omit<DeckCardDummy, 'key'>;
+
+export type KeyLessDeckCard = KeyLessDeckCardGeneral | KeyLessDeckCardDummy;
 
 export interface DeckCardAssist {
   assist: string;
@@ -46,6 +56,8 @@ export const defaultSameCardConstraint: SameCardConstraint = 'personal';
 export function isSameCardConstraint(s: any): s is SameCardConstraint {
   return sameCardConstraints.includes(s);
 }
+
+type MoveDirection = 'left' | 'right';
 
 export interface DeckConstraints {
   limitCost: number;
@@ -81,9 +93,12 @@ export const deckModule = createSlice({
   reducers: {
     addDeckGeneral(
       state: DeckState,
-      action: PayloadAction<DeckCardGeneral>
+      action: PayloadAction<KeyLessDeckCardGeneral>
     ): DeckState {
-      const card = action.payload;
+      const card = {
+        ...action.payload,
+        key: currentDeckKey++,
+      };
       return {
         ...state,
         activeIndex: null,
@@ -96,12 +111,12 @@ export const deckModule = createSlice({
       state: DeckState,
       action: PayloadAction<{
         index: number;
-        card: DeckCardGeneral;
+        card: KeyLessDeckCardGeneral;
       }>
     ): DeckState {
       const { index, card } = action.payload;
       const deckCards = [...state.deckCards];
-      deckCards[index] = { ...card };
+      deckCards[index] = { ...card, key: deckCards[index].key };
       return {
         ...state,
         activeIndex: null,
@@ -126,7 +141,7 @@ export const deckModule = createSlice({
         searchCondition: undefined,
         deckCards: [
           ...state.deckCards,
-          { cost, belongState, unitType, pocket: false },
+          { key: currentDeckKey++, cost, belongState, unitType, pocket: false },
         ],
       };
     },
@@ -152,10 +167,17 @@ export const deckModule = createSlice({
         deckCards,
       };
     },
-    setDecks(state: DeckState, action: PayloadAction<DeckCard[]>): DeckState {
+    setDecks(
+      state: DeckState,
+      action: PayloadAction<KeyLessDeckCard[]>
+    ): DeckState {
+      const deckCards = action.payload.map((deckCard) => ({
+        ...deckCard,
+        key: currentDeckKey++,
+      }));
       return {
         ...state,
-        deckCards: action.payload,
+        deckCards,
       };
     },
     removeDeck(state: DeckState, action: PayloadAction<number>): DeckState {
@@ -330,15 +352,45 @@ export const deckModule = createSlice({
         },
       };
     },
+    moveDeckIndex(
+      state: DeckState,
+      {
+        payload: { index, direction },
+      }: PayloadAction<{ index: number; direction: MoveDirection }>
+    ): DeckState {
+      const leftIndex = direction === 'left' ? index - 1 : index;
+      const rightIndex = direction === 'right' ? index + 1 : index;
+      if (
+        state.deckCards.length < 2 ||
+        leftIndex < 0 ||
+        rightIndex < 0 ||
+        leftIndex >= state.deckCards.length ||
+        rightIndex >= state.deckCards.length
+      ) {
+        return state;
+      }
+      const deckCards = [...state.deckCards];
+      deckCards.splice(
+        leftIndex,
+        2,
+        deckCards[rightIndex],
+        deckCards[leftIndex]
+      );
+      return {
+        ...state,
+        deckCards,
+        activeIndex: direction === 'left' ? leftIndex : rightIndex,
+      };
+    },
   },
 });
 
 export const deckActions = {
   ...deckModule.actions,
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-  changeDeckGeneral: (index: number, card: DeckCardGeneral) =>
+  changeDeckGeneral: (index: number, card: KeyLessDeckCardGeneral) =>
     deckModule.actions.changeDeckGeneral({ index, card }),
-  setDeckDummyValue: (index: number, deckCard: Partial<DeckCardDummy>) =>
+  setDeckDummyValue: (index: number, deckCard: Partial<KeyLessDeckCardDummy>) =>
     deckModule.actions.setDeckDummyValue({ index, deckCard }),
   changeDeckAssist: (index: number, card: DeckCardAssist) =>
     deckModule.actions.changeDeckAssist({ index, card }),

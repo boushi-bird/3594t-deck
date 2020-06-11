@@ -73,5 +73,17 @@
     & .tool-button {
       opacity: 1;
     }
+
+    & .search {
+      top: 212px;
+    }
+
+    & .move-left {
+      top: 166px;
+    }
+
+    & .move-right {
+      top: 166px;
+    }
   }
 }

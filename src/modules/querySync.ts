@@ -13,8 +13,9 @@ import type { State } from '../store';
 import store from '../store';
 import type {
   DeckCard,
-  DeckCardGeneral,
-  DeckCardDummy,
+  KeyLessDeckCard,
+  KeyLessDeckCardGeneral,
+  KeyLessDeckCardDummy,
   DeckCardAssist,
   SameCardConstraint,
 } from './deck';
@@ -68,7 +69,7 @@ const parseDeckCardGeneral = (
     genMainCode?: string;
   },
   { generals, filterContents }: DataContents
-): DeckCardGeneral | null => {
+): KeyLessDeckCardGeneral | null => {
   if (!code) {
     return null;
   }
@@ -102,7 +103,7 @@ const parseDeckCardDummy = (
     unitTypeName?: string;
   },
   content: FilterContents
-): DeckCardDummy => {
+): KeyLessDeckCardDummy => {
   const belongState = content.belongStates.find(
     (r) => r.nameShort === belongStateNameShort
   );
@@ -115,7 +116,7 @@ const parseDeckCardDummy = (
 };
 
 const parseDeckCard = ({ generals, filterContents }: DataContents) => {
-  return (v: string): DeckCard => {
+  return (v: string): KeyLessDeckCard => {
     const [
       code,
       genMainCode,
@@ -142,10 +143,10 @@ const parseDeckCard = ({ generals, filterContents }: DataContents) => {
 };
 
 // defaultValue と=== 比較で一致する場合にparameterがなくなるので空を同一インスタンスに
-const emptyDecks: DeckCard[] = [];
+const emptyDecks: KeyLessDeckCard[] = [];
 const emptyAssistDecks: DeckCardAssist[] = [];
 
-const deckParam: ParamsOptions<State, DeckCard[]> = {
+const deckParam: ParamsOptions<State, KeyLessDeckCard[]> = {
   action: deckActions.setDecks,
   selector: (state) => {
     const deckCards = state.deck.deckCards;

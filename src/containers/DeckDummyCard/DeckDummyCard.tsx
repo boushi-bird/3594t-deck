@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import type { DatalistState } from '../../modules/datalist';
 import type { DeckCardDummy } from '../../modules/deck';
 
@@ -12,6 +14,8 @@ export interface OwnProps {
   deckCard: DeckCardDummy;
   active: boolean;
   search: boolean;
+  enableMoveLeft: boolean;
+  enableMoveRight: boolean;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
   onToggleSearch: (
@@ -22,6 +26,8 @@ export interface OwnProps {
       unitType?: string;
     }
   ) => void;
+  onMoveLeft: (index: number) => void;
+  onMoveRight: (index: number) => void;
 }
 
 export interface StateFromProps {
@@ -39,7 +45,30 @@ export interface DispatchFromProps {
 
 export type Props = StateFromProps & OwnProps & DispatchFromProps;
 
-export default class DeckDummyCard extends React.PureComponent<Props> {
+type MoveDirection = 'left' | 'right';
+
+interface LocalState {
+  moveFrom: MoveDirection | null;
+}
+
+export default class DeckDummyCard extends React.PureComponent<
+  Props,
+  LocalState
+> {
+  state: Readonly<LocalState> = { moveFrom: null };
+
+  public componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (prevProps === this.props) {
+      return;
+    }
+    const diff = prevProps.index - this.props.index;
+    if (diff === 0) {
+      this.setState({ moveFrom: null });
+    } else {
+      this.setState({ moveFrom: diff > 0 ? 'right' : 'left' });
+    }
+  }
+
   private handleActive = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ): void => {
@@ -64,6 +93,24 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
     onToggleSearch(index, deckCard);
   };
 
+  private handleMoveLeft = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    this.setState({ moveFrom: null });
+    const { index, onMoveLeft } = this.props;
+    onMoveLeft(index);
+  };
+
+  private handleMoveRight = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    this.setState({ moveFrom: null });
+    const { index, onMoveRight } = this.props;
+    onMoveRight(index);
+  };
+
   private handleChangeDeckValue = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
@@ -78,12 +125,15 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
 
   public render(): React.ReactNode {
     const {
+      index,
       deckCard,
       active,
       search,
       belongStates,
       costs,
       unitTypes,
+      enableMoveLeft,
+      enableMoveRight,
     } = this.props;
     const style: React.CSSProperties = {};
     const styleState: React.CSSProperties = {};
@@ -143,11 +193,15 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
         </option>
       );
     });
+    const moveFrom = this.state.moveFrom;
+    const indexClass = index % 2 === 0 ? 'even' : 'odd';
     return (
       <div
-        className={classNames('deck-card', 'deck-dummy-card', {
+        className={classNames('deck-card', 'deck-dummy-card', indexClass, {
           'has-state': hasState,
           active,
+          'from-right': moveFrom === 'right',
+          'from-left': moveFrom === 'left',
         })}
         style={style}
         onClick={this.handleActive}
@@ -206,6 +260,24 @@ export default class DeckDummyCard extends React.PureComponent<Props> {
             onClick={this.handleSearch}
           >
             <FontAwesomeIcon icon={faSearch} />
+          </button>
+          <button
+            className={classNames('tool-button', 'move-left', {
+              enabled: enableMoveLeft,
+            })}
+            title="左へ移動"
+            onClick={this.handleMoveLeft}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <button
+            className={classNames('tool-button', 'move-right', {
+              enabled: enableMoveRight,
+            })}
+            title="右へ移動"
+            onClick={this.handleMoveRight}
+          >
+            <FontAwesomeIcon icon={faArrowRight} />
           </button>
         </div>
       </div>

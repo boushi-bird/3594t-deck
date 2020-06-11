@@ -7,6 +7,7 @@
   --deck-card-row2-height: 20px;
   --deck-card-row3-top: calc(var(--deck-card-row2-top) + var(--deck-card-row2-height) + 4px);
   --deck-card-row3-height: 56px;
+  --deck-card-move-from-x: calc(var(--deck-card-width) + 4px);
 }
 
 .deck-card {
@@ -143,6 +144,28 @@
       padding-top: 2px;
       padding-bottom: 2px;
     }
+
+    & .move-left {
+      color: white;
+      top: 112px;
+      left: -2px;
+      display: none;
+
+      &.enabled {
+        display: block;
+      }
+    }
+
+    & .move-right {
+      color: white;
+      top: 112px;
+      right: -2px;
+      display: none;
+
+      &.enabled {
+        display: block;
+      }
+    }
   }
 
   & .state {
@@ -263,5 +286,48 @@
     height: 48px;
     transform: scale(0.62);
     cursor: pointer;
+  }
+
+  /* 連続右移動の際にアニメーションされない現象回避のためkeyframesを交互に指定している */
+  &.from-right.odd {
+    animation: move-from-right-odd 0.5s;
+  }
+
+  &.from-right.even {
+    animation: move-from-right-even 0.5s;
+  }
+
+  &.from-left {
+    animation: move-from-left 0.5s;
+  }
+}
+
+@keyframes move-from-right-odd {
+  0% {
+    transform: translateX(var(--deck-card-move-from-x));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes move-from-right-even {
+  0% {
+    transform: translateX(var(--deck-card-move-from-x));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes move-from-left {
+  0% {
+    transform: translateX(calc(var(--deck-card-move-from-x) * -1));
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }

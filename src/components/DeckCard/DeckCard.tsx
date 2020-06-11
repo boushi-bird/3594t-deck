@@ -3,6 +3,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import classNames from 'classnames';
 import type { General } from '3594t-deck';
 
@@ -13,6 +15,8 @@ interface Props {
   pocket: boolean;
   active: boolean;
   search: boolean;
+  enableMoveLeft: boolean;
+  enableMoveRight: boolean;
   onSelectMainGen: (index: number, genMain?: string) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
@@ -24,9 +28,31 @@ interface Props {
       unitType: string;
     }
   ) => void;
+  onMoveLeft: (index: number) => void;
+  onMoveRight: (index: number) => void;
 }
 
-export default class DeckCard extends React.PureComponent<Props> {
+type MoveDirection = 'left' | 'right';
+
+interface LocalState {
+  moveFrom: MoveDirection | null;
+}
+
+export default class DeckCard extends React.PureComponent<Props, LocalState> {
+  state: Readonly<LocalState> = { moveFrom: null };
+
+  public componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (prevProps === this.props) {
+      return;
+    }
+    const diff = prevProps.index - this.props.index;
+    if (diff === 0) {
+      this.setState({ moveFrom: null });
+    } else {
+      this.setState({ moveFrom: diff > 0 ? 'right' : 'left' });
+    }
+  }
+
   private handleSelectMainGen = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
@@ -67,8 +93,35 @@ export default class DeckCard extends React.PureComponent<Props> {
     onToggleSearch(index, condition);
   };
 
+  private handleMoveLeft = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    this.setState({ moveFrom: null });
+    const { index, onMoveLeft } = this.props;
+    onMoveLeft(index);
+  };
+
+  private handleMoveRight = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    this.setState({ moveFrom: null });
+    const { index, onMoveRight } = this.props;
+    onMoveRight(index);
+  };
+
   public render(): React.ReactNode {
-    const { general, genMain, active, search, pocket } = this.props;
+    const {
+      index,
+      general,
+      genMain,
+      active,
+      search,
+      pocket,
+      enableMoveLeft,
+      enableMoveRight,
+    } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
     };
@@ -109,9 +162,15 @@ export default class DeckCard extends React.PureComponent<Props> {
       );
     });
     const selectedGenMain = genMain != null ? genMain : '';
+    const moveFrom = this.state.moveFrom;
+    const indexClass = index % 2 === 0 ? 'even' : 'odd';
     return (
       <div
-        className={classNames('deck-card', { active })}
+        className={classNames('deck-card', indexClass, {
+          active,
+          'from-right': moveFrom === 'right',
+          'from-left': moveFrom === 'left',
+        })}
         style={style}
         onClick={this.handleActive}
       >
@@ -167,6 +226,24 @@ export default class DeckCard extends React.PureComponent<Props> {
             onClick={this.handleSearch}
           >
             <FontAwesomeIcon icon={faSearch} />
+          </button>
+          <button
+            className={classNames('tool-button', 'move-left', {
+              enabled: enableMoveLeft,
+            })}
+            title="左へ移動"
+            onClick={this.handleMoveLeft}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <button
+            className={classNames('tool-button', 'move-right', {
+              enabled: enableMoveRight,
+            })}
+            title="右へ移動"
+            onClick={this.handleMoveRight}
+          >
+            <FontAwesomeIcon icon={faArrowRight} />
           </button>
         </div>
       </div>
