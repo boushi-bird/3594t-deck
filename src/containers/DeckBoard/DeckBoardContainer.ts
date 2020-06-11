@@ -106,6 +106,10 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
       removeDeckAssist: deckActions.removeDeckAssist,
       clearDeck: deckActions.clearDeck,
       searchByDeck: deckActions.searchByDeck,
+      moveLeft: (index: number) =>
+        deckActions.moveDeckIndex({ index, direction: 'left' }),
+      moveRight: (index: number) =>
+        deckActions.moveDeckIndex({ index, direction: 'right' }),
       resetPage: datalistActions.resetPage,
       showDialog: dialogActions.showDialog,
     },
@@ -173,6 +177,7 @@ const mergeProps: TMergeProps = (state, actions) => {
         skillCounts.set(s.name, count + 1);
       });
       deckCards.push({
+        key: deckCard.key,
         general,
         genMain,
         pocket: deckCard.pocket,

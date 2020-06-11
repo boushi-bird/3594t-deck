@@ -11,7 +11,7 @@ import DeckDummyCard from '../DeckDummyCard';
 import type { DeckCardGeneral, DeckCardDummy } from '../../modules/deck';
 
 interface DeckCardGeneralInfo
-  extends Pick<DeckCardGeneral, 'genMain' | 'pocket'> {
+  extends Pick<DeckCardGeneral, 'genMain' | 'pocket' | 'key'> {
   general: General;
 }
 
@@ -75,6 +75,8 @@ export interface DispatchFromProps {
   ) => void;
   setActiveAssistCard: (index: number) => void;
   removeDeckAssist: (index: number) => void;
+  moveLeft: (index: number) => void;
+  moveRight: (index: number) => void;
 }
 
 export type Props = StateFromProps & DispatchFromProps;
@@ -135,38 +137,51 @@ export default class DeckBoard extends React.Component<Props> {
       setActiveCard,
       removeDeck,
       toggleSearch,
+      moveLeft,
+      moveRight,
     } = this.props;
     const deckCardsElements: JSX.Element[] = [];
     deckCards.forEach((deckCard, i) => {
       const active = activeIndex === i;
+      const firstCard = i === 0;
+      const lastCard = i === deckCards.length - 1;
+      const key = deckCard.key;
       if ('general' in deckCard) {
         const { general, genMain, pocket } = deckCard;
         deckCardsElements.push(
           <DeckCard
-            key={i}
+            key={key}
             index={i}
             active={active}
             search={active && enableSearch}
             genMain={genMain}
             general={general}
             pocket={pocket}
+            enableMoveLeft={!firstCard}
+            enableMoveRight={!lastCard}
             onSelectMainGen={selectMainGen}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
+            onMoveLeft={moveLeft}
+            onMoveRight={moveRight}
           />
         );
       } else {
         deckCardsElements.push(
           <DeckDummyCard
-            key={i}
+            key={key}
             index={i}
             active={active}
             search={active && enableSearch}
             deckCard={deckCard}
+            enableMoveLeft={!firstCard}
+            enableMoveRight={!lastCard}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
+            onMoveLeft={moveLeft}
+            onMoveRight={moveRight}
           />
         );
       }

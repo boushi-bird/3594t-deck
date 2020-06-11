@@ -12,7 +12,7 @@ import { faSyncAlt } from '@fortawesome/free-solid-svg-icons/faSyncAlt';
 import type { General, AssistGeneral } from '3594t-deck';
 import type { State } from '../../store';
 import type {
-  DeckCardGeneral,
+  KeyLessDeckCardGeneral,
   DeckCard,
   DeckCardAssist,
   SameCardConstraint,
@@ -25,7 +25,7 @@ interface StateFromProps {
 }
 
 type DispatchFromProps = {
-  onAddDeck: (card: DeckCardGeneral) => void;
+  onAddDeck: (card: KeyLessDeckCardGeneral) => void;
 };
 
 interface OwnProps {
@@ -99,8 +99,8 @@ interface ContainerStateFromProps {
 }
 
 interface ContainerDispatchFromProps {
-  addDeckGeneral: (card: DeckCardGeneral) => void;
-  changeDeckGeneral: (index: number, card: DeckCardGeneral) => void;
+  addDeckGeneral: (card: KeyLessDeckCardGeneral) => void;
+  changeDeckGeneral: (index: number, card: KeyLessDeckCardGeneral) => void;
 }
 
 type TMapStateToProps = MapStateToProps<
@@ -243,7 +243,7 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
     enabledAddDeck,
   };
   const dProps: DispatchFromProps = {
-    onAddDeck: (card: DeckCardGeneral) => {
+    onAddDeck: (card: KeyLessDeckCardGeneral) => {
       if (!enabledAddDeck) {
         return;
       }
