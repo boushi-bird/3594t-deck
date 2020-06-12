@@ -75,6 +75,7 @@ export interface DispatchFromProps {
   ) => void;
   setActiveAssistCard: (index: number) => void;
   removeDeckAssist: (index: number) => void;
+  showDetail: (general: General) => void;
   moveLeft: (index: number) => void;
   moveRight: (index: number) => void;
 }
@@ -137,6 +138,7 @@ export default class DeckBoard extends React.Component<Props> {
       setActiveCard,
       removeDeck,
       toggleSearch,
+      showDetail,
       moveLeft,
       moveRight,
     } = this.props;
@@ -163,6 +165,7 @@ export default class DeckBoard extends React.Component<Props> {
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
+            onShowDetail={showDetail}
             onMoveLeft={moveLeft}
             onMoveRight={moveRight}
           />
