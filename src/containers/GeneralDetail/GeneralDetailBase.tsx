@@ -1,5 +1,7 @@
 import './GeneralDetail.css';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
 import { strategyRangeImageUrl } from '../../utils/externalUrl';
 
 export interface StateBaseProps<C> {
@@ -18,6 +20,10 @@ export default abstract class GeneralDetailBase<
   protected abstract createCardElement(card: CARD): JSX.Element;
   protected abstract getStratExplanation(card: CARD): string;
   protected abstract getStratRangeCode(card: CARD): string | undefined;
+
+  private handleClose = (): void => {
+    this.props.close();
+  };
 
   public render(): React.ReactNode {
     const card: CARD | null = this.props.card;
@@ -49,6 +55,9 @@ export default abstract class GeneralDetailBase<
             </div>
           </div>
         </div>
+        <button className="close" onClick={this.handleClose}>
+          <FontAwesomeIcon icon={faTimesCircle} />
+        </button>
       </div>
     );
   }
