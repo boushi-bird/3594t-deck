@@ -2,6 +2,7 @@ import './AssistDeckCard.css';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import classNames from 'classnames';
 import type { AssistGeneral } from '3594t-deck';
 
@@ -11,6 +12,7 @@ interface Props {
   active: boolean;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
+  onShowDetail: (assist: AssistGeneral) => void;
 }
 
 const DEFAULT_ASSIST: {
@@ -39,6 +41,17 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
       return;
     }
     onRemoveDeck(index);
+  };
+
+  private handleShowDetail = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    const { assist, onShowDetail } = this.props;
+    if (!assist) {
+      return;
+    }
+    onShowDetail(assist);
   };
 
   public render(): React.ReactNode {
@@ -81,8 +94,15 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
         <span className="name">{name}</span>
         <span className="strategy">{stratName}</span>
         <div className="tool-box">
-          <button className="tool-button remove" onClick={this.handleRemove}>
+          <button className="remove" onClick={this.handleRemove}>
             <FontAwesomeIcon icon={faMinusCircle} className="circle-icon" />
+          </button>
+          <button
+            className="tool-button show-detail"
+            title="遊軍詳細"
+            onClick={this.handleShowDetail}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} />
           </button>
         </div>
       </div>

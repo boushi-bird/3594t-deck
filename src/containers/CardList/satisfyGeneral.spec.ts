@@ -125,8 +125,8 @@ const EXAMPLE_GENERAL = new GeneralImpl(
 const searchMode: SearchMode = 'general';
 
 const DEFAULT_FILTER = {
+  searchMode,
   basic: {
-    searchMode,
     belongStates: [],
     costs: [],
     unitTypes: [],

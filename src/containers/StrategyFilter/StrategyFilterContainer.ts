@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setStrategiesFilterConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleStrategyCheckList } from '../Common/toggleCheckList';
+import getSearchMode from '../Common/getSearchMode';
 import type { StrategiesFilterConditionKey } from '../../modules/datalist';
 import { datalistActions } from '../../modules/datalist';
 import type { State } from '../../store';
@@ -34,7 +35,7 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  searchMode: state.datalist.filterCondition.basic.searchMode,
+  searchMode: getSearchMode(state.deck, state.datalist.filterCondition),
   filterCondition: state.datalist.filterCondition.strategies,
   filterContents: state.datalist.filterContents,
 });

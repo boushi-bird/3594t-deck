@@ -2,6 +2,8 @@ import './AssistGeneralCard.css';
 import React from 'react';
 import classNames from 'classnames';
 import LazyLoad from 'react-lazyload';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import type { AssistGeneral } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
 import { strategyRangeImageUrl } from '../../utils/externalUrl';
@@ -30,9 +32,7 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
       showStrategyExplanation,
       showAddButtons,
     } = this.props;
-    // const clickable = showAddButtons;
-    // TODO 詳細表示
-    const clickable = false;
+    const clickable = showAddButtons;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
     };
@@ -54,7 +54,14 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
     const extraArea: JSX.Element = showAddButtons ? (
       <AddButtonContainer assist={general} show={show} />
     ) : (
-      <></>
+      <span className="externals">
+        <a href={general.officialUrl} target="_blank" rel="noopener noreferrer">
+          公式
+          <br />
+          サイトへ
+          <FontAwesomeIcon icon={faExternalLinkAlt} />
+        </a>
+      </span>
     );
     return (
       <div

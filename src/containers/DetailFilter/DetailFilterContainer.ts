@@ -6,6 +6,7 @@ import type {
 import { connect } from 'react-redux';
 import { setDetailConditionAdapter } from '../Common/setConditionAdapter';
 import { toggleDetailCheckList } from '../Common/toggleCheckList';
+import getSearchMode from '../Common/getSearchMode';
 import type { DetailFilterConditionKey } from '../../modules/datalist';
 import type { State } from '../../store';
 import type { StateFromProps, DispatchFromProps, Props } from './DetailFilter';
@@ -28,7 +29,7 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  searchMode: state.datalist.filterCondition.basic.searchMode,
+  searchMode: getSearchMode(state.deck, state.datalist.filterCondition),
   filterCondition: state.datalist.filterCondition.detail,
   filterContents: state.datalist.filterContents,
 });

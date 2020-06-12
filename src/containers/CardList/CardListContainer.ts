@@ -6,7 +6,8 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { General, Strategy } from '3594t-deck';
+import type { General, Strategy, SearchMode } from '3594t-deck';
+import getSearchMode from '../Common/getSearchMode';
 import type { FilterCondition } from '../../modules/datalist';
 import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
@@ -22,6 +23,7 @@ interface ContainerStateFromProps {
   currentPage: number;
   pageLimit: number;
   filterCondition: FilterCondition;
+  searchMode: SearchMode;
   deckSearchCondition?: {
     belongState?: string;
     cost: string;
@@ -65,6 +67,10 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   currentPage: state.datalist.currentPage,
   pageLimit: state.datalist.pageLimit,
   filterCondition: state.datalist.effectiveFilterCondition,
+  searchMode: getSearchMode(
+    state.deck,
+    state.datalist.effectiveFilterCondition
+  ),
   deckSearchCondition: state.deck.searchCondition,
 });
 
@@ -86,6 +92,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     currentPage,
     pageLimit,
     filterCondition: rawFilterCondition,
+    searchMode,
     deckSearchCondition,
   } = state;
   let filterCondition = rawFilterCondition;
@@ -143,7 +150,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     searchedLimit: pageLimit,
     hasPrev,
     hasNext,
-    show: filterCondition.basic.searchMode === 'general',
+    show: searchMode === 'general',
     showStrategyExplanation: filterCondition.strategies.showStrategyExplanation,
   };
 

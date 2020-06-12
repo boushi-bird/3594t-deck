@@ -3,6 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import classNames from 'classnames';
@@ -28,6 +29,7 @@ interface Props {
       unitType: string;
     }
   ) => void;
+  onShowDetail: (general: General) => void;
   onMoveLeft: (index: number) => void;
   onMoveRight: (index: number) => void;
 }
@@ -91,6 +93,15 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
       unitType: general.raw.unit_type,
     };
     onToggleSearch(index, condition);
+  };
+
+  private handleShowDetail = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
+    event.stopPropagation();
+    this.setState({ moveFrom: null });
+    const { general, onShowDetail } = this.props;
+    onShowDetail(general);
   };
 
   private handleMoveLeft = (
@@ -226,6 +237,13 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
             onClick={this.handleSearch}
           >
             <FontAwesomeIcon icon={faSearch} />
+          </button>
+          <button
+            className="tool-button show-detail"
+            title="武将詳細"
+            onClick={this.handleShowDetail}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} />
           </button>
           <button
             className={classNames('tool-button', 'move-left', {

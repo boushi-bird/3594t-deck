@@ -19,8 +19,6 @@ import {
 } from '../const';
 
 export interface BasicFilterCondition {
-  /** 検索モード */
-  searchMode: SearchMode;
   /** 勢力 */
   belongStates: string[];
   /** コスト */
@@ -96,8 +94,13 @@ export interface StrategiesFilterCondition {
 }
 
 export interface FilterCondition {
+  /** 検索モード */
+  searchMode: SearchMode;
+  /** 絞り込み条件: 基本 */
   basic: BasicFilterCondition;
+  /** 絞り込み条件: 詳細 */
   detail: DetailFilterCondition;
+  /** 絞り込み条件: 計略 */
   strategies: StrategiesFilterCondition;
 }
 
@@ -106,7 +109,6 @@ export type DetailFilterConditionKey = keyof DetailFilterCondition;
 export type StrategiesFilterConditionKey = keyof StrategiesFilterCondition;
 
 const initialBasicFilterCondition: BasicFilterCondition = {
-  searchMode: 'general',
   belongStates: [],
   costs: [],
   unitTypes: [],
@@ -155,6 +157,7 @@ const initialStrategiesFilterCondition: StrategiesFilterCondition = {
 };
 
 const initialFilterCondition: FilterCondition = {
+  searchMode: 'general',
   basic: initialBasicFilterCondition,
   detail: initialDetailFilterCondition,
   strategies: initialStrategiesFilterCondition,
@@ -216,6 +219,18 @@ export const datalistModule = createSlice({
         ...state,
         effectiveFilterCondition: cloneDeep(state.filterCondition),
         currentPage: initialState.currentPage,
+      };
+    },
+    setSearchMode(
+      state: DatalistState,
+      action: PayloadAction<SearchMode>
+    ): DatalistState {
+      return {
+        ...state,
+        filterCondition: {
+          ...state.filterCondition,
+          searchMode: action.payload,
+        },
       };
     },
     setBasicCondition(

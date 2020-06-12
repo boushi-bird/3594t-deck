@@ -18,6 +18,7 @@ import DetailFilter from '../DetailFilter';
 import StrategyFilter from '../StrategyFilter';
 import DeckConfig from '../DeckConfig';
 import UpdateInfo from '../UpdateInfo';
+import AssistDetail from '../AssistDetail';
 import GeneralDetail from '../GeneralDetail';
 import Dialog from '../Dialog';
 
@@ -167,6 +168,7 @@ export default class App extends React.PureComponent<Props> {
           </div>
         </div>
         <div className="modal-background" onClick={closeAllModal} />
+        <AssistDetail />
         <GeneralDetail />
         <DeckConfig />
         <UpdateInfo />

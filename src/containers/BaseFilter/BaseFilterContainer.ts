@@ -4,9 +4,13 @@ import type {
   MergeProps,
 } from 'react-redux';
 import { connect } from 'react-redux';
-import type { FilterContents } from '3594t-deck';
-import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
+import type { FilterContents, SearchMode } from '3594t-deck';
+import {
+  setSearchModeAdapter,
+  setBasicConditionAdapter,
+} from '../Common/setConditionAdapter';
 import { toggleBasicCheckList } from '../Common/toggleCheckList';
+import getSearchMode from '../Common/getSearchMode';
 import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
@@ -16,6 +20,7 @@ import type { StateFromProps, DispatchFromProps, Props } from './BaseFilter';
 import BaseFilter from './BaseFilter';
 
 interface ContainerStateFromProps {
+  searchMode: SearchMode;
   filterCondition: BasicFilterCondition;
   filterContents: FilterContents;
   deckSearchCondition?: {
@@ -48,6 +53,7 @@ type TMergeProps = MergeProps<
 const mapStateToProps: TMapStateToProps = (state) => {
   const { searchCondition } = state.deck;
   return {
+    searchMode: getSearchMode(state.deck, state.datalist.filterCondition),
     filterCondition: state.datalist.filterCondition.basic,
     filterContents: state.datalist.filterContents,
     deckSearchCondition: searchCondition,
@@ -55,11 +61,17 @@ const mapStateToProps: TMapStateToProps = (state) => {
 };
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => ({
+  setSearchMode: setSearchModeAdapter(dispatch),
   setCondition: setBasicConditionAdapter(dispatch),
 });
 
 const mergeProps: TMergeProps = (state, actions) => {
-  const { deckSearchCondition, filterCondition, filterContents } = state;
+  const {
+    searchMode,
+    filterCondition,
+    filterContents,
+    deckSearchCondition,
+  } = state;
   let sProps: StateFromProps;
   if (deckSearchCondition) {
     let belongStates: string[];
@@ -80,6 +92,7 @@ const mergeProps: TMergeProps = (state, actions) => {
       unitTypes = filterCondition.unitTypes;
     }
     sProps = {
+      searchMode,
       filterContents,
       searchByDeckBelongState,
       searchByDeckCost: true,
@@ -93,6 +106,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     };
   } else {
     sProps = {
+      searchMode,
       filterContents,
       filterCondition,
       searchByDeckBelongState: false,
