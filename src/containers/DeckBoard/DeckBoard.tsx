@@ -76,6 +76,7 @@ export interface DispatchFromProps {
   setActiveAssistCard: (index: number) => void;
   removeDeckAssist: (index: number) => void;
   showDetail: (general: General) => void;
+  showAssistDetail: (assist: AssistGeneral) => void;
   moveLeft: (index: number) => void;
   moveRight: (index: number) => void;
 }
@@ -99,6 +100,7 @@ export default class DeckBoard extends React.Component<Props> {
       activeAssistIndex,
       setActiveAssistCard,
       removeDeckAssist,
+      showAssistDetail,
     } = this.props;
     const assistDeckCardsElements: JSX.Element[] = [];
     assistDeckCards.forEach((assistDeckCard, i) => {
@@ -111,6 +113,7 @@ export default class DeckBoard extends React.Component<Props> {
           active={active}
           onActive={setActiveAssistCard}
           onRemoveDeck={removeDeckAssist}
+          onShowDetail={showAssistDetail}
         />
       );
     });

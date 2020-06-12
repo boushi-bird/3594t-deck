@@ -107,6 +107,7 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
       clearDeck: deckActions.clearDeck,
       searchByDeck: deckActions.searchByDeck,
       showDetail: windowActions.openGeneralDetail,
+      showAssistDetail: windowActions.openAssistGeneralDetail,
       moveLeft: (index: number) =>
         deckActions.moveDeckIndex({ index, direction: 'left' }),
       moveRight: (index: number) =>

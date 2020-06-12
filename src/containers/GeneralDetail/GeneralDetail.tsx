@@ -1,47 +1,31 @@
-import './GeneralDetail.css';
 import React from 'react';
 import type { General } from '3594t-deck';
+import type { StateBaseProps, DispatchBaseProps } from './GeneralDetailBase';
+import GeneralDetailBase from './GeneralDetailBase';
 import GeneralCard from '../../components/GeneralCard';
-import { strategyRangeImageUrl } from '../../utils/externalUrl';
 
-export interface Props {
-  general: General | null;
-}
+export type StateFromProps = StateBaseProps<General>;
 
-export default class GeneralDetail extends React.PureComponent<Props> {
-  public render(): React.ReactNode {
-    const { general } = this.props;
-    if (!general) {
-      return <></>;
-    }
-    const stratExplanation = general.strategy.explanation;
-    const stratExplanationElements: JSX.Element[] = [];
-    stratExplanation.split('\n').forEach((exp, i) => {
-      stratExplanationElements.push(<span key={i}>{exp}</span>);
-    });
-    const strategyRangeUrl = strategyRangeImageUrl(
-      general.strategy.stratRangeCode
-    );
+export type DispatchFromProps = DispatchBaseProps;
+
+export type Props = StateFromProps & DispatchFromProps;
+
+export default class GeneralDetail extends GeneralDetailBase<General, Props> {
+  protected createCardElement(general: General): JSX.Element {
     return (
-      <div className="general-detail">
-        <div className="general-detail-inner">
-          <GeneralCard
-            general={general}
-            showStrategyExplanation={false}
-            showAddButtons={false}
-          />
-          <div className="general-detail-body">
-            <div className="row">
-              <div className="strategy-explanation" data-label="計略説明">
-                {stratExplanationElements}
-              </div>
-              <div className="strategy-range" data-label="計略範囲">
-                <img className="range-image" src={strategyRangeUrl} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <GeneralCard
+        general={general}
+        showStrategyExplanation={false}
+        showAddButtons={false}
+      />
     );
+  }
+
+  protected getStratExplanation(general: General): string {
+    return general.strategy.explanation;
+  }
+
+  protected getStratRangeCode(general: General): string | undefined {
+    return general.strategy.stratRangeCode;
   }
 }

@@ -36,6 +36,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
     state.window.openedDeckConfig ||
     state.window.openedUpdateInfo ||
     !!state.window.detailGeneral ||
+    !!state.window.detailAssistGeneral ||
     !state.window.ready,
   openedAnyModalSmall: state.window.openedFilter || !state.window.ready,
   loading: !state.window.ready,
