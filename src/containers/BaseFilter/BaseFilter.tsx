@@ -1,7 +1,7 @@
 import './BaseFilter.css';
 import React from 'react';
 import classNames from 'classnames';
-import type { FilterContents } from '3594t-deck';
+import type { FilterContents, SearchMode } from '3594t-deck';
 import {
   MIN_FORCE,
   MAX_FORCE,
@@ -22,6 +22,7 @@ import CostRatioBaseForce from '../../components/CostRatioBaseForce';
 import SearchTextBox from '../../components/SearchTextBox';
 
 export interface StateFromProps {
+  searchMode: SearchMode;
   filterCondition: BasicFilterCondition;
   filterContents: FilterContents;
   searchByDeckBelongState: boolean;
@@ -30,6 +31,7 @@ export interface StateFromProps {
 }
 
 export interface DispatchFromProps {
+  setSearchMode: (searchMode: SearchMode) => void;
   setCondition: (condition: Partial<BasicFilterCondition>) => void;
   toggleCheckList: (key: BasicFilterConditionKey, value: string) => void;
 }
@@ -37,19 +39,23 @@ export interface DispatchFromProps {
 export type Props = StateFromProps & DispatchFromProps;
 
 export default class BaseFilter extends React.PureComponent<Props> {
+  private handleOnChangeSearchMode: <V>(
+    _: 'searchMode',
+    value: boolean
+  ) => void = (itemName, value): void => {
+    this.props.setSearchMode(value ? 'assist' : 'general');
+  };
+
   private handleOnChangeValue: <V>(
     itemName: BasicFilterConditionKey,
     value: V
   ) => void = (itemName, value): void => {
-    if (itemName === 'searchMode') {
-      this.props.setCondition({ ['searchMode']: value ? 'assist' : 'general' });
-      return;
-    }
     this.props.setCondition({ [itemName]: value });
   };
 
   public render(): React.ReactNode {
     const {
+      searchMode,
       filterContents,
       filterCondition,
       searchByDeckBelongState,
@@ -58,14 +64,14 @@ export default class BaseFilter extends React.PureComponent<Props> {
       setCondition,
       toggleCheckList,
     } = this.props;
-    const generalModeOff = filterCondition.searchMode !== 'general';
+    const generalModeOff = searchMode !== 'general';
     return (
       <div className={classNames({ 'general-mode-off': generalModeOff })}>
         <section className="filter-section">
           <h2 className="title">武将/遊軍切り替え</h2>
-          <SwitchItem<BasicFilterConditionKey>
+          <SwitchItem<'searchMode'>
             itemName="searchMode"
-            onChangeValue={this.handleOnChangeValue}
+            onChangeValue={this.handleOnChangeSearchMode}
             isOn={generalModeOff}
             labelOff="武将"
             labelOn="遊軍"

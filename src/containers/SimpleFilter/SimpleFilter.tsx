@@ -16,6 +16,7 @@ export interface StateFromProps {
 }
 
 export interface DispatchFromProps {
+  setSearchMode: (searchMode: SearchMode) => void;
   setCondition: (condition: Partial<BasicFilterCondition>) => void;
   toggleCheckList: (key: BasicFilterConditionKey, value: string) => void;
 }
@@ -31,9 +32,9 @@ export default class SimpleFilter extends React.Component<Props> {
   };
 
   private handleOnClickToggleSearchMode = (): void => {
-    const { searchMode, setCondition } = this.props;
+    const { searchMode, setSearchMode } = this.props;
     const newSearchMode = searchMode === 'general' ? 'assist' : 'general';
-    setCondition({ searchMode: newSearchMode });
+    setSearchMode(newSearchMode);
   };
 
   public render(): React.ReactNode {

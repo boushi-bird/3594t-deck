@@ -7,6 +7,7 @@ import type {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import type { AssistGeneral, SearchMode } from '3594t-deck';
+import getSearchMode from '../Common/getSearchMode';
 import { datalistActions } from '../../modules/datalist';
 import { windowActions } from '../../modules/window';
 import type { State } from '../../store';
@@ -62,7 +63,10 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   pageLimit: state.datalist.pageLimit,
   belongStates: state.datalist.effectiveFilterCondition.basic.belongStates,
   enableSearchByDeck: state.deck.searchCondition != null,
-  searchMode: state.datalist.effectiveFilterCondition.basic.searchMode,
+  searchMode: getSearchMode(
+    state.deck,
+    state.datalist.effectiveFilterCondition
+  ),
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {

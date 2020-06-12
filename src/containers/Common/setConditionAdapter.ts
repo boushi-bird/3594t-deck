@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { SearchMode } from '3594t-deck';
 import type {
   BasicFilterCondition,
   DetailFilterCondition,
@@ -8,6 +9,18 @@ import { datalistActions } from '../../modules/datalist';
 
 let handleId: NodeJS.Timeout;
 const delayTime = 500;
+
+export function setSearchModeAdapter(
+  dispatch: Dispatch
+): (searchMode: SearchMode) => void {
+  return (searchMode: SearchMode): void => {
+    dispatch(datalistActions.setSearchMode(searchMode));
+    clearTimeout(handleId);
+    handleId = setTimeout(() => {
+      dispatch(datalistActions.applyCondition());
+    }, delayTime);
+  };
+}
 
 export function setBasicConditionAdapter(
   dispatch: Dispatch

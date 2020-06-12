@@ -4,9 +4,13 @@ import type {
   MergeProps,
 } from 'react-redux';
 import { connect } from 'react-redux';
-import type { FilterItem } from '3594t-deck';
-import { setBasicConditionAdapter } from '../Common/setConditionAdapter';
+import type { FilterItem, SearchMode } from '3594t-deck';
+import {
+  setSearchModeAdapter,
+  setBasicConditionAdapter,
+} from '../Common/setConditionAdapter';
 import { toggleBasicCheckList } from '../Common/toggleCheckList';
+import getSearchMode from '../Common/getSearchMode';
 import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
@@ -17,13 +21,12 @@ import SimpleFilter from './SimpleFilter';
 
 interface ContainerStateFromProps {
   belongStates: FilterItem[];
+  searchMode: SearchMode;
   basicFilterCondition: BasicFilterCondition;
   deckCardBelongState?: string;
 }
 
-interface ContainerDispatchFromProps {
-  setCondition: (condition: Partial<BasicFilterCondition>) => void;
-}
+type ContainerDispatchFromProps = Omit<DispatchFromProps, 'toggleCheckList'>;
 
 type OwnProps = {};
 
@@ -50,17 +53,24 @@ const mapStateToProps: TMapStateToProps = (state) => {
     : undefined;
   return {
     belongStates: state.datalist.filterContents.belongStates,
+    searchMode: getSearchMode(state.deck, state.datalist.filterCondition),
     basicFilterCondition: state.datalist.filterCondition.basic,
     deckCardBelongState,
   };
 };
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => ({
+  setSearchMode: setSearchModeAdapter(dispatch),
   setCondition: setBasicConditionAdapter(dispatch),
 });
 
 const mergeProps: TMergeProps = (state, actions) => {
-  const { deckCardBelongState, belongStates, basicFilterCondition } = state;
+  const {
+    deckCardBelongState,
+    belongStates,
+    searchMode,
+    basicFilterCondition,
+  } = state;
   let searchByDeck = false;
   let filterCondition = basicFilterCondition.belongStates;
   if (deckCardBelongState != null) {
@@ -71,10 +81,11 @@ const mergeProps: TMergeProps = (state, actions) => {
     filterContents: belongStates,
     filterCondition,
     searchByDeck,
-    searchMode: basicFilterCondition.searchMode,
+    searchMode,
   };
   const dProps: DispatchFromProps = {
     setCondition: actions.setCondition,
+    setSearchMode: actions.setSearchMode,
     toggleCheckList: (key: BasicFilterConditionKey, value: string) => {
       actions.setCondition(
         toggleBasicCheckList(basicFilterCondition, key, value)
