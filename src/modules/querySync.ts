@@ -41,7 +41,8 @@ const toQueryDeckCard = ({ generals, filterContents }: DataContents) => {
         (r) => r.id === deckCard.genMain
       );
       const code = deckCard.pocket ? general.pocketCode : general.code;
-      const genMainCode = genMain ? genMain.code : '';
+      const genMainCode =
+        (genMain ? genMain.code : '') + (deckCard.genMainAwaking ? '*' : '');
       // 武将 (code)_(genMainCode)
       return [code, genMainCode].join('_');
     }
@@ -64,9 +65,11 @@ const parseDeckCardGeneral = (
   {
     code,
     genMainCode,
+    genMainAwaking,
   }: {
     code?: string;
     genMainCode?: string;
+    genMainAwaking: boolean;
   },
   { generals, filterContents }: DataContents
 ): KeyLessDeckCardGeneral | null => {
@@ -88,6 +91,7 @@ const parseDeckCardGeneral = (
   return {
     general: general.id,
     genMain: genMainid,
+    genMainAwaking,
     pocket,
   };
 };
@@ -117,15 +121,12 @@ const parseDeckCardDummy = (
 
 const parseDeckCard = ({ generals, filterContents }: DataContents) => {
   return (v: string): KeyLessDeckCard => {
-    const [
-      code,
-      genMainCode,
-      cost,
-      belongStateNameShort,
-      unitTypeName,
-    ] = v.split('_');
+    const [code, genMain, cost, belongStateNameShort, unitTypeName] = v.split(
+      '_'
+    );
+    const [genMainCode, awaking] = genMain.split('*');
     const g = parseDeckCardGeneral(
-      { code, genMainCode },
+      { code, genMainCode, genMainAwaking: awaking === '' },
       { generals, filterContents }
     );
     if (g) {

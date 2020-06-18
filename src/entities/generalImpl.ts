@@ -4,6 +4,7 @@ import type {
   GeneralProps,
   General,
   DataItem,
+  GenMainItem,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
 import {
@@ -25,7 +26,8 @@ export class GeneralImpl implements General {
   public readonly intelligence: number;
   public readonly conquest: number;
   public readonly cost: DataItem;
-  public readonly genMains: readonly FilterItem[];
+  public readonly genMains: readonly GenMainItem[];
+  public readonly genMainSp: GenMainItem | null;
   public readonly generalType: DataItem;
   public readonly personal?: Personal;
   public readonly rarity: DataItem;

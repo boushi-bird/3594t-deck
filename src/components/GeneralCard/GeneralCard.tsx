@@ -66,7 +66,11 @@ export default class GeneralCard extends React.PureComponent<Props> {
     const extraArea: JSX.Element = showAddButtons ? (
       <AddButtonContainer general={general} show={show} />
     ) : (
-      <GenMains genMains={general.genMains} officialUrl={general.officialUrl} />
+      <GenMains
+        genMains={general.genMains}
+        genMainSp={general.genMainSp}
+        officialUrl={general.officialUrl}
+      />
     );
     return (
       <div

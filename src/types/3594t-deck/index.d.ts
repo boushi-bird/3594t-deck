@@ -24,6 +24,10 @@ declare module '3594t-deck' {
 
   interface FilterItem extends DataItem, IdItem {}
 
+  interface GenMainItem extends FilterItem {
+    replace: boolean;
+  }
+
   interface ButtonItem {
     id: string;
     name: string;
@@ -63,7 +67,9 @@ declare module '3594t-deck' {
     /** コスト */
     readonly cost: DataItem;
     /** 主将器 */
-    readonly genMains: readonly FilterItem[];
+    readonly genMains: readonly GenMainItem[];
+    /** 奇才将器 */
+    readonly genMainSp: GenMainItem | null;
     /** 官職 */
     readonly generalType: DataItem;
     /** 武将名 */
@@ -162,7 +168,7 @@ declare module '3594t-deck' {
     /** 特技 */
     skills: FilterItem[];
     /** 主将器 */
-    genMains: FilterItem[];
+    genMains: GenMainItem[];
     /** レアリティ */
     rarities: FilterItem[];
     /** 官職 */

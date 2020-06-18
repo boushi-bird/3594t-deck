@@ -10,9 +10,14 @@ import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
 import type { DeckCardGeneral, DeckCardDummy } from '../../modules/deck';
 
-interface DeckCardGeneralInfo
-  extends Pick<DeckCardGeneral, 'genMain' | 'pocket' | 'key'> {
+interface DeckCardGeneralInfo extends Omit<DeckCardGeneral, 'general'> {
   general: General;
+  genMainAwakingCount: number;
+  additionalParams: {
+    force: number;
+    intelligence: number;
+    conquest: number;
+  };
 }
 
 export interface DeckCardAssistInfo {
@@ -56,6 +61,10 @@ export interface StateFromProps {
   hasDummy: boolean;
   /** 勢力未指定ダミー含む */
   hasStateDummy: boolean;
+  /** 覚醒済み将器ポイント */
+  totalAwakingGenMainCount: number;
+  /** 覚醒できる主将器の最大ポイント数 */
+  genMainAwakingLimit: number;
 }
 
 export interface DispatchFromProps {
@@ -63,6 +72,7 @@ export interface DispatchFromProps {
   clearDeck: () => void;
   openDeckConfig: () => void;
   selectMainGen: (index: number, genMain?: string) => void;
+  awakeMainGen: (index: number, awake: boolean) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
   toggleSearch: (
@@ -101,6 +111,7 @@ export default class DeckBoard extends React.Component<Props> {
       setActiveAssistCard,
       removeDeckAssist,
       showAssistDetail,
+      openDeckConfig,
     } = this.props;
     const assistDeckCardsElements: JSX.Element[] = [];
     assistDeckCards.forEach((assistDeckCard, i) => {
@@ -124,6 +135,9 @@ export default class DeckBoard extends React.Component<Props> {
     return (
       <div className="assist-deck-card-list" style={style}>
         {assistDeckCardsElements}
+        <div className="open-deck-config button" onClick={openDeckConfig}>
+          <FontAwesomeIcon icon={faCog} />
+        </div>
       </div>
     );
   }
@@ -134,10 +148,14 @@ export default class DeckBoard extends React.Component<Props> {
       activeIndex,
       enableSearch,
       enabledAddDeck,
+      totalAwakingGenMainCount,
+      genMainAwakingLimit,
+      assistDeckCards,
       addDeckDummy,
       clearDeck,
       openDeckConfig,
       selectMainGen,
+      awakeMainGen,
       setActiveCard,
       removeDeck,
       toggleSearch,
@@ -152,7 +170,17 @@ export default class DeckBoard extends React.Component<Props> {
       const lastCard = i === deckCards.length - 1;
       const key = deckCard.key;
       if ('general' in deckCard) {
-        const { general, genMain, pocket } = deckCard;
+        const {
+          general,
+          additionalParams,
+          genMain,
+          genMainAwaking,
+          genMainAwakingCount,
+          pocket,
+        } = deckCard;
+        const enableGenMainAwake =
+          genMainAwaking ||
+          genMainAwakingLimit >= genMainAwakingCount + totalAwakingGenMainCount;
         deckCardsElements.push(
           <DeckCard
             key={key}
@@ -160,11 +188,16 @@ export default class DeckBoard extends React.Component<Props> {
             active={active}
             search={active && enableSearch}
             genMain={genMain}
+            genMainAwaking={genMainAwaking}
+            genMainAwakingCount={genMainAwakingCount}
             general={general}
+            additionalParams={additionalParams}
             pocket={pocket}
             enableMoveLeft={!firstCard}
             enableMoveRight={!lastCard}
+            enableGenMainAwake={enableGenMainAwake}
             onSelectMainGen={selectMainGen}
+            onAwakeMainGen={awakeMainGen}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
@@ -192,10 +225,17 @@ export default class DeckBoard extends React.Component<Props> {
         );
       }
     });
+    const deckConfigStyle: React.CSSProperties = {};
+    if (assistDeckCards.length > 0) {
+      deckConfigStyle.display = 'none';
+    }
     return (
       <div className="deck-card-list">
         {deckCardsElements}
         <div className="deck-actions">
+          <div className="deck-clear button" onClick={clearDeck}>
+            クリア
+          </div>
           <div
             className={classNames('add-new-deck-card', 'button', {
               disabled: !enabledAddDeck,
@@ -205,11 +245,20 @@ export default class DeckBoard extends React.Component<Props> {
             追加
             <FontAwesomeIcon icon={faPlusCircle} />
           </div>
-          <div className="deck-clear button" onClick={clearDeck}>
-            クリア
-          </div>
-          <div className="open-deck-config button" onClick={openDeckConfig}>
+          <div
+            style={deckConfigStyle}
+            className="open-deck-config button"
+            onClick={openDeckConfig}
+          >
             <FontAwesomeIcon icon={faCog} />
+          </div>
+          <div
+            className={classNames('deck-awaking-gen-main', {
+              'over-limit': totalAwakingGenMainCount > genMainAwakingLimit,
+            })}
+            data-label="将器ポイント"
+          >
+            {totalAwakingGenMainCount}/{genMainAwakingLimit}
           </div>
         </div>
       </div>
