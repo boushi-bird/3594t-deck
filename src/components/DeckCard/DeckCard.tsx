@@ -12,13 +12,22 @@ import type { General } from '3594t-deck';
 interface Props {
   index: number;
   genMain?: string;
+  genMainAwaking: boolean;
+  genMainAwakingCount: number;
   general: General;
+  additionalParams: {
+    force: number;
+    intelligence: number;
+    conquest: number;
+  };
   pocket: boolean;
   active: boolean;
   search: boolean;
   enableMoveLeft: boolean;
   enableMoveRight: boolean;
-  onSelectMainGen: (index: number, genMain?: string) => void;
+  enableGenMainAwake: boolean;
+  onSelectGenMain: (index: number, genMain?: string) => void;
+  onAwakeGenMain: (index: number, awake: boolean) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
   onToggleSearch: (
@@ -55,15 +64,32 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
     }
   }
 
-  private handleSelectMainGen = (
+  private handleSelectGenMain = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    const { index, onSelectMainGen } = this.props;
+    const { index, onSelectGenMain } = this.props;
     let value: string | undefined = event.currentTarget.value;
     if (value == null || value === '') {
       value = undefined;
     }
-    onSelectMainGen(index, value);
+    onSelectGenMain(index, value);
+  };
+
+  private handleAwakeGenMain = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.stopPropagation();
+    const {
+      index,
+      genMainAwaking,
+      enableGenMainAwake,
+      onAwakeGenMain,
+    } = this.props;
+    const awake = !genMainAwaking;
+    if (awake && !enableGenMainAwake) {
+      return;
+    }
+    onAwakeGenMain(index, awake);
   };
 
   private handleActive = (
@@ -126,12 +152,16 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
     const {
       index,
       general,
+      additionalParams,
       genMain,
+      genMainAwaking,
+      genMainAwakingCount,
       active,
       search,
       pocket,
       enableMoveLeft,
       enableMoveRight,
+      enableGenMainAwake,
     } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
@@ -166,15 +196,28 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
     }
     const genMains: JSX.Element[] = [];
     general.genMains.forEach((genMain, i) => {
+      const gm = general.genMainSp || genMain;
       genMains.push(
         <option value={genMain.id} key={i}>
-          {genMain.nameShort}
+          {gm.nameShort}
         </option>
       );
     });
     const selectedGenMain = genMain != null ? genMain : '';
+    const genMainLabel = general.genMainSp != null ? '奇才将器' : '主将器';
     const moveFrom = this.state.moveFrom;
     const indexClass = index % 2 === 0 ? 'even' : 'odd';
+    const diamonds: JSX.Element[] = Array(genMainAwakingCount)
+      .fill(0)
+      .map((_, i) => <span key={i} className="diamond" />);
+    let genMainAwakeClass;
+    if (genMainAwaking) {
+      genMainAwakeClass = 'gen-main-awaking';
+    } else if (enableGenMainAwake) {
+      genMainAwakeClass = 'gen-main-not-awaking';
+    } else {
+      genMainAwakeClass = 'gen-main-disable-awaking';
+    }
     return (
       <div
         className={classNames('deck-card', indexClass, {
@@ -206,25 +249,49 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
           </span>
         </div>
         <div className="deck-card-inner-bottom">
-          <span className="force" data-label="武">
-            {general.force}
+          <span
+            className={classNames('force', {
+              additional: additionalParams.force > 0,
+            })}
+            data-label="武"
+          >
+            {general.force + additionalParams.force}
           </span>
-          <span className="intelligence" data-label="知">
-            {general.intelligence}
+          <span
+            className={classNames('intelligence', {
+              additional: additionalParams.intelligence > 0,
+            })}
+            data-label="知"
+          >
+            {general.intelligence + additionalParams.intelligence}
           </span>
-          <span className="conquest" data-label="制圧">
-            {general.conquest}
+          <span
+            className={classNames('conquest', {
+              additional: additionalParams.conquest > 0,
+            })}
+            data-label="制圧"
+          >
+            {general.conquest + additionalParams.conquest}
           </span>
           <span className="skills">{skills}</span>
-          <span className="gen-mains" data-label="主将器">
-            <select
-              className="gen-mains-select"
-              value={selectedGenMain}
-              onChange={this.handleSelectMainGen}
+          <span className="gen-mains" data-label={genMainLabel}>
+            <span className="gen-mains-select-wrapper">
+              <select
+                className="gen-mains-select"
+                value={selectedGenMain}
+                onChange={this.handleSelectGenMain}
+              >
+                <option value="" />
+                {genMains}
+              </select>
+            </span>
+            <button
+              className={classNames('awake-gen-main', genMainAwakeClass)}
+              onClick={this.handleAwakeGenMain}
             >
-              <option value="" />
-              {genMains}
-            </select>
+              <span className="diamonds">{diamonds}</span>
+              <span className="label">将器覚醒</span>
+            </button>
           </span>
         </div>
         <div className="tool-box">

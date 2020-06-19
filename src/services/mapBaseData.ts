@@ -92,10 +92,25 @@ const emptyAssistStrategy: AssistStrategy = {
   nameRuby: '',
 };
 
-const findById = (filterItems: FilterItem[], id: string): DataItem => {
+const findById = (
+  filterItems: FilterItem[],
+  id: string,
+  defaultValue: DataItem = emptyItem
+): DataItem => {
+  const item = findByIdNullable(filterItems, id);
+  if (item == null) {
+    return defaultValue;
+  }
+  return item;
+};
+
+const findByIdNullable = <D extends FilterItem>(
+  filterItems: D[],
+  id: string
+): D | null => {
   const item = filterItems.find((v) => v.id === id);
   if (!item) {
-    return emptyItem;
+    return null;
   }
   return item;
 };
@@ -140,7 +155,21 @@ export default (baseData: RawBaseData): BaseData => {
   // 特技
   const skills = convertIdItem(baseData.SKILL, idIsKey, toItem);
   // 主将器
-  const genMains = convertIdItem(baseData.GEN_MAIN, idIsKey, toItem);
+  const genMains = convertIdItem(baseData.GEN_MAIN, idIsKey, (s, id) => {
+    const dist = toItem(s, id);
+    return {
+      ...dist,
+      replace: s.replace === '1',
+    };
+  });
+  // 奇才将器
+  const genMainSps = convertIdItem(baseData.GEN_MAIN_SP, idIsKey, (s, id) => {
+    const dist = toItem(s, id);
+    return {
+      ...dist,
+      replace: s.replace === '1',
+    };
+  });
   // レアリティ
   const rarities = objectToIdItems(baseData.RARITY, toItem);
   // 官職
@@ -245,6 +274,7 @@ export default (baseData: RawBaseData): BaseData => {
           .filter((v) => v !== '')
           .map((v) => genMains.find((g) => g.id === v))
       ),
+      genMainSp: findByIdNullable(genMainSps, id),
       generalType: findById(generalTypes, raw.general_type),
       personal: baseData.PERSONAL[parseInt(raw.personal)],
       rarity: findById(rarities, raw.rarity),

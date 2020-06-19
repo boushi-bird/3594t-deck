@@ -13,6 +13,7 @@
   --danger-color: #f94355;
   --active-color: #ff8c00;
   --normal-border-color: #ccc;
+  --deep-border-color: #333;
   --title-color: white;
   --side-menu-color: black;
   --side-menu-disabled-color: #ccc;
@@ -24,8 +25,8 @@
   --deck-clear-button-gb-color: #c5e0dc;
   --deck-card-width: 72px;
   --deck-card-height: 250px;
-  --deck-card-inner-top-height: 136px;
-  --deck-card-inner-bottom-height: 114px;
+  --deck-card-inner-top-height: 115px;
+  --deck-card-inner-bottom-height: 135px;
   --deck-card-top-color: white;
   --deck-card-top-bg-color: rgba(0, 0, 0, 0.1);
   --deck-card-tool-box-button-color: lightslategray;

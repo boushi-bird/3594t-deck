@@ -10,9 +10,14 @@ import DeckCard from '../../components/DeckCard';
 import DeckDummyCard from '../DeckDummyCard';
 import type { DeckCardGeneral, DeckCardDummy } from '../../modules/deck';
 
-interface DeckCardGeneralInfo
-  extends Pick<DeckCardGeneral, 'genMain' | 'pocket' | 'key'> {
+interface DeckCardGeneralInfo extends Omit<DeckCardGeneral, 'general'> {
   general: General;
+  genMainAwakingCount: number;
+  additionalParams: {
+    force: number;
+    intelligence: number;
+    conquest: number;
+  };
 }
 
 export interface DeckCardAssistInfo {
@@ -33,11 +38,11 @@ export interface StateFromProps {
   /** 総知力 */
   totalIntelligence: number;
   /** 総知力将器加算値 */
-  intelligenceByMainGen: number;
+  intelligenceByGenMain: number;
   /** 総征圧力 */
   totalConquest: number;
   /** 総征圧力将器加算値 */
-  conquestByMainGen: number;
+  conquestByGenMain: number;
   /** 征圧ランク */
   conquestRank: string;
   /** 総コスト */
@@ -47,22 +52,27 @@ export interface StateFromProps {
   /** 最大士気 */
   maxMorale: number;
   /** 最大士気将器加算値 */
-  maxMoraleByMainGen: number;
+  maxMoraleByGenMain: number;
   /** 魅力による士気 */
   tolalMoraleByCharm: number;
   /** 主将器による士気 */
-  tolalMoraleByMainGen: number;
+  tolalMoraleByGenMain: number;
   /** ダミー含む */
   hasDummy: boolean;
   /** 勢力未指定ダミー含む */
   hasStateDummy: boolean;
+  /** 覚醒済み将器ポイント */
+  totalAwakingGenMainCount: number;
+  /** 覚醒できる主将器の最大ポイント数 */
+  genMainAwakingLimit: number;
 }
 
 export interface DispatchFromProps {
   addDeckDummy: () => void;
   clearDeck: () => void;
   openDeckConfig: () => void;
-  selectMainGen: (index: number, genMain?: string) => void;
+  selectGenMain: (index: number, genMain?: string) => void;
+  awakeGenMain: (index: number, awake: boolean) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
   toggleSearch: (
@@ -101,6 +111,7 @@ export default class DeckBoard extends React.Component<Props> {
       setActiveAssistCard,
       removeDeckAssist,
       showAssistDetail,
+      openDeckConfig,
     } = this.props;
     const assistDeckCardsElements: JSX.Element[] = [];
     assistDeckCards.forEach((assistDeckCard, i) => {
@@ -124,6 +135,9 @@ export default class DeckBoard extends React.Component<Props> {
     return (
       <div className="assist-deck-card-list" style={style}>
         {assistDeckCardsElements}
+        <div className="open-deck-config button" onClick={openDeckConfig}>
+          <FontAwesomeIcon icon={faCog} />
+        </div>
       </div>
     );
   }
@@ -134,10 +148,14 @@ export default class DeckBoard extends React.Component<Props> {
       activeIndex,
       enableSearch,
       enabledAddDeck,
+      totalAwakingGenMainCount,
+      genMainAwakingLimit,
+      assistDeckCards,
       addDeckDummy,
       clearDeck,
       openDeckConfig,
-      selectMainGen,
+      selectGenMain,
+      awakeGenMain,
       setActiveCard,
       removeDeck,
       toggleSearch,
@@ -152,7 +170,17 @@ export default class DeckBoard extends React.Component<Props> {
       const lastCard = i === deckCards.length - 1;
       const key = deckCard.key;
       if ('general' in deckCard) {
-        const { general, genMain, pocket } = deckCard;
+        const {
+          general,
+          additionalParams,
+          genMain,
+          genMainAwaking,
+          genMainAwakingCount,
+          pocket,
+        } = deckCard;
+        const enableGenMainAwake =
+          genMainAwaking ||
+          genMainAwakingLimit >= genMainAwakingCount + totalAwakingGenMainCount;
         deckCardsElements.push(
           <DeckCard
             key={key}
@@ -160,11 +188,16 @@ export default class DeckBoard extends React.Component<Props> {
             active={active}
             search={active && enableSearch}
             genMain={genMain}
+            genMainAwaking={genMainAwaking}
+            genMainAwakingCount={genMainAwakingCount}
             general={general}
+            additionalParams={additionalParams}
             pocket={pocket}
             enableMoveLeft={!firstCard}
             enableMoveRight={!lastCard}
-            onSelectMainGen={selectMainGen}
+            enableGenMainAwake={enableGenMainAwake}
+            onSelectGenMain={selectGenMain}
+            onAwakeGenMain={awakeGenMain}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
@@ -192,10 +225,17 @@ export default class DeckBoard extends React.Component<Props> {
         );
       }
     });
+    const deckConfigStyle: React.CSSProperties = {};
+    if (assistDeckCards.length > 0) {
+      deckConfigStyle.display = 'none';
+    }
     return (
       <div className="deck-card-list">
         {deckCardsElements}
         <div className="deck-actions">
+          <div className="deck-clear button" onClick={clearDeck}>
+            クリア
+          </div>
           <div
             className={classNames('add-new-deck-card', 'button', {
               disabled: !enabledAddDeck,
@@ -205,11 +245,20 @@ export default class DeckBoard extends React.Component<Props> {
             追加
             <FontAwesomeIcon icon={faPlusCircle} />
           </div>
-          <div className="deck-clear button" onClick={clearDeck}>
-            クリア
-          </div>
-          <div className="open-deck-config button" onClick={openDeckConfig}>
+          <div
+            style={deckConfigStyle}
+            className="open-deck-config button"
+            onClick={openDeckConfig}
+          >
             <FontAwesomeIcon icon={faCog} />
+          </div>
+          <div
+            className={classNames('deck-awaking-gen-main', {
+              'over-limit': totalAwakingGenMainCount > genMainAwakingLimit,
+            })}
+            data-label="将器ポイント"
+          >
+            {totalAwakingGenMainCount}/{genMainAwakingLimit}
           </div>
         </div>
       </div>
@@ -220,16 +269,16 @@ export default class DeckBoard extends React.Component<Props> {
     const {
       totalForce,
       totalIntelligence,
-      intelligenceByMainGen,
+      intelligenceByGenMain,
       totalConquest,
-      conquestByMainGen,
+      conquestByGenMain,
       conquestRank,
       totalCost,
       limitCost,
       maxMorale,
-      maxMoraleByMainGen,
+      maxMoraleByGenMain,
       tolalMoraleByCharm,
-      tolalMoraleByMainGen,
+      tolalMoraleByGenMain,
       hasDummy,
       hasStateDummy,
     } = this.props;
@@ -245,9 +294,9 @@ export default class DeckBoard extends React.Component<Props> {
       under = true;
     }
     // 開幕士気
-    const startMorale = (tolalMoraleByCharm + tolalMoraleByMainGen) / 100;
+    const startMorale = (tolalMoraleByCharm + tolalMoraleByGenMain) / 100;
     const startMoraleByCharm = tolalMoraleByCharm / 100;
-    const startMoraleByMainGen = tolalMoraleByMainGen / 100;
+    const startMoraleByGenMain = tolalMoraleByGenMain / 100;
     return (
       <div className="deck-total">
         <div className="total" data-label="総武力">
@@ -258,7 +307,7 @@ export default class DeckBoard extends React.Component<Props> {
         <div className="total" data-label="総知力">
           <span
             className={classNames('has-gen-main', {
-              active: intelligenceByMainGen > 0,
+              active: intelligenceByGenMain > 0,
             })}
           >
             将器込み
@@ -267,12 +316,12 @@ export default class DeckBoard extends React.Component<Props> {
             {totalIntelligence}
             <span
               className={classNames('breakdown', {
-                active: intelligenceByMainGen > 0,
+                active: intelligenceByGenMain > 0,
               })}
             >
-              ({totalIntelligence - intelligenceByMainGen}
-              <span className="addition-by-main-gen">
-                &#43;{intelligenceByMainGen}
+              ({totalIntelligence - intelligenceByGenMain}
+              <span className="addition-by-gen-main">
+                &#43;{intelligenceByGenMain}
               </span>
               )
             </span>
@@ -281,7 +330,7 @@ export default class DeckBoard extends React.Component<Props> {
         <div className="total" data-label="総征圧力">
           <span
             className={classNames('has-gen-main', {
-              active: conquestByMainGen > 0,
+              active: conquestByGenMain > 0,
             })}
           >
             将器込み
@@ -293,12 +342,12 @@ export default class DeckBoard extends React.Component<Props> {
             {totalConquest}
             <span
               className={classNames('breakdown', {
-                active: conquestByMainGen > 0,
+                active: conquestByGenMain > 0,
               })}
             >
-              ({totalConquest - conquestByMainGen}
-              <span className="addition-by-main-gen">
-                &#43;{conquestByMainGen}
+              ({totalConquest - conquestByGenMain}
+              <span className="addition-by-gen-main">
+                &#43;{conquestByGenMain}
               </span>
               )
             </span>
@@ -313,7 +362,7 @@ export default class DeckBoard extends React.Component<Props> {
         <div className="total" data-label="最大士気">
           <span
             className={classNames('has-gen-main', {
-              active: maxMoraleByMainGen > 0,
+              active: maxMoraleByGenMain > 0,
             })}
           >
             将器込み
@@ -322,12 +371,12 @@ export default class DeckBoard extends React.Component<Props> {
             {maxMorale}
             <span
               className={classNames('breakdown', {
-                active: maxMoraleByMainGen > 0,
+                active: maxMoraleByGenMain > 0,
               })}
             >
-              ({maxMorale - maxMoraleByMainGen}
-              <span className="addition-by-main-gen">
-                &#43;{maxMoraleByMainGen}
+              ({maxMorale - maxMoraleByGenMain}
+              <span className="addition-by-gen-main">
+                &#43;{maxMoraleByGenMain}
               </span>
               )
             </span>
@@ -336,7 +385,7 @@ export default class DeckBoard extends React.Component<Props> {
         <div className="total" data-label="開幕士気">
           <span
             className={classNames('has-gen-main', {
-              active: startMoraleByMainGen > 0,
+              active: startMoraleByGenMain > 0,
             })}
           >
             将器込み
@@ -345,12 +394,12 @@ export default class DeckBoard extends React.Component<Props> {
             {startMorale}
             <span
               className={classNames('breakdown', {
-                active: startMoraleByMainGen > 0,
+                active: startMoraleByGenMain > 0,
               })}
             >
               ({startMoraleByCharm}
-              <span className="addition-by-main-gen">
-                &#43;{startMoraleByMainGen}
+              <span className="addition-by-gen-main">
+                &#43;{startMoraleByGenMain}
               </span>
               )
             </span>

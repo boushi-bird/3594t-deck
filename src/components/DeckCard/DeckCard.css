@@ -4,9 +4,9 @@
   --deck-card-row1-top: 4px;
   --deck-card-row1-height: 38px;
   --deck-card-row2-top: calc(var(--deck-card-row1-top) + var(--deck-card-row1-height) - 4px);
-  --deck-card-row2-height: 20px;
+  --deck-card-row2-height: 21px;
   --deck-card-row3-top: calc(var(--deck-card-row2-top) + var(--deck-card-row2-height) + 4px);
-  --deck-card-row3-height: 56px;
+  --deck-card-row3-height: 72px;
   --deck-card-move-from-x: calc(var(--deck-card-width) + 4px);
 }
 
@@ -131,7 +131,7 @@
     }
 
     & .search {
-      top: 158px;
+      top: 137px;
       right: auto;
       left: auto;
 
@@ -147,14 +147,14 @@
 
     & .show-detail {
       color: white;
-      top: 66px;
+      top: 45px;
       right: auto;
       left: auto;
     }
 
     & .move-left {
       color: white;
-      top: 112px;
+      top: 91px;
       left: -2px;
       display: none;
 
@@ -165,7 +165,7 @@
 
     & .move-right {
       color: white;
-      top: 112px;
+      top: 91px;
       right: -2px;
       display: none;
 
@@ -176,11 +176,10 @@
   }
 
   & .state {
-    font-size: 18px;
     top: 14px;
     left: 0;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   & .version {
@@ -189,7 +188,7 @@
     color: var(--deck-card-top-color);
     top: 0;
     left: 0;
-    height: 16px;
+    height: 14px;
   }
 
   & .name {
@@ -220,6 +219,11 @@
     padding-top: 4px;
     width: 32px;
     height: 28px;
+  }
+
+  & .additional {
+    color: var(--active-color);
+    text-shadow: 0 0 5px white;
   }
 
   & .force {
@@ -280,19 +284,86 @@
     top: var(--deck-card-row3-top);
     width: 100%;
     height: var(--deck-card-row3-height);
-    padding-top: 5px;
+    padding-top: 10px;
+    flex-direction: column;
 
     &::before {
-      top: -1px;
+      top: -2px;
     }
   }
 
+  & .gen-mains-select-wrapper {
+    width: 100%;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   & .gen-mains-select {
-    width: 116px;
-    min-width: 116px;
+    width: calc(calc(100% / 0.62) - 2px);
+    min-width: calc(calc(100% / 0.62) - 2px);
     height: 48px;
     transform: scale(0.62);
     cursor: pointer;
+    border: solid 1px var(--deep-border-color);
+    outline: 0;
+  }
+
+  & .awake-gen-main {
+    font-size: 14px;
+    width: 100%;
+    height: 30px;
+    color: var(--switch-button-active-color);
+    background-color: var(--switch-button-bg-color);
+    box-sizing: border-box;
+    border: solid 2px var(--normal-border-color);
+    position: relative;
+    outline: 0;
+
+    & .label {
+      position: relative;
+    }
+
+    & .diamonds {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: nowrap;
+
+      & .diamond {
+        width: 16px;
+        height: 16px;
+        background-color: white;
+        transform: rotate(-45deg);
+      }
+    }
+
+    &.gen-main-awaking {
+      background-color: #40a1b2;
+      border: solid 2px var(--active-color);
+
+      & .diamonds {
+        & .diamond {
+          background-color: #c5e0dc;
+        }
+      }
+
+      & .label {
+        font-weight: bold;
+      }
+    }
+
+    &.gen-main-disable-awaking {
+      color: var(--switch-button-color);
+      cursor: not-allowed;
+    }
   }
 
   /* 連続右移動の際にアニメーションされない現象回避のためkeyframesを交互に指定している */

@@ -45,6 +45,7 @@ class AddButton extends React.PureComponent<Props> {
     onAddDeck({
       general: general.id,
       genMain,
+      genMainAwaking: false,
       pocket: false,
     });
   };
@@ -53,6 +54,7 @@ class AddButton extends React.PureComponent<Props> {
     const { general, enabledAddDeck } = this.props;
     const genMains: JSX.Element[] = [];
     general.genMains.forEach((genMain, i) => {
+      const gm = general.genMainSp || genMain;
       genMains.push(
         <button
           className="gen-main"
@@ -61,15 +63,16 @@ class AddButton extends React.PureComponent<Props> {
           data-gen-main={genMain.id}
           onClick={this.handleAddDeckClick}
         >
-          {genMain.nameShort}
+          {gm.nameShort}
           <FontAwesomeIcon className="add-icon" icon={faPlusCircle} />
           <FontAwesomeIcon className="change-icon" icon={faSyncAlt} />
         </button>
       );
     });
+    const genMainLabel = general.genMainSp != null ? '奇才将器' : '主将器';
     return (
       <>
-        <span className="gen-mains" data-label="主将器">
+        <span className="gen-mains" data-label={genMainLabel}>
           {genMains}
         </span>
         <span className="buttons">

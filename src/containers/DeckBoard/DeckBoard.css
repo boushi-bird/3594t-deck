@@ -1,5 +1,16 @@
 @import '../../defines.css';
 
+.open-deck-config {
+  font-size: 30px;
+  width: 72px;
+  min-height: 52px;
+  border: solid 1px var(--normal-border-color);
+  background-color: var(--add-button-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .assist-deck-card-list {
   width: 100%;
   min-width: var(--app-min-width);
@@ -12,6 +23,10 @@
   overflow-y: none;
   -webkit-overflow-scrolling: touch;
   padding-right: 4px;
+
+  & .open-deck-config {
+    margin: 4px;
+  }
 }
 
 .deck-board {
@@ -43,6 +58,12 @@
 
   & > * {
     margin: 2px 0;
+  }
+
+  & .open-deck-config {
+    width: 100%;
+    min-height: 50px;
+    flex: 1;
   }
 }
 
@@ -78,17 +99,27 @@
   flex: 1;
 }
 
-.open-deck-config {
-  font-size: 30px;
-  width: 72px;
-  min-width: 72px;
-  min-height: 50px;
-  border: solid 1px var(--normal-border-color);
-  background-color: var(--add-button-bg-color);
+.deck-awaking-gen-main {
+  width: 100%;
+  min-height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
+  margin: 4px 0 2px;
+  padding-top: 6px;
+  position: relative;
+
+  &[data-label]::before {
+    font-size: 10px;
+    position: absolute;
+    top: -6px;
+    content: attr(data-label);
+  }
+
+  &.over-limit {
+    color: var(--danger-color);
+  }
 }
 
 .deck-total {
@@ -159,7 +190,7 @@
         display: inline-block;
       }
 
-      & .addition-by-main-gen {
+      & .addition-by-gen-main {
         color: var(--active-color);
       }
     }

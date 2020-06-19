@@ -8,6 +8,8 @@ import {
   STEP_DECK_COST_LIMIT,
   DEFAULT_DECK_ASSIST_CARD_COUNT,
   MAX_DECK_ASSIST_CARD_COUNT,
+  DEFAULT_GEN_MAIN_AWAKING_LIMIT,
+  MAX_GEN_MAIN_AWAKING_LIMIT,
 } from '../const';
 import type { State } from '../store';
 import store from '../store';
@@ -41,7 +43,8 @@ const toQueryDeckCard = ({ generals, filterContents }: DataContents) => {
         (r) => r.id === deckCard.genMain
       );
       const code = deckCard.pocket ? general.pocketCode : general.code;
-      const genMainCode = genMain ? genMain.code : '';
+      const genMainCode =
+        (genMain ? genMain.code : '') + (deckCard.genMainAwaking ? '*' : '');
       // 武将 (code)_(genMainCode)
       return [code, genMainCode].join('_');
     }
@@ -64,9 +67,11 @@ const parseDeckCardGeneral = (
   {
     code,
     genMainCode,
+    genMainAwaking,
   }: {
     code?: string;
     genMainCode?: string;
+    genMainAwaking: boolean;
   },
   { generals, filterContents }: DataContents
 ): KeyLessDeckCardGeneral | null => {
@@ -88,6 +93,7 @@ const parseDeckCardGeneral = (
   return {
     general: general.id,
     genMain: genMainid,
+    genMainAwaking,
     pocket,
   };
 };
@@ -117,15 +123,12 @@ const parseDeckCardDummy = (
 
 const parseDeckCard = ({ generals, filterContents }: DataContents) => {
   return (v: string): KeyLessDeckCard => {
-    const [
-      code,
-      genMainCode,
-      cost,
-      belongStateNameShort,
-      unitTypeName,
-    ] = v.split('_');
+    const [code, genMain, cost, belongStateNameShort, unitTypeName] = v.split(
+      '_'
+    );
+    const [genMainCode, awaking] = genMain.split('*');
     const g = parseDeckCardGeneral(
-      { code, genMainCode },
+      { code, genMainCode, genMainAwaking: awaking === '' },
       { generals, filterContents }
     );
     if (g) {
@@ -293,6 +296,26 @@ const assistLimitParam: ParamsOptions<State, number> = {
   },
 };
 
+const genMainLimitParam: ParamsOptions<State, number> = {
+  action: (genMainAwakingLimit) =>
+    deckActions.setDeckConstraints({ genMainAwakingLimit }),
+  selector: (state) => state.deck.deckConstraints.genMainAwakingLimit,
+  defaultValue: DEFAULT_GEN_MAIN_AWAKING_LIMIT,
+  stringToValue: (s) => {
+    try {
+      const genMainAwakingLimit = parseInt(s);
+      if (
+        genMainAwakingLimit >= 0 &&
+        genMainAwakingLimit <= MAX_GEN_MAIN_AWAKING_LIMIT &&
+        genMainAwakingLimit % 1 === 0
+      ) {
+        return genMainAwakingLimit;
+      }
+    } catch (e) {}
+    return DEFAULT_GEN_MAIN_AWAKING_LIMIT;
+  },
+};
+
 let init = false;
 
 export default function (): void {
@@ -307,6 +330,7 @@ export default function (): void {
       cost: costParam,
       ['same_card']: sameCardParam,
       ['assist_limit']: assistLimitParam,
+      ['gen_main_limit']: genMainLimitParam,
     },
     initialTruth: 'location',
   });

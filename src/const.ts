@@ -53,3 +53,9 @@ export const MAX_DECK_GENERAL_CARD_COUNT = 8;
 export const DEFAULT_DECK_ASSIST_CARD_COUNT = 1;
 /** デッキに入れられる遊軍カード最大数 */
 export const MAX_DECK_ASSIST_CARD_COUNT = 1;
+/** 覚醒できる主将器の最大ポイント数 */
+export const DEFAULT_GEN_MAIN_AWAKING_LIMIT = 3;
+/** 奇才将器覚醒時に使用する主将器ポイント数 */
+export const DEFAULT_GEN_MAIN_SP_AWAKING_COUNT = 3;
+/** 覚醒できる主将器の最大ポイント数(最大値) */
+export const MAX_GEN_MAIN_AWAKING_LIMIT = 8;

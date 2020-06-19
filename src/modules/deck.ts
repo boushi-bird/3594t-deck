@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   DEFAULT_DECK_COST_LIMIT,
   DEFAULT_DECK_ASSIST_CARD_COUNT,
+  DEFAULT_GEN_MAIN_AWAKING_LIMIT,
+  DEFAULT_GEN_MAIN_SP_AWAKING_COUNT,
 } from '../const';
 
 // デッキのユニークIDとして使う揮発的な数値
@@ -12,6 +14,7 @@ export interface DeckCardGeneral {
   key: number;
   general: string;
   genMain?: string;
+  genMainAwaking: boolean;
   pocket: boolean;
 }
 
@@ -63,6 +66,8 @@ export interface DeckConstraints {
   limitCost: number;
   sameCard: SameCardConstraint;
   assistCardLimit: number;
+  genMainAwakingLimit: number;
+  genMainSpAwakingCount: number;
 }
 
 interface DeckState {
@@ -84,6 +89,8 @@ const initialState: DeckState = {
     limitCost: DEFAULT_DECK_COST_LIMIT,
     sameCard: defaultSameCardConstraint,
     assistCardLimit: DEFAULT_DECK_ASSIST_CARD_COUNT,
+    genMainAwakingLimit: DEFAULT_GEN_MAIN_AWAKING_LIMIT,
+    genMainSpAwakingCount: DEFAULT_GEN_MAIN_SP_AWAKING_COUNT,
   },
 };
 
@@ -315,7 +322,7 @@ export const deckModule = createSlice({
         searchCondition: undefined,
       };
     },
-    selectMainGen(
+    selectGenMain(
       state: DeckState,
       action: PayloadAction<{
         index: number;
@@ -331,6 +338,31 @@ export const deckModule = createSlice({
       deckCards[index] = {
         ...deckCard,
         genMain,
+      };
+      return {
+        ...state,
+        activeIndex: null,
+        activeAssistIndex: null,
+        searchCondition: undefined,
+        deckCards,
+      };
+    },
+    awakeGenMain(
+      state: DeckState,
+      action: PayloadAction<{
+        index: number;
+        awake: boolean;
+      }>
+    ): DeckState {
+      const { index, awake } = action.payload;
+      const deckCards = [...state.deckCards];
+      const deckCard = deckCards[index];
+      if (deckCard == null) {
+        return state;
+      }
+      deckCards[index] = {
+        ...deckCard,
+        genMainAwaking: awake,
       };
       return {
         ...state,
@@ -396,7 +428,9 @@ export const deckActions = {
     deckModule.actions.changeDeckAssist({ index, card }),
   searchByDeck: (index: number, condition: SearchCondition) =>
     deckModule.actions.searchByDeck({ index, condition }),
-  selectMainGen: (index: number, genMain?: string) =>
-    deckModule.actions.selectMainGen({ index, genMain }),
+  selectGenMain: (index: number, genMain?: string) =>
+    deckModule.actions.selectGenMain({ index, genMain }),
+  awakeGenMain: (index: number, awake: boolean) =>
+    deckModule.actions.awakeGenMain({ index, awake }),
   /* eslint-enable @typescript-eslint/explicit-module-boundary-types */
 };
