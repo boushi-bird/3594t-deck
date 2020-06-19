@@ -5,7 +5,7 @@ title: About
 
 # このツールについて
 
-アーケードゲーム [三国志大戦](http://www.sangokushi-taisen.com) のデッキシミュレーターです。
+アーケードゲーム（ゲームセンター用ゲーム） [三国志大戦](http://www.sangokushi-taisen.com) のデッキシミュレーターです。
 
 ## 注意
 
@@ -38,6 +38,8 @@ title: About
 ## その他
 
 ### 動作対象ブラウザ
+
+下記のブラウザで動作しますが、ブラウザやOSのバージョンが古いと動作しないため、なるべく最新のバージョンをお使いください。
 
 - Google Chrome
 - Firefox
