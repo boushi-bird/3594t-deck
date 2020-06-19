@@ -5,6 +5,7 @@ import {
   MAX_DECK_COST_LIMIT,
   STEP_DECK_COST_LIMIT,
   MAX_DECK_ASSIST_CARD_COUNT,
+  MAX_GEN_MAIN_AWAKING_LIMIT,
 } from '../../const';
 import type { DeckConstraints, SameCardConstraint } from '../../modules/deck';
 import NumberSelect from '../../components/NumberSelect';
@@ -118,6 +119,7 @@ export default class DeckConfig extends React.PureComponent<Props> {
       limitCost,
       sameCard,
       assistCardLimit,
+      genMainAwakingLimit,
       closeDeckConfig,
     } = this.props;
     const style: React.CSSProperties = {};
@@ -196,6 +198,17 @@ export default class DeckConfig extends React.PureComponent<Props> {
               >
                 同名の武将・遊軍登録可
               </RadioButton>
+            </section>
+            <section className="filter-section">
+              <h2 className="title">覚醒できる主将器の最大ポイント数</h2>
+              <NumberSelect<DeckConstraintsKey>
+                itemName="genMainAwakingLimit"
+                onChangeValue={this.handleOnChangeDeckConstraints}
+                value={genMainAwakingLimit}
+                max={MAX_GEN_MAIN_AWAKING_LIMIT}
+                min={0}
+                step={1}
+              />
             </section>
           </div>
         </div>
