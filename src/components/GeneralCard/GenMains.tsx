@@ -21,9 +21,10 @@ export default class GenMains extends React.PureComponent<Props> {
         </span>
       );
     });
+    const genMainLabel = genMainSp != null ? '奇才将器' : '主将器';
     return (
       <>
-        <span className="gen-mains" data-label="主将器">
+        <span className="gen-mains" data-label={genMainLabel}>
           {genMainElments}
         </span>
         <span className="externals">

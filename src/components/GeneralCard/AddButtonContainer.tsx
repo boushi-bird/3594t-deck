@@ -69,9 +69,10 @@ class AddButton extends React.PureComponent<Props> {
         </button>
       );
     });
+    const genMainLabel = general.genMainSp != null ? '奇才将器' : '主将器';
     return (
       <>
-        <span className="gen-mains" data-label="主将器">
+        <span className="gen-mains" data-label={genMainLabel}>
           {genMains}
         </span>
         <span className="buttons">

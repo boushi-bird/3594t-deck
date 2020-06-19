@@ -204,6 +204,7 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
       );
     });
     const selectedGenMain = genMain != null ? genMain : '';
+    const genMainLabel = general.genMainSp != null ? '奇才将器' : '主将器';
     const moveFrom = this.state.moveFrom;
     const indexClass = index % 2 === 0 ? 'even' : 'odd';
     const diamonds: JSX.Element[] = Array(genMainAwakingCount)
@@ -273,7 +274,7 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
             {general.conquest + additionalParams.conquest}
           </span>
           <span className="skills">{skills}</span>
-          <span className="gen-mains" data-label="主将器">
+          <span className="gen-mains" data-label={genMainLabel}>
             <span className="gen-mains-select-wrapper">
               <select
                 className="gen-mains-select"
