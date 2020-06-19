@@ -26,9 +26,9 @@ import type {
 import DeckBoard from './DeckBoard';
 import isEnabledAddDeck from '../Common/isEnabledAddDeck';
 import {
-  getMainGenParams,
-  getMainGenSpParams,
-} from '../../services/mainGenParams';
+  getGenMainParams,
+  getGenMainSpParams,
+} from '../../services/genMainParams';
 
 interface ContainerStateFromProps {
   deckCards: DeckCard[];
@@ -106,8 +106,8 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
         windowActions.changeDeckConfigVisible({
           openedDeckConfig: true,
         }),
-      selectMainGen: deckActions.selectMainGen,
-      awakeMainGen: deckActions.awakeMainGen,
+      selectGenMain: deckActions.selectGenMain,
+      awakeGenMain: deckActions.awakeGenMain,
       setActiveCard: deckActions.setActiveCard,
       removeDeck: deckActions.removeDeck,
       rawAddDeckDummy: deckActions.addDeckDummy,
@@ -155,8 +155,8 @@ const mergeProps: TMergeProps = (state, actions) => {
   let totalIntelligence = 0;
   let totalConquest = 0;
   let totalCost = 0;
-  let tolalMoraleByMainGen = 0;
-  let maxMoraleByMainGen = 0;
+  let tolalMoraleByGenMain = 0;
+  let maxMoraleByGenMain = 0;
   let totalAwakingGenMainCount = 0;
   let hasDummy = false;
   let hasStateDummy = false;
@@ -202,8 +202,8 @@ const mergeProps: TMergeProps = (state, actions) => {
         if (gm) {
           const p =
             general.genMainSp != null
-              ? getMainGenSpParams(general.genMainSp)
-              : getMainGenParams(gm);
+              ? getGenMainSpParams(general.genMainSp)
+              : getGenMainParams(gm);
           additionalParams.intelligence += p.self.intelligence;
           additionalParams.conquest += p.self.conquest;
           for (const [state, prms] of Object.entries(p.states)) {
@@ -215,8 +215,8 @@ const mergeProps: TMergeProps = (state, actions) => {
             totalPrms.conquest += prms.conquest;
             statesGenMainParams.set(state, totalPrms);
           }
-          tolalMoraleByMainGen += p.morale;
-          maxMoraleByMainGen += p.maxMorale;
+          tolalMoraleByGenMain += p.morale;
+          maxMoraleByGenMain += p.maxMorale;
         }
       }
       general.skills.forEach((s) => {
@@ -282,11 +282,11 @@ const mergeProps: TMergeProps = (state, actions) => {
     hasStateDummy = false;
     maxMorale = 6;
   }
-  if (maxMorale + maxMoraleByMainGen >= MAX_MORALE_LIMIT) {
-    maxMoraleByMainGen = MAX_MORALE_LIMIT - maxMorale;
+  if (maxMorale + maxMoraleByGenMain >= MAX_MORALE_LIMIT) {
+    maxMoraleByGenMain = MAX_MORALE_LIMIT - maxMorale;
     maxMorale = MAX_MORALE_LIMIT;
   } else {
-    maxMorale += maxMoraleByMainGen;
+    maxMorale += maxMoraleByGenMain;
   }
   // 魅力による士気
   const charmCount = skillCounts.get('魅力') || 0;
@@ -304,7 +304,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   }
 
   // 追加パラメータによる加算
-  const additionalParamsByMainGen = deckCards.reduce(
+  const additionalParamsByGenMain = deckCards.reduce(
     (v, deckCard) => {
       if ('additionalParams' in deckCard) {
         const p = deckCard.additionalParams;
@@ -317,8 +317,8 @@ const mergeProps: TMergeProps = (state, actions) => {
     },
     { intelligence: 0, conquest: 0 }
   );
-  totalIntelligence += additionalParamsByMainGen.intelligence;
-  totalConquest += additionalParamsByMainGen.conquest;
+  totalIntelligence += additionalParamsByGenMain.intelligence;
+  totalConquest += additionalParamsByGenMain.conquest;
 
   const sProps: StateFromProps = {
     deckCards,
@@ -329,16 +329,16 @@ const mergeProps: TMergeProps = (state, actions) => {
     enableSearch,
     totalForce,
     totalIntelligence,
-    intelligenceByMainGen: additionalParamsByMainGen.intelligence,
+    intelligenceByGenMain: additionalParamsByGenMain.intelligence,
     totalConquest,
-    conquestByMainGen: additionalParamsByMainGen.conquest,
+    conquestByGenMain: additionalParamsByGenMain.conquest,
     conquestRank,
     totalCost,
     limitCost,
     maxMorale,
-    maxMoraleByMainGen,
+    maxMoraleByGenMain,
     tolalMoraleByCharm,
-    tolalMoraleByMainGen,
+    tolalMoraleByGenMain,
     hasDummy,
     hasStateDummy,
     totalAwakingGenMainCount,

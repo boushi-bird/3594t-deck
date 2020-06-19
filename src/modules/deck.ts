@@ -322,7 +322,7 @@ export const deckModule = createSlice({
         searchCondition: undefined,
       };
     },
-    selectMainGen(
+    selectGenMain(
       state: DeckState,
       action: PayloadAction<{
         index: number;
@@ -347,7 +347,7 @@ export const deckModule = createSlice({
         deckCards,
       };
     },
-    awakeMainGen(
+    awakeGenMain(
       state: DeckState,
       action: PayloadAction<{
         index: number;
@@ -428,9 +428,9 @@ export const deckActions = {
     deckModule.actions.changeDeckAssist({ index, card }),
   searchByDeck: (index: number, condition: SearchCondition) =>
     deckModule.actions.searchByDeck({ index, condition }),
-  selectMainGen: (index: number, genMain?: string) =>
-    deckModule.actions.selectMainGen({ index, genMain }),
-  awakeMainGen: (index: number, awake: boolean) =>
-    deckModule.actions.awakeMainGen({ index, awake }),
+  selectGenMain: (index: number, genMain?: string) =>
+    deckModule.actions.selectGenMain({ index, genMain }),
+  awakeGenMain: (index: number, awake: boolean) =>
+    deckModule.actions.awakeGenMain({ index, awake }),
   /* eslint-enable @typescript-eslint/explicit-module-boundary-types */
 };

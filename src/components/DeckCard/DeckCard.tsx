@@ -26,8 +26,8 @@ interface Props {
   enableMoveLeft: boolean;
   enableMoveRight: boolean;
   enableGenMainAwake: boolean;
-  onSelectMainGen: (index: number, genMain?: string) => void;
-  onAwakeMainGen: (index: number, awake: boolean) => void;
+  onSelectGenMain: (index: number, genMain?: string) => void;
+  onAwakeGenMain: (index: number, awake: boolean) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
   onToggleSearch: (
@@ -64,18 +64,18 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
     }
   }
 
-  private handleSelectMainGen = (
+  private handleSelectGenMain = (
     event: React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    const { index, onSelectMainGen } = this.props;
+    const { index, onSelectGenMain } = this.props;
     let value: string | undefined = event.currentTarget.value;
     if (value == null || value === '') {
       value = undefined;
     }
-    onSelectMainGen(index, value);
+    onSelectGenMain(index, value);
   };
 
-  private handleAwakeMainGen = (
+  private handleAwakeGenMain = (
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
     event.stopPropagation();
@@ -83,13 +83,13 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
       index,
       genMainAwaking,
       enableGenMainAwake,
-      onAwakeMainGen,
+      onAwakeGenMain,
     } = this.props;
     const awake = !genMainAwaking;
     if (awake && !enableGenMainAwake) {
       return;
     }
-    onAwakeMainGen(index, awake);
+    onAwakeGenMain(index, awake);
   };
 
   private handleActive = (
@@ -279,7 +279,7 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
               <select
                 className="gen-mains-select"
                 value={selectedGenMain}
-                onChange={this.handleSelectMainGen}
+                onChange={this.handleSelectGenMain}
               >
                 <option value="" />
                 {genMains}
@@ -287,7 +287,7 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
             </span>
             <button
               className={classNames('awake-gen-main', genMainAwakeClass)}
-              onClick={this.handleAwakeMainGen}
+              onClick={this.handleAwakeGenMain}
             >
               <span className="diamonds">{diamonds}</span>
               <span className="label">将器覚醒</span>

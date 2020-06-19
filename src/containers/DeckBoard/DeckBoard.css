@@ -190,7 +190,7 @@
         display: inline-block;
       }
 
-      & .addition-by-main-gen {
+      & .addition-by-gen-main {
         color: var(--active-color);
       }
     }

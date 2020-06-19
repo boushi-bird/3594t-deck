@@ -1,27 +1,27 @@
 import { GenMainItem } from '3594t-deck';
 import { GEN_MAIN_MORALE } from '../const';
 
-interface MainGenParams {
+interface GenMainParams {
   /** 知力 */
   readonly intelligence: number;
   /** 征圧力 */
   readonly conquest: number;
 }
 
-interface MainGenAllParams {
+interface GenMainAllParams {
   /** 説明 */
   readonly description: string;
   /** 自身に影響するパラメータ */
-  readonly self: MainGenParams;
+  readonly self: GenMainParams;
   /** 所属勢力に影響するパラメータ */
-  readonly states: { [key: string]: MainGenParams };
+  readonly states: { [key: string]: GenMainParams };
   /** 士気 */
   readonly morale: number;
   /** 最大士気 */
   readonly maxMorale: number;
 }
 
-const EMPTY_PARAMS: MainGenParams = {
+const EMPTY_PARAMS: GenMainParams = {
   intelligence: 0,
   conquest: 0,
 };
@@ -32,15 +32,15 @@ const EMPTY_OTHER_PARAMS = {
   maxMorale: 0,
 };
 
-const EMPTY_ALL_PARAMS: MainGenAllParams = {
+const EMPTY_ALL_PARAMS: GenMainAllParams = {
   ...EMPTY_OTHER_PARAMS,
   description: '',
   self: EMPTY_PARAMS,
 };
 
-type MainGenParamsMap = { [key: string]: MainGenAllParams };
+type GenMainParamsMap = { [key: string]: GenMainAllParams };
 
-const genMainParams: MainGenParamsMap = {
+const genMainParams: GenMainParamsMap = {
   // 知力上昇
   ['64577c9cf5034bd53dea21522ffa5fa8']: {
     ...EMPTY_OTHER_PARAMS,
@@ -75,7 +75,7 @@ const genMainParams: MainGenParamsMap = {
   },
 };
 
-const genMainSpParams: MainGenParamsMap = {
+const genMainSpParams: GenMainParamsMap = {
   // 奸雄の覇道
   ['b25b1cafbf36743d7a5f95aff4016436']: {
     ...EMPTY_OTHER_PARAMS,
@@ -107,14 +107,14 @@ const genMainSpParams: MainGenParamsMap = {
   },
 };
 
-export function getMainGenParams(genMain: GenMainItem): MainGenAllParams {
+export function getGenMainParams(genMain: GenMainItem): GenMainAllParams {
   if (!genMain.code) {
     return EMPTY_ALL_PARAMS;
   }
   return genMainParams[genMain.code] || EMPTY_ALL_PARAMS;
 }
 
-export function getMainGenSpParams(genMainSp: GenMainItem): MainGenAllParams {
+export function getGenMainSpParams(genMainSp: GenMainItem): GenMainAllParams {
   if (!genMainSp.code) {
     return EMPTY_ALL_PARAMS;
   }
