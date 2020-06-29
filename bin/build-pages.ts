@@ -18,7 +18,7 @@ console.log('output pages.');
 const srcConfigPath = path.resolve(srcDir, '_config.yml');
 const distConfigPath = path.resolve(distDir, '_config.yml');
 
-const conf = jsYaml.safeLoad(fs.readFileSync(srcConfigPath, 'utf8'));
+const conf = jsYaml.safeLoad(fs.readFileSync(srcConfigPath, 'utf8')) as any;
 
 if (process.env.GH_PAGES_URL) {
   conf['url'] = process.env.GH_PAGES_URL;
