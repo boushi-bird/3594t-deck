@@ -59,3 +59,8 @@ export const DEFAULT_GEN_MAIN_AWAKING_LIMIT = 3;
 export const DEFAULT_GEN_MAIN_SP_AWAKING_COUNT = 3;
 /** 覚醒できる主将器の最大ポイント数(最大値) */
 export const MAX_GEN_MAIN_AWAKING_LIMIT = 8;
+
+/** 兵種略称のalias */
+export const UNIT_TYPE_NAME_SHORT_ALIAS: { [key: string]: string } = {
+  ['連弩兵']: '弩',
+};

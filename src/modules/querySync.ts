@@ -10,6 +10,7 @@ import {
   MAX_DECK_ASSIST_CARD_COUNT,
   DEFAULT_GEN_MAIN_AWAKING_LIMIT,
   MAX_GEN_MAIN_AWAKING_LIMIT,
+  UNIT_TYPE_NAME_SHORT_ALIAS,
 } from '../const';
 import type { State } from '../store';
 import store from '../store';
@@ -55,7 +56,9 @@ const toQueryDeckCard = ({ generals, filterContents }: DataContents) => {
     const unitType = filterContents.unitTypes.find(
       (r) => r.id === deckCard.unitType
     );
-    const unitTypeName = unitType ? unitType.name[0] : '';
+    const unitTypeName = unitType
+      ? UNIT_TYPE_NAME_SHORT_ALIAS[unitType.name] || unitType.name[0]
+      : '';
     // ダミー __(cost)_(belongStateNameShort)_(unitTypeName[先頭1文字])
     return ['', '', deckCard.cost, belongStateNameShort, unitTypeName].join(
       '_'
@@ -113,7 +116,9 @@ const parseDeckCardDummy = (
   const belongState = content.belongStates.find(
     (r) => r.nameShort === belongStateNameShort
   );
-  const unitType = content.unitTypes.find((r) => r.name[0] === unitTypeName);
+  const unitType = content.unitTypes.find(
+    (r) => (UNIT_TYPE_NAME_SHORT_ALIAS[r.name] || r.name[0]) === unitTypeName
+  );
   return {
     cost: cost && content.costs.findIndex((r) => r.code === cost) ? cost : '10',
     belongState: belongState ? belongState.id : undefined,
