@@ -107,12 +107,6 @@
     left: var(--general-card-col3-left);
     width: var(--general-card-col3-width);
     height: var(--general-card-thumb-size);
-
-    /* react-lazyload使用時に画像位置がずれる現象を修正するため */
-    & .lazyload-wrapper {
-      width: 100%;
-      height: 100%;
-    }
   }
 
   & .no-image {
