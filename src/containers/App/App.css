@@ -80,7 +80,7 @@
 }
 
 .app-header {
-  min-height: 80px;
+  min-height: 76px;
   background-color: var(--app-header-bg-color);
   display: flex;
   align-items: center;
@@ -97,6 +97,7 @@
   height: 68px;
   border-radius: 4px;
   visibility: hidden;
+  outline: 0;
 
   &.show {
     visibility: visible;
@@ -134,6 +135,13 @@
 
 .deck-boad-container {
   display: block;
+}
+
+.list-container {
+  min-width: var(--app-min-width);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .simple-filter-container {
@@ -224,7 +232,7 @@
   }
 
   body {
-    min-height: 680px;
+    min-height: var(--app-small-min-height);
   }
 }
 
@@ -240,8 +248,17 @@
     flex-wrap: wrap;
   }
 
+  .deck-boad-container {
+    width: calc(100% - var(--app-min-width));
+  }
+
+  .list-container {
+    height: 100%;
+  }
+
   body {
-    min-height: var(--app-min-height);
+    min-width: var(--app-oblong-min-width);
+    min-height: var(--app-oblong-min-height);
   }
 }
 

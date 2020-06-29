@@ -119,14 +119,16 @@ export default class App extends React.PureComponent<Props> {
             <div className="deck-boad-container">
               <DeckBoard />
             </div>
-            <div className="simple-filter-container">
-              <SimpleFilter />
-              <button className="open-filter" onClick={openFilter}>
-                絞込
-              </button>
+            <div className="list-container">
+              <div className="simple-filter-container">
+                <SimpleFilter />
+                <button className="open-filter" onClick={openFilter}>
+                  絞込
+                </button>
+              </div>
+              <CardList />
+              <AssistCardList />
             </div>
-            <CardList />
-            <AssistCardList />
           </div>
           <div className={classNames(['card-filter-container', { open }])}>
             <h1 className="card-filter-title">絞り込みメニュー</h1>

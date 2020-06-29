@@ -13,7 +13,6 @@
 
 .assist-deck-card-list {
   width: 100%;
-  min-width: var(--app-min-width);
   height: 70px;
   display: flex;
   align-items: flex-start;
@@ -31,7 +30,6 @@
 
 .deck-board {
   width: 100%;
-  min-width: var(--app-min-width);
 }
 
 .deck-card-list {
@@ -119,100 +117,5 @@
 
   &.over-limit {
     color: var(--danger-color);
-  }
-}
-
-.deck-total {
-  min-height: 48px;
-  max-height: 48px;
-  display: flex;
-  position: relative;
-
-  & > .total {
-    font-size: 14px;
-    border: 1px solid var(--normal-border-color);
-    margin: 1px;
-    padding: 0 5px;
-    flex: 1;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    position: relative;
-
-    & .has-gen-main {
-      font-size: 10px;
-      color: var(--active-color);
-      position: absolute;
-      top: 2px;
-      right: 0;
-      display: none;
-
-      &.active {
-        display: block;
-      }
-    }
-
-    & > * {
-      font-weight: bold;
-    }
-
-    & .dummy {
-      font-weight: normal;
-    }
-
-    & .conquest-rank {
-      font-size: 16px;
-      margin-right: 6px;
-    }
-
-    &.total-cost {
-      min-width: 110px;
-    }
-
-    & .cost-remain {
-      font-size: 12px;
-
-      &.over {
-        font-size: 10px;
-        color: var(--danger-color);
-      }
-
-      &.under {
-        color: var(--cold-color);
-      }
-    }
-
-    & .breakdown {
-      display: none;
-
-      &.active {
-        display: inline-block;
-      }
-
-      & .addition-by-gen-main {
-        color: var(--active-color);
-      }
-    }
-  }
-
-  & > *[data-label] {
-    font-weight: bold;
-    position: relative;
-  }
-
-  & > *[data-label]::before {
-    font-size: 14px;
-    font-weight: bold;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    content: attr(data-label);
-  }
-}
-
-@media (--oblong-device) {
-  .deck-board {
-    max-width: var(--app-min-width);
   }
 }

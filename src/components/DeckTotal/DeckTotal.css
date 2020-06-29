@@ -1,0 +1,240 @@
+@import '../../defines.css';
+
+.deck-total {
+  width: 100%;
+  position: relative;
+
+  & .switch-total-all {
+    width: 64px;
+    height: 32px;
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    z-index: 10;
+    outline: none;
+    opacity: 0.6;
+    padding: 16px 0 4px;
+    overflow: hidden;
+    border-style: none;
+    background-color: var(--add-button-bg-color);
+    background-clip: content-box;
+    -webkit-tap-highlight-color: transparent;
+
+    &.show-button {
+      display: flex;
+    }
+
+    & .up-icon,
+    & .down-icon {
+      width: 100%;
+      height: 12px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    & .icon-inner {
+      width: 0;
+      height: 0;
+      position: absolute;
+      border: 24px solid transparent;
+    }
+
+    & .up-icon {
+      align-items: flex-end;
+
+      & .icon-inner {
+        border-bottom: 8px solid black;
+        bottom: 2px;
+      }
+    }
+
+    & .down-icon {
+      align-items: flex-start;
+
+      & .icon-inner {
+        border-top: 8px solid black;
+        top: 2px;
+      }
+    }
+  }
+}
+
+.deck-inner {
+  width: 100%;
+  max-height: 180px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  overflow-y: auto;
+
+  & .total {
+    font-size: 14px;
+    border: 1px solid var(--normal-border-color);
+    margin: 1px;
+    padding: 0 5px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  & .total-params {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    & .total-row {
+      margin: 0;
+      min-width: 318px;
+      display: flex;
+      flex: 1;
+    }
+
+    & .total {
+      width: calc(100% / 3 - 2px);
+      min-width: 104px;
+      min-height: 48px;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+      &.total-cost {
+        min-width: 110px;
+      }
+
+      & .has-gen-main {
+        font-size: 10px;
+        color: var(--active-color);
+        position: absolute;
+        top: 2px;
+        right: 0;
+        display: none;
+
+        &.active {
+          display: block;
+        }
+      }
+
+      & > * {
+        font-weight: bold;
+      }
+
+      & .dummy {
+        font-weight: normal;
+      }
+
+      & .conquest-rank {
+        font-size: 16px;
+        margin-right: 6px;
+      }
+
+      & .cost-remain {
+        font-size: 12px;
+
+        &.over {
+          font-size: 10px;
+          color: var(--danger-color);
+        }
+
+        &.under {
+          color: var(--cold-color);
+        }
+      }
+
+      & .breakdown {
+        display: none;
+
+        &.active {
+          display: inline-block;
+        }
+
+        & .addition-by-gen-main {
+          color: var(--active-color);
+        }
+      }
+    }
+  }
+
+  & .total-type-counts {
+    width: 100%;
+    min-height: 0;
+    max-height: 0;
+    display: flex;
+    overflow-y: hidden;
+    flex-wrap: wrap;
+    transition-property: max-height;
+    transition-duration: 0.5s;
+    transition-timing-function: linear;
+
+    &.show-total {
+      min-height: 48px;
+      max-height: 200px;
+      display: flex;
+    }
+
+    & > .total {
+      min-width: 318px;
+      flex: 1;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-content: flex-start;
+      padding: 1px;
+    }
+
+    & .type-count {
+      max-height: 22px;
+      display: flex;
+      align-items: flex-end;
+      margin: 1px 6px 1px;
+
+      &:first-child {
+        margin-left: 60px;
+      }
+
+      & .cost-label {
+        font-size: 10px;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      & .skill {
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0 2px;
+        width: 20px;
+        height: 20px;
+        background-color: var(--general-skill-bg-color);
+        border: solid 2px var(--general-skill-border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+
+      & .unit {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0 2px;
+      }
+    }
+  }
+
+  & *[data-label] {
+    font-weight: bold;
+    position: relative;
+  }
+
+  & *[data-label]::before {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    content: attr(data-label);
+  }
+}
