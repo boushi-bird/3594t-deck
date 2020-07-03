@@ -2,8 +2,8 @@ import './FilterActions.css';
 import React from 'react';
 
 interface Props {
-  resetConditions(): void;
-  closeFilter(): void;
+  resetConditions: () => void;
+  closeFilter: () => void;
 }
 
 const FilterActions: React.FC<Props> = ({
