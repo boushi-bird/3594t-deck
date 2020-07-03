@@ -80,7 +80,7 @@
 }
 
 .app-header {
-  min-height: 76px;
+  min-height: 72px;
   background-color: var(--app-header-bg-color);
   display: flex;
   align-items: center;
@@ -93,8 +93,8 @@
   margin-left: 2px;
   color: var(--app-header-bg-color);
   background-color: var(--side-menu-bg-color);
-  width: 68px;
-  height: 68px;
+  width: 64px;
+  height: 64px;
   border-radius: 4px;
   visibility: hidden;
   outline: 0;
@@ -175,8 +175,8 @@
   font-size: 26px;
   color: var(--card-filter-label-color);
   text-shadow: 0 0 5px var(--card-filter-label-color);
-  margin: 20px auto;
-  height: 40px;
+  margin: 18px auto;
+  height: 36px;
 }
 
 .card-filter-buttons {
