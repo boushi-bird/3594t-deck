@@ -6,7 +6,7 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { General, AssistGeneral, FilterContents } from '3594t-deck';
+import type { General, AssistGeneral, FilterItem, DataItem } from '3594t-deck';
 import { MAX_MORALE_LIMIT, CHARM_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
 import type { DeckCard, DeckCardAssist } from '../../modules/deck';
@@ -38,7 +38,8 @@ interface ContainerStateFromProps {
   activeAssistIndex: number | null;
   generals: General[];
   assistGenerals: AssistGeneral[];
-  filterContents: FilterContents;
+  skills: FilterItem[];
+  unitTypes: FilterItem[];
   limitCost: number;
   assistCardLimit: number;
   genMainAwakingLimit: number;
@@ -92,7 +93,8 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   activeAssistIndex: state.deck.activeAssistIndex,
   generals: state.datalist.generals,
   assistGenerals: state.datalist.assistGenerals,
-  filterContents: state.datalist.filterContents,
+  skills: state.datalist.filterContents.skills,
+  unitTypes: state.datalist.filterContents.unitTypes,
   limitCost: state.deck.deckConstraints.limitCost,
   assistCardLimit: state.deck.deckConstraints.assistCardLimit,
   genMainAwakingLimit: state.deck.deckConstraints.genMainAwakingLimit,
@@ -128,6 +130,22 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
   );
 };
 
+const sumCounts = <K>(
+  generalCost: number,
+  counts: Map<K, { count: number; cost: number }>
+) => {
+  return (item: K): void => {
+    const { count, cost } = counts.get(item) || {
+      count: 0,
+      cost: 0,
+    };
+    counts.set(item, {
+      count: count + 1,
+      cost: cost + generalCost,
+    });
+  };
+};
+
 const mergeProps: TMergeProps = (state, actions) => {
   const {
     deckCards: rawDeckCards,
@@ -141,6 +159,8 @@ const mergeProps: TMergeProps = (state, actions) => {
     assistCardLimit,
     genMainAwakingLimit,
     genMainSpAwakingCount,
+    skills,
+    unitTypes,
   } = state;
   const {
     rawAddDeckDummy,
@@ -163,14 +183,15 @@ const mergeProps: TMergeProps = (state, actions) => {
   const deckCards: DeckCardInfo[] = [];
   const assistDeckCards: DeckCardAssistInfo[] = [];
   const belongStateSet = new Set<string>();
-  const skillCounts = new Map<string, number>();
+  const skillCounts = new Map<DataItem, { count: number; cost: number }>();
+  const unitTypeCounts = new Map<DataItem, { count: number; cost: number }>();
   // 所属勢力ごとの加算値
   const statesGenMainParams = new Map<
     string,
     { intelligence: number; conquest: number }
   >();
   rawDeckCards.forEach((deckCard) => {
-    let cost: string;
+    let generalCost: number;
     if ('general' in deckCard) {
       const { general: generalId, ...deckInfo } = deckCard;
       const general =
@@ -183,7 +204,7 @@ const mergeProps: TMergeProps = (state, actions) => {
       totalForce += general.force;
       totalIntelligence += general.intelligence;
       totalConquest += general.conquest;
-      cost = general.raw.cost;
+      generalCost = parseInt(general.raw.cost);
       belongStateSet.add(general.raw.state);
       const genMain = deckInfo.genMain;
       // 消費する主将器ポイント 奇才将器の場合は消費ポイントが違う
@@ -219,10 +240,8 @@ const mergeProps: TMergeProps = (state, actions) => {
           maxMoraleByGenMain += p.maxMorale;
         }
       }
-      general.skills.forEach((s) => {
-        const count = skillCounts.get(s.name) || 0;
-        skillCounts.set(s.name, count + 1);
-      });
+      general.skills.forEach(sumCounts(generalCost, skillCounts));
+      sumCounts(generalCost, unitTypeCounts)(general.unitType);
       deckCards.push({
         ...deckInfo,
         general,
@@ -231,15 +250,21 @@ const mergeProps: TMergeProps = (state, actions) => {
       });
     } else {
       hasDummy = true;
-      cost = deckCard.cost;
+      generalCost = parseInt(deckCard.cost);
       if (deckCard.belongState) {
         belongStateSet.add(deckCard.belongState);
       } else {
         hasStateDummy = true;
       }
+      const unitType = deckCard.unitType
+        ? unitTypes.find((u) => u.id === deckCard.unitType)
+        : undefined;
+      if (unitType) {
+        sumCounts(generalCost, unitTypeCounts)(unitType);
+      }
       deckCards.push(deckCard);
     }
-    totalCost += parseInt(cost);
+    totalCost += generalCost;
   });
   // 主将器の全体効果加算
   deckCards.forEach((deckCard) => {
@@ -271,6 +296,30 @@ const mergeProps: TMergeProps = (state, actions) => {
       assistDeckCards.push({ assist: null });
     }
   }
+  // 特技合計
+  const totalSkills: StateFromProps['total']['totalSkills'] = [];
+  skills.forEach((skill) => {
+    const sc = skillCounts.get(skill);
+    if (!sc) {
+      return;
+    }
+    totalSkills.push({
+      ...sc,
+      skill,
+    });
+  });
+  // 合計兵種
+  const totalUnitTypes: StateFromProps['total']['totalUnitTypes'] = [];
+  unitTypes.forEach((unitType) => {
+    const uc = unitTypeCounts.get(unitType);
+    if (!uc) {
+      return;
+    }
+    totalUnitTypes.push({
+      ...uc,
+      unitType,
+    });
+  });
   // 最大士気
   const stateCount = belongStateSet.size + (hasStateDummy ? 1 : 0);
   let maxMorale;
@@ -289,7 +338,10 @@ const mergeProps: TMergeProps = (state, actions) => {
     maxMorale += maxMoraleByGenMain;
   }
   // 魅力による士気
-  const charmCount = skillCounts.get('魅力') || 0;
+  const charmSkill = skills.find((s) => s.name === '魅力');
+  const { count: charmCount } = (charmSkill
+    ? skillCounts.get(charmSkill)
+    : undefined) || { count: 0 };
   const tolalMoraleByCharm = charmCount * CHARM_MORALE;
   // 征圧ランク
   let conquestRank;
@@ -327,20 +379,24 @@ const mergeProps: TMergeProps = (state, actions) => {
     activeAssistIndex,
     enabledAddDeck,
     enableSearch,
-    totalForce,
-    totalIntelligence,
-    intelligenceByGenMain: additionalParamsByGenMain.intelligence,
-    totalConquest,
-    conquestByGenMain: additionalParamsByGenMain.conquest,
-    conquestRank,
-    totalCost,
-    limitCost,
-    maxMorale,
-    maxMoraleByGenMain,
-    tolalMoraleByCharm,
-    tolalMoraleByGenMain,
-    hasDummy,
-    hasStateDummy,
+    total: {
+      totalForce,
+      totalIntelligence,
+      intelligenceByGenMain: additionalParamsByGenMain.intelligence,
+      totalConquest,
+      conquestByGenMain: additionalParamsByGenMain.conquest,
+      conquestRank,
+      totalCost,
+      limitCost,
+      maxMorale,
+      maxMoraleByGenMain,
+      tolalMoraleByCharm,
+      tolalMoraleByGenMain,
+      hasDummy,
+      hasStateDummy,
+      totalSkills,
+      totalUnitTypes,
+    },
     totalAwakingGenMainCount,
     genMainAwakingLimit,
   };

@@ -80,7 +80,7 @@
 }
 
 .app-header {
-  min-height: 80px;
+  min-height: 72px;
   background-color: var(--app-header-bg-color);
   display: flex;
   align-items: center;
@@ -93,10 +93,11 @@
   margin-left: 2px;
   color: var(--app-header-bg-color);
   background-color: var(--side-menu-bg-color);
-  width: 68px;
-  height: 68px;
+  width: 64px;
+  height: 64px;
   border-radius: 4px;
   visibility: hidden;
+  outline: 0;
 
   &.show {
     visibility: visible;
@@ -136,6 +137,13 @@
   display: block;
 }
 
+.list-container {
+  min-width: var(--app-min-width);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .simple-filter-container {
   min-height: 80px;
   display: none;
@@ -167,8 +175,8 @@
   font-size: 26px;
   color: var(--card-filter-label-color);
   text-shadow: 0 0 5px var(--card-filter-label-color);
-  margin: 20px auto;
-  height: 40px;
+  margin: 18px auto;
+  height: 36px;
 }
 
 .card-filter-buttons {
@@ -224,7 +232,7 @@
   }
 
   body {
-    min-height: 680px;
+    min-height: var(--app-small-min-height);
   }
 }
 
@@ -240,8 +248,17 @@
     flex-wrap: wrap;
   }
 
+  .deck-boad-container {
+    width: calc(100% - var(--app-min-width));
+  }
+
+  .list-container {
+    height: 100%;
+  }
+
   body {
-    min-height: var(--app-min-height);
+    min-width: var(--app-oblong-min-width);
+    min-height: var(--app-oblong-min-height);
   }
 }
 

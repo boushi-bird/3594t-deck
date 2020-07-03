@@ -1,3 +1,4 @@
+import '../../components/DeckCard/DeckCard.css';
 import './DeckDummyCard.css';
 import React from 'react';
 import classNames from 'classnames';

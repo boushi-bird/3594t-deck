@@ -229,7 +229,9 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
         onClick={this.handleActive}
       >
         <div className="deck-card-inner-top">
-          <img className="general-thumb" src={general.thumbUrl(pocket)} />
+          <div className="general-thumb-wrap">
+            <img className="general-thumb" src={general.thumbUrl(pocket)} />
+          </div>
           <div className="shadow" style={styleShadow} />
           <span className="state" style={styleState}>
             {general.state.nameShort}

@@ -15,8 +15,8 @@
 }
 
 .cardlist-paging {
-  min-height: 40px;
-  max-height: 40px;
+  min-height: 36px;
+  max-height: 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;

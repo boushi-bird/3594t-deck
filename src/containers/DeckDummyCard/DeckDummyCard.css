@@ -1,4 +1,4 @@
-@import '../../components/DeckCard/DeckCard.css';
+@import '../../defines.css';
 
 .deck-card.deck-dummy-card {
   margin: 3px;

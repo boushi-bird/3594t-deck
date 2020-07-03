@@ -85,6 +85,8 @@ const config: Configuration = {
         collapseWhitespace: isProduction,
         removeComments: isProduction,
       },
+      inject: 'head',
+      scriptLoading: 'defer',
     }),
     new GenerateSW({
       swDest: 'service-worker.js',

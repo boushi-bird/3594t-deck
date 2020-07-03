@@ -1,6 +1,9 @@
 :root {
   --app-min-width: 630px; /* アプリケーションの最小幅 */
-  --app-min-height: 600px; /* アプリケーションの最小高さ */
+  --app-oblong-min-width: 1150px;
+  --app-min-height: 700px; /* アプリケーションの最小高さ */
+  --app-oblong-min-height: 610px;
+  --app-small-min-height: 740px;
   --side-menu-width: 320px; /* サイドメニューの幅 */
   --app-header-bg-color: #40a1b2;
   --card-filter-min-width: 300px;
@@ -64,11 +67,10 @@
 
 @custom-media --app-min screen and (max-width: 630px);
 @custom-media --small-device-w screen and (max-width: 1080px);
-@custom-media --small-device-h screen and (max-height: 680px);
-@custom-media --small-device --small-device-w, --small-device-h;
-@custom-media --oblong-device-w screen and (min-width: 1260px);
-@custom-media --oblong-device --oblong-device-w and --small-device-h;
-@custom-media --large-device screen and (min-width: 1580px);
+@custom-media --small-device-h screen and (max-height: 740px);
+@custom-media --small-device --small-device-w, --small-device-h; /* 縦長の小さめ画面表示 */
+@custom-media --oblong-device --small-device-h; /* 横長の小さめ画面表示 */
+@custom-media --large-device screen and (min-width: 1580px); /* 幅・高さが大きい画面表示 */
 
 @keyframes rolling {
   from {
