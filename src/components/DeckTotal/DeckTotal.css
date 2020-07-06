@@ -167,9 +167,9 @@
     display: flex;
     overflow-y: hidden;
     flex-wrap: wrap;
-    transition-property: max-height;
+    transition-property: min-height, max-height;
     transition-duration: 0.5s;
-    transition-timing-function: linear;
+    transition-timing-function: ease;
 
     &.show-total {
       min-height: 48px;
