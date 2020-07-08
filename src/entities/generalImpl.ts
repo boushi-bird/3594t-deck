@@ -105,7 +105,7 @@ export class GeneralImpl implements Props {
     }
     return {
       text: this.personal.name,
-      ruby: this.personal.raw.name_ruby || '',
+      ruby: this.personal.raw.name_ruby_search || '',
     };
   }
   public thumbUrl(pocket: boolean): string {

@@ -39,7 +39,7 @@ export class StrategyImpl implements Props {
   public get nameSearchText(): SearchText {
     return {
       text: this.raw.name,
-      ruby: this.raw.name_ruby,
+      ruby: this.raw.name_ruby_search,
     };
   }
 }

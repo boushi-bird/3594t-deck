@@ -78,13 +78,15 @@ const EXAMPLE_GENERAL = new GeneralImpl(
     personal: {
       raw: {
         name: '夏侯月姫',
-        name_ruby: 'ｶｺｳｹﾂｷ',
+        name_ruby: 'か＿こう＿げっ＿き',
+        name_ruby_search: 'ｶｺｳｹﾂｷ',
         azana: '',
         azana_ruby: '',
+        azana_ruby_search: '',
       },
       id: '64',
       name: '夏侯月姫',
-      nameRuby: 'ｶｺｳｹﾂｷ',
+      nameRuby: 'かこうげっき',
       azana: '',
       azanaRuby: '',
     },
@@ -122,13 +124,16 @@ const EXAMPLE_GENERAL = new GeneralImpl(
         key: '63',
         code: 'db0303d1fecc2fa15ba2b9d1ef05bd4a',
         name: '月光の目覚め',
-        name_ruby: 'ｹﾂｺｳﾉﾒｻﾒ',
+        name_ruby: 'げっこうのめざめ',
         morale: '4',
         explanation:
           '戦場にいる魏の味方の武力の最大値が大きいほど武力が上がる。一定以上武力が上がると、さらに移動速度と突撃ダメージが上がる',
         strat_category: '0',
         strat_range: '3',
         strat_time: '0',
+        name_ruby_search: 'ｹﾂｺｳﾉﾒｻﾒ',
+        explanation_search:
+          '戦場にいる魏の味方の武力の最大値が大きいほど武力が上がる。一定以上武力が上がると、さらに移動速度と突撃ダメージが上がる',
       },
       {
         code: 'db0303d1fecc2fa15ba2b9d1ef05bd4a',
@@ -136,7 +141,7 @@ const EXAMPLE_GENERAL = new GeneralImpl(
         explanation:
           '戦場にいる魏の味方の武力の最大値が大きいほど武力が上がる。一定以上武力が上がると、さらに移動速度と突撃ダメージが上がる',
         morale: 4,
-        nameRuby: 'ｹﾂｺｳﾉﾒｻﾒ',
+        nameRuby: 'げっこうのめざめ',
         stratCategory: '1',
         stratCategoryName: '強化',
         stratRange: '1',

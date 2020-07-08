@@ -320,7 +320,7 @@ export default (baseData: RawBaseData): BaseData => {
         raw,
         id,
         name,
-        nameRuby,
+        nameRuby: nameRuby.replace(/＿/g, ''),
         azana,
         azanaRuby,
       };
