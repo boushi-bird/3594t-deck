@@ -6,7 +6,13 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { General, AssistGeneral, FilterItem, DataItem } from '3594t-deck';
+import type {
+  General,
+  AssistGeneral,
+  FilterItem,
+  DataItem,
+  KeyDataItem,
+} from '3594t-deck';
 import { MAX_MORALE_LIMIT, CHARM_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
 import type { DeckCard, DeckCardAssist } from '../../modules/deck';
@@ -39,7 +45,7 @@ interface ContainerStateFromProps {
   generals: General[];
   assistGenerals: AssistGeneral[];
   skills: FilterItem[];
-  unitTypes: FilterItem[];
+  unitTypes: KeyDataItem[];
   limitCost: number;
   assistCardLimit: number;
   genMainAwakingLimit: number;
@@ -183,7 +189,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   const deckCards: DeckCardInfo[] = [];
   const assistDeckCards: DeckCardAssistInfo[] = [];
   const belongStateSet = new Set<string>();
-  const skillCounts = new Map<DataItem, { count: number; cost: number }>();
+  const skillCounts = new Map<FilterItem, { count: number; cost: number }>();
   const unitTypeCounts = new Map<DataItem, { count: number; cost: number }>();
   // 所属勢力ごとの加算値
   const statesGenMainParams = new Map<
@@ -204,8 +210,8 @@ const mergeProps: TMergeProps = (state, actions) => {
       totalForce += general.force;
       totalIntelligence += general.intelligence;
       totalConquest += general.conquest;
-      generalCost = parseInt(general.raw.cost);
-      belongStateSet.add(general.raw.state);
+      generalCost = parseInt(general.cost.id);
+      belongStateSet.add(general.state.id);
       const genMain = deckInfo.genMain;
       // 消費する主将器ポイント 奇才将器の場合は消費ポイントが違う
       const genMainAwakingCount =
@@ -286,7 +292,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     const assist = assistGenerals.find((a) => a.id === id);
     if (assist && assistDeckCards.length < assistCardLimit) {
       assistDeckCards.push({ assist });
-      belongStateSet.add(assist.raw.state);
+      belongStateSet.add(assist.state.id);
     }
   });
   // assistCardLimitの数になるまで空の遊軍設置

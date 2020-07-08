@@ -2,14 +2,20 @@ import type { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/re
 import type {
   FilterItem,
   Strategy,
-  General,
+  StrategyWithRaw,
+  GeneralWithRaw,
   AssistStrategy,
-  AssistGeneral,
+  AssistGeneralWithRaw,
+  Personal,
+  PersonalWithRaw,
   DataItem,
   FilterContents,
+  BelongState,
+  KeyDataItem,
 } from '3594t-deck';
 import { GeneralImpl } from '../entities/generalImpl';
 import { AssistGeneralImpl } from '../entities/assistGeneralImpl';
+import { StrategyImpl } from '../entities/strategyImpl';
 import { createVersionLabel } from '../entities/createVersionLabel';
 import { UNIT_TYPE_NAME_SHORT_ALIAS } from '../const';
 
@@ -20,16 +26,27 @@ interface IdItem {
 export interface BaseData {
   filterContents: FilterContents;
   /** 武将 */
-  generals: General[];
+  generals: GeneralWithRaw[];
   /** 計略 */
-  strategies: Strategy[];
+  strategies: StrategyWithRaw[];
   /** 遊軍 */
-  assistGenerals: AssistGeneral[];
+  assistGenerals: AssistGeneralWithRaw[];
   /** 遊軍計略 */
   assistStrategies: AssistStrategy[];
 }
 
-const idIsIndex = <V>(_v: V, i: number): string => `${i}`;
+/**
+ * id として 配列のindexを採用する
+ * @param {V} _ 値(使用しない)
+ * @param {number} i 配列のindex
+ * @return {string} id
+ */
+const idIsIndex = <V>(_: V, i: number): string => `${i}`;
+/**
+ * id として 値の key プロパティを使用する
+ * @param {V} v 値
+ * @return {string} id
+ */
 const idIsKey = <V extends { key: string }>(v: V): string => v.key;
 
 const convertIdItem = <S, D extends IdItem>(
@@ -43,7 +60,12 @@ const objectToIdItems = <S, D extends IdItem>(
   convertValue: (t: S, id: string) => D
 ): D[] => Object.entries(obj).map(([key, s]) => convertValue(s, `${key}`));
 
-const toItem = (
+const toItem = <S>(s: S, id: string): S & IdItem => ({
+  ...s,
+  id,
+});
+
+const toFilterItem = (
   {
     code,
     name,
@@ -65,12 +87,35 @@ const toItem = (
   nameShort: nameShort || shortName,
 });
 
-const emptyItem: DataItem = {
+const emptyDataItem: IdLess<DataItem> = {
+  code: '',
   name: '',
 };
 
-const emptyStrategy: Strategy = {
-  id: '',
+const emptyKeyDataItem: IdLess<KeyDataItem> = {
+  code: '',
+  name: '',
+  key: '',
+};
+
+type IdLess<T> = Omit<T, 'id'>;
+
+const emptyBelongState: IdLess<BelongState> = {
+  code: '',
+  name: '',
+  nameShort: '',
+  color: '',
+  thincolor: '',
+};
+
+const emptyPersonal: IdLess<Personal> = {
+  name: '',
+  nameRuby: '',
+  azana: '',
+  azanaRuby: '',
+};
+
+const emptyStrategy: IdLess<Strategy> = {
   code: '',
   explanation: '',
   rawExplanation: '',
@@ -82,10 +127,10 @@ const emptyStrategy: Strategy = {
   stratRange: '',
   stratRangeCode: '',
   stratTime: '',
+  nameSearchText: null,
 };
 
-const emptyAssistStrategy: AssistStrategy = {
-  id: '',
+const emptyAssistStrategy: IdLess<AssistStrategy> = {
   code: '',
   explanation: '',
   rawExplanation: '',
@@ -93,23 +138,26 @@ const emptyAssistStrategy: AssistStrategy = {
   nameRuby: '',
 };
 
-const findById = (
-  filterItems: FilterItem[],
+const findById = <D>(
+  items: (D & IdItem)[],
   id: string,
-  defaultValue: DataItem = emptyItem
-): DataItem => {
-  const item = findByIdNullable(filterItems, id);
-  if (item == null) {
-    return defaultValue;
+  defaultValue: D
+): D & IdItem => {
+  const item = findByIdNullable(items, id);
+  if (item) {
+    return item;
   }
-  return item;
+  return {
+    ...defaultValue,
+    id,
+  };
 };
 
-const findByIdNullable = <D extends FilterItem>(
-  filterItems: D[],
+const findByIdNullable = <D extends IdItem>(
+  items: D[],
   id: string
 ): D | null => {
-  const item = filterItems.find((v) => v.id === id);
+  const item = items.find((v) => v.id === id);
   if (!item) {
     return null;
   }
@@ -134,29 +182,37 @@ const convertStrategyExplanation = (explanation: string): string => {
 
 export default (baseData: RawBaseData): BaseData => {
   // 勢力
-  const belongStates = convertIdItem(baseData.STATE, idIsIndex, (s, id) => {
-    const dist = toItem(s, id);
-    return {
-      ...dist,
-      color: `rgb(${s.red}, ${s.green}, ${s.blue})`,
-      thincolor: `rgba(${s.red}, ${s.green}, ${s.blue}, 0.2)`,
-    };
-  });
+  const belongStates = convertIdItem(
+    baseData.STATE,
+    idIsIndex,
+    ({ code, name, name_short: nameShort, red, green, blue }, id) => {
+      return {
+        id,
+        code,
+        name,
+        nameShort,
+        color: `rgb(${red}, ${green}, ${blue})`,
+        thincolor: `rgba(${red}, ${green}, ${blue}, 0.2)`,
+      };
+    }
+  );
   // コスト
   const costs = objectToIdItems(baseData.COST, toItem);
   // 兵種
-  const unitTypes = convertIdItem(baseData.UNIT_TYPE, idIsKey, (s, id) => {
-    const dist = toItem(s, id);
-    return {
-      ...dist,
+  const unitTypes = convertIdItem(
+    baseData.UNIT_TYPE,
+    idIsKey,
+    (s, id): KeyDataItem => ({
+      ...s,
+      id,
       nameShort: UNIT_TYPE_NAME_SHORT_ALIAS[s.name] || s.name[0],
-    };
-  });
+    })
+  );
   // 特技
-  const skills = convertIdItem(baseData.SKILL, idIsKey, toItem);
+  const skills = convertIdItem(baseData.SKILL, idIsKey, toFilterItem);
   // 主将器
   const genMains = convertIdItem(baseData.GEN_MAIN, idIsKey, (s, id) => {
-    const dist = toItem(s, id);
+    const dist = toFilterItem(s, id);
     return {
       ...dist,
       replace: s.replace === '1',
@@ -164,14 +220,16 @@ export default (baseData: RawBaseData): BaseData => {
   });
   // 奇才将器
   const genMainSps = convertIdItem(baseData.GEN_MAIN_SP, idIsKey, (s, id) => {
-    const dist = toItem(s, id);
+    const dist = toFilterItem(s, id);
     return {
       ...dist,
       replace: s.replace === '1',
     };
   });
   // レアリティ
-  const rarities = objectToIdItems(baseData.RARITY, toItem);
+  const rarities: DataItem[] = objectToIdItems(baseData.RARITY, toItem).sort(
+    (a, b) => a.order - b.order
+  );
   // 官職
   const generalTypes = convertIdItem(
     baseData.GENERAL_TYPE,
@@ -188,22 +246,24 @@ export default (baseData: RawBaseData): BaseData => {
     }
   );
   // スターター/通常/Ex
-  const varTypes = convertIdItem(baseData.VER_TYPE, idIsIndex, toItem).map(
-    (v) => {
-      if (v.name === 'Ex') {
-        return {
-          ...v,
-          name: 'EX',
-        };
-      }
-      return v;
+  const varTypes = convertIdItem(
+    baseData.VER_TYPE,
+    idIsIndex,
+    toFilterItem
+  ).map((v) => {
+    if (v.name === 'Ex') {
+      return {
+        ...v,
+        name: 'EX',
+      };
     }
-  );
+    return v;
+  });
   // 計略カテゴリ
   const strategyCategories = convertIdItem(
     baseData.STRAT_CATEGORY,
     idIsKey,
-    toItem
+    toFilterItem
   );
   // 計略範囲
   const strategyRanges = convertIdItem(
@@ -216,40 +276,56 @@ export default (baseData: RawBaseData): BaseData => {
     })
   );
   // 計略
-  const strategies: Strategy[] = convertIdItem(
+  const strategies: StrategyImpl[] = convertIdItem(
     baseData.STRAT,
     idIsKey,
     (strat, id) => {
       const {
         morale,
-        explanation: rawExplanation,
+        code,
+        explanation,
+        name,
         name_ruby: nameRuby,
         strat_category: stratCategory,
         strat_range: stratRange,
         strat_time: stratTime,
-        ...otherStrat
       } = strat;
       const stratCategoryName =
         strategyCategories.find((sc) => sc.id === stratCategory)?.name || '';
       const stratRangeCode =
         strategyRanges.find((sr) => sr.id === stratRange)?.code || '';
-      return {
-        id,
-        ...otherStrat,
-        explanation: convertStrategyExplanation(rawExplanation),
-        rawExplanation,
+      return new StrategyImpl(id, strat, {
+        code,
+        explanation: convertStrategyExplanation(explanation),
         morale: parseInt(morale),
+        name,
         nameRuby,
         stratCategory,
         stratCategoryName,
         stratRange,
         stratRangeCode,
         stratTime,
-      };
+      });
     }
   );
   // 登場弾
   const versions: { [key: number]: number[] } = {};
+  // 武将名
+  const personals: PersonalWithRaw[] = convertIdItem(
+    baseData.PERSONAL,
+    idIsIndex,
+    (raw, id) => {
+      const { name, name_ruby: nameRuby, azana, azana_ruby: azanaRuby } = raw;
+      return {
+        raw,
+        id,
+        name,
+        nameRuby,
+        azana,
+        azanaRuby,
+      };
+    }
+  );
   // 武将
   const generals = convertIdItem(baseData.GENERAL, idIsIndex, (raw, id) => {
     const majorVersion = parseInt(raw.major_version);
@@ -268,24 +344,24 @@ export default (baseData: RawBaseData): BaseData => {
       force: parseInt(raw.buryoku),
       intelligence: parseInt(raw.chiryoku),
       conquest: parseInt(raw.seiatsu),
-      cost: findById(costs, raw.cost),
+      cost: findById(costs, raw.cost, emptyDataItem),
       genMains: plain(
         [raw.gen_main0, raw.gen_main1, raw.gen_main2]
           .filter((v) => v !== '')
           .map((v) => genMains.find((g) => g.id === v))
       ),
       genMainSp: findByIdNullable(genMainSps, id),
-      generalType: findById(generalTypes, raw.general_type),
-      personal: baseData.PERSONAL[parseInt(raw.personal)],
-      rarity: findById(rarities, raw.rarity),
+      generalType: findById(generalTypes, raw.general_type, emptyKeyDataItem),
+      personal: findById(personals, raw.personal, emptyPersonal),
+      rarity: findById(rarities, raw.rarity, emptyDataItem),
       skills: plain(
         [raw.skill0, raw.skill1, raw.skill2]
           .filter((v) => v !== '' && v !== noSkillId)
           .map((v) => skills.find((g) => g.id === v))
       ),
-      state: findById(belongStates, raw.state),
-      unitType: findById(unitTypes, raw.unit_type),
-      strategy: strategies.find((v) => v.id === raw.strat) || emptyStrategy,
+      state: findById(belongStates, raw.state, emptyBelongState),
+      unitType: findById(unitTypes, raw.unit_type, emptyKeyDataItem),
+      strategy: findById(strategies, raw.strat, emptyStrategy),
     });
   });
   const majorVersions = Object.keys(versions).map((v) => parseInt(v));
@@ -296,12 +372,16 @@ export default (baseData: RawBaseData): BaseData => {
   majorVersions.forEach((major) => {
     versions[major].sort(sortNumber);
   });
-  const strategyTimes = convertIdItem(baseData.STRAT_TIME, idIsIndex, toItem);
+  const strategyTimes = convertIdItem(
+    baseData.STRAT_TIME,
+    idIsIndex,
+    toFilterItem
+  );
   // 遊軍計略カテゴリ
   const assistStrategyCategories = convertIdItem(
     baseData.ASSIST_STRAT_CATEGORY,
     idIsKey,
-    toItem
+    toFilterItem
   );
   // 遊軍計略
   const assistStrategies: AssistStrategy[] = convertIdItem(
@@ -352,11 +432,13 @@ export default (baseData: RawBaseData): BaseData => {
         majorVersion,
         addVersion,
         isEx,
-        personal: baseData.PERSONAL[parseInt(raw.personal)],
-        state: findById(belongStates, raw.state),
-        strategy:
-          assistStrategies.find((v) => v.id === raw.assist_strat) ||
-          emptyAssistStrategy,
+        personal: findById(personals, raw.personal, emptyPersonal),
+        state: findById(belongStates, raw.state, emptyBelongState),
+        strategy: findById(
+          assistStrategies,
+          raw.assist_strat,
+          emptyAssistStrategy
+        ),
       });
     }
   );

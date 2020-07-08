@@ -1,9 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type {
-  General,
+  GeneralWithRaw,
   Strategy,
-  AssistGeneral,
+  AssistGeneralWithRaw,
   FilterContents,
   SearchMode,
 } from '3594t-deck';
@@ -184,9 +184,9 @@ export interface DatalistState {
   filterCondition: FilterCondition;
   effectiveFilterCondition: FilterCondition;
   filterContents: FilterContents;
-  generals: General[];
+  generals: GeneralWithRaw[];
   strategies: Strategy[];
-  assistGenerals: AssistGeneral[];
+  assistGenerals: AssistGeneralWithRaw[];
   currentPage: number;
   pageLimit: number;
 }

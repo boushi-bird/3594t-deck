@@ -114,9 +114,9 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
     event.stopPropagation();
     const { index, onToggleSearch, general } = this.props;
     const condition = {
-      cost: general.raw.cost,
-      belongState: general.raw.state,
-      unitType: general.raw.unit_type,
+      cost: general.cost.id,
+      belongState: general.state.id,
+      unitType: general.unitType.id,
     };
     onToggleSearch(index, condition);
   };

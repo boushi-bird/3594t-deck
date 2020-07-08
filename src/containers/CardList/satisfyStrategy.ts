@@ -60,19 +60,26 @@ export default (
     return false;
   }
   // 計略名検索
-  if (
-    searchName.length > 0 &&
-    !includeSearchText(strategy.name, searchName) &&
-    !includeSearchTextRuby(strategy.nameRuby, searchName)
-  ) {
-    return false;
+  if (searchName.length > 0) {
+    if (!strategy.nameSearchText) {
+      return false;
+    }
+    const { text, ruby } = strategy.nameSearchText;
+    if (
+      !includeSearchText(text, searchName) &&
+      !includeSearchTextRuby(ruby, searchName)
+    ) {
+      return false;
+    }
   }
   // 計略説明検索
-  if (
-    searchExplanation.length > 0 &&
-    !includeSearchText(strategy.explanation, searchExplanation)
-  ) {
-    return false;
+  if (searchExplanation.length > 0) {
+    if (!strategy.explanation) {
+      return false;
+    }
+    if (!includeSearchText(strategy.explanation, searchExplanation)) {
+      return false;
+    }
   }
   return true;
 };
