@@ -96,7 +96,7 @@ const mergeProps: TMergeProps = (state, actions) => {
         // 勢力
         if (
           belongStates.length > 0 &&
-          !belongStates.includes(general.raw.state)
+          !belongStates.includes(general.state.id)
         ) {
           return false;
         }

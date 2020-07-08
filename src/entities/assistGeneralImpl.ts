@@ -1,8 +1,9 @@
 import type {
   AssistStrategy,
-  AssistGeneralProps,
   AssistGeneral,
-  DataItem,
+  RawAssistGeneral,
+  PersonalWithRaw,
+  BelongState,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
 import {
@@ -11,12 +12,22 @@ import {
   assistAvatarUrl,
 } from '../utils/externalUrl';
 
-type RawAssistGeneral = AssistGeneral['raw'];
-type Personal = AssistGeneral['personal'];
+interface Props {
+  /** 登場弾(メジャー) */
+  readonly majorVersion: number;
+  /** 登場弾(追加) */
+  readonly addVersion: number;
+  /** EXカード */
+  readonly isEx: boolean;
+  /** 武将名 */
+  readonly personal: PersonalWithRaw;
+  /** 勢力 */
+  readonly state: BelongState;
+  /** 計略 */
+  readonly strategy: AssistStrategy;
+}
 
 export class AssistGeneralImpl implements AssistGeneral {
-  public readonly id: string;
-  public readonly raw: RawAssistGeneral;
   /** 登場弾(メジャー) */
   public readonly majorVersion: number;
   /** 登場弾(追加) */
@@ -24,25 +35,18 @@ export class AssistGeneralImpl implements AssistGeneral {
   /** EXカード */
   public readonly isEx: boolean;
   /** 武将名 */
-  public readonly personal?: Personal;
+  public readonly personal: PersonalWithRaw;
   /** 勢力 */
-  public readonly state: DataItem;
+  public readonly state: BelongState;
   /** 計略 */
   public readonly strategy: AssistStrategy;
 
   public constructor(
-    id: string,
-    raw: RawAssistGeneral,
-    option: AssistGeneralProps
+    public readonly id: string,
+    public readonly raw: RawAssistGeneral,
+    props: Props
   ) {
-    this.id = id;
-    this.raw = raw;
-    this.majorVersion = option.majorVersion;
-    this.addVersion = option.addVersion;
-    this.isEx = option.isEx;
-    this.personal = option.personal;
-    this.state = option.state;
-    this.strategy = option.strategy;
+    Object.assign(this, props);
   }
   /** コード */
   public get code(): string {
@@ -50,10 +54,10 @@ export class AssistGeneralImpl implements AssistGeneral {
   }
   /** 武将名 */
   public get name(): string {
-    if (!this.personal) {
-      return '';
+    if ('name' in this.personal) {
+      return this.personal.name;
     }
-    return this.personal.name;
+    return '';
   }
   /** 登場弾 */
   public get version(): string {

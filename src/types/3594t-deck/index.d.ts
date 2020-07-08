@@ -6,23 +6,47 @@ declare module '3594t-deck' {
   import type { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/read-only';
 
   type RawGeneral = RawBaseData['GENERAL'][number];
-  type Personal = RawBaseData['PERSONAL'][number];
+  type RawPersonal = RawBaseData['PERSONAL'][number];
   type RawAssistGeneral = RawBaseData['ASSIST'][number];
+  type RawStrategy = RawBaseData['STRAT'][number];
 
   // 検索モード
   // general: 武将
   // assist: 遊軍
   type SearchMode = 'general' | 'assist';
 
-  interface DataItem {
+  interface WithRaw<T> {
+    readonly raw: T;
+  }
+
+  interface SearchText {
+    readonly text: string;
+    readonly ruby: string;
+  }
+
+  interface DataItem extends IdItem {
+    readonly code: string;
+    readonly name: string;
+    readonly nameShort?: string;
+  }
+
+  interface KeyDataItem extends DataItem {
+    readonly key: string;
+  }
+
+  interface FilterItem extends IdItem {
     readonly code?: string;
     readonly name: string;
     readonly nameShort?: string;
-    readonly color?: string;
-    readonly thincolor?: string;
   }
 
-  interface FilterItem extends DataItem, IdItem {}
+  interface BelongState extends IdItem {
+    readonly code: string;
+    readonly name: string;
+    readonly nameShort: string;
+    readonly color: string;
+    readonly thincolor: string;
+  }
 
   interface GenMainItem extends FilterItem {
     replace: boolean;
@@ -49,9 +73,20 @@ declare module '3594t-deck' {
     readonly stratRange: string;
     readonly stratRangeCode: string;
     readonly stratTime: string;
+    /** 計略名検索用テキスト */
+    readonly nameSearchText: SearchText | null;
   }
 
-  interface GeneralProps {
+  interface Personal extends IdItem {
+    azana: string;
+    azanaRuby: string;
+    name: string;
+    nameRuby: string;
+  }
+
+  interface PersonalWithRaw extends Personal, Partial<WithRaw<RawPersonal>> {}
+
+  interface General extends IdItem {
     /** 登場弾(メジャー) */
     readonly majorVersion: number;
     /** 登場弾(追加) */
@@ -71,23 +106,19 @@ declare module '3594t-deck' {
     /** 奇才将器 */
     readonly genMainSp: GenMainItem | null;
     /** 官職 */
-    readonly generalType: DataItem;
+    readonly generalType: KeyDataItem;
     /** 武将名 */
-    readonly personal?: Personal;
+    readonly personal: Personal;
     /** レアリティ */
     readonly rarity: DataItem;
     /** 特技 */
     readonly skills: readonly FilterItem[];
     /** 勢力 */
-    readonly state: DataItem;
+    readonly state: BelongState;
     /** 兵種 */
-    readonly unitType: DataItem;
+    readonly unitType: KeyDataItem;
     /** 計略 */
     readonly strategy: Strategy;
-  }
-
-  interface General extends IdItem, GeneralProps {
-    readonly raw: RawGeneral;
     /** コード */
     readonly code: string;
     /** ぽけっとコード */
@@ -102,6 +133,8 @@ declare module '3594t-deck' {
     readonly hasPocket: boolean;
     /** 公式ページへのURL */
     readonly officialUrl: string;
+    /** 検索用テキスト */
+    readonly searchText: SearchText | null;
     /**
      * サムネイル画像URL取得
      * @param pocket trueなら ぽけっと武将画像
@@ -125,7 +158,7 @@ declare module '3594t-deck' {
     readonly range?: FilterItem;
   }
 
-  interface AssistGeneralProps {
+  interface AssistGeneral extends IdItem {
     /** 登場弾(メジャー) */
     readonly majorVersion: number;
     /** 登場弾(追加) */
@@ -133,15 +166,11 @@ declare module '3594t-deck' {
     /** EXカード */
     readonly isEx: boolean;
     /** 武将名 */
-    readonly personal?: Personal;
+    readonly personal: Personal;
     /** 勢力 */
-    readonly state: DataItem;
+    readonly state: BelongState;
     /** 計略 */
     readonly strategy: AssistStrategy;
-  }
-
-  interface AssistGeneral extends IdItem, AssistGeneralProps {
-    readonly raw: RawAssistGeneral;
     /** コード */
     readonly code: string;
     /** 武将名 */
@@ -160,19 +189,19 @@ declare module '3594t-deck' {
 
   interface FilterContents {
     /** 勢力 */
-    belongStates: FilterItem[];
+    belongStates: BelongState[];
     /** コスト */
-    costs: FilterItem[];
+    costs: DataItem[];
     /** 兵種 */
-    unitTypes: FilterItem[];
+    unitTypes: KeyDataItem[];
     /** 特技 */
     skills: FilterItem[];
     /** 主将器 */
     genMains: GenMainItem[];
     /** レアリティ */
-    rarities: FilterItem[];
+    rarities: DataItem[];
     /** 官職 */
-    generalTypes: FilterItem[];
+    generalTypes: KeyDataItem[];
     /** スターター/通常/Ex */
     varTypes: FilterItem[];
     /** 登場弾(メジャーバージョン) */
@@ -188,4 +217,10 @@ declare module '3594t-deck' {
     /** 遊軍計略カテゴリー */
     assistStrategyCategories: FilterItem[];
   }
+
+  interface StrategyWithRaw extends Strategy, WithRaw<RawStrategy> {}
+  interface GeneralWithRaw extends General, WithRaw<RawGeneral> {}
+  interface AssistGeneralWithRaw
+    extends AssistGeneral,
+      WithRaw<RawAssistGeneral> {}
 }

@@ -1,7 +1,7 @@
 import './DeckTotal.css';
 import React from 'react';
 import classNames from 'classnames';
-import { FilterItem } from '3594t-deck';
+import { FilterItem, KeyDataItem } from '3594t-deck';
 
 interface TotalSkill {
   skill: FilterItem;
@@ -10,7 +10,7 @@ interface TotalSkill {
 }
 
 interface TotalUnitType {
-  unitType: FilterItem;
+  unitType: KeyDataItem;
   count: number;
   cost: number;
 }
