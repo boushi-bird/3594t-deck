@@ -206,7 +206,7 @@
   }
 }
 
-@media (--small-device) {
+@media (--modal-filter-style) {
   .ready.modal-small .modal-background {
     display: block;
   }
@@ -230,10 +230,6 @@
       display: block;
     }
   }
-
-  body {
-    min-height: var(--app-small-min-height);
-  }
 }
 
 @media (--large-device) {
@@ -254,16 +250,5 @@
 
   .list-container {
     height: 100%;
-  }
-
-  body {
-    min-width: var(--app-oblong-min-width);
-    min-height: var(--app-oblong-min-height);
-  }
-}
-
-@media (--app-min) {
-  .card-filter-container.open {
-    position: absolute;
   }
 }

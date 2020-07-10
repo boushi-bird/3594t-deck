@@ -1,9 +1,6 @@
 :root {
   --app-min-width: 630px; /* アプリケーションの最小幅 */
-  --app-oblong-min-width: 1150px;
-  --app-min-height: 700px; /* アプリケーションの最小高さ */
-  --app-oblong-min-height: 610px;
-  --app-small-min-height: 740px;
+  --app-min-height: 650px; /* アプリケーションの最小高さ */
   --side-menu-width: 320px; /* サイドメニューの幅 */
   --app-header-bg-color: #40a1b2;
   --card-filter-min-width: 300px;
@@ -65,12 +62,27 @@
   --general-label-border-color: black;
 }
 
-@custom-media --app-min screen and (max-width: 630px);
 @custom-media --small-device-w screen and (max-width: 1080px);
 @custom-media --small-device-h screen and (max-height: 740px);
-@custom-media --small-device --small-device-w, --small-device-h; /* 縦長の小さめ画面表示 */
-@custom-media --oblong-device --small-device-h; /* 横長の小さめ画面表示 */
+@custom-media --small-device --small-device-w; /* 縦長の小さめ画面表示 */
+@custom-media --oblong-device1 screen and (max-width: 1300px) and (max-height: 740px);
+@custom-media --oblong-device2 screen and (min-width: 1300px) and (max-height: 650px);
+@custom-media --oblong-device --oblong-device1, --oblong-device2; /* 横長の小さめ画面表示 */
 @custom-media --large-device screen and (min-width: 1580px); /* 幅・高さが大きい画面表示 */
+@custom-media --modal-filter-style --small-device, --oblong-device; /* 絞り込みメニューがモーダルの場合 */
+
+@media (--small-device) {
+  body {
+    min-height: 740px;
+  }
+}
+
+@media (--oblong-device) {
+  body {
+    min-width: 1150px;
+    min-height: 600px;
+  }
+}
 
 @keyframes rolling {
   from {

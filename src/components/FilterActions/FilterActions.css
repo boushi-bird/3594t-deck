@@ -28,7 +28,7 @@
   }
 }
 
-@media (--small-device) {
+@media (--modal-filter-style) {
   .modal-small .card-filter-actions .action-buton-ok {
     display: block;
   }
