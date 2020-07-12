@@ -31,7 +31,10 @@ type TMergeProps = MergeProps<
 >;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
-  ...state.window,
+  ready: state.window.ready,
+  openedSideMenu: state.window.openedSideMenu,
+  openedFilter: state.window.openedFilter,
+  showNotice: state.window.showNotice,
   openedAnyModal:
     state.window.openedDeckConfig ||
     state.window.openedUpdateInfo ||
@@ -64,7 +67,6 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
     ...bindActionCreators(
       {
         clearActiveCard: deckActions.clearActiveCard,
-        resetConditions: datalistActions.resetConditions,
         openSideMenu: () =>
           windowActions.changeSideMenuVisible({
             openedSideMenu: true,
@@ -75,10 +77,7 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
           }),
         openFilter: () =>
           windowActions.changeFilterVisible({ openedFilter: true }),
-        closeFilter: () =>
-          windowActions.changeFilterVisible({ openedFilter: false }),
         closeAllModal: windowActions.closeAllModal,
-        changeActiveFilterTab: windowActions.changeActiveFilterTab,
       },
       dispatch
     ),

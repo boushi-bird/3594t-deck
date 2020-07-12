@@ -1,4 +1,8 @@
-import type { FilterContents, FilterItem } from '3594t-deck';
+import type {
+  FilterContents,
+  FilterItem,
+  FilterSelectionMode,
+} from '3594t-deck';
 import type {
   BasicFilterCondition,
   BasicFilterConditionKey,
@@ -9,11 +13,13 @@ import type {
 } from '../../modules/datalist';
 
 const toggleCheckListVersion = ({
+  mode,
   filterContents,
   filterCondition,
   value,
   checked,
 }: {
+  mode: FilterSelectionMode;
   filterContents: FilterItem[][];
   filterCondition: string[];
   value: string;
@@ -22,16 +28,22 @@ const toggleCheckListVersion = ({
   // 一旦該当のチェックをすべて外す
   let versions = filterCondition.filter((v) => !v.startsWith(`${value}-`));
   if (!checked) {
-    // 該当のチェックをすべて入れる
-    const versionItems = ([] as FilterItem[])
+    // 該当の詳細バージョン取得
+    const addVersions = ([] as FilterItem[])
       .concat(...filterContents)
-      .filter((v) => v.id.startsWith(`${value}-`));
-    versions = versions.concat(versionItems.map((v) => v.id));
+      .filter((v) => v.id.startsWith(`${value}-`))
+      .map((v) => v.id);
+    if (mode === 'singular') {
+      versions = addVersions;
+    } else {
+      versions = versions.concat(addVersions);
+    }
   }
   return versions;
 };
 
 const toggleCheckListMajorVersion = (
+  mode: FilterSelectionMode,
   filterContents: FilterItem[],
   filterCondition: string[],
   versions: string[],
@@ -47,12 +59,15 @@ const toggleCheckListMajorVersion = (
         (version) => version !== majorVersion
       );
     }
+  } else if (mode === 'singular') {
+    majorVersions = [majorVersion];
   } else if (!majorVersions.includes(majorVersion)) {
-    const versionItems = ([] as FilterItem[])
+    const addVersions = ([] as FilterItem[])
       .concat(...filterContents)
-      .filter((v) => v.id.startsWith(`${majorVersion}-`));
+      .filter((v) => v.id.startsWith(`${majorVersion}-`))
+      .map((v) => v.id);
     // 該当のチェックが全て入っている場合
-    if (versionItems.every((v) => versions.includes(v.id))) {
+    if (addVersions.every((id) => versions.includes(id))) {
       majorVersions.push(majorVersion);
     }
   }
@@ -60,6 +75,7 @@ const toggleCheckListMajorVersion = (
 };
 
 function toggleCheckList(
+  mode: FilterSelectionMode,
   value: string,
   targetCondition: string[]
 ): { checked: boolean; targetValue: string[] } {
@@ -68,6 +84,9 @@ function toggleCheckList(
   if (checked) {
     // チェック外す
     targetValue = targetCondition.filter((v) => v !== value);
+  } else if (mode === 'singular') {
+    // 対象のみチェック入れる
+    targetValue = [value];
   } else {
     // チェック入れる
     targetValue = [...targetCondition, value];
@@ -76,6 +95,7 @@ function toggleCheckList(
 }
 
 export function toggleBasicCheckList(
+  mode: FilterSelectionMode,
   filterCondition: BasicFilterCondition,
   key: BasicFilterConditionKey,
   value: string
@@ -85,11 +105,12 @@ export function toggleBasicCheckList(
     console.warn(`${key} is not array.`);
     return {};
   }
-  const { targetValue } = toggleCheckList(value, targetCondition);
+  const { targetValue } = toggleCheckList(mode, value, targetCondition);
   return { [key]: targetValue };
 }
 
 export function toggleDetailCheckList(
+  mode: FilterSelectionMode,
   state: {
     filterContents: FilterContents;
     filterCondition: DetailFilterCondition;
@@ -102,13 +123,18 @@ export function toggleDetailCheckList(
     console.warn(`${key} is not array.`);
     return {};
   }
-  const { checked, targetValue } = toggleCheckList(value, targetCondition);
+  const { checked, targetValue } = toggleCheckList(
+    mode,
+    value,
+    targetCondition
+  );
   const conditions = { [key]: targetValue };
   switch (key) {
     case 'majorVersions': {
       return {
         ...conditions,
         versions: toggleCheckListVersion({
+          mode,
           filterContents: state.filterContents.versions,
           filterCondition: state.filterCondition.versions,
           value,
@@ -120,6 +146,7 @@ export function toggleDetailCheckList(
       return {
         ...conditions,
         majorVersions: toggleCheckListMajorVersion(
+          mode,
           state.filterContents.majorVersions,
           state.filterCondition.majorVersions,
           targetValue,
@@ -134,6 +161,7 @@ export function toggleDetailCheckList(
 }
 
 export function toggleStrategyCheckList(
+  mode: FilterSelectionMode,
   filterCondition: StrategiesFilterCondition,
   key: StrategiesFilterConditionKey,
   value: string
@@ -143,6 +171,6 @@ export function toggleStrategyCheckList(
     console.warn(`${key} is not array.`);
     return {};
   }
-  const { targetValue } = toggleCheckList(value, targetCondition);
+  const { targetValue } = toggleCheckList(mode, value, targetCondition);
   return { [key]: targetValue };
 }

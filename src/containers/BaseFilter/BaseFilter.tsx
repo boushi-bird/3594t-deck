@@ -42,7 +42,7 @@ export default class BaseFilter extends React.PureComponent<Props> {
   private handleOnChangeSearchMode: <V>(
     _: 'searchMode',
     value: boolean
-  ) => void = (itemName, value): void => {
+  ) => void = (_, value): void => {
     this.props.setSearchMode(value ? 'assist' : 'general');
   };
 

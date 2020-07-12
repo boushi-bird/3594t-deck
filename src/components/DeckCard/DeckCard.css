@@ -324,7 +324,7 @@
     font-size: 14px;
     width: 100%;
     height: 30px;
-    color: var(--switch-button-active-color);
+    color: var(--gen-main-active-color);
     background-color: var(--switch-button-bg-color);
     box-sizing: border-box;
     border: solid 2px var(--normal-border-color);

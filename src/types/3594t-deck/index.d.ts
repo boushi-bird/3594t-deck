@@ -10,10 +10,19 @@ declare module '3594t-deck' {
   type RawAssistGeneral = RawBaseData['ASSIST'][number];
   type RawStrategy = RawBaseData['STRAT'][number];
 
-  // 検索モード
-  // general: 武将
-  // assist: 遊軍
+  /**
+   * 検索モード
+   * general: 武将
+   * assist: 遊軍
+   */
   type SearchMode = 'general' | 'assist';
+
+  /**
+   * 絞り込み条件選択モード
+   * multiple: 複数選択
+   * singular: 単数選択
+   */
+  type FilterSelectionMode = 'multiple' | 'singular';
 
   interface WithRaw<T> {
     readonly raw: T;

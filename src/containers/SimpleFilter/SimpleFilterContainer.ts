@@ -4,7 +4,7 @@ import type {
   MergeProps,
 } from 'react-redux';
 import { connect } from 'react-redux';
-import type { FilterItem, SearchMode } from '3594t-deck';
+import type { FilterItem, SearchMode, FilterSelectionMode } from '3594t-deck';
 import {
   setSearchModeAdapter,
   setBasicConditionAdapter,
@@ -22,6 +22,7 @@ import SimpleFilter from './SimpleFilter';
 interface ContainerStateFromProps {
   belongStates: FilterItem[];
   searchMode: SearchMode;
+  filterSelectionMode: FilterSelectionMode;
   basicFilterCondition: BasicFilterCondition;
   deckCardBelongState?: string;
 }
@@ -54,6 +55,7 @@ const mapStateToProps: TMapStateToProps = (state) => {
   return {
     belongStates: state.datalist.filterContents.belongStates,
     searchMode: getSearchMode(state.deck, state.datalist.filterCondition),
+    filterSelectionMode: state.datalist.filterSelectionMode,
     basicFilterCondition: state.datalist.filterCondition.basic,
     deckCardBelongState,
   };
@@ -69,6 +71,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     deckCardBelongState,
     belongStates,
     searchMode,
+    filterSelectionMode,
     basicFilterCondition,
   } = state;
   let searchByDeck = false;
@@ -88,7 +91,12 @@ const mergeProps: TMergeProps = (state, actions) => {
     setSearchMode: actions.setSearchMode,
     toggleCheckList: (key: BasicFilterConditionKey, value: string) => {
       actions.setCondition(
-        toggleBasicCheckList(basicFilterCondition, key, value)
+        toggleBasicCheckList(
+          filterSelectionMode,
+          basicFilterCondition,
+          key,
+          value
+        )
       );
     },
   };
