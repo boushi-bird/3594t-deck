@@ -19,7 +19,8 @@
     "lint:css": "stylelint .",
     "fix:css": "stylelint --fix .",
     "pretest": "tsc -p extra_modules",
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit"
   },
   "author": "boushi-bird <boushi-bird@users.noreply.github.com>",
   "license": "MIT",
@@ -91,6 +92,8 @@
     "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.1.0",
+    "jest-extended": "^0.11.5",
+    "jest-junit": "^11.0.1",
     "js-yaml": "^3.14.0",
     "license-checker": "^25.0.1",
     "mini-css-extract-plugin": "^0.9.0",
@@ -122,6 +125,9 @@
         "tsConfig": "tsconfig-for-ts-node-config.json"
       }
     },
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ],
     "preset": "ts-jest/presets/js-with-babel",
     "moduleNameMapper": {
       "^jaco(.*)": "<rootDir>/extra_modules/jaco$1"
@@ -135,5 +141,8 @@
       "ts",
       "tsx"
     ]
+  },
+  "jest-junit": {
+    "outputDirectory": "./reports/junit"
   }
 }
