@@ -30,6 +30,7 @@
   --deck-card-top-color: white;
   --deck-card-top-bg-color: rgba(0, 0, 0, 0.1);
   --deck-card-tool-box-button-color: lightslategray;
+  --gen-main-active-color: #111;
   --simple-filter-bg-color: #333;
   --general-skill-bg-color: #e2ab04;
   --general-skill-border-color: black;
@@ -47,8 +48,8 @@
   --filter-button-disabled-color: #ccc;
   --no-general-bg-color: gray;
   --general-state-color: white;
-  --switch-button-color: gray;
-  --switch-button-active-color: #111;
+  --switch-button-color: lightslategray;
+  --switch-button-active-color: #fccd4d;
   --switch-button-bg-color: #eee;
   --switch-button-active-bg-color: #40a1b2;
   --dialog-bg-color: #40a1b2;

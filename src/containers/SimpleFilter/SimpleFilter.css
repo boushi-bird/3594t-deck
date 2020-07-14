@@ -29,6 +29,7 @@
     user-select: none;
 
     & .mode-item {
+      font-weight: bold;
       width: 100%;
       height: 50%;
       display: flex;

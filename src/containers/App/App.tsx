@@ -4,25 +4,22 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
-import type { WindowState, FilterTab } from '../../modules/window';
-import { filterTabNames } from '../../modules/window';
-import FilterTabs from '../../components/FilterTabs';
-import FilterActions from '../../components/FilterActions';
 import SideMenu from '../SideMenu';
 import DeckBoard from '../DeckBoard';
 import CardList from '../CardList';
 import AssistCardList from '../AssistCardList';
 import SimpleFilter from '../SimpleFilter';
-import BaseFilter from '../BaseFilter';
-import DetailFilter from '../DetailFilter';
-import StrategyFilter from '../StrategyFilter';
+import CardFilter from '../CardFilter';
 import DeckConfig from '../DeckConfig';
 import UpdateInfo from '../UpdateInfo';
 import AssistDetail from '../AssistDetail';
 import GeneralDetail from '../GeneralDetail';
 import Dialog from '../Dialog';
 
-export interface StateFromProps extends WindowState {
+export interface StateFromProps {
+  ready: boolean;
+  openedSideMenu: boolean;
+  openedFilter: boolean;
   openedAnyModalSmall: boolean;
   openedAnyModal: boolean;
   showNotice: boolean;
@@ -32,14 +29,11 @@ export interface StateFromProps extends WindowState {
 
 export interface DispatchFromProps {
   clearActiveCard(): void;
-  resetConditions(): void;
   appDidLoaded(): void;
   openSideMenu(): void;
   closeSideMenu(): void;
   openFilter(): void;
-  closeFilter(): void;
   closeAllModal(): void;
-  changeActiveFilterTab(activeFilter: FilterTab): void;
 }
 
 export type OwnProps = {};
@@ -64,17 +58,13 @@ export default class App extends React.PureComponent<Props> {
     const {
       ready,
       loading,
-      resetConditions,
       openedSideMenu,
       openFilter,
       showNotice,
-      closeFilter,
       closeAllModal,
-      changeActiveFilterTab,
-      openedFilter: open,
+      openedFilter,
       openedAnyModal: modal,
       openedAnyModalSmall: modalSmall,
-      activeFilter,
       deckSelected,
     } = this.props;
     return (
@@ -130,44 +120,7 @@ export default class App extends React.PureComponent<Props> {
               <AssistCardList />
             </div>
           </div>
-          <div className={classNames(['card-filter-container', { open }])}>
-            <h1 className="card-filter-title">絞り込みメニュー</h1>
-            <div className="card-filter-buttons">
-              <FilterTabs
-                tabs={filterTabNames}
-                activeTab={activeFilter}
-                onTabChanged={changeActiveFilterTab}
-              />
-              <FilterActions
-                resetConditions={resetConditions}
-                closeFilter={closeFilter}
-              />
-            </div>
-            <div
-              className={classNames([
-                'card-filter-content',
-                { active: activeFilter === 'BASIC' },
-              ])}
-            >
-              <BaseFilter />
-            </div>
-            <div
-              className={classNames([
-                'card-filter-content',
-                { active: activeFilter === 'DETAIL' },
-              ])}
-            >
-              <DetailFilter />
-            </div>
-            <div
-              className={classNames([
-                'card-filter-content',
-                { active: activeFilter === 'STRAT' },
-              ])}
-            >
-              <StrategyFilter />
-            </div>
-          </div>
+          <CardFilter open={openedFilter} />
         </div>
         <div className="modal-background" onClick={closeAllModal} />
         <AssistDetail />

@@ -6,6 +6,7 @@ import type {
   AssistGeneralWithRaw,
   FilterContents,
   SearchMode,
+  FilterSelectionMode,
 } from '3594t-deck';
 import type { BaseData } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
@@ -183,6 +184,7 @@ const initialFilterContents: FilterContents = {
 export interface DatalistState {
   filterCondition: FilterCondition;
   effectiveFilterCondition: FilterCondition;
+  filterSelectionMode: FilterSelectionMode;
   filterContents: FilterContents;
   generals: GeneralWithRaw[];
   strategies: Strategy[];
@@ -194,6 +196,7 @@ export interface DatalistState {
 const initialState: DatalistState = {
   filterCondition: initialFilterCondition,
   effectiveFilterCondition: initialFilterCondition,
+  filterSelectionMode: 'multiple',
   filterContents: initialFilterContents,
   generals: [],
   strategies: [],
@@ -231,6 +234,15 @@ export const datalistModule = createSlice({
           ...state.filterCondition,
           searchMode: action.payload,
         },
+      };
+    },
+    setFilterSelectionMode(
+      state: DatalistState,
+      action: PayloadAction<FilterSelectionMode>
+    ): DatalistState {
+      return {
+        ...state,
+        filterSelectionMode: action.payload,
       };
     },
     setBasicCondition(
