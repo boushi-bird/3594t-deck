@@ -57,7 +57,13 @@ jobs:
 
       - run:
           name: Unit test
-          command: npm test
+          command: npm run pretest && npm run test:ci
+
+      - store_test_results:
+          path: ./reports/junit
+
+      - store_artifacts:
+          path: ./reports/junit
 
   build:
 
