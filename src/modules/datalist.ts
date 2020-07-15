@@ -157,14 +157,14 @@ const initialStrategiesFilterCondition: StrategiesFilterCondition = {
   strategySearchExplanation: '',
 };
 
-const initialFilterCondition: FilterCondition = {
+export const initialFilterCondition: FilterCondition = {
   searchMode: 'general',
   basic: initialBasicFilterCondition,
   detail: initialDetailFilterCondition,
   strategies: initialStrategiesFilterCondition,
 };
 
-const initialFilterContents: FilterContents = {
+export const initialFilterContents: FilterContents = {
   belongStates: [],
   costs: [],
   unitTypes: [],
