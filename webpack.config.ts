@@ -14,8 +14,10 @@ import { GenerateSW } from 'workbox-webpack-plugin';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // '/' アクセス時に index.html をキャッシュさせる設定
 const indexHtmlCacheRuleExt: {
-  urlPattern: (options: { url: URL }) => boolean;
-  handler: (options: { event: unknown }) => unknown;
+  urlPattern: (options: {
+    url?: { origin: string; pathname: string };
+  }) => boolean;
+  handler: (options: { event?: unknown }) => unknown;
 } = {
   urlPattern: ({ url }) => {
     // @ts-ignore
