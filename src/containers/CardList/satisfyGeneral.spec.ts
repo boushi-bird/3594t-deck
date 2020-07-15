@@ -1,7 +1,7 @@
-import type { SearchMode } from '3594t-deck';
 import satisfyGeneral from './satisfyGeneral';
 import { GeneralImpl } from '../../entities/generalImpl';
 import { StrategyImpl } from '../../entities/strategyImpl';
+import { initialFilterCondition } from '../../modules/datalist';
 
 const EXAMPLE_GENERAL = new GeneralImpl(
   '71',
@@ -152,50 +152,7 @@ const EXAMPLE_GENERAL = new GeneralImpl(
   }
 );
 
-const searchMode: SearchMode = 'general';
-
-const DEFAULT_FILTER = {
-  searchMode,
-  basic: {
-    belongStates: [],
-    costs: [],
-    unitTypes: [],
-    forceMin: 1,
-    forceMax: 10,
-    useCostRatioForce: false,
-    costRatioForceMin: -4,
-    costRatioForceMax: 5,
-    costRatioBaseForces: { '10': 3, '15': 6, '20': 8, '25': 9, '30': 10 },
-    intelligenceMin: 1,
-    intelligenceMax: 10,
-    conquestMin: 0,
-    conquestMax: 4,
-    skills: [],
-    skillsAnd: false,
-    searchText: '',
-  },
-  detail: {
-    genMains: [],
-    genMainsAnd: false,
-    rarities: [],
-    generalTypes: [],
-    varTypes: [],
-    majorVersions: [],
-    versions: [],
-    enableDetailVersion: false,
-    pockets: [],
-  },
-  strategies: {
-    showStrategyExplanation: false,
-    moraleMin: 1,
-    moraleMax: 12,
-    strategyCategories: [],
-    strategyRanges: [],
-    strategyTimes: [],
-    strategySearchName: '',
-    strategySearchExplanation: '',
-  },
-};
+const DEFAULT_FILTER = initialFilterCondition;
 
 test('filter by name', () => {
   const general = EXAMPLE_GENERAL;
