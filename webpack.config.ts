@@ -7,7 +7,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import type { RouteMatchCallback, RouteHandlerCallback } from 'workbox-core';
 import type { RuntimeCacheRule } from 'workbox-webpack-plugin';
 import { GenerateSW } from 'workbox-webpack-plugin';
 
@@ -15,8 +14,8 @@ import { GenerateSW } from 'workbox-webpack-plugin';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // '/' アクセス時に index.html をキャッシュさせる設定
 const indexHtmlCacheRuleExt: {
-  urlPattern: RouteMatchCallback;
-  handler: RouteHandlerCallback;
+  urlPattern: (options: { url: URL }) => boolean;
+  handler: (options: { event: unknown }) => unknown;
 } = {
   urlPattern: ({ url }) => {
     // @ts-ignore
