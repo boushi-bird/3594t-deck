@@ -140,6 +140,12 @@
       "js",
       "ts",
       "tsx"
+    ],
+    "transform": {
+      "^.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es|jaco)"
     ]
   },
   "jest-junit": {

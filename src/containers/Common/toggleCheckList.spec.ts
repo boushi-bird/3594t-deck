@@ -4,25 +4,14 @@ import type {
   BasicFilterCondition,
   DetailFilterCondition,
 } from '../../modules/datalist';
-import { toggleBasicCheckList, toggleDetailCheckList } from './toggleCheckList';
 import {
-  MIN_FORCE,
-  MAX_FORCE,
-  MIN_INTELIGENCE,
-  MAX_INTELIGENCE,
-  MIN_CONQUEST,
-  MAX_CONQUEST,
-} from '../../const';
+  initialFilterContents,
+  initialFilterCondition,
+} from '../../modules/datalist';
+import { toggleBasicCheckList, toggleDetailCheckList } from './toggleCheckList';
 
 const testFilterContents: FilterContents = {
-  belongStates: [],
-  costs: [],
-  unitTypes: [],
-  skills: [],
-  genMains: [],
-  rarities: [],
-  generalTypes: [],
-  varTypes: [],
+  ...initialFilterContents,
   versions: [
     [
       { id: '1-0', name: '第1弾' },
@@ -70,47 +59,14 @@ const testFilterContents: FilterContents = {
       name: '第4段',
     },
   ],
-  strategyCategories: [],
-  strategyRanges: [],
-  strategyTimes: [],
-  assistStrategyCategories: [],
 };
 
 const testBasicFilterCondition: BasicFilterCondition = {
-  belongStates: [],
-  costs: [],
-  unitTypes: [],
-  forceMin: MIN_FORCE,
-  forceMax: MAX_FORCE,
-  useCostRatioForce: false,
-  costRatioForceMin: -4,
-  costRatioForceMax: 5,
-  costRatioBaseForces: {
-    '10': 3,
-    '15': 6,
-    '20': 8,
-    '25': 9,
-    '30': 10,
-  },
-  intelligenceMin: MIN_INTELIGENCE,
-  intelligenceMax: MAX_INTELIGENCE,
-  conquestMin: MIN_CONQUEST,
-  conquestMax: MAX_CONQUEST,
-  skills: [],
-  skillsAnd: false,
-  searchText: '',
+  ...initialFilterCondition.basic,
 };
 
 const testDetailFilterCondition: DetailFilterCondition = {
-  genMains: [],
-  genMainsAnd: false,
-  rarities: [],
-  generalTypes: [],
-  varTypes: [],
-  majorVersions: [],
-  versions: [],
-  enableDetailVersion: false,
-  pockets: [],
+  ...initialFilterCondition.detail,
 };
 
 describe('Toggle BasicFilter checklist', () => {
