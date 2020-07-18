@@ -4,7 +4,9 @@ import type { StateBaseProps, DispatchBaseProps } from './GeneralDetailBase';
 import GeneralDetailBase from './GeneralDetailBase';
 import GeneralCard from '../../components/GeneralCard';
 
-export type StateFromProps = StateBaseProps<General>;
+export interface StateFromProps extends StateBaseProps<General> {
+  exchangeForceIntelligence: boolean;
+}
 
 export type DispatchFromProps = DispatchBaseProps;
 
@@ -17,6 +19,7 @@ export default class GeneralDetail extends GeneralDetailBase<General, Props> {
         general={general}
         showStrategyExplanation={false}
         showAddButtons={false}
+        exchangeForceIntelligence={this.props.exchangeForceIntelligence}
       />
     );
   }

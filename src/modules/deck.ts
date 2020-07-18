@@ -2,6 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
   DECK_COST_LIMIT,
+  DECK_GENERAL_CARD_COUNT,
   DECK_ASSIST_CARD_COUNT,
   GEN_MAIN_AWAKENING_LIMIT,
   DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
@@ -62,11 +63,23 @@ export function isSameCardConstraint(s: any): s is SameCardConstraint {
 
 type MoveDirection = 'left' | 'right';
 
+/**
+ * デッキ成約
+ */
 export interface DeckConstraints {
+  /** コスト上限 */
   limitCost: number;
+  /** 同名武将制限 */
   sameCard: SameCardConstraint;
+  /** 武将カード上限枚数 */
+  generalCardLimit: number;
+  /** 遊軍カード上限枚数 */
   assistCardLimit: number;
+  /** 知勇一転 */
+  exchange: boolean;
+  /** 覚醒できる主将器の最大ポイント数 */
   genMainAwakeningLimit: number;
+  /** 奇才将器の消費将器ポイント */
   genMainSpAwakeningCount: number;
 }
 
@@ -88,7 +101,9 @@ const initialState: DeckState = {
   deckConstraints: {
     limitCost: DECK_COST_LIMIT.defaultValue,
     sameCard: defaultSameCardConstraint,
+    generalCardLimit: DECK_GENERAL_CARD_COUNT.defaultValue,
     assistCardLimit: DECK_ASSIST_CARD_COUNT.defaultValue,
+    exchange: false,
     genMainAwakeningLimit: GEN_MAIN_AWAKENING_LIMIT.defaultValue,
     genMainSpAwakeningCount: DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
   },

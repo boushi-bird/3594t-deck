@@ -33,6 +33,7 @@ interface ContainerStateFromProps {
     cost: string;
     unitType?: string;
   };
+  exchangeForceIntelligence: boolean;
 }
 
 type ContainerDispatchFromProps = Omit<DispatchFromProps, 'toggleCheckList'>;
@@ -63,6 +64,7 @@ const mapStateToProps: TMapStateToProps = (state) => {
     filterCondition: state.datalist.filterCondition.basic,
     filterContents: state.datalist.filterContents,
     deckSearchCondition: searchCondition,
+    exchangeForceIntelligence: state.deck.deckConstraints.exchange,
   };
 };
 
@@ -78,6 +80,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     filterCondition,
     filterContents,
     deckSearchCondition,
+    exchangeForceIntelligence,
   } = state;
   let sProps: StateFromProps;
   if (deckSearchCondition) {
@@ -110,6 +113,7 @@ const mergeProps: TMergeProps = (state, actions) => {
         costs,
         unitTypes,
       },
+      exchangeForceIntelligence,
     };
   } else {
     sProps = {
@@ -119,6 +123,7 @@ const mergeProps: TMergeProps = (state, actions) => {
       searchByDeckBelongState: false,
       searchByDeckCost: false,
       searchByDeckUnitType: false,
+      exchangeForceIntelligence,
     };
   }
   const dProps: DispatchFromProps = {

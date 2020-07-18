@@ -3,6 +3,7 @@ import reduxQuerySync from 'redux-query-sync';
 import type { General, AssistGeneral, FilterContents } from '3594t-deck';
 import {
   DECK_COST_LIMIT,
+  DECK_GENERAL_CARD_COUNT,
   DECK_ASSIST_CARD_COUNT,
   GEN_MAIN_AWAKENING_LIMIT,
   UNIT_TYPE_NAME_SHORT_ALIAS,
@@ -294,6 +295,18 @@ const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
   },
 };
 
+const generalLimitParam: ParamsOptions<
+  State,
+  number
+> = generateNumberParamsOptions(
+  {
+    action: (generalCardLimit) =>
+      deckActions.setDeckConstraints({ generalCardLimit }),
+    selector: (state) => state.deck.deckConstraints.generalCardLimit,
+  },
+  DECK_GENERAL_CARD_COUNT
+);
+
 const assistLimitParam: ParamsOptions<
   State,
   number
@@ -318,6 +331,14 @@ const genMainLimitParam: ParamsOptions<
   GEN_MAIN_AWAKENING_LIMIT
 );
 
+const exchangeParam: ParamsOptions<State, boolean> = {
+  action: (exchange) => deckActions.setDeckConstraints({ exchange }),
+  selector: (state) => state.deck.deckConstraints.exchange,
+  defaultValue: false,
+  valueToString: (exchange) => (exchange ? 'on' : ''),
+  stringToValue: (s) => s != null && s.toLowerCase() === 'on',
+};
+
 let init = false;
 
 export default function (): void {
@@ -331,7 +352,9 @@ export default function (): void {
       assist: assistParam,
       cost: costParam,
       ['same_card']: sameCardParam,
+      ['general_limit']: generalLimitParam,
       ['assist_limit']: assistLimitParam,
+      ['exchange']: exchangeParam,
       ['gen_main_limit']: genMainLimitParam,
     },
     initialTruth: 'location',

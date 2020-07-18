@@ -47,9 +47,11 @@ interface ContainerStateFromProps {
   skills: FilterItem[];
   unitTypes: KeyDataItem[];
   limitCost: number;
+  generalCardLimit: number;
   assistCardLimit: number;
   genMainAwakeningLimit: number;
   genMainSpAwakeningCount: number;
+  exchangeForceIntelligence: boolean;
 }
 
 interface ContainerDispatchFromProps
@@ -102,9 +104,11 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   skills: state.datalist.filterContents.skills,
   unitTypes: state.datalist.filterContents.unitTypes,
   limitCost: state.deck.deckConstraints.limitCost,
+  generalCardLimit: state.deck.deckConstraints.generalCardLimit,
   assistCardLimit: state.deck.deckConstraints.assistCardLimit,
   genMainAwakeningLimit: state.deck.deckConstraints.genMainAwakeningLimit,
   genMainSpAwakeningCount: state.deck.deckConstraints.genMainSpAwakeningCount,
+  exchangeForceIntelligence: state.deck.deckConstraints.exchange,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -162,9 +166,11 @@ const mergeProps: TMergeProps = (state, actions) => {
     generals,
     assistGenerals,
     limitCost,
+    generalCardLimit,
     assistCardLimit,
     genMainAwakeningLimit,
     genMainSpAwakeningCount,
+    exchangeForceIntelligence,
     skills,
     unitTypes,
   } = state;
@@ -176,7 +182,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     showDialog,
     ...otherActions
   } = actions;
-  const enabledAddDeck = isEnabledAddDeck(rawDeckCards);
+  const enabledAddDeck = isEnabledAddDeck(rawDeckCards, generalCardLimit);
   let totalForce = 0;
   let totalIntelligence = 0;
   let totalConquest = 0;
@@ -400,6 +406,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     },
     totalAwakeningGenMainCount,
     genMainAwakeningLimit,
+    exchangeForceIntelligence,
   };
 
   const dProps: DispatchFromProps = {

@@ -26,6 +26,7 @@ interface Props {
   enableMoveLeft: boolean;
   enableMoveRight: boolean;
   enableGenMainAwaken: boolean;
+  exchangeForceIntelligence: boolean;
   onSelectGenMain: (index: number, genMain?: string) => void;
   onAwakenGenMain: (index: number, awaken: boolean) => void;
   onActive: (index: number) => void;
@@ -162,6 +163,7 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
       enableMoveLeft,
       enableMoveRight,
       enableGenMainAwaken,
+      exchangeForceIntelligence,
     } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
@@ -257,7 +259,9 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
             })}
             data-label="武"
           >
-            {general.force + additionalParams.force}
+            {(exchangeForceIntelligence
+              ? general.intelligence
+              : general.force) + additionalParams.force}
           </span>
           <span
             className={classNames('intelligence', {
@@ -265,7 +269,9 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
             })}
             data-label="知"
           >
-            {general.intelligence + additionalParams.intelligence}
+            {(exchangeForceIntelligence
+              ? general.force
+              : general.intelligence) + additionalParams.intelligence}
           </span>
           <span
             className={classNames('conquest', {

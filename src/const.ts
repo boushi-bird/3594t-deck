@@ -59,6 +59,13 @@ export const DECK_COST_LIMIT: RangeValue = {
   step: 5,
 };
 
+/** デッキに入れられる武将カード数 */
+export const DECK_GENERAL_CARD_COUNT: RangeValue = {
+  min: 1,
+  max: 8,
+  defaultValue: 8,
+};
+
 /** デッキに入れられる遊軍カード数 */
 export const DECK_ASSIST_CARD_COUNT: RangeValue = {
   min: 0,
@@ -73,8 +80,6 @@ export const GEN_MAIN_AWAKENING_LIMIT: RangeValue = {
   defaultValue: 3,
 };
 
-/** デッキに入れられる武将カード最大数 */
-export const MAX_DECK_GENERAL_CARD_COUNT = 8;
 /** 奇才将器覚醒時に使用する主将器ポイント数 */
 export const DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT = 3;
 

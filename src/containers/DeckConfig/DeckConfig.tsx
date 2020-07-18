@@ -2,12 +2,14 @@ import './DeckConfig.css';
 import React from 'react';
 import {
   DECK_COST_LIMIT,
+  DECK_GENERAL_CARD_COUNT,
   DECK_ASSIST_CARD_COUNT,
   GEN_MAIN_AWAKENING_LIMIT,
 } from '../../const';
 import type { DeckConstraints, SameCardConstraint } from '../../modules/deck';
 import NumberSelect from '../../components/NumberSelect';
 import RadioButton from '../../components/RadioButton';
+import SwitchItem from '../../components/SwitchItem';
 
 type DeckConstraintsKey = keyof DeckConstraints;
 
@@ -116,8 +118,10 @@ export default class DeckConfig extends React.PureComponent<Props> {
       show,
       limitCost,
       sameCard,
+      generalCardLimit,
       assistCardLimit,
       genMainAwakeningLimit,
+      exchange,
       closeDeckConfig,
     } = this.props;
     const style: React.CSSProperties = {};
@@ -145,6 +149,18 @@ export default class DeckConfig extends React.PureComponent<Props> {
                   displayText={this.costDisplayText}
                   defaultValueLabel="(通常ルール)"
                   {...DECK_COST_LIMIT}
+                />
+              </div>
+            </section>
+            <section className="filter-section">
+              <h2 className="title">武将カード最大枚数</h2>
+              <div className="deck-filter-content">
+                <NumberSelect<DeckConstraintsKey>
+                  itemName="generalCardLimit"
+                  onChangeValue={this.handleOnChangeDeckConstraints}
+                  value={generalCardLimit}
+                  defaultValueLabel="(通常ルール)"
+                  {...DECK_GENERAL_CARD_COUNT}
                 />
               </div>
             </section>
@@ -201,6 +217,19 @@ export default class DeckConfig extends React.PureComponent<Props> {
                 >
                   同名の武将・遊軍登録可
                 </RadioButton>
+              </div>
+            </section>
+            <section className="filter-section">
+              <h2 className="title">知勇一転</h2>
+              <div className="deck-filter-content">
+                <SwitchItem<DeckConstraintsKey>
+                  itemName="exchange"
+                  onChangeValue={this.handleOnChangeDeckConstraints}
+                  isOn={exchange}
+                  labelOff="通常"
+                  labelOn="知勇一転"
+                  width={200}
+                />
               </div>
             </section>
             <section className="filter-section">

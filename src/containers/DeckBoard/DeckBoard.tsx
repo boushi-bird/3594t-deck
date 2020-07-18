@@ -39,6 +39,8 @@ export interface StateFromProps {
   totalAwakeningGenMainCount: number;
   /** 覚醒できる主将器の最大ポイント数 */
   genMainAwakeningLimit: number;
+  /** 知勇一転 */
+  exchangeForceIntelligence: boolean;
 }
 
 export interface DispatchFromProps {
@@ -69,7 +71,13 @@ export type Props = StateFromProps & DispatchFromProps;
 
 export default class DeckBoard extends React.Component<Props> {
   public render(): React.ReactNode {
-    const total = this.props.total;
+    const total = this.props.exchangeForceIntelligence
+      ? {
+          ...this.props.total,
+          totalForce: this.props.total.totalIntelligence,
+          totalIntelligence: this.props.total.totalForce,
+        }
+      : this.props.total;
     return (
       <div className="deck-board">
         {this.renderAssistDeckCardList()}
@@ -126,6 +134,7 @@ export default class DeckBoard extends React.Component<Props> {
       totalAwakeningGenMainCount,
       genMainAwakeningLimit,
       assistDeckCards,
+      exchangeForceIntelligence,
       addDeckDummy,
       clearDeck,
       openDeckConfig,
@@ -172,6 +181,7 @@ export default class DeckBoard extends React.Component<Props> {
             enableMoveLeft={!firstCard}
             enableMoveRight={!lastCard}
             enableGenMainAwaken={enableGenMainAwaken}
+            exchangeForceIntelligence={exchangeForceIntelligence}
             onSelectGenMain={selectGenMain}
             onAwakenGenMain={awakenGenMain}
             onActive={setActiveCard}

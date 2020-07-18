@@ -11,6 +11,7 @@ interface Props {
   show?: boolean;
   showStrategyExplanation: boolean;
   showAddButtons: boolean;
+  exchangeForceIntelligence: boolean;
   onShowDetail?: (general: General) => void;
 }
 
@@ -29,6 +30,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
       show,
       showStrategyExplanation,
       showAddButtons,
+      exchangeForceIntelligence,
     } = this.props;
     const clickable = showAddButtons;
     const style: React.CSSProperties = {
@@ -102,10 +104,10 @@ export default class GeneralCard extends React.PureComponent<Props> {
           {general.unitType.nameShort}
         </span>
         <span className="force" data-label="武">
-          {general.force}
+          {exchangeForceIntelligence ? general.intelligence : general.force}
         </span>
         <span className="intelligence" data-label="知">
-          {general.intelligence}
+          {exchangeForceIntelligence ? general.force : general.intelligence}
         </span>
         <span className="conquest" data-label="制圧">
           {general.conquest}
