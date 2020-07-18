@@ -45,7 +45,7 @@ class AddButton extends React.PureComponent<Props> {
     onAddDeck({
       general: general.id,
       genMain,
-      genMainAwaking: false,
+      genMainAwakening: false,
       pocket: false,
     });
   };
@@ -95,6 +95,7 @@ interface ContainerStateFromProps {
   assistGenerals: AssistGeneral[];
   deckCards: DeckCard[];
   assistDeckCards: DeckCardAssist[];
+  generalCardLimit: number;
   assistCardLimit: number;
   activeIndex: number | null;
   activeAssistIndex: number | null;
@@ -127,6 +128,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   assistGenerals: state.datalist.assistGenerals,
   deckCards: state.deck.deckCards,
   assistDeckCards: state.deck.assistDeckCards,
+  generalCardLimit: state.deck.deckConstraints.generalCardLimit,
   assistCardLimit: state.deck.deckConstraints.assistCardLimit,
   activeIndex: state.deck.activeIndex,
   activeAssistIndex: state.deck.activeAssistIndex,
@@ -224,6 +226,7 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
   const {
     deckCards,
     assistDeckCards,
+    generalCardLimit,
     activeIndex,
     activeAssistIndex,
     sameCard,
@@ -234,7 +237,7 @@ const mergeProps: TMergeProps = (state, actions, ownProps) => {
   const deckAssistPersonals = createAssistDeckPersonals(state, assistDeckCards);
   const enabledAddDeck =
     activeAssistIndex == null &&
-    isEnabledAddDeck(deckCards, activeIndex) &&
+    isEnabledAddDeck(deckCards, generalCardLimit, activeIndex) &&
     isEnabledAddDeckGeneral(
       general,
       deckPersonals,

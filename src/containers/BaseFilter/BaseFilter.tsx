@@ -28,6 +28,7 @@ export interface StateFromProps {
   searchByDeckBelongState: boolean;
   searchByDeckCost: boolean;
   searchByDeckUnitType: boolean;
+  exchangeForceIntelligence: boolean;
 }
 
 export interface DispatchFromProps {
@@ -61,10 +62,33 @@ export default class BaseFilter extends React.PureComponent<Props> {
       searchByDeckBelongState,
       searchByDeckCost,
       searchByDeckUnitType,
+      exchangeForceIntelligence,
       setCondition,
       toggleCheckList,
     } = this.props;
     const generalModeOff = searchMode !== 'general';
+    const intelligenceElm = (
+      <section className="filter-section general-mode-only">
+        <h2 className="title">{exchangeForceIntelligence ? '武力' : '知力'}</h2>
+        <div className="range">
+          <NumberSelect<BasicFilterConditionKey>
+            itemName="intelligenceMin"
+            onChangeValue={this.handleOnChangeValue}
+            value={filterCondition.intelligenceMin}
+            max={MAX_INTELIGENCE}
+            min={MIN_INTELIGENCE}
+          />
+          -
+          <NumberSelect<BasicFilterConditionKey>
+            itemName="intelligenceMax"
+            onChangeValue={this.handleOnChangeValue}
+            value={filterCondition.intelligenceMax}
+            max={MAX_INTELIGENCE}
+            min={MIN_INTELIGENCE}
+          />
+        </div>
+      </section>
+    );
     return (
       <div className={classNames({ 'general-mode-off': generalModeOff })}>
         <section className="filter-section">
@@ -111,8 +135,11 @@ export default class BaseFilter extends React.PureComponent<Props> {
             disabled={searchByDeckUnitType}
           />
         </section>
+        {exchangeForceIntelligence ? intelligenceElm : <></>}
         <section className="filter-section general-mode-only">
-          <h2 className="title">武力</h2>
+          <h2 className="title">
+            {exchangeForceIntelligence ? '知力' : '武力'}
+          </h2>
           <div className="title-button">
             <SwitchItem<BasicFilterConditionKey>
               itemName="useCostRatioForce"
@@ -163,30 +190,12 @@ export default class BaseFilter extends React.PureComponent<Props> {
             </div>
             <CostRatioBaseForce
               costRatioBaseForces={filterCondition.costRatioBaseForces}
+              exchangeForceIntelligence={exchangeForceIntelligence}
               setCondition={setCondition}
             />
           </div>
         </section>
-        <section className="filter-section general-mode-only">
-          <h2 className="title">知力</h2>
-          <div className="range">
-            <NumberSelect<BasicFilterConditionKey>
-              itemName="intelligenceMin"
-              onChangeValue={this.handleOnChangeValue}
-              value={filterCondition.intelligenceMin}
-              max={MAX_INTELIGENCE}
-              min={MIN_INTELIGENCE}
-            />
-            -
-            <NumberSelect<BasicFilterConditionKey>
-              itemName="intelligenceMax"
-              onChangeValue={this.handleOnChangeValue}
-              value={filterCondition.intelligenceMax}
-              max={MAX_INTELIGENCE}
-              min={MIN_INTELIGENCE}
-            />
-          </div>
-        </section>
+        {exchangeForceIntelligence ? <></> : intelligenceElm}
         <section className="filter-section general-mode-only">
           <h2 className="title">征圧力</h2>
           <div className="range">

@@ -47,9 +47,11 @@ interface ContainerStateFromProps {
   skills: FilterItem[];
   unitTypes: KeyDataItem[];
   limitCost: number;
+  generalCardLimit: number;
   assistCardLimit: number;
-  genMainAwakingLimit: number;
-  genMainSpAwakingCount: number;
+  genMainAwakeningLimit: number;
+  genMainSpAwakeningCount: number;
+  exchangeForceIntelligence: boolean;
 }
 
 interface ContainerDispatchFromProps
@@ -102,9 +104,11 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   skills: state.datalist.filterContents.skills,
   unitTypes: state.datalist.filterContents.unitTypes,
   limitCost: state.deck.deckConstraints.limitCost,
+  generalCardLimit: state.deck.deckConstraints.generalCardLimit,
   assistCardLimit: state.deck.deckConstraints.assistCardLimit,
-  genMainAwakingLimit: state.deck.deckConstraints.genMainAwakingLimit,
-  genMainSpAwakingCount: state.deck.deckConstraints.genMainSpAwakingCount,
+  genMainAwakeningLimit: state.deck.deckConstraints.genMainAwakeningLimit,
+  genMainSpAwakeningCount: state.deck.deckConstraints.genMainSpAwakeningCount,
+  exchangeForceIntelligence: state.deck.deckConstraints.exchange,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -115,7 +119,7 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
           openedDeckConfig: true,
         }),
       selectGenMain: deckActions.selectGenMain,
-      awakeGenMain: deckActions.awakeGenMain,
+      awakenGenMain: deckActions.awakenGenMain,
       setActiveCard: deckActions.setActiveCard,
       removeDeck: deckActions.removeDeck,
       rawAddDeckDummy: deckActions.addDeckDummy,
@@ -162,9 +166,11 @@ const mergeProps: TMergeProps = (state, actions) => {
     generals,
     assistGenerals,
     limitCost,
+    generalCardLimit,
     assistCardLimit,
-    genMainAwakingLimit,
-    genMainSpAwakingCount,
+    genMainAwakeningLimit,
+    genMainSpAwakeningCount,
+    exchangeForceIntelligence,
     skills,
     unitTypes,
   } = state;
@@ -176,14 +182,14 @@ const mergeProps: TMergeProps = (state, actions) => {
     showDialog,
     ...otherActions
   } = actions;
-  const enabledAddDeck = isEnabledAddDeck(rawDeckCards);
+  const enabledAddDeck = isEnabledAddDeck(rawDeckCards, generalCardLimit);
   let totalForce = 0;
   let totalIntelligence = 0;
   let totalConquest = 0;
   let totalCost = 0;
   let tolalMoraleByGenMain = 0;
   let maxMoraleByGenMain = 0;
-  let totalAwakingGenMainCount = 0;
+  let totalAwakeningGenMainCount = 0;
   let hasDummy = false;
   let hasStateDummy = false;
   const deckCards: DeckCardInfo[] = [];
@@ -214,17 +220,17 @@ const mergeProps: TMergeProps = (state, actions) => {
       belongStateSet.add(general.state.id);
       const genMain = deckInfo.genMain;
       // 消費する主将器ポイント 奇才将器の場合は消費ポイントが違う
-      const genMainAwakingCount =
-        general.genMainSp != null ? genMainSpAwakingCount : 1;
-      if (deckInfo.genMainAwaking) {
-        totalAwakingGenMainCount += genMainAwakingCount;
+      const genMainAwakeningCount =
+        general.genMainSp != null ? genMainSpAwakeningCount : 1;
+      if (deckInfo.genMainAwakening) {
+        totalAwakeningGenMainCount += genMainAwakeningCount;
       }
       const additionalParams = {
         force: 0,
         intelligence: 0,
         conquest: 0,
       };
-      if (genMain != null && deckInfo.genMainAwaking) {
+      if (genMain != null && deckInfo.genMainAwakening) {
         const gm = general.genMains.find((g) => g.id === genMain);
         if (gm) {
           const p =
@@ -251,7 +257,7 @@ const mergeProps: TMergeProps = (state, actions) => {
       deckCards.push({
         ...deckInfo,
         general,
-        genMainAwakingCount,
+        genMainAwakeningCount,
         additionalParams,
       });
     } else {
@@ -339,9 +345,6 @@ const mergeProps: TMergeProps = (state, actions) => {
   }
   if (maxMorale + maxMoraleByGenMain >= MAX_MORALE_LIMIT) {
     maxMoraleByGenMain = MAX_MORALE_LIMIT - maxMorale;
-    maxMorale = MAX_MORALE_LIMIT;
-  } else {
-    maxMorale += maxMoraleByGenMain;
   }
   // 魅力による士気
   const charmSkill = skills.find((s) => s.name === '魅力');
@@ -375,8 +378,6 @@ const mergeProps: TMergeProps = (state, actions) => {
     },
     { intelligence: 0, conquest: 0 }
   );
-  totalIntelligence += additionalParamsByGenMain.intelligence;
-  totalConquest += additionalParamsByGenMain.conquest;
 
   const sProps: StateFromProps = {
     deckCards,
@@ -403,8 +404,9 @@ const mergeProps: TMergeProps = (state, actions) => {
       totalSkills,
       totalUnitTypes,
     },
-    totalAwakingGenMainCount,
-    genMainAwakingLimit,
+    totalAwakeningGenMainCount,
+    genMainAwakeningLimit,
+    exchangeForceIntelligence,
   };
 
   const dProps: DispatchFromProps = {

@@ -17,6 +17,7 @@ import type { BasicFilterCondition } from '../../modules/datalist';
 
 interface Props {
   costRatioBaseForces: BasicFilterCondition['costRatioBaseForces'];
+  exchangeForceIntelligence: boolean;
   setCondition: (condition: Partial<BasicFilterCondition>) => void;
 }
 
@@ -32,10 +33,12 @@ export default class CostRatioBaseForce extends React.PureComponent<Props> {
   };
 
   public render(): React.ReactNode {
-    const { costRatioBaseForces } = this.props;
+    const { costRatioBaseForces, exchangeForceIntelligence } = this.props;
     return (
       <div className="cost-ratio-base-force">
-        <span className="title-inline">基準武力</span>
+        <span className="title-inline">
+          基準{exchangeForceIntelligence ? '知力' : '武力'}
+        </span>
         <label>
           1.0
           <NumberSelect

@@ -14,6 +14,7 @@ type TMapDispatchToProps = MapDispatchToProps<DispatchFromProps, OwnProps>;
 
 const mapStateToProps: TMapStateToProps = (state) => ({
   card: state.window.detailGeneral,
+  exchangeForceIntelligence: state.deck.deckConstraints.exchange,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {

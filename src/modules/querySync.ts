@@ -2,14 +2,10 @@ import type { ParamsOptions } from 'redux-query-sync';
 import reduxQuerySync from 'redux-query-sync';
 import type { General, AssistGeneral, FilterContents } from '3594t-deck';
 import {
-  DEFAULT_DECK_COST_LIMIT,
-  MIN_DECK_COST_LIMIT,
-  MAX_DECK_COST_LIMIT,
-  STEP_DECK_COST_LIMIT,
-  DEFAULT_DECK_ASSIST_CARD_COUNT,
-  MAX_DECK_ASSIST_CARD_COUNT,
-  DEFAULT_GEN_MAIN_AWAKING_LIMIT,
-  MAX_GEN_MAIN_AWAKING_LIMIT,
+  DECK_COST_LIMIT,
+  DECK_GENERAL_CARD_COUNT,
+  DECK_ASSIST_CARD_COUNT,
+  GEN_MAIN_AWAKENING_LIMIT,
   UNIT_TYPE_NAME_SHORT_ALIAS,
 } from '../const';
 import type { State } from '../store';
@@ -45,7 +41,7 @@ const toQueryDeckCard = ({ generals, filterContents }: DataContents) => {
       );
       const code = deckCard.pocket ? general.pocketCode : general.code;
       const genMainCode =
-        (genMain ? genMain.code : '') + (deckCard.genMainAwaking ? '*' : '');
+        (genMain ? genMain.code : '') + (deckCard.genMainAwakening ? '*' : '');
       // 武将 (code)_(genMainCode)
       return [code, genMainCode].join('_');
     }
@@ -70,11 +66,11 @@ const parseDeckCardGeneral = (
   {
     code,
     genMainCode,
-    genMainAwaking,
+    genMainAwakening,
   }: {
     code?: string;
     genMainCode?: string;
-    genMainAwaking: boolean;
+    genMainAwakening: boolean;
   },
   { generals, filterContents }: DataContents
 ): KeyLessDeckCardGeneral | null => {
@@ -96,7 +92,7 @@ const parseDeckCardGeneral = (
   return {
     general: general.id,
     genMain: genMainid,
-    genMainAwaking,
+    genMainAwakening,
     pocket,
   };
 };
@@ -131,9 +127,9 @@ const parseDeckCard = ({ generals, filterContents }: DataContents) => {
     const [code, genMain, cost, belongStateNameShort, unitTypeName] = v.split(
       '_'
     );
-    const [genMainCode, awaking] = genMain.split('*');
+    const [genMainCode, awakening] = genMain.split('*');
     const g = parseDeckCardGeneral(
-      { code, genMainCode, genMainAwaking: awaking === '' },
+      { code, genMainCode, genMainAwakening: awakening === '' },
       { generals, filterContents }
     );
     if (g) {
@@ -250,24 +246,42 @@ const assistParam: ParamsOptions<State, DeckCardAssist[]> = {
   },
 };
 
-const costParam: ParamsOptions<State, number> = {
-  action: (limitCost) => deckActions.setDeckConstraints({ limitCost }),
-  selector: (state) => state.deck.deckConstraints.limitCost,
-  defaultValue: DEFAULT_DECK_COST_LIMIT,
-  stringToValue: (s) => {
-    try {
-      const limitCost = parseInt(s);
-      if (
-        limitCost >= MIN_DECK_COST_LIMIT &&
-        limitCost <= MAX_DECK_COST_LIMIT &&
-        limitCost % STEP_DECK_COST_LIMIT === 0
-      ) {
-        return limitCost;
-      }
-    } catch (e) {}
-    return DEFAULT_DECK_COST_LIMIT;
+function generateNumberParamsOptions(
+  options: Pick<ParamsOptions<State, number>, 'action' | 'selector'>,
+  {
+    min = 0,
+    max,
+    defaultValue,
+    step = 1,
+  }: {
+    min?: number;
+    max: number;
+    defaultValue: number;
+    step?: number;
+  }
+): ParamsOptions<State, number> {
+  return {
+    ...options,
+    defaultValue,
+    stringToValue: (s) => {
+      try {
+        const v = parseInt(s);
+        if (v >= min && v <= max && v % step === 0) {
+          return v;
+        }
+      } catch (e) {}
+      return defaultValue;
+    },
+  };
+}
+
+const costParam: ParamsOptions<State, number> = generateNumberParamsOptions(
+  {
+    action: (limitCost) => deckActions.setDeckConstraints({ limitCost }),
+    selector: (state) => state.deck.deckConstraints.limitCost,
   },
-};
+  DECK_COST_LIMIT
+);
 
 const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
   action: (sameCard) => deckActions.setDeckConstraints({ sameCard }),
@@ -281,44 +295,48 @@ const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
   },
 };
 
-const assistLimitParam: ParamsOptions<State, number> = {
-  action: (assistCardLimit) =>
-    deckActions.setDeckConstraints({ assistCardLimit }),
-  selector: (state) => state.deck.deckConstraints.assistCardLimit,
-  defaultValue: DEFAULT_DECK_ASSIST_CARD_COUNT,
-  stringToValue: (s) => {
-    try {
-      const assistCardLimit = parseInt(s);
-      if (
-        assistCardLimit >= 0 &&
-        assistCardLimit <= MAX_DECK_ASSIST_CARD_COUNT &&
-        assistCardLimit % 1 === 0
-      ) {
-        return assistCardLimit;
-      }
-    } catch (e) {}
-    return DEFAULT_DECK_ASSIST_CARD_COUNT;
+const generalLimitParam: ParamsOptions<
+  State,
+  number
+> = generateNumberParamsOptions(
+  {
+    action: (generalCardLimit) =>
+      deckActions.setDeckConstraints({ generalCardLimit }),
+    selector: (state) => state.deck.deckConstraints.generalCardLimit,
   },
-};
+  DECK_GENERAL_CARD_COUNT
+);
 
-const genMainLimitParam: ParamsOptions<State, number> = {
-  action: (genMainAwakingLimit) =>
-    deckActions.setDeckConstraints({ genMainAwakingLimit }),
-  selector: (state) => state.deck.deckConstraints.genMainAwakingLimit,
-  defaultValue: DEFAULT_GEN_MAIN_AWAKING_LIMIT,
-  stringToValue: (s) => {
-    try {
-      const genMainAwakingLimit = parseInt(s);
-      if (
-        genMainAwakingLimit >= 0 &&
-        genMainAwakingLimit <= MAX_GEN_MAIN_AWAKING_LIMIT &&
-        genMainAwakingLimit % 1 === 0
-      ) {
-        return genMainAwakingLimit;
-      }
-    } catch (e) {}
-    return DEFAULT_GEN_MAIN_AWAKING_LIMIT;
+const assistLimitParam: ParamsOptions<
+  State,
+  number
+> = generateNumberParamsOptions(
+  {
+    action: (assistCardLimit) =>
+      deckActions.setDeckConstraints({ assistCardLimit }),
+    selector: (state) => state.deck.deckConstraints.assistCardLimit,
   },
+  DECK_ASSIST_CARD_COUNT
+);
+
+const genMainLimitParam: ParamsOptions<
+  State,
+  number
+> = generateNumberParamsOptions(
+  {
+    action: (genMainAwakeningLimit) =>
+      deckActions.setDeckConstraints({ genMainAwakeningLimit }),
+    selector: (state) => state.deck.deckConstraints.genMainAwakeningLimit,
+  },
+  GEN_MAIN_AWAKENING_LIMIT
+);
+
+const exchangeParam: ParamsOptions<State, boolean> = {
+  action: (exchange) => deckActions.setDeckConstraints({ exchange }),
+  selector: (state) => state.deck.deckConstraints.exchange,
+  defaultValue: false,
+  valueToString: (exchange) => (exchange ? 'on' : ''),
+  stringToValue: (s) => s != null && s.toLowerCase() === 'on',
 };
 
 let init = false;
@@ -334,7 +352,9 @@ export default function (): void {
       assist: assistParam,
       cost: costParam,
       ['same_card']: sameCardParam,
+      ['general_limit']: generalLimitParam,
       ['assist_limit']: assistLimitParam,
+      ['exchange']: exchangeParam,
       ['gen_main_limit']: genMainLimitParam,
     },
     initialTruth: 'location',

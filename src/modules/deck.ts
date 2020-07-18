@@ -1,10 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  DEFAULT_DECK_COST_LIMIT,
-  DEFAULT_DECK_ASSIST_CARD_COUNT,
-  DEFAULT_GEN_MAIN_AWAKING_LIMIT,
-  DEFAULT_GEN_MAIN_SP_AWAKING_COUNT,
+  DECK_COST_LIMIT,
+  DECK_GENERAL_CARD_COUNT,
+  DECK_ASSIST_CARD_COUNT,
+  GEN_MAIN_AWAKENING_LIMIT,
+  DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
 } from '../const';
 
 // デッキのユニークIDとして使う揮発的な数値
@@ -14,7 +15,7 @@ export interface DeckCardGeneral {
   key: number;
   general: string;
   genMain?: string;
-  genMainAwaking: boolean;
+  genMainAwakening: boolean;
   pocket: boolean;
 }
 
@@ -62,12 +63,24 @@ export function isSameCardConstraint(s: any): s is SameCardConstraint {
 
 type MoveDirection = 'left' | 'right';
 
+/**
+ * デッキ成約
+ */
 export interface DeckConstraints {
+  /** コスト上限 */
   limitCost: number;
+  /** 同名武将制限 */
   sameCard: SameCardConstraint;
+  /** 武将カード上限枚数 */
+  generalCardLimit: number;
+  /** 遊軍カード上限枚数 */
   assistCardLimit: number;
-  genMainAwakingLimit: number;
-  genMainSpAwakingCount: number;
+  /** 知勇一転 */
+  exchange: boolean;
+  /** 覚醒できる主将器の最大ポイント数 */
+  genMainAwakeningLimit: number;
+  /** 奇才将器の消費将器ポイント */
+  genMainSpAwakeningCount: number;
 }
 
 interface DeckState {
@@ -86,11 +99,13 @@ const initialState: DeckState = {
   activeAssistIndex: null,
   searchCondition: undefined,
   deckConstraints: {
-    limitCost: DEFAULT_DECK_COST_LIMIT,
+    limitCost: DECK_COST_LIMIT.defaultValue,
     sameCard: defaultSameCardConstraint,
-    assistCardLimit: DEFAULT_DECK_ASSIST_CARD_COUNT,
-    genMainAwakingLimit: DEFAULT_GEN_MAIN_AWAKING_LIMIT,
-    genMainSpAwakingCount: DEFAULT_GEN_MAIN_SP_AWAKING_COUNT,
+    generalCardLimit: DECK_GENERAL_CARD_COUNT.defaultValue,
+    assistCardLimit: DECK_ASSIST_CARD_COUNT.defaultValue,
+    exchange: false,
+    genMainAwakeningLimit: GEN_MAIN_AWAKENING_LIMIT.defaultValue,
+    genMainSpAwakeningCount: DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
   },
 };
 
@@ -347,14 +362,14 @@ export const deckModule = createSlice({
         deckCards,
       };
     },
-    awakeGenMain(
+    awakenGenMain(
       state: DeckState,
       action: PayloadAction<{
         index: number;
-        awake: boolean;
+        awaken: boolean;
       }>
     ): DeckState {
-      const { index, awake } = action.payload;
+      const { index, awaken } = action.payload;
       const deckCards = [...state.deckCards];
       const deckCard = deckCards[index];
       if (deckCard == null) {
@@ -362,7 +377,7 @@ export const deckModule = createSlice({
       }
       deckCards[index] = {
         ...deckCard,
-        genMainAwaking: awake,
+        genMainAwakening: awaken,
       };
       return {
         ...state,
@@ -430,7 +445,7 @@ export const deckActions = {
     deckModule.actions.searchByDeck({ index, condition }),
   selectGenMain: (index: number, genMain?: string) =>
     deckModule.actions.selectGenMain({ index, genMain }),
-  awakeGenMain: (index: number, awake: boolean) =>
-    deckModule.actions.awakeGenMain({ index, awake }),
+  awakenGenMain: (index: number, awaken: boolean) =>
+    deckModule.actions.awakenGenMain({ index, awaken }),
   /* eslint-enable @typescript-eslint/explicit-module-boundary-types */
 };

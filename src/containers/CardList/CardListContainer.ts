@@ -29,6 +29,7 @@ interface ContainerStateFromProps {
     cost: string;
     unitType?: string;
   };
+  exchangeForceIntelligence: boolean;
 }
 
 interface ContainerDispatchFromProps {
@@ -72,6 +73,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
     state.datalist.effectiveFilterCondition
   ),
   deckSearchCondition: state.deck.searchCondition,
+  exchangeForceIntelligence: state.deck.deckConstraints.exchange,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -94,6 +96,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     filterCondition: rawFilterCondition,
     searchMode,
     deckSearchCondition,
+    exchangeForceIntelligence,
   } = state;
   let filterCondition = rawFilterCondition;
   if (deckSearchCondition) {
@@ -152,6 +155,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     hasNext,
     show: searchMode === 'general',
     showStrategyExplanation: filterCondition.strategies.showStrategyExplanation,
+    exchangeForceIntelligence,
   };
 
   const dProps: DispatchFromProps = {
@@ -184,6 +188,12 @@ const options: ConnectorOptions = {
       return false;
     }
     if (nextMergedProps.searchedOffset !== prevMergedProps.searchedOffset) {
+      return false;
+    }
+    if (
+      nextMergedProps.exchangeForceIntelligence !==
+      prevMergedProps.exchangeForceIntelligence
+    ) {
       return false;
     }
     if (

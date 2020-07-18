@@ -13,7 +13,7 @@ import type { DeckCardGeneral, DeckCardDummy } from '../../modules/deck';
 
 interface DeckCardGeneralInfo extends Omit<DeckCardGeneral, 'general'> {
   general: General;
-  genMainAwakingCount: number;
+  genMainAwakeningCount: number;
   additionalParams: {
     force: number;
     intelligence: number;
@@ -36,9 +36,11 @@ export interface StateFromProps {
   enableSearch: boolean;
   total: DeckTotal['props'];
   /** 覚醒済み将器ポイント */
-  totalAwakingGenMainCount: number;
+  totalAwakeningGenMainCount: number;
   /** 覚醒できる主将器の最大ポイント数 */
-  genMainAwakingLimit: number;
+  genMainAwakeningLimit: number;
+  /** 知勇一転 */
+  exchangeForceIntelligence: boolean;
 }
 
 export interface DispatchFromProps {
@@ -46,7 +48,7 @@ export interface DispatchFromProps {
   clearDeck: () => void;
   openDeckConfig: () => void;
   selectGenMain: (index: number, genMain?: string) => void;
-  awakeGenMain: (index: number, awake: boolean) => void;
+  awakenGenMain: (index: number, awaken: boolean) => void;
   setActiveCard: (index: number) => void;
   removeDeck: (index: number) => void;
   toggleSearch: (
@@ -69,7 +71,13 @@ export type Props = StateFromProps & DispatchFromProps;
 
 export default class DeckBoard extends React.Component<Props> {
   public render(): React.ReactNode {
-    const total = this.props.total;
+    const total = this.props.exchangeForceIntelligence
+      ? {
+          ...this.props.total,
+          totalForce: this.props.total.totalIntelligence,
+          totalIntelligence: this.props.total.totalForce,
+        }
+      : this.props.total;
     return (
       <div className="deck-board">
         {this.renderAssistDeckCardList()}
@@ -123,14 +131,15 @@ export default class DeckBoard extends React.Component<Props> {
       activeIndex,
       enableSearch,
       enabledAddDeck,
-      totalAwakingGenMainCount,
-      genMainAwakingLimit,
+      totalAwakeningGenMainCount,
+      genMainAwakeningLimit,
       assistDeckCards,
+      exchangeForceIntelligence,
       addDeckDummy,
       clearDeck,
       openDeckConfig,
       selectGenMain,
-      awakeGenMain,
+      awakenGenMain,
       setActiveCard,
       removeDeck,
       toggleSearch,
@@ -149,13 +158,14 @@ export default class DeckBoard extends React.Component<Props> {
           general,
           additionalParams,
           genMain,
-          genMainAwaking,
-          genMainAwakingCount,
+          genMainAwakening,
+          genMainAwakeningCount,
           pocket,
         } = deckCard;
-        const enableGenMainAwake =
-          genMainAwaking ||
-          genMainAwakingLimit >= genMainAwakingCount + totalAwakingGenMainCount;
+        const enableGenMainAwaken =
+          genMainAwakening ||
+          genMainAwakeningLimit >=
+            genMainAwakeningCount + totalAwakeningGenMainCount;
         deckCardsElements.push(
           <DeckCard
             key={key}
@@ -163,16 +173,17 @@ export default class DeckBoard extends React.Component<Props> {
             active={active}
             search={active && enableSearch}
             genMain={genMain}
-            genMainAwaking={genMainAwaking}
-            genMainAwakingCount={genMainAwakingCount}
+            genMainAwakening={genMainAwakening}
+            genMainAwakeningCount={genMainAwakeningCount}
             general={general}
             additionalParams={additionalParams}
             pocket={pocket}
             enableMoveLeft={!firstCard}
             enableMoveRight={!lastCard}
-            enableGenMainAwake={enableGenMainAwake}
+            enableGenMainAwaken={enableGenMainAwaken}
+            exchangeForceIntelligence={exchangeForceIntelligence}
             onSelectGenMain={selectGenMain}
-            onAwakeGenMain={awakeGenMain}
+            onAwakenGenMain={awakenGenMain}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}
@@ -228,12 +239,12 @@ export default class DeckBoard extends React.Component<Props> {
             <FontAwesomeIcon icon={faCog} />
           </div>
           <div
-            className={classNames('deck-awaking-gen-main', {
-              'over-limit': totalAwakingGenMainCount > genMainAwakingLimit,
+            className={classNames('deck-awakening-gen-main', {
+              'over-limit': totalAwakeningGenMainCount > genMainAwakeningLimit,
             })}
             data-label="将器ポイント"
           >
-            {totalAwakingGenMainCount}/{genMainAwakingLimit}
+            {totalAwakeningGenMainCount}/{genMainAwakeningLimit}
           </div>
         </div>
       </div>

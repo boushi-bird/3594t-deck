@@ -9,6 +9,7 @@ export interface StateFromProps extends StateBaseProps {
   generals: General[];
   searchedGeneralIds: string[];
   showStrategyExplanation: boolean;
+  exchangeForceIntelligence: boolean;
 }
 
 export interface DispatchFromProps extends DispatchBaseProps {
@@ -61,6 +62,7 @@ export default class CardList extends CardListBase<Props, LocalState> {
       generals,
       searchedGeneralIds,
       showStrategyExplanation,
+      exchangeForceIntelligence,
     } = this.props;
     const { renderingCount } = this.state;
     const generalCards: JSX.Element[] = [];
@@ -77,6 +79,7 @@ export default class CardList extends CardListBase<Props, LocalState> {
           show={show}
           showStrategyExplanation={showStrategyExplanation}
           showAddButtons={true}
+          exchangeForceIntelligence={exchangeForceIntelligence}
         />
       );
     });
