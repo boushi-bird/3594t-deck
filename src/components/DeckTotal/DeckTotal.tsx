@@ -139,13 +139,13 @@ export default class DeckTotal extends React.Component<Props, LocalState> {
                 <span
                   className={classNames('intelligence', { dummy: hasDummy })}
                 >
-                  {totalIntelligence}
+                  {totalIntelligence + intelligenceByGenMain}
                   <span
                     className={classNames('breakdown', {
                       active: intelligenceByGenMain > 0,
                     })}
                   >
-                    ({totalIntelligence - intelligenceByGenMain}
+                    ({totalIntelligence}
                     <span className="addition-by-gen-main">
                       &#43;{intelligenceByGenMain}
                     </span>
@@ -167,13 +167,13 @@ export default class DeckTotal extends React.Component<Props, LocalState> {
                   {conquestRank}
                 </span>
                 <span className={classNames('conquest', { dummy: hasDummy })}>
-                  {totalConquest}
+                  {totalConquest + conquestByGenMain}
                   <span
                     className={classNames('breakdown', {
                       active: conquestByGenMain > 0,
                     })}
                   >
-                    ({totalConquest - conquestByGenMain}
+                    ({totalConquest}
                     <span className="addition-by-gen-main">
                       &#43;{conquestByGenMain}
                     </span>
@@ -200,13 +200,13 @@ export default class DeckTotal extends React.Component<Props, LocalState> {
                 <span
                   className={classNames('max-morale', { dummy: hasStateDummy })}
                 >
-                  {maxMorale}
+                  {maxMorale + maxMoraleByGenMain}
                   <span
                     className={classNames('breakdown', {
                       active: maxMoraleByGenMain > 0,
                     })}
                   >
-                    ({maxMorale - maxMoraleByGenMain}
+                    ({maxMorale}
                     <span className="addition-by-gen-main">
                       &#43;{maxMoraleByGenMain}
                     </span>

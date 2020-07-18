@@ -339,9 +339,6 @@ const mergeProps: TMergeProps = (state, actions) => {
   }
   if (maxMorale + maxMoraleByGenMain >= MAX_MORALE_LIMIT) {
     maxMoraleByGenMain = MAX_MORALE_LIMIT - maxMorale;
-    maxMorale = MAX_MORALE_LIMIT;
-  } else {
-    maxMorale += maxMoraleByGenMain;
   }
   // 魅力による士気
   const charmSkill = skills.find((s) => s.name === '魅力');
@@ -375,8 +372,6 @@ const mergeProps: TMergeProps = (state, actions) => {
     },
     { intelligence: 0, conquest: 0 }
   );
-  totalIntelligence += additionalParamsByGenMain.intelligence;
-  totalConquest += additionalParamsByGenMain.conquest;
 
   const sProps: StateFromProps = {
     deckCards,
