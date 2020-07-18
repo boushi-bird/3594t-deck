@@ -45,7 +45,7 @@ class AddButton extends React.PureComponent<Props> {
     onAddDeck({
       general: general.id,
       genMain,
-      genMainAwaking: false,
+      genMainAwakening: false,
       pocket: false,
     });
   };

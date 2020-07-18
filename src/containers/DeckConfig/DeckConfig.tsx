@@ -117,7 +117,7 @@ export default class DeckConfig extends React.PureComponent<Props> {
       limitCost,
       sameCard,
       assistCardLimit,
-      genMainAwakingLimit,
+      genMainAwakeningLimit,
       closeDeckConfig,
     } = this.props;
     const style: React.CSSProperties = {};
@@ -207,9 +207,9 @@ export default class DeckConfig extends React.PureComponent<Props> {
               <h2 className="title">覚醒できる主将器の最大ポイント数</h2>
               <div className="deck-filter-content">
                 <NumberSelect<DeckConstraintsKey>
-                  itemName="genMainAwakingLimit"
+                  itemName="genMainAwakeningLimit"
                   onChangeValue={this.handleOnChangeDeckConstraints}
-                  value={genMainAwakingLimit}
+                  value={genMainAwakeningLimit}
                   defaultValueLabel="(通常ルール)"
                   {...GEN_MAIN_AWAKENING_LIMIT}
                 />

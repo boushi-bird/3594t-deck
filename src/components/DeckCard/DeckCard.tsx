@@ -12,8 +12,8 @@ import type { General } from '3594t-deck';
 interface Props {
   index: number;
   genMain?: string;
-  genMainAwaking: boolean;
-  genMainAwakingCount: number;
+  genMainAwakening: boolean;
+  genMainAwakeningCount: number;
   general: General;
   additionalParams: {
     force: number;
@@ -25,9 +25,9 @@ interface Props {
   search: boolean;
   enableMoveLeft: boolean;
   enableMoveRight: boolean;
-  enableGenMainAwake: boolean;
+  enableGenMainAwaken: boolean;
   onSelectGenMain: (index: number, genMain?: string) => void;
-  onAwakeGenMain: (index: number, awake: boolean) => void;
+  onAwakenGenMain: (index: number, awaken: boolean) => void;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
   onToggleSearch: (
@@ -75,21 +75,21 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
     onSelectGenMain(index, value);
   };
 
-  private handleAwakeGenMain = (
+  private handleAwakenGenMain = (
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
     event.stopPropagation();
     const {
       index,
-      genMainAwaking,
-      enableGenMainAwake,
-      onAwakeGenMain,
+      genMainAwakening,
+      enableGenMainAwaken,
+      onAwakenGenMain,
     } = this.props;
-    const awake = !genMainAwaking;
-    if (awake && !enableGenMainAwake) {
+    const awaken = !genMainAwakening;
+    if (awaken && !enableGenMainAwaken) {
       return;
     }
-    onAwakeGenMain(index, awake);
+    onAwakenGenMain(index, awaken);
   };
 
   private handleActive = (
@@ -154,14 +154,14 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
       general,
       additionalParams,
       genMain,
-      genMainAwaking,
-      genMainAwakingCount,
+      genMainAwakening,
+      genMainAwakeningCount,
       active,
       search,
       pocket,
       enableMoveLeft,
       enableMoveRight,
-      enableGenMainAwake,
+      enableGenMainAwaken,
     } = this.props;
     const style: React.CSSProperties = {
       backgroundColor: general.state.thincolor,
@@ -207,16 +207,16 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
     const genMainLabel = general.genMainSp != null ? '奇才将器' : '主将器';
     const moveFrom = this.state.moveFrom;
     const indexClass = index % 2 === 0 ? 'even' : 'odd';
-    const diamonds: JSX.Element[] = Array(genMainAwakingCount)
+    const diamonds: JSX.Element[] = Array(genMainAwakeningCount)
       .fill(0)
       .map((_, i) => <span key={i} className="diamond" />);
-    let genMainAwakeClass;
-    if (genMainAwaking) {
-      genMainAwakeClass = 'gen-main-awaking';
-    } else if (enableGenMainAwake) {
-      genMainAwakeClass = 'gen-main-not-awaking';
+    let genMainAwakenClass;
+    if (genMainAwakening) {
+      genMainAwakenClass = 'gen-main-awakening';
+    } else if (enableGenMainAwaken) {
+      genMainAwakenClass = 'gen-main-not-awakening';
     } else {
-      genMainAwakeClass = 'gen-main-disable-awaking';
+      genMainAwakenClass = 'gen-main-disable-awakening';
     }
     return (
       <div
@@ -288,8 +288,8 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
               </select>
             </span>
             <button
-              className={classNames('awake-gen-main', genMainAwakeClass)}
-              onClick={this.handleAwakeGenMain}
+              className={classNames('awaken-gen-main', genMainAwakenClass)}
+              onClick={this.handleAwakenGenMain}
             >
               <span className="diamonds">{diamonds}</span>
               <span className="label">将器覚醒</span>

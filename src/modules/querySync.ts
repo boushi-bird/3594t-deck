@@ -40,7 +40,7 @@ const toQueryDeckCard = ({ generals, filterContents }: DataContents) => {
       );
       const code = deckCard.pocket ? general.pocketCode : general.code;
       const genMainCode =
-        (genMain ? genMain.code : '') + (deckCard.genMainAwaking ? '*' : '');
+        (genMain ? genMain.code : '') + (deckCard.genMainAwakening ? '*' : '');
       // 武将 (code)_(genMainCode)
       return [code, genMainCode].join('_');
     }
@@ -65,11 +65,11 @@ const parseDeckCardGeneral = (
   {
     code,
     genMainCode,
-    genMainAwaking,
+    genMainAwakening,
   }: {
     code?: string;
     genMainCode?: string;
-    genMainAwaking: boolean;
+    genMainAwakening: boolean;
   },
   { generals, filterContents }: DataContents
 ): KeyLessDeckCardGeneral | null => {
@@ -91,7 +91,7 @@ const parseDeckCardGeneral = (
   return {
     general: general.id,
     genMain: genMainid,
-    genMainAwaking,
+    genMainAwakening,
     pocket,
   };
 };
@@ -126,9 +126,9 @@ const parseDeckCard = ({ generals, filterContents }: DataContents) => {
     const [code, genMain, cost, belongStateNameShort, unitTypeName] = v.split(
       '_'
     );
-    const [genMainCode, awaking] = genMain.split('*');
+    const [genMainCode, awakening] = genMain.split('*');
     const g = parseDeckCardGeneral(
-      { code, genMainCode, genMainAwaking: awaking === '' },
+      { code, genMainCode, genMainAwakening: awakening === '' },
       { generals, filterContents }
     );
     if (g) {
@@ -311,9 +311,9 @@ const genMainLimitParam: ParamsOptions<
   number
 > = generateNumberParamsOptions(
   {
-    action: (genMainAwakingLimit) =>
-      deckActions.setDeckConstraints({ genMainAwakingLimit }),
-    selector: (state) => state.deck.deckConstraints.genMainAwakingLimit,
+    action: (genMainAwakeningLimit) =>
+      deckActions.setDeckConstraints({ genMainAwakeningLimit }),
+    selector: (state) => state.deck.deckConstraints.genMainAwakeningLimit,
   },
   GEN_MAIN_AWAKENING_LIMIT
 );

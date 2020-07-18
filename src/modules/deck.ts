@@ -14,7 +14,7 @@ export interface DeckCardGeneral {
   key: number;
   general: string;
   genMain?: string;
-  genMainAwaking: boolean;
+  genMainAwakening: boolean;
   pocket: boolean;
 }
 
@@ -66,8 +66,8 @@ export interface DeckConstraints {
   limitCost: number;
   sameCard: SameCardConstraint;
   assistCardLimit: number;
-  genMainAwakingLimit: number;
-  genMainSpAwakingCount: number;
+  genMainAwakeningLimit: number;
+  genMainSpAwakeningCount: number;
 }
 
 interface DeckState {
@@ -89,8 +89,8 @@ const initialState: DeckState = {
     limitCost: DECK_COST_LIMIT.defaultValue,
     sameCard: defaultSameCardConstraint,
     assistCardLimit: DECK_ASSIST_CARD_COUNT.defaultValue,
-    genMainAwakingLimit: GEN_MAIN_AWAKENING_LIMIT.defaultValue,
-    genMainSpAwakingCount: DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
+    genMainAwakeningLimit: GEN_MAIN_AWAKENING_LIMIT.defaultValue,
+    genMainSpAwakeningCount: DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
   },
 };
 
@@ -347,14 +347,14 @@ export const deckModule = createSlice({
         deckCards,
       };
     },
-    awakeGenMain(
+    awakenGenMain(
       state: DeckState,
       action: PayloadAction<{
         index: number;
-        awake: boolean;
+        awaken: boolean;
       }>
     ): DeckState {
-      const { index, awake } = action.payload;
+      const { index, awaken } = action.payload;
       const deckCards = [...state.deckCards];
       const deckCard = deckCards[index];
       if (deckCard == null) {
@@ -362,7 +362,7 @@ export const deckModule = createSlice({
       }
       deckCards[index] = {
         ...deckCard,
-        genMainAwaking: awake,
+        genMainAwakening: awaken,
       };
       return {
         ...state,
@@ -430,7 +430,7 @@ export const deckActions = {
     deckModule.actions.searchByDeck({ index, condition }),
   selectGenMain: (index: number, genMain?: string) =>
     deckModule.actions.selectGenMain({ index, genMain }),
-  awakeGenMain: (index: number, awake: boolean) =>
-    deckModule.actions.awakeGenMain({ index, awake }),
+  awakenGenMain: (index: number, awaken: boolean) =>
+    deckModule.actions.awakenGenMain({ index, awaken }),
   /* eslint-enable @typescript-eslint/explicit-module-boundary-types */
 };

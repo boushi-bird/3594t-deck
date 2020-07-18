@@ -48,8 +48,8 @@ interface ContainerStateFromProps {
   unitTypes: KeyDataItem[];
   limitCost: number;
   assistCardLimit: number;
-  genMainAwakingLimit: number;
-  genMainSpAwakingCount: number;
+  genMainAwakeningLimit: number;
+  genMainSpAwakeningCount: number;
 }
 
 interface ContainerDispatchFromProps
@@ -103,8 +103,8 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   unitTypes: state.datalist.filterContents.unitTypes,
   limitCost: state.deck.deckConstraints.limitCost,
   assistCardLimit: state.deck.deckConstraints.assistCardLimit,
-  genMainAwakingLimit: state.deck.deckConstraints.genMainAwakingLimit,
-  genMainSpAwakingCount: state.deck.deckConstraints.genMainSpAwakingCount,
+  genMainAwakeningLimit: state.deck.deckConstraints.genMainAwakeningLimit,
+  genMainSpAwakeningCount: state.deck.deckConstraints.genMainSpAwakeningCount,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -115,7 +115,7 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
           openedDeckConfig: true,
         }),
       selectGenMain: deckActions.selectGenMain,
-      awakeGenMain: deckActions.awakeGenMain,
+      awakenGenMain: deckActions.awakenGenMain,
       setActiveCard: deckActions.setActiveCard,
       removeDeck: deckActions.removeDeck,
       rawAddDeckDummy: deckActions.addDeckDummy,
@@ -163,8 +163,8 @@ const mergeProps: TMergeProps = (state, actions) => {
     assistGenerals,
     limitCost,
     assistCardLimit,
-    genMainAwakingLimit,
-    genMainSpAwakingCount,
+    genMainAwakeningLimit,
+    genMainSpAwakeningCount,
     skills,
     unitTypes,
   } = state;
@@ -183,7 +183,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   let totalCost = 0;
   let tolalMoraleByGenMain = 0;
   let maxMoraleByGenMain = 0;
-  let totalAwakingGenMainCount = 0;
+  let totalAwakeningGenMainCount = 0;
   let hasDummy = false;
   let hasStateDummy = false;
   const deckCards: DeckCardInfo[] = [];
@@ -214,17 +214,17 @@ const mergeProps: TMergeProps = (state, actions) => {
       belongStateSet.add(general.state.id);
       const genMain = deckInfo.genMain;
       // 消費する主将器ポイント 奇才将器の場合は消費ポイントが違う
-      const genMainAwakingCount =
-        general.genMainSp != null ? genMainSpAwakingCount : 1;
-      if (deckInfo.genMainAwaking) {
-        totalAwakingGenMainCount += genMainAwakingCount;
+      const genMainAwakeningCount =
+        general.genMainSp != null ? genMainSpAwakeningCount : 1;
+      if (deckInfo.genMainAwakening) {
+        totalAwakeningGenMainCount += genMainAwakeningCount;
       }
       const additionalParams = {
         force: 0,
         intelligence: 0,
         conquest: 0,
       };
-      if (genMain != null && deckInfo.genMainAwaking) {
+      if (genMain != null && deckInfo.genMainAwakening) {
         const gm = general.genMains.find((g) => g.id === genMain);
         if (gm) {
           const p =
@@ -251,7 +251,7 @@ const mergeProps: TMergeProps = (state, actions) => {
       deckCards.push({
         ...deckInfo,
         general,
-        genMainAwakingCount,
+        genMainAwakeningCount,
         additionalParams,
       });
     } else {
@@ -403,8 +403,8 @@ const mergeProps: TMergeProps = (state, actions) => {
       totalSkills,
       totalUnitTypes,
     },
-    totalAwakingGenMainCount,
-    genMainAwakingLimit,
+    totalAwakeningGenMainCount,
+    genMainAwakeningLimit,
   };
 
   const dProps: DispatchFromProps = {
