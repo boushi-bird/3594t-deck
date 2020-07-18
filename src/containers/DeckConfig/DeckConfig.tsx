@@ -137,72 +137,83 @@ export default class DeckConfig extends React.PureComponent<Props> {
           <div className="deck-config-body">
             <section className="filter-section">
               <h2 className="title">コスト 上限</h2>
-              <NumberSelect<DeckConstraintsKey>
-                itemName="limitCost"
-                onChangeValue={this.handleOnChangeDeckConstraints}
-                value={limitCost}
-                displayText={this.costDisplayText}
-                defaultValueLabel="(通常ルール)"
-                {...DECK_COST_LIMIT}
-              />
+              <div className="deck-filter-content">
+                <NumberSelect<DeckConstraintsKey>
+                  itemName="limitCost"
+                  onChangeValue={this.handleOnChangeDeckConstraints}
+                  value={limitCost}
+                  displayText={this.costDisplayText}
+                  defaultValueLabel="(通常ルール)"
+                  {...DECK_COST_LIMIT}
+                />
+              </div>
             </section>
             <section className="filter-section">
               <h2 className="title">遊軍</h2>
-              <NumberSelect<DeckConstraintsKey>
-                itemName="assistCardLimit"
-                onChangeValue={this.handleOnChangeDeckConstraints}
-                value={assistCardLimit}
-                displayText={this.assistLimitDisplayText}
-                {...DECK_ASSIST_CARD_COUNT}
-              />
+              <div className="deck-filter-content">
+                <NumberSelect<DeckConstraintsKey>
+                  className="assist-card-limit"
+                  itemName="assistCardLimit"
+                  onChangeValue={this.handleOnChangeDeckConstraints}
+                  value={assistCardLimit}
+                  displayText={this.assistLimitDisplayText}
+                  {...DECK_ASSIST_CARD_COUNT}
+                />
+              </div>
             </section>
             <section className="filter-section same-card-constraint">
               <h2 className="title">同名武将 制限</h2>
-              <RadioButton<DeckConstraintsKey, SameCardGeneralConstraint>
-                itemName="sameCard"
-                value="general"
-                checked={generalConst === 'general'}
-                onClick={this.handleOnChangeSameCardGeneral}
-              >
-                同名武将登録不可(通常ルール)
-              </RadioButton>
-              <RadioButton<DeckConstraintsKey, SameCardGeneralConstraint>
-                itemName="sameCard"
-                value="general-strategy"
-                checked={generalConst === 'general-strategy'}
-                onClick={this.handleOnChangeSameCardGeneral}
-              >
-                同名武将登録可、ただし同計略の同名武将は登録不可
-              </RadioButton>
+              <div className="deck-filter-content">
+                <RadioButton<DeckConstraintsKey, SameCardGeneralConstraint>
+                  itemName="sameCard"
+                  value="general"
+                  checked={generalConst === 'general'}
+                  onClick={this.handleOnChangeSameCardGeneral}
+                >
+                  同名武将登録不可(通常ルール)
+                </RadioButton>
+                <RadioButton<DeckConstraintsKey, SameCardGeneralConstraint>
+                  itemName="sameCard"
+                  value="general-strategy"
+                  checked={generalConst === 'general-strategy'}
+                  onClick={this.handleOnChangeSameCardGeneral}
+                >
+                  同名武将登録可、ただし同計略の同名武将は登録不可
+                </RadioButton>
+              </div>
             </section>
             <section className="filter-section same-card-constraint">
               <h2 className="title">同名武将・遊軍 制限</h2>
-              <RadioButton<DeckConstraintsKey, SameCardAssistConstraint>
-                itemName="sameCard"
-                value="exclude-assist"
-                checked={assistConst === 'exclude-assist'}
-                onClick={this.handleOnChangeSameCardAssist}
-              >
-                同名の武将・遊軍登録不可(通常ルール)
-              </RadioButton>
-              <RadioButton<DeckConstraintsKey, SameCardAssistConstraint>
-                itemName="sameCard"
-                value="assist"
-                checked={assistConst === 'assist'}
-                onClick={this.handleOnChangeSameCardAssist}
-              >
-                同名の武将・遊軍登録可
-              </RadioButton>
+              <div className="deck-filter-content">
+                <RadioButton<DeckConstraintsKey, SameCardAssistConstraint>
+                  itemName="sameCard"
+                  value="exclude-assist"
+                  checked={assistConst === 'exclude-assist'}
+                  onClick={this.handleOnChangeSameCardAssist}
+                >
+                  同名の武将・遊軍登録不可(通常ルール)
+                </RadioButton>
+                <RadioButton<DeckConstraintsKey, SameCardAssistConstraint>
+                  itemName="sameCard"
+                  value="assist"
+                  checked={assistConst === 'assist'}
+                  onClick={this.handleOnChangeSameCardAssist}
+                >
+                  同名の武将・遊軍登録可
+                </RadioButton>
+              </div>
             </section>
             <section className="filter-section">
               <h2 className="title">覚醒できる主将器の最大ポイント数</h2>
-              <NumberSelect<DeckConstraintsKey>
-                itemName="genMainAwakingLimit"
-                onChangeValue={this.handleOnChangeDeckConstraints}
-                value={genMainAwakingLimit}
-                defaultValueLabel="(通常ルール)"
-                {...GEN_MAIN_AWAKENING_LIMIT}
-              />
+              <div className="deck-filter-content">
+                <NumberSelect<DeckConstraintsKey>
+                  itemName="genMainAwakingLimit"
+                  onChangeValue={this.handleOnChangeDeckConstraints}
+                  value={genMainAwakingLimit}
+                  defaultValueLabel="(通常ルール)"
+                  {...GEN_MAIN_AWAKENING_LIMIT}
+                />
+              </div>
             </section>
           </div>
         </div>

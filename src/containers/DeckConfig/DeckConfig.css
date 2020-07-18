@@ -8,7 +8,7 @@
 .same-card-constraint {
   font-size: 20px;
   color: var(--card-filter-label-color);
-  margin: 6px;
+  margin: 6px 0;
 }
 
 .deck-config {
@@ -27,6 +27,14 @@
   flex-direction: column;
   animation: fadeIn 0.5s ease 0s 1 normal;
   z-index: 101;
+
+  & .number-select.assist-card-limit {
+    width: 120px;
+  }
+
+  & .deck-filter-content {
+    margin: 0 6px;
+  }
 }
 
 .deck-config-inner {
