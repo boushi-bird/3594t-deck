@@ -1,5 +1,10 @@
 @import '../../defines.css';
 
 .number-select {
-  width: 102px;
+  min-width: 102px;
+  min-height: 48px;
+
+  &.has-default-label {
+    min-width: 260px;
+  }
 }

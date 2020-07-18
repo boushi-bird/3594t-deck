@@ -8,8 +8,10 @@ interface Props<N extends string> {
   value: number;
   className?: string;
   step?: number;
+  defaultValue?: number;
   itemName: N;
-  displayText?: (value: number) => string;
+  defaultValueLabel?: string;
+  displayText?: (value: number, isDefault: boolean) => string;
   onChangeValue: (itemNave: N, value: number) => void;
 }
 
@@ -25,11 +27,23 @@ export default class NumberSelect<
   };
 
   public render(): React.ReactNode {
-    const { min, max, value, className, displayText, step = 1 } = this.props;
+    const {
+      min,
+      max,
+      value,
+      className,
+      defaultValue,
+      defaultValueLabel,
+      displayText,
+      step = 1,
+    } = this.props;
     const minus = min < 0;
     const options: JSX.Element[] = [];
     for (let i = min; i <= max; i += step) {
-      const display = displayText ? displayText(i) : `${i}`;
+      const isDefault = defaultValue != null && defaultValue === i;
+      const display =
+        (displayText ? displayText(i, isDefault) : `${i}`) +
+        (isDefault ? defaultValueLabel || '' : '');
       const displaySign = minus && i > 0 ? '+' : '';
       options.push(
         <option key={i} value={i}>
@@ -38,10 +52,17 @@ export default class NumberSelect<
         </option>
       );
     }
+    const classNameList = ['number-select'];
+    if (className) {
+      classNameList.push(className);
+    }
+    if (defaultValueLabel) {
+      classNameList.push('has-default-label');
+    }
     return (
       <select
         value={value}
-        className={classNames('number-select', className)}
+        className={classNames(classNameList)}
         onChange={this.handleOnChange}
       >
         {options}

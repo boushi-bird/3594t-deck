@@ -1,11 +1,9 @@
 import './DeckConfig.css';
 import React from 'react';
 import {
-  MIN_DECK_COST_LIMIT,
-  MAX_DECK_COST_LIMIT,
-  STEP_DECK_COST_LIMIT,
-  MAX_DECK_ASSIST_CARD_COUNT,
-  MAX_GEN_MAIN_AWAKING_LIMIT,
+  DECK_COST_LIMIT,
+  DECK_ASSIST_CARD_COUNT,
+  GEN_MAIN_AWAKENING_LIMIT,
 } from '../../const';
 import type { DeckConstraints, SameCardConstraint } from '../../modules/deck';
 import NumberSelect from '../../components/NumberSelect';
@@ -143,10 +141,9 @@ export default class DeckConfig extends React.PureComponent<Props> {
                 itemName="limitCost"
                 onChangeValue={this.handleOnChangeDeckConstraints}
                 value={limitCost}
-                max={MAX_DECK_COST_LIMIT}
-                min={MIN_DECK_COST_LIMIT}
-                step={STEP_DECK_COST_LIMIT}
                 displayText={this.costDisplayText}
+                defaultValueLabel="(通常ルール)"
+                {...DECK_COST_LIMIT}
               />
             </section>
             <section className="filter-section">
@@ -155,10 +152,8 @@ export default class DeckConfig extends React.PureComponent<Props> {
                 itemName="assistCardLimit"
                 onChangeValue={this.handleOnChangeDeckConstraints}
                 value={assistCardLimit}
-                max={MAX_DECK_ASSIST_CARD_COUNT}
-                min={0}
-                step={1}
                 displayText={this.assistLimitDisplayText}
+                {...DECK_ASSIST_CARD_COUNT}
               />
             </section>
             <section className="filter-section same-card-constraint">
@@ -205,9 +200,8 @@ export default class DeckConfig extends React.PureComponent<Props> {
                 itemName="genMainAwakingLimit"
                 onChangeValue={this.handleOnChangeDeckConstraints}
                 value={genMainAwakingLimit}
-                max={MAX_GEN_MAIN_AWAKING_LIMIT}
-                min={0}
-                step={1}
+                defaultValueLabel="(通常ルール)"
+                {...GEN_MAIN_AWAKENING_LIMIT}
               />
             </section>
           </div>

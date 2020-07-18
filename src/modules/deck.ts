@@ -1,10 +1,10 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  DEFAULT_DECK_COST_LIMIT,
-  DEFAULT_DECK_ASSIST_CARD_COUNT,
-  DEFAULT_GEN_MAIN_AWAKING_LIMIT,
-  DEFAULT_GEN_MAIN_SP_AWAKING_COUNT,
+  DECK_COST_LIMIT,
+  DECK_ASSIST_CARD_COUNT,
+  GEN_MAIN_AWAKENING_LIMIT,
+  DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
 } from '../const';
 
 // デッキのユニークIDとして使う揮発的な数値
@@ -86,11 +86,11 @@ const initialState: DeckState = {
   activeAssistIndex: null,
   searchCondition: undefined,
   deckConstraints: {
-    limitCost: DEFAULT_DECK_COST_LIMIT,
+    limitCost: DECK_COST_LIMIT.defaultValue,
     sameCard: defaultSameCardConstraint,
-    assistCardLimit: DEFAULT_DECK_ASSIST_CARD_COUNT,
-    genMainAwakingLimit: DEFAULT_GEN_MAIN_AWAKING_LIMIT,
-    genMainSpAwakingCount: DEFAULT_GEN_MAIN_SP_AWAKING_COUNT,
+    assistCardLimit: DECK_ASSIST_CARD_COUNT.defaultValue,
+    genMainAwakingLimit: GEN_MAIN_AWAKENING_LIMIT.defaultValue,
+    genMainSpAwakingCount: DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
   },
 };
 
