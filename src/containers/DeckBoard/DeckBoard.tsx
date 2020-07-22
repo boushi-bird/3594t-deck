@@ -41,6 +41,8 @@ export interface StateFromProps {
   genMainAwakeningLimit: number;
   /** 知勇一転 */
   exchangeForceIntelligence: boolean;
+  /** デッキ設定を変更しているか */
+  modifiedDeckConstraints: boolean;
 }
 
 export interface DispatchFromProps {
@@ -91,6 +93,7 @@ export default class DeckBoard extends React.Component<Props> {
     const {
       assistDeckCards,
       activeAssistIndex,
+      modifiedDeckConstraints,
       setActiveAssistCard,
       removeDeckAssist,
       showAssistDetail,
@@ -118,7 +121,12 @@ export default class DeckBoard extends React.Component<Props> {
     return (
       <div className="assist-deck-card-list" style={style}>
         {assistDeckCardsElements}
-        <div className="open-deck-config button" onClick={openDeckConfig}>
+        <div
+          className={classNames('open-deck-config', 'button', {
+            modified: modifiedDeckConstraints,
+          })}
+          onClick={openDeckConfig}
+        >
           <FontAwesomeIcon icon={faCog} />
         </div>
       </div>
@@ -135,6 +143,7 @@ export default class DeckBoard extends React.Component<Props> {
       genMainAwakeningLimit,
       assistDeckCards,
       exchangeForceIntelligence,
+      modifiedDeckConstraints,
       addDeckDummy,
       clearDeck,
       openDeckConfig,
@@ -233,7 +242,9 @@ export default class DeckBoard extends React.Component<Props> {
           </div>
           <div
             style={deckConfigStyle}
-            className="open-deck-config button"
+            className={classNames('open-deck-config', 'button', {
+              modified: modifiedDeckConstraints,
+            })}
             onClick={openDeckConfig}
           >
             <FontAwesomeIcon icon={faCog} />

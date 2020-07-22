@@ -15,7 +15,11 @@ import type {
 } from '3594t-deck';
 import { MAX_MORALE_LIMIT, CHARM_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
-import type { DeckCard, DeckCardAssist } from '../../modules/deck';
+import {
+  DeckCard,
+  DeckCardAssist,
+  initialDeckConstraints,
+} from '../../modules/deck';
 import { deckActions } from '../../modules/deck';
 import { windowActions } from '../../modules/window';
 import type { DialogInfo } from '../../modules/dialog';
@@ -52,6 +56,8 @@ interface ContainerStateFromProps {
   genMainAwakeningLimit: number;
   genMainSpAwakeningCount: number;
   exchangeForceIntelligence: boolean;
+  /** デッキ設定を変更しているか */
+  modifiedDeckConstraints: boolean;
 }
 
 interface ContainerDispatchFromProps
@@ -93,6 +99,10 @@ type ConnectorOptions = Options<
   Props
 >;
 
+const shallowEquals = <OBJ extends Object>(objA: OBJ, objB: OBJ): boolean => {
+  return (Object.keys(objA) as (keyof OBJ)[]).every((k) => objA[k] === objB[k]);
+};
+
 const mapStateToProps: TMapStateToProps = (state) => ({
   deckCards: state.deck.deckCards,
   assistDeckCards: state.deck.assistDeckCards,
@@ -109,6 +119,10 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   genMainAwakeningLimit: state.deck.deckConstraints.genMainAwakeningLimit,
   genMainSpAwakeningCount: state.deck.deckConstraints.genMainSpAwakeningCount,
   exchangeForceIntelligence: state.deck.deckConstraints.exchange,
+  modifiedDeckConstraints: !shallowEquals(
+    initialDeckConstraints,
+    state.deck.deckConstraints
+  ),
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) => {
@@ -171,6 +185,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     genMainAwakeningLimit,
     genMainSpAwakeningCount,
     exchangeForceIntelligence,
+    modifiedDeckConstraints,
     skills,
     unitTypes,
   } = state;
@@ -407,6 +422,7 @@ const mergeProps: TMergeProps = (state, actions) => {
     totalAwakeningGenMainCount,
     genMainAwakeningLimit,
     exchangeForceIntelligence,
+    modifiedDeckConstraints,
   };
 
   const dProps: DispatchFromProps = {

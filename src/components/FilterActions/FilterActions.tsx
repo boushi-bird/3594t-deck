@@ -11,10 +11,10 @@ const FilterActions: React.FC<Props> = ({
   closeFilter,
 }: Props): React.ReactElement => (
   <div className="card-filter-actions">
-    <button className="action-buton-reset" onClick={resetConditions}>
+    <button className="action-button-reset" onClick={resetConditions}>
       リセット
     </button>
-    <button className="action-buton-ok" onClick={closeFilter}>
+    <button className="action-button-ok" onClick={closeFilter}>
       OK
     </button>
   </div>

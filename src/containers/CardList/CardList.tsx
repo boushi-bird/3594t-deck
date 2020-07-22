@@ -26,6 +26,7 @@ export default class CardList extends CardListBase<Props, LocalState> {
   state: Readonly<LocalState> = { renderingCount: 0 };
 
   public async componentDidUpdate(prevProps: Readonly<Props>): Promise<void> {
+    super.componentDidUpdate(prevProps);
     const { generals } = this.props;
     if (generals.length !== prevProps.generals.length) {
       // 武将リストのレンダリングが重すぎるので少しずつレンダリングさせる。
@@ -37,7 +38,6 @@ export default class CardList extends CardListBase<Props, LocalState> {
       }
       this.setState({ renderingCount: generals.length });
     }
-    super.componentDidUpdate(prevProps);
   }
 
   private handleOnShowDetail = (general: General): void => {

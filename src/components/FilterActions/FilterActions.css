@@ -4,7 +4,7 @@
   display: flex;
   justify-content: flex-end;
 
-  & [class^="action-buton-"] {
+  & [class^="action-button-"] {
     margin: 3px;
     font-size: 18px;
     width: 88px;
@@ -18,18 +18,18 @@
     outline: none;
   }
 
-  & .action-buton-reset {
+  & .action-button-reset {
     background-color: var(--action-button-cancel-bg-color);
   }
 
-  & .action-buton-ok {
+  & .action-button-ok {
     display: none;
     background-color: var(--action-button-ok-bg-color);
   }
 }
 
 @media (--modal-filter-style) {
-  .modal-small .card-filter-actions .action-buton-ok {
+  .modal-small .card-filter-actions .action-button-ok {
     display: block;
   }
 }
