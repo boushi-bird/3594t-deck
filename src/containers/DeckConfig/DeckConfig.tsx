@@ -19,6 +19,7 @@ export interface StateFromProps extends DeckConstraints {
 
 export interface DispatchFromProps {
   closeDeckConfig: () => void;
+  resetDeckConfig: () => void;
   setDeckConstraints: (deckConstraints: Partial<DeckConstraints>) => void;
   sliceDeckAssist: () => void;
 }
@@ -123,6 +124,7 @@ export default class DeckConfig extends React.PureComponent<Props> {
       genMainAwakeningLimit,
       exchange,
       closeDeckConfig,
+      resetDeckConfig,
     } = this.props;
     const style: React.CSSProperties = {};
     if (!show) {
@@ -134,6 +136,9 @@ export default class DeckConfig extends React.PureComponent<Props> {
         <div className="deck-config-inner">
           <div className="deck-config-title">デッキ設定</div>
           <div className="deck-config-buttons">
+            <button className="action-button-reset" onClick={resetDeckConfig}>
+              通常ルール
+            </button>
             <button className="action-button-ok" onClick={closeDeckConfig}>
               OK
             </button>

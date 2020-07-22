@@ -24,6 +24,7 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
         windowActions.changeDeckConfigVisible({
           openedDeckConfig: false,
         }),
+      resetDeckConfig: deckActions.resetDeckConstraints,
       setDeckConstraints: deckActions.setDeckConstraints,
       sliceDeckAssist: deckActions.sliceDeckAssist,
     },

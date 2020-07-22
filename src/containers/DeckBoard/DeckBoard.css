@@ -9,6 +9,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.modified {
+    color: var(--active-color);
+  }
 }
 
 .assist-deck-card-list {

@@ -92,21 +92,23 @@ interface DeckState {
   deckConstraints: DeckConstraints;
 }
 
+export const initialDeckConstraints: DeckConstraints = {
+  limitCost: DECK_COST_LIMIT.defaultValue,
+  sameCard: defaultSameCardConstraint,
+  generalCardLimit: DECK_GENERAL_CARD_COUNT.defaultValue,
+  assistCardLimit: DECK_ASSIST_CARD_COUNT.defaultValue,
+  exchange: false,
+  genMainAwakeningLimit: GEN_MAIN_AWAKENING_LIMIT.defaultValue,
+  genMainSpAwakeningCount: DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
+};
+
 const initialState: DeckState = {
   deckCards: [],
   assistDeckCards: [],
   activeIndex: null,
   activeAssistIndex: null,
   searchCondition: undefined,
-  deckConstraints: {
-    limitCost: DECK_COST_LIMIT.defaultValue,
-    sameCard: defaultSameCardConstraint,
-    generalCardLimit: DECK_GENERAL_CARD_COUNT.defaultValue,
-    assistCardLimit: DECK_ASSIST_CARD_COUNT.defaultValue,
-    exchange: false,
-    genMainAwakeningLimit: GEN_MAIN_AWAKENING_LIMIT.defaultValue,
-    genMainSpAwakeningCount: DEFAULT_GEN_MAIN_SP_AWAKENING_COUNT,
-  },
+  deckConstraints: initialDeckConstraints,
 };
 
 export const deckModule = createSlice({
@@ -385,6 +387,12 @@ export const deckModule = createSlice({
         activeAssistIndex: null,
         searchCondition: undefined,
         deckCards,
+      };
+    },
+    resetDeckConstraints(state: DeckState): DeckState {
+      return {
+        ...state,
+        deckConstraints: initialDeckConstraints,
       };
     },
     setDeckConstraints(

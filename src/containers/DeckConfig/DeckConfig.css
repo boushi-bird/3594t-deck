@@ -72,6 +72,11 @@
     outline: none;
   }
 
+  & .action-button-reset {
+    width: 124px;
+    background-color: var(--action-button-cancel-bg-color);
+  }
+
   & .action-button-ok {
     background-color: var(--action-button-ok-bg-color);
   }
