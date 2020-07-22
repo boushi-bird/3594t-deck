@@ -344,7 +344,7 @@
     - license: MIT
  - **[@types/istanbul-reports@1.1.2](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
- - **[@types/jest@26.0.4](https://github.com/DefinitelyTyped/DefinitelyTyped)**
+ - **[@types/jest@26.0.5](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
  - **[@types/js-yaml@3.12.5](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
@@ -364,7 +364,7 @@
     - license: MIT
  - **[@types/minimist@1.2.0](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
- - **[@types/node@14.0.23](https://github.com/DefinitelyTyped/DefinitelyTyped)**
+ - **[@types/node@14.0.24](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
  - **[@types/normalize-package-data@2.4.0](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
@@ -414,7 +414,7 @@
     - license: MIT
  - **[@types/webpack@4.41.21](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
- - **[@types/workbox-webpack-plugin@5.1.1](https://github.com/DefinitelyTyped/DefinitelyTyped)**
+ - **[@types/workbox-webpack-plugin@5.1.2](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
  - **[@types/yargs-parser@15.0.0](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
@@ -422,17 +422,17 @@
     - license: MIT
  - **[@types/yargs@15.0.5](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
- - **[@typescript-eslint/eslint-plugin@3.6.1](https://github.com/typescript-eslint/typescript-eslint)**
+ - **[@typescript-eslint/eslint-plugin@3.7.0](https://github.com/typescript-eslint/typescript-eslint)**
     - license: MIT
- - **[@typescript-eslint/experimental-utils@3.6.1](https://github.com/typescript-eslint/typescript-eslint)**
+ - **[@typescript-eslint/experimental-utils@3.7.0](https://github.com/typescript-eslint/typescript-eslint)**
     - license: MIT
- - **[@typescript-eslint/parser@3.6.1](https://github.com/typescript-eslint/typescript-eslint)**
+ - **[@typescript-eslint/parser@3.7.0](https://github.com/typescript-eslint/typescript-eslint)**
     - license: BSD-2-Clause
- - **[@typescript-eslint/types@3.6.1](https://github.com/typescript-eslint/typescript-eslint)**
+ - **[@typescript-eslint/types@3.7.0](https://github.com/typescript-eslint/typescript-eslint)**
     - license: MIT
- - **[@typescript-eslint/typescript-estree@3.6.1](https://github.com/typescript-eslint/typescript-eslint)**
+ - **[@typescript-eslint/typescript-estree@3.7.0](https://github.com/typescript-eslint/typescript-eslint)**
     - license: BSD-2-Clause
- - **[@typescript-eslint/visitor-keys@3.6.1](https://github.com/typescript-eslint/typescript-eslint)**
+ - **[@typescript-eslint/visitor-keys@3.7.0](https://github.com/typescript-eslint/typescript-eslint)**
     - license: MIT
  - **[@ungap/url-search-params@0.1.4](https://github.com/ungap/url-search-params)**
     - license: ISC
@@ -1082,7 +1082,7 @@
     - license: MIT
  - **[eslint-visitor-keys@1.3.0](https://github.com/eslint/eslint-visitor-keys)**
     - license: Apache-2.0
- - **[eslint@7.4.0](https://github.com/eslint/eslint)**
+ - **[eslint@7.5.0](https://github.com/eslint/eslint)**
     - license: MIT
  - **[espree@7.2.0](https://github.com/eslint/espree)**
     - license: BSD-2-Clause
@@ -2296,7 +2296,7 @@
     - license: MIT
  - **[regenerator-runtime@0.11.1](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime)**
     - license: MIT
- - **[regenerator-runtime@0.13.5](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime)**
+ - **[regenerator-runtime@0.13.6](https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime)**
     - license: MIT
  - **[regenerator-transform@0.14.5](https://github.com/facebook/regenerator/tree/master/packages/regenerator-transform)**
     - license: MIT
