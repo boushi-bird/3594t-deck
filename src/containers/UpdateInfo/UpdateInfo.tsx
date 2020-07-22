@@ -31,7 +31,7 @@ export default class UpdateInfo extends React.PureComponent<Props> {
           <div className="update-info-title">更新情報</div>
         </div>
         <div className="update-info-buttons">
-          <button className="action-buton-ok" onClick={closeUpdateInfo}>
+          <button className="action-button-ok" onClick={closeUpdateInfo}>
             OK
           </button>
         </div>
