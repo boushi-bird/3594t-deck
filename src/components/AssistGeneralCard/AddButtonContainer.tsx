@@ -133,7 +133,7 @@ function createDeckPersonals(
     .filter((general) => {
       return deckGenerals.includes(general.id);
     })
-    .map((g) => g.personal.id);
+    .map((g) => g.personal.uniqueId);
 }
 
 // 遊軍に含まれている武将名IDの配列を返す
@@ -149,7 +149,7 @@ function createAssistDeckPersonals(
     .filter((assistGeneral) => {
       return deckAssists.includes(assistGeneral.id);
     })
-    .map((ag) => ag.personal.id);
+    .map((ag) => ag.personal.uniqueId);
 }
 
 function isEnabledAddDeck(
@@ -177,7 +177,9 @@ function isEnabledAddDeckAssist(
 ): boolean {
   // 遊軍の同名カード判別
   // TODO: 複数枚遊軍登録可能になり、さらに同名遊軍が登場した場合は要対応
-  const hasSameCard = deckAssistPersonals.some((p) => p === assist.personal.id);
+  const hasSameCard = deckAssistPersonals.some(
+    (p) => p === assist.personal.uniqueId
+  );
   if (hasSameCard) {
     return false;
   }
@@ -186,7 +188,7 @@ function isEnabledAddDeckAssist(
     return true;
   }
   // 武将カードに同名カードがあるか判別する
-  return !deckPersonals.some((p) => p === assist.personal.id);
+  return !deckPersonals.some((p) => p === assist.personal.uniqueId);
 }
 
 const mergeProps: TMergeProps = (state, actions, ownProps) => {

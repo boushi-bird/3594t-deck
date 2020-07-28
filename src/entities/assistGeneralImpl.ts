@@ -2,7 +2,7 @@ import type {
   AssistStrategy,
   AssistGeneral,
   RawAssistGeneral,
-  PersonalWithRaw,
+  Personal,
   BelongState,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
@@ -20,7 +20,7 @@ interface Props {
   /** EXカード */
   readonly isEx: boolean;
   /** 武将名 */
-  readonly personal: PersonalWithRaw;
+  readonly personal: Personal;
   /** 勢力 */
   readonly state: BelongState;
   /** 計略 */
@@ -35,7 +35,7 @@ export class AssistGeneralImpl implements AssistGeneral {
   /** EXカード */
   public readonly isEx: boolean;
   /** 武将名 */
-  public readonly personal: PersonalWithRaw;
+  public readonly personal: Personal;
   /** 勢力 */
   public readonly state: BelongState;
   /** 計略 */

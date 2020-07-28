@@ -87,13 +87,21 @@ declare module '3594t-deck' {
   }
 
   interface Personal extends IdItem {
-    azana: string;
-    azanaRuby: string;
-    name: string;
-    nameRuby: string;
+    /** 字(あざな) */
+    readonly azana: string;
+    /** 字(あざな)読み仮名 */
+    readonly azanaRuby: string;
+    /** 武将名 */
+    readonly name: string;
+    /** 武将名読み仮名 */
+    readonly nameRuby: string;
+    /** 同一武将判別用ID */
+    readonly uniqueId: string;
+    /** 字(あざな)検索用テキスト */
+    readonly azanaSearchText: SearchText | null;
+    /** 武将名検索用テキスト */
+    readonly nameSearchText: SearchText | null;
   }
-
-  interface PersonalWithRaw extends Personal, Partial<WithRaw<RawPersonal>> {}
 
   interface General extends IdItem {
     /** 登場弾(メジャー) */
@@ -142,8 +150,6 @@ declare module '3594t-deck' {
     readonly hasPocket: boolean;
     /** 公式ページへのURL */
     readonly officialUrl: string;
-    /** 検索用テキスト */
-    readonly searchText: SearchText | null;
     /**
      * サムネイル画像URL取得
      * @param pocket trueなら ぽけっと武将画像

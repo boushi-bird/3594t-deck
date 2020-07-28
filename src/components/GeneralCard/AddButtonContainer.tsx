@@ -170,7 +170,7 @@ function createDeckPersonals(
       return deckGenerals.includes(general.id);
     })
     .map((v) => {
-      return { personal: v.personal.id, strat: v.strategy.id };
+      return { personal: v.personal.uniqueId, strat: v.strategy.id };
     });
 }
 
@@ -187,7 +187,7 @@ function createAssistDeckPersonals(
     .filter((assistGeneral) => {
       return deckAssists.includes(assistGeneral.id);
     })
-    .map((ag) => ag.personal.id);
+    .map((ag) => ag.personal.uniqueId);
 }
 
 function isEnabledAddDeckGeneral(
@@ -199,7 +199,7 @@ function isEnabledAddDeckGeneral(
   // 遊軍の同名カード判別
   if (sameCard !== 'personal-strategy' && sameCard !== 'personal-assist') {
     const hasSameCard = deckAssistPersonals.some(
-      (p) => p === general.personal.id
+      (p) => p === general.personal.uniqueId
     );
     if (hasSameCard) {
       return false;
@@ -218,7 +218,7 @@ function isEnabledAddDeckGeneral(
     );
   } else {
     // 武将が一致したときに同名カード扱い
-    return !deckPersonals.some((r) => r.personal === general.personal.id);
+    return !deckPersonals.some((r) => r.personal === general.personal.uniqueId);
   }
 }
 

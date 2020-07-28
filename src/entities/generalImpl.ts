@@ -2,11 +2,10 @@ import type {
   FilterItem,
   Strategy,
   RawGeneral,
-  PersonalWithRaw,
+  Personal,
   DataItem,
   KeyDataItem,
   GenMainItem,
-  SearchText,
   BelongState,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
@@ -38,7 +37,7 @@ interface Props {
   /** 官職 */
   readonly generalType: KeyDataItem;
   /** 武将名 */
-  readonly personal: PersonalWithRaw;
+  readonly personal: Personal;
   /** レアリティ */
   readonly rarity: DataItem;
   /** 特技 */
@@ -62,7 +61,7 @@ export class GeneralImpl implements Props {
   public readonly genMains: readonly GenMainItem[];
   public readonly genMainSp: GenMainItem | null;
   public readonly generalType: KeyDataItem;
-  public readonly personal: PersonalWithRaw;
+  public readonly personal: Personal;
   public readonly rarity: DataItem;
   public readonly skills: readonly FilterItem[];
   public readonly state: BelongState;
@@ -98,15 +97,6 @@ export class GeneralImpl implements Props {
   }
   public get officialUrl(): string {
     return generalOfficiallUrl(this.code);
-  }
-  public get searchText(): SearchText | null {
-    if (!this.personal.raw) {
-      return null;
-    }
-    return {
-      text: this.personal.name,
-      ruby: this.personal.raw.name_ruby_search || '',
-    };
   }
   public thumbUrl(pocket: boolean): string {
     const code = pocket && this.hasPocket ? this.pocketCode : this.code;

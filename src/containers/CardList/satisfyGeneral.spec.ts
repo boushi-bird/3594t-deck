@@ -3,7 +3,7 @@ import { GeneralImpl } from '../../entities/generalImpl';
 import { StrategyImpl } from '../../entities/strategyImpl';
 import { initialFilterCondition } from '../../modules/datalist';
 
-const EXAMPLE_GENERAL = new GeneralImpl(
+const EXAMPLE_GENERAL1 = new GeneralImpl(
   '71',
   {
     code: '4d4d6458fbbe6b4de65cf66fe6defec2',
@@ -76,19 +76,20 @@ const EXAMPLE_GENERAL = new GeneralImpl(
       name: 'なし(女性)',
     },
     personal: {
-      raw: {
-        name: '夏侯月姫',
-        name_ruby: 'か＿こう＿げっ＿き',
-        name_ruby_search: 'ｶｺｳｹﾂｷ',
-        azana: '',
-        azana_ruby: '',
-        azana_ruby_search: '',
-      },
       id: '64',
       name: '夏侯月姫',
       nameRuby: 'かこうげっき',
       azana: '',
       azanaRuby: '',
+      uniqueId: '64',
+      nameSearchText: {
+        text: '夏侯月姫',
+        ruby: 'ｶｺｳｹﾂｷ',
+      },
+      azanaSearchText: {
+        text: '',
+        ruby: '',
+      },
     },
     rarity: {
       id: 'R',
@@ -152,44 +153,410 @@ const EXAMPLE_GENERAL = new GeneralImpl(
   }
 );
 
+const EXAMPLE_GENERAL2 = new GeneralImpl(
+  '9',
+  {
+    code: 'b3bf88e47b9790b3617ce4fc903566d9',
+    pocket_code: '97c0bf301fec8366690107a6c53a100e',
+    avatar: '8b550579c21871e350a6e8fb6781fbd3',
+    pocket_avatar: '6074be3ccc492d29df69a36c9561c085',
+    major_version: '1',
+    add_version: '0',
+    ver_type: '1',
+    state: '0',
+    rarity: 'SR',
+    personal: '8',
+    cost: '25',
+    unit_type: '2',
+    general_type: '0',
+    buryoku: '8',
+    chiryoku: '8',
+    seiatsu: '2',
+    skill0: '3',
+    skill1: '',
+    skill2: '',
+    gen_main0: '3',
+    gen_main1: '2',
+    gen_main2: '6',
+    strat: '7',
+    illustrator: '8',
+    voice_actor: '5',
+    pocket_off: false,
+  },
+  {
+    majorVersion: 1,
+    addVersion: 0,
+    isEx: false,
+    force: 8,
+    intelligence: 8,
+    conquest: 2,
+    cost: {
+      id: '25',
+      code: '25',
+      name: '2.5',
+    },
+    genMains: [
+      {
+        id: '3',
+        code: '7cfbeb7b81d1b14e65da41ed58c91216',
+        name: '兵力上昇',
+        nameShort: '兵力',
+        replace: false,
+      },
+      {
+        id: '2',
+        code: 'c5ba2908a0a62ad4addf9066a6100604',
+        name: '突撃術',
+        nameShort: '突撃',
+        replace: false,
+      },
+      {
+        id: '6',
+        code: '3405cfee88f470ac9ba916064014936d',
+        name: '突破術',
+        nameShort: '突破',
+        replace: false,
+      },
+    ],
+    genMainSp: null,
+    generalType: {
+      id: '0',
+      key: '0',
+      code: '6a32328cbdc6507cf12a60c81b7bb9e5',
+      name: '武官',
+    },
+    personal: {
+      id: '8',
+      name: '夏侯惇',
+      nameRuby: 'かこうとん',
+      azana: '元譲',
+      azanaRuby: 'げんじょう',
+      uniqueId: '64',
+      nameSearchText: {
+        text: '夏侯惇',
+        ruby: 'ｶｺｳﾄﾝ',
+      },
+      azanaSearchText: {
+        text: '元譲',
+        ruby: 'ｹﾝｼﾖｳ',
+      },
+    },
+    rarity: {
+      id: 'SR',
+      code: 'SR',
+      name: 'SR',
+    },
+    skills: [
+      {
+        id: '3',
+        code: '89a55f0e40703227723be3b26f94ad65',
+        name: '勇猛',
+        nameShort: '勇',
+      },
+    ],
+    state: {
+      id: '0',
+      code: 'c27df45cf8cd8895e643247f78749d47',
+      name: '魏',
+      nameShort: '魏',
+      color: 'rgb(180, 25, 27)',
+      thincolor: 'rgba(180, 25, 27, 0.2)',
+    },
+    unitType: {
+      id: '2',
+      key: '2',
+      code: 'facdd0b9db5c7f823be5b8a1cbfadf6c',
+      name: '騎兵',
+      nameShort: '騎',
+    },
+    strategy: new StrategyImpl(
+      '7',
+      {
+        key: '7',
+        code: '4dfa19079d8fb8eb92bbc1a5cadeb715',
+        name: '隻眼の一喝',
+        name_ruby: 'せきがんのいっかつ',
+        morale: '5',
+        explanation: '敵の武力と移動速度を下げる',
+        strat_category: '2',
+        strat_range: '1',
+        strat_time: '0',
+        name_ruby_search: 'ｾｷｶﾝﾉｲﾂｶﾂ',
+        explanation_search: '敵の武力と移動速度を下げる',
+      },
+      {
+        code: '4dfa19079d8fb8eb92bbc1a5cadeb715',
+        name: '隻眼の一喝',
+        explanation: '敵の武力と移動速度を下げる',
+        morale: 5,
+        nameRuby: 'せきがんのいっかつ',
+        stratCategory: '2',
+        stratCategoryName: '妨害',
+        stratRange: '1',
+        stratRangeCode: '6a8be9ce53f700ecbee51f39f5b38501',
+        stratTime: '0',
+      }
+    ),
+  }
+);
+
+const EXAMPLE_GENERAL3 = new GeneralImpl(
+  '9',
+  {
+    code: '31a035295983e46b30147a7bbb8787b9',
+    pocket_code: '',
+    avatar: 'a496a6c5793c272d8b42f53613eacc1c',
+    pocket_avatar: '',
+    major_version: '4',
+    add_version: '1',
+    ver_type: '1',
+    state: '0',
+    rarity: 'LE',
+    personal: '104',
+    cost: '25',
+    unit_type: '2',
+    general_type: '0',
+    buryoku: '8',
+    chiryoku: '8',
+    seiatsu: '2',
+    skill0: '3',
+    skill1: '',
+    skill2: '',
+    gen_main0: '3',
+    gen_main1: '2',
+    gen_main2: '6',
+    strat: '7',
+    illustrator: '82',
+    voice_actor: '60',
+    pocket_off: true,
+  },
+  {
+    majorVersion: 4,
+    addVersion: 1,
+    isEx: false,
+    force: 8,
+    intelligence: 8,
+    conquest: 2,
+    cost: {
+      id: '25',
+      code: '25',
+      name: '2.5',
+    },
+    genMains: [
+      {
+        id: '3',
+        code: '7cfbeb7b81d1b14e65da41ed58c91216',
+        name: '兵力上昇',
+        nameShort: '兵力',
+        replace: false,
+      },
+      {
+        id: '2',
+        code: 'c5ba2908a0a62ad4addf9066a6100604',
+        name: '突撃術',
+        nameShort: '突撃',
+        replace: false,
+      },
+      {
+        id: '6',
+        code: '3405cfee88f470ac9ba916064014936d',
+        name: '突破術',
+        nameShort: '突破',
+        replace: false,
+      },
+    ],
+    genMainSp: null,
+    generalType: {
+      id: '0',
+      key: '0',
+      code: '6a32328cbdc6507cf12a60c81b7bb9e5',
+      name: '武官',
+    },
+    personal: {
+      id: '104',
+      name: '夏侯惇',
+      nameRuby: 'かこうじゅん',
+      azana: '元譲',
+      azanaRuby: 'げんじょう',
+      uniqueId: '64',
+      nameSearchText: {
+        text: '夏侯惇',
+        ruby: 'ｶｺｳｼﾕﾝ',
+      },
+      azanaSearchText: {
+        text: '元譲',
+        ruby: 'ｹﾝｼﾖｳ',
+      },
+    },
+    rarity: {
+      id: 'LE',
+      code: 'LE',
+      name: 'LE',
+    },
+    skills: [
+      {
+        id: '3',
+        code: '89a55f0e40703227723be3b26f94ad65',
+        name: '勇猛',
+        nameShort: '勇',
+      },
+    ],
+    state: {
+      id: '0',
+      code: 'c27df45cf8cd8895e643247f78749d47',
+      name: '魏',
+      nameShort: '魏',
+      color: 'rgb(180, 25, 27)',
+      thincolor: 'rgba(180, 25, 27, 0.2)',
+    },
+    unitType: {
+      id: '2',
+      key: '2',
+      code: 'facdd0b9db5c7f823be5b8a1cbfadf6c',
+      name: '騎兵',
+      nameShort: '騎',
+    },
+    strategy: new StrategyImpl(
+      '7',
+      {
+        key: '7',
+        code: '4dfa19079d8fb8eb92bbc1a5cadeb715',
+        name: '隻眼の一喝',
+        name_ruby: 'せきがんのいっかつ',
+        morale: '5',
+        explanation: '敵の武力と移動速度を下げる',
+        strat_category: '2',
+        strat_range: '1',
+        strat_time: '0',
+        name_ruby_search: 'ｾｷｶﾝﾉｲﾂｶﾂ',
+        explanation_search: '敵の武力と移動速度を下げる',
+      },
+      {
+        code: '4dfa19079d8fb8eb92bbc1a5cadeb715',
+        name: '隻眼の一喝',
+        explanation: '敵の武力と移動速度を下げる',
+        morale: 5,
+        nameRuby: 'せきがんのいっかつ',
+        stratCategory: '2',
+        stratCategoryName: '妨害',
+        stratRange: '1',
+        stratRangeCode: '6a8be9ce53f700ecbee51f39f5b38501',
+        stratTime: '0',
+      }
+    ),
+  }
+);
+
 const DEFAULT_FILTER = initialFilterCondition;
 
-test('filter by name', () => {
-  const general = EXAMPLE_GENERAL;
-  expect(
-    satisfyGeneral(general, {
-      ...DEFAULT_FILTER,
-      basic: {
-        ...DEFAULT_FILTER.basic,
-        searchText: 'かこうげっき',
-      },
-    })
-  ).toBe(true);
-  expect(
-    satisfyGeneral(general, {
-      ...DEFAULT_FILTER,
-      basic: {
-        ...DEFAULT_FILTER.basic,
-        searchText: '夏侯月姫',
-      },
-    })
-  ).toBe(true);
-  expect(
-    satisfyGeneral(general, {
-      ...DEFAULT_FILTER,
-      basic: {
-        ...DEFAULT_FILTER.basic,
-        searchText: 'かこうけつき',
-      },
-    })
-  ).toBe(true);
-  expect(
-    satisfyGeneral(general, {
-      ...DEFAULT_FILTER,
-      basic: {
-        ...DEFAULT_FILTER.basic,
-        searchText: 'かこうとん',
-      },
-    })
-  ).toBe(false);
+describe('Filter General', () => {
+  describe('filter by name', () => {
+    it('武将名検索 濁点付き読み仮名で一致', () => {
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL1, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうげっき',
+          },
+        })
+      ).toBe(true);
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL3, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうじゅん',
+          },
+        })
+      ).toBe(true);
+    });
+    it('武将名検索 漢字で一致', () => {
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL1, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: '夏侯月姫',
+          },
+        })
+      ).toBe(true);
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL2, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: '夏侯惇',
+          },
+        })
+      ).toBe(true);
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL3, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: '夏侯惇',
+          },
+        })
+      ).toBe(true);
+    });
+    it('武将名検索 濁点なし読み仮名で一致', () => {
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL1, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうけつき',
+          },
+        })
+      ).toBe(true);
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL2, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうとん',
+          },
+        })
+      ).toBe(true);
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL3, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうしゅん',
+          },
+        })
+      ).toBe(true);
+    });
+    it('武将名検索 不一致', () => {
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL1, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうとん',
+          },
+        })
+      ).toBe(false);
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL2, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうげっき',
+          },
+        })
+      ).toBe(false);
+      expect(
+        satisfyGeneral(EXAMPLE_GENERAL3, {
+          ...DEFAULT_FILTER,
+          basic: {
+            ...DEFAULT_FILTER.basic,
+            searchText: 'かこうげっき',
+          },
+        })
+      ).toBe(false);
+    });
+  });
 });
