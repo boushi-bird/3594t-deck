@@ -1,32 +1,6 @@
 import type { Strategy } from '3594t-deck';
 import type { StrategiesFilterCondition } from '../../modules/datalist';
-import toNarrowKatakana from 'jaco/fn/toNarrowKatakana';
-import toBasicLetter from 'jaco/fn/toBasicLetter';
-
-function includeSearchText(
-  target: string | undefined,
-  searchText: string
-): boolean {
-  if (target == null) {
-    return false;
-  }
-  const search = searchText.split(/\s+/g).filter((s) => s.length > 0);
-  return search.every((s) => target.includes(s));
-}
-
-function includeSearchTextRuby(
-  targetRuby: string | undefined,
-  searchText: string
-): boolean {
-  if (targetRuby == null) {
-    return false;
-  }
-  const search = searchText
-    .split(/\s+/g)
-    .filter((s) => s.length > 0)
-    .map((s) => toNarrowKatakana(toBasicLetter(s), true).replace(/[ﾞﾟ]/g, ''));
-  return search.every((s) => targetRuby.includes(s));
-}
+import { includeText, includeSearchText } from './includeSearchText';
 
 export default (
   strategy: Strategy,
@@ -60,24 +34,15 @@ export default (
     return false;
   }
   // 計略名検索
-  if (searchName.length > 0) {
-    if (!strategy.nameSearchText) {
-      return false;
-    }
-    const { text, ruby } = strategy.nameSearchText;
-    if (
-      !includeSearchText(text, searchName) &&
-      !includeSearchTextRuby(ruby, searchName)
-    ) {
-      return false;
-    }
+  if (
+    searchName.length > 0 &&
+    !includeSearchText(strategy.nameSearchText, searchName, 'and')
+  ) {
+    return false;
   }
   // 計略説明検索
   if (searchExplanation.length > 0) {
-    if (!strategy.explanation) {
-      return false;
-    }
-    if (!includeSearchText(strategy.explanation, searchExplanation)) {
+    if (!includeText(strategy.explanation, searchExplanation, 'and')) {
       return false;
     }
   }

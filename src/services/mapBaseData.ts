@@ -7,7 +7,7 @@ import type {
   AssistStrategy,
   AssistGeneralWithRaw,
   Personal,
-  PersonalWithRaw,
+  RawPersonal,
   DataItem,
   FilterContents,
   BelongState,
@@ -16,6 +16,7 @@ import type {
 import { GeneralImpl } from '../entities/generalImpl';
 import { AssistGeneralImpl } from '../entities/assistGeneralImpl';
 import { StrategyImpl } from '../entities/strategyImpl';
+import { PersonalImpl } from '../entities/personalImpl';
 import { createVersionLabel } from '../entities/createVersionLabel';
 import { UNIT_TYPE_NAME_SHORT_ALIAS } from '../const';
 
@@ -109,10 +110,13 @@ const emptyBelongState: IdLess<BelongState> = {
 };
 
 const emptyPersonal: IdLess<Personal> = {
-  name: '',
-  nameRuby: '',
   azana: '',
   azanaRuby: '',
+  name: '',
+  nameRuby: '',
+  uniqueId: '',
+  azanaSearchText: null,
+  nameSearchText: null,
 };
 
 const emptyStrategy: IdLess<Strategy> = {
@@ -311,19 +315,18 @@ export default (baseData: RawBaseData): BaseData => {
   // 登場弾
   const versions: { [key: number]: number[] } = {};
   // 武将名
-  const personals: PersonalWithRaw[] = convertIdItem(
+  const personalMaps = new Map<string, Personal>();
+  const genPersonalUnique = (raw: RawPersonal) => raw.name;
+  const personals: Personal[] = convertIdItem(
     baseData.PERSONAL,
     idIsIndex,
     (raw, id) => {
-      const { name, name_ruby: nameRuby, azana, azana_ruby: azanaRuby } = raw;
-      return {
-        raw,
-        id,
-        name,
-        nameRuby: nameRuby.replace(/＿/g, ''),
-        azana,
-        azanaRuby,
-      };
+      const key = genPersonalUnique(raw);
+      const personal = new PersonalImpl(id, raw, personalMaps.get(key));
+      if (!personalMaps.has(key)) {
+        personalMaps.set(key, personal);
+      }
+      return personal;
     }
   );
   // 武将
@@ -364,6 +367,9 @@ export default (baseData: RawBaseData): BaseData => {
       strategy: findById(strategies, raw.strat, emptyStrategy),
     });
   });
+  console.log(
+    generals.filter((g) => g.code === 'b3bf88e47b9790b3617ce4fc903566d9')
+  );
   const majorVersions = Object.keys(versions).map((v) => parseInt(v));
   const sortNumber = (a: number, b: number): number => {
     return a - b;
