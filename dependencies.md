@@ -236,17 +236,17 @@
     - license: MIT
  - **[@jest/console@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/console@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/console@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/core@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/core@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/environment@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/environment@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/fake-timers@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/fake-timers@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/globals@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/globals@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/reporters@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/reporters@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
  - **[@jest/source-map@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
@@ -254,17 +254,19 @@
     - license: MIT
  - **[@jest/test-result@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/test-result@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/test-result@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/test-sequencer@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/test-sequencer@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[@jest/transform@26.1.0](https://github.com/facebook/jest)**
+ - **[@jest/transform@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
  - **[@jest/types@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[@jest/types@25.5.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[@jest/types@26.1.0](https://github.com/facebook/jest)**
+    - license: MIT
+ - **[@jest/types@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[@nodelib/fs.scandir@2.1.3](https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.scandir)**
     - license: MIT
@@ -364,7 +366,7 @@
     - license: MIT
  - **[@types/minimist@1.2.0](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
- - **[@types/node@14.0.26](https://github.com/DefinitelyTyped/DefinitelyTyped)**
+ - **[@types/node@14.0.27](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
  - **[@types/normalize-package-data@2.4.0](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
@@ -414,7 +416,7 @@
     - license: MIT
  - **[@types/webpack@4.41.21](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
- - **[@types/workbox-webpack-plugin@5.1.2](https://github.com/DefinitelyTyped/DefinitelyTyped)**
+ - **[@types/workbox-webpack-plugin@5.1.3](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
  - **[@types/yargs-parser@15.0.0](https://github.com/DefinitelyTyped/DefinitelyTyped)**
     - license: MIT
@@ -594,7 +596,7 @@
     - license: MIT
  - **[babel-extract-comments@1.0.0](https://github.com/jonschlinkert/babel-extract-comments)**
     - license: MIT
- - **[babel-jest@26.1.0](https://github.com/facebook/jest)**
+ - **[babel-jest@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
  - **[babel-loader@8.1.0](https://github.com/babel/babel-loader)**
     - license: MIT
@@ -602,7 +604,7 @@
     - license: MIT
  - **[babel-plugin-istanbul@6.0.0](https://github.com/istanbuljs/babel-plugin-istanbul)**
     - license: BSD-3-Clause
- - **[babel-plugin-jest-hoist@26.1.0](https://github.com/facebook/jest)**
+ - **[babel-plugin-jest-hoist@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[babel-plugin-syntax-object-rest-spread@6.13.0](https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-object-rest-spread)**
     - license: MIT
@@ -610,7 +612,7 @@
     - license: MIT
  - **[babel-preset-current-node-syntax@0.1.3](https://github.com/nicolo-ribaudo/babel-preset-current-node-syntax)**
     - license: MIT
- - **[babel-preset-jest@26.1.0](https://github.com/facebook/jest)**
+ - **[babel-preset-jest@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[babel-runtime@6.26.0](https://github.com/babel/babel/tree/master/packages/babel-runtime)**
     - license: MIT
@@ -866,7 +868,7 @@
     - license: MIT
  - **[css-declaration-sorter@4.0.1](https://github.com/Siilwyn/css-declaration-sorter)**
     - license: MIT
- - **[css-loader@4.0.0](https://github.com/webpack-contrib/css-loader)**
+ - **[css-loader@4.1.1](https://github.com/webpack-contrib/css-loader)**
     - license: MIT
  - **[css-select-base-adapter@0.1.1](https://github.com/nrkn/css-select-base-adapter)**
     - license: MIT
@@ -1026,6 +1028,8 @@
     - license: MIT
  - **[email-addresses@3.1.0](https://github.com/jackbearheart/email-addresses)**
     - license: MIT
+ - **[emittery@0.7.1](https://github.com/sindresorhus/emittery)**
+    - license: MIT
  - **[emoji-regex@7.0.3](https://github.com/mathiasbynens/emoji-regex)**
     - license: MIT
  - **[emoji-regex@8.0.0](https://github.com/mathiasbynens/emoji-regex)**
@@ -1070,7 +1074,7 @@
     - license: MIT
  - **[eslint-plugin-prettier@3.1.4](https://github.com/prettier/eslint-plugin-prettier)**
     - license: MIT
- - **[eslint-plugin-react@7.20.3](https://github.com/yannickcr/eslint-plugin-react)**
+ - **[eslint-plugin-react@7.20.5](https://github.com/yannickcr/eslint-plugin-react)**
     - license: MIT
  - **[eslint-rule-composer@0.3.0](https://github.com/not-an-aardvark/eslint-rule-composer)**
     - license: MIT
@@ -1128,7 +1132,7 @@
     - license: MIT
  - **[expect@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[expect@26.1.0](https://github.com/facebook/jest)**
+ - **[expect@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[express@4.17.1](https://github.com/expressjs/express)**
     - license: MIT
@@ -1278,7 +1282,7 @@
     - license: MIT
  - **[har-schema@2.0.0](https://github.com/ahmadnassri/har-schema)**
     - license: ISC
- - **[har-validator@5.1.3](https://github.com/ahmadnassri/node-har-validator)**
+ - **[har-validator@5.1.5](https://github.com/ahmadnassri/node-har-validator)**
     - license: MIT
  - **[hard-rejection@2.1.0](https://github.com/sindresorhus/hard-rejection)**
     - license: MIT
@@ -1564,25 +1568,25 @@
     - license: BSD-3-Clause
  - **[jaco@3.0.0](https://github.com/jaco-project/jaco-js)**
     - license: MIT
- - **[jest-changed-files@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-changed-files@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-cli@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-cli@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-config@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-config@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-diff@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-diff@25.5.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-diff@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-diff@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-docblock@26.0.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-each@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-each@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-environment-jsdom@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-environment-jsdom@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-environment-node@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-environment-node@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-extended@0.11.5](https://github.com/jest-community/jest-extended)**
     - license: MIT
@@ -1594,25 +1598,25 @@
     - license: MIT
  - **[jest-get-type@26.0.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-haste-map@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-haste-map@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-jasmine2@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-jasmine2@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-junit@11.1.0](https://github.com/jest-community/jest-junit)**
     - license: Apache-2.0
- - **[jest-leak-detector@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-leak-detector@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-matcher-utils@22.4.3](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-matcher-utils@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-matcher-utils@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-matcher-utils@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-message-util@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-message-util@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-message-util@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-mock@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-mock@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-pnp-resolver@1.2.2](https://github.com/arcanis/jest-pnp-resolver)**
     - license: MIT
@@ -1620,29 +1624,33 @@
     - license: MIT
  - **[jest-regex-util@26.0.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-resolve-dependencies@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-resolve-dependencies@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-resolve@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-resolve@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-runner@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-runner@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-runtime@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-runtime@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-serializer@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-serializer@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-snapshot@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-snapshot@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-util@26.1.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-validate@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-util@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest-watcher@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-validate@26.2.0](https://github.com/facebook/jest)**
+    - license: MIT
+ - **[jest-watcher@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-worker@24.9.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[jest-worker@26.1.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[jest@26.1.0](https://github.com/facebook/jest)**
+ - **[jest-worker@26.2.1](https://github.com/facebook/jest)**
+    - license: MIT
+ - **[jest@26.2.1](https://github.com/facebook/jest)**
     - license: MIT
  - **[js-tokens@4.0.0](https://github.com/lydell/js-tokens)**
     - license: MIT
@@ -2192,7 +2200,7 @@
     - license: MIT
  - **[pretty-format@25.5.0](https://github.com/facebook/jest)**
     - license: MIT
- - **[pretty-format@26.1.0](https://github.com/facebook/jest)**
+ - **[pretty-format@26.2.0](https://github.com/facebook/jest)**
     - license: MIT
  - **[process-nextick-args@2.0.1](https://github.com/calvinmetcalf/process-nextick-args)**
     - license: MIT
@@ -2876,7 +2884,7 @@
     - license: MIT
  - **[webpack-sources@1.4.3](https://github.com/webpack/webpack-sources)**
     - license: MIT
- - **[webpack@4.44.0](https://github.com/webpack/webpack)**
+ - **[webpack@4.44.1](https://github.com/webpack/webpack)**
     - license: MIT
  - **[websocket-driver@0.6.5](https://github.com/faye/websocket-driver-node)**
     - license: MIT
