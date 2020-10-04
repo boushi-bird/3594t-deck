@@ -80,11 +80,18 @@
 }
 
 .app-header {
+  position: relative;
   min-height: 72px;
   background-color: var(--app-header-bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  & .copyright {
+    position: absolute;
+    right: 6px;
+    bottom: 0;
+  }
 }
 
 .side-menu-button {
