@@ -367,9 +367,6 @@ export default (baseData: RawBaseData): BaseData => {
       strategy: findById(strategies, raw.strat, emptyStrategy),
     });
   });
-  console.log(
-    generals.filter((g) => g.code === 'b3bf88e47b9790b3617ce4fc903566d9')
-  );
   const majorVersions = Object.keys(versions).map((v) => parseInt(v));
   const sortNumber = (a: number, b: number): number => {
     return a - b;
