@@ -6,11 +6,6 @@ import type {
   BelongState,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
-import {
-  assistOfficiallUrl,
-  assistThumbUrl,
-  assistAvatarUrl,
-} from '../utils/externalUrl';
 
 interface Props {
   /** 登場弾(メジャー) */
@@ -68,17 +63,8 @@ export class AssistGeneralImpl implements AssistGeneral {
     const add = this.isEx ? '-EX' : `-${this.addVersion}`;
     return `${this.majorVersion}${add}`;
   }
-  /** 公式ページへのURL */
-  public get officialUrl(): string {
-    return assistOfficiallUrl(this.code);
-  }
-  /** サムネイル画像URL */
-  public get thumbUrl(): string {
-    return assistThumbUrl(this.code);
-  }
-  /** アバター画像URL */
-  public get avatarUrl(): string {
-    const avatar = this.raw.avatar;
-    return assistAvatarUrl(avatar);
+  /** アバター画像コード */
+  public get avatar(): string {
+    return this.raw.avatar;
   }
 }

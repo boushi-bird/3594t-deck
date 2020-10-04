@@ -8,6 +8,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import classNames from 'classnames';
 import type { General } from '3594t-deck';
+import { generalThumbUrl } from '../../utils/externalUrl';
 
 interface Props {
   index: number;
@@ -232,7 +233,10 @@ export default class DeckCard extends React.PureComponent<Props, LocalState> {
       >
         <div className="deck-card-inner-top">
           <div className="general-thumb-wrap">
-            <img className="general-thumb" src={general.thumbUrl(pocket)} />
+            <img
+              className="general-thumb"
+              src={generalThumbUrl(general, pocket)}
+            />
           </div>
           <div className="shadow" style={styleShadow} />
           <span className="state" style={styleState}>

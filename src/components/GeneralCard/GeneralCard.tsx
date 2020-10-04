@@ -5,6 +5,7 @@ import LazyLoad from 'react-lazyload';
 import type { General } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
 import GenMains from './GenMains';
+import { generalOfficiallUrl, generalAvatarUrl } from '../../utils/externalUrl';
 
 interface Props {
   general: General;
@@ -71,7 +72,7 @@ export default class GeneralCard extends React.PureComponent<Props> {
       <GenMains
         genMains={general.genMains}
         genMainSp={general.genMainSp}
-        officialUrl={general.officialUrl}
+        officialUrl={generalOfficiallUrl(general)}
       />
     );
     return (
@@ -94,7 +95,10 @@ export default class GeneralCard extends React.PureComponent<Props> {
             resize={false}
             placeholder={<div className="no-image general-thumb" />}
           >
-            <img className="general-thumb" src={general.avatarUrl(false)} />
+            <img
+              className="general-thumb"
+              src={generalAvatarUrl(general, false)}
+            />
           </LazyLoad>
         </span>
         <span className="cost" data-label="コスト">

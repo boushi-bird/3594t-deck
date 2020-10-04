@@ -9,11 +9,6 @@ import type {
   BelongState,
 } from '3594t-deck';
 import { createVersionLabel } from './createVersionLabel';
-import {
-  generalThumbUrl,
-  generalAvatarUrl,
-  generalOfficiallUrl,
-} from '../utils/externalUrl';
 
 interface Props {
   /** 登場弾(メジャー) */
@@ -95,16 +90,12 @@ export class GeneralImpl implements Props {
   public get hasPocket(): boolean {
     return this.raw.pocket_code !== '';
   }
-  public get officialUrl(): string {
-    return generalOfficiallUrl(this.code);
+  /** アバター画像コード */
+  public get avatar(): string {
+    return this.raw.avatar;
   }
-  public thumbUrl(pocket: boolean): string {
-    const code = pocket && this.hasPocket ? this.pocketCode : this.code;
-    return generalThumbUrl(code);
-  }
-  public avatarUrl(pocket: boolean): string {
-    const code =
-      pocket && this.hasPocket ? this.raw.pocket_avatar : this.raw.avatar;
-    return generalAvatarUrl(code);
+  /** ぽけっとアバター画像コード */
+  public get pocketAvatar(): string {
+    return this.raw.pocket_avatar;
   }
 }

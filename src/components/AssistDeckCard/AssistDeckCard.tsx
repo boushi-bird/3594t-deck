@@ -5,6 +5,7 @@ import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import classNames from 'classnames';
 import type { AssistGeneral } from '3594t-deck';
+import { assistAvatarUrl } from '../../utils/externalUrl';
 
 interface Props {
   index: number;
@@ -67,7 +68,7 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
     }
     const stateShortName = assist?.state?.nameShort ?? '';
     const name = assist?.name ?? (index === 0 ? DEFAULT_ASSIST.name : '');
-    const avatarUrl = assist?.avatarUrl ?? undefined;
+    const avatarUrl = assist ? assistAvatarUrl(assist) : undefined;
     if (!avatarUrl) {
       styleThumb.display = 'none';
     }

@@ -148,18 +148,10 @@ declare module '3594t-deck' {
     readonly versionValue: string;
     /** さんぽけあり */
     readonly hasPocket: boolean;
-    /** 公式ページへのURL */
-    readonly officialUrl: string;
-    /**
-     * サムネイル画像URL取得
-     * @param pocket trueなら ぽけっと武将画像
-     */
-    thumbUrl(pocket: boolean): string;
-    /**
-     * アバター画像URL取得
-     * @param pocket trueなら ぽけっと武将画像
-     */
-    avatarUrl(pocket: boolean): string;
+    /** アバター画像コード */
+    readonly avatar: string;
+    /** ぽけっとアバター画像コード */
+    readonly pocketAvatar: string;
   }
 
   interface AssistStrategy {
@@ -194,12 +186,8 @@ declare module '3594t-deck' {
     readonly version: string;
     /** 登場弾(内部値) */
     readonly versionValue: string;
-    /** 公式ページへのURL */
-    readonly officialUrl: string;
-    /** サムネイル画像URL */
-    readonly thumbUrl: string;
-    /** アバター画像URL */
-    readonly avatarUrl: string;
+    /** アバター画像コード */
+    readonly avatar: string;
   }
 
   interface FilterContents {
