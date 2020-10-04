@@ -105,6 +105,15 @@ const genMainSpParams: GenMainParamsMap = {
       },
     },
   },
+  // 縦横無尽
+  ['70ad519b63b128f52840c82303caef10']: {
+    ...EMPTY_OTHER_PARAMS,
+    description: '征圧力が上がる',
+    self: {
+      ...EMPTY_PARAMS,
+      conquest: 3,
+    },
+  },
 };
 
 export function getGenMainParams(genMain: GenMainItem): GenMainAllParams {
