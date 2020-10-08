@@ -24,10 +24,6 @@ declare module '3594t-deck' {
    */
   type FilterSelectionMode = 'multiple' | 'singular';
 
-  interface WithRaw<T> {
-    readonly raw: T;
-  }
-
   interface SearchText {
     readonly text: string;
     readonly ruby: string;
@@ -110,6 +106,8 @@ declare module '3594t-deck' {
     readonly addVersion: number;
     /** EXカード */
     readonly isEx: boolean;
+    /** カード種別(スターター/通常/Ex) */
+    readonly verType: string;
     /** 武力 */
     readonly force: number;
     /** 知力 */
@@ -148,18 +146,10 @@ declare module '3594t-deck' {
     readonly versionValue: string;
     /** さんぽけあり */
     readonly hasPocket: boolean;
-    /** 公式ページへのURL */
-    readonly officialUrl: string;
-    /**
-     * サムネイル画像URL取得
-     * @param pocket trueなら ぽけっと武将画像
-     */
-    thumbUrl(pocket: boolean): string;
-    /**
-     * アバター画像URL取得
-     * @param pocket trueなら ぽけっと武将画像
-     */
-    avatarUrl(pocket: boolean): string;
+    /** アバター画像コード */
+    readonly avatar: string;
+    /** ぽけっとアバター画像コード */
+    readonly pocketAvatar: string;
   }
 
   interface AssistStrategy {
@@ -194,12 +184,8 @@ declare module '3594t-deck' {
     readonly version: string;
     /** 登場弾(内部値) */
     readonly versionValue: string;
-    /** 公式ページへのURL */
-    readonly officialUrl: string;
-    /** サムネイル画像URL */
-    readonly thumbUrl: string;
-    /** アバター画像URL */
-    readonly avatarUrl: string;
+    /** アバター画像コード */
+    readonly avatar: string;
   }
 
   interface FilterContents {
@@ -218,7 +204,7 @@ declare module '3594t-deck' {
     /** 官職 */
     generalTypes: KeyDataItem[];
     /** スターター/通常/Ex */
-    varTypes: FilterItem[];
+    verTypes: FilterItem[];
     /** 登場弾(メジャーバージョン) */
     versions: FilterItem[][];
     /** 登場弾(メジャーバージョン) */
@@ -232,10 +218,4 @@ declare module '3594t-deck' {
     /** 遊軍計略カテゴリー */
     assistStrategyCategories: FilterItem[];
   }
-
-  interface StrategyWithRaw extends Strategy, WithRaw<RawStrategy> {}
-  interface GeneralWithRaw extends General, WithRaw<RawGeneral> {}
-  interface AssistGeneralWithRaw
-    extends AssistGeneral,
-      WithRaw<RawAssistGeneral> {}
 }

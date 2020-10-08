@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import type { AssistGeneral } from '3594t-deck';
 import AddButtonContainer from './AddButtonContainer';
-import { strategyRangeImageUrl } from '../../utils/externalUrl';
+import {
+  strategyRangeImageUrl,
+  assistAvatarUrl,
+  assistOfficiallUrl,
+} from '../../utils/externalUrl';
 
 interface Props {
   general: AssistGeneral;
@@ -55,7 +59,11 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
       <AddButtonContainer assist={general} show={show} />
     ) : (
       <span className="externals">
-        <a href={general.officialUrl} target="_blank" rel="noopener noreferrer">
+        <a
+          href={assistOfficiallUrl(general)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           公式
           <br />
           サイトへ
@@ -83,7 +91,7 @@ export default class AssistGeneralCard extends React.PureComponent<Props> {
             resize={false}
             placeholder={<div className="no-image general-thumb" />}
           >
-            <img className="general-thumb" src={general.avatarUrl} />
+            <img className="general-thumb" src={assistAvatarUrl(general)} />
           </LazyLoad>
         </span>
         <span

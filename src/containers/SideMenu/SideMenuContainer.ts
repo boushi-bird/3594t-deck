@@ -8,16 +8,17 @@ import { bindActionCreators } from 'redux';
 import { windowActions } from '../../modules/window';
 import type { State } from '../../store';
 import type { StateFromProps, DispatchFromProps, Props } from './SideMenu';
+import unmanagedStore from '../../unmanagedStore';
 import SideMenu from './SideMenu';
 
 interface ContainerStateFromProps {
   showNotice: boolean;
-  installPromptEvent: BeforeInstallPromptEvent | null;
+  pendingInstallPromptEvent: boolean;
 }
 
 interface ContainerDispatchFromProps {
   openUpdateInfo: () => void;
-  storeInstallPromptEvent: (event: BeforeInstallPromptEvent | null) => void;
+  clearInstallPromptEvent: () => void;
 }
 
 type OwnProps = {};
@@ -40,7 +41,7 @@ type TMergeProps = MergeProps<
 
 const mapStateToProps: TMapStateToProps = (state) => ({
   showNotice: state.window.showNotice,
-  installPromptEvent: state.window.installPromptEvent,
+  pendingInstallPromptEvent: state.window.pendingInstallPromptEvent,
 });
 
 const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
@@ -50,7 +51,7 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
         windowActions.changeUpdateInfoVisible({
           openedUpdateInfo: true,
         }),
-      storeInstallPromptEvent: windowActions.storeInstallPromptEvent,
+      clearInstallPromptEvent: windowActions.clearInstallPromptEvent,
     },
     dispatch
   );
@@ -58,15 +59,18 @@ const mapDispatchToProps: TMapDispatchToProps = (dispatch) =>
 const mergeProps: TMergeProps = (state, actions) => {
   const sProps: StateFromProps = {
     showNotice: state.showNotice,
-    pwaInstallEnabled: !!state.installPromptEvent,
+    pwaInstallEnabled: state.pendingInstallPromptEvent,
   };
   const dProps: DispatchFromProps = {
     openUpdateInfo: actions.openUpdateInfo,
     installPrompt: async () => {
-      if (state.installPromptEvent) {
-        await state.installPromptEvent.prompt();
-        actions.storeInstallPromptEvent(null);
+      if (
+        state.pendingInstallPromptEvent &&
+        unmanagedStore.installPromptEvent
+      ) {
+        await unmanagedStore.installPromptEvent.prompt();
       }
+      actions.clearInstallPromptEvent();
     },
   };
   return {

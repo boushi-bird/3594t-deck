@@ -1,9 +1,9 @@
-import type { GeneralWithRaw } from '3594t-deck';
+import type { General } from '3594t-deck';
 import type { FilterCondition } from '../../modules/datalist';
 import { includeSearchText } from './includeSearchText';
 
 export default (
-  general: GeneralWithRaw,
+  general: General,
   filterCondition: FilterCondition
 ): boolean => {
   const {
@@ -94,7 +94,7 @@ export default (
     genMainsAnd,
     rarities,
     generalTypes,
-    varTypes,
+    verTypes,
     versions,
     majorVersions,
     enableDetailVersion,
@@ -112,7 +112,7 @@ export default (
   } else {
     if (
       majorVersions.length > 0 &&
-      !majorVersions.includes(general.raw.major_version)
+      !majorVersions.includes(`${general.majorVersion}`)
     ) {
       return false;
     }
@@ -139,7 +139,7 @@ export default (
     return false;
   }
   // カード種別
-  if (varTypes.length > 0 && !varTypes.includes(general.raw.ver_type)) {
+  if (verTypes.length > 0 && !verTypes.includes(general.verType)) {
     return false;
   }
   // ぽけっと武将

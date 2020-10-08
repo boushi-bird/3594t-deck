@@ -1,9 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type {
-  GeneralWithRaw,
+  General,
   Strategy,
-  AssistGeneralWithRaw,
+  AssistGeneral,
   FilterContents,
   SearchMode,
   FilterSelectionMode,
@@ -64,7 +64,7 @@ export interface DetailFilterCondition {
   /** 官職 */
   generalTypes: string[];
   /** カード種別(スターター/通常/Ex) */
-  varTypes: string[];
+  verTypes: string[];
   /** メジャーバージョン */
   majorVersions: string[];
   /** 詳細バージョン */
@@ -139,7 +139,7 @@ const initialDetailFilterCondition: DetailFilterCondition = {
   genMainsAnd: false,
   rarities: [],
   generalTypes: [],
-  varTypes: [],
+  verTypes: [],
   majorVersions: [],
   versions: [],
   enableDetailVersion: false,
@@ -172,7 +172,7 @@ export const initialFilterContents: FilterContents = {
   genMains: [],
   rarities: [],
   generalTypes: [],
-  varTypes: [],
+  verTypes: [],
   versions: [],
   majorVersions: [],
   strategyCategories: [],
@@ -186,9 +186,9 @@ export interface DatalistState {
   effectiveFilterCondition: FilterCondition;
   filterSelectionMode: FilterSelectionMode;
   filterContents: FilterContents;
-  generals: GeneralWithRaw[];
+  generals: General[];
   strategies: Strategy[];
-  assistGenerals: AssistGeneralWithRaw[];
+  assistGenerals: AssistGeneral[];
   currentPage: number;
   pageLimit: number;
 }

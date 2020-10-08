@@ -135,9 +135,9 @@ export default class DetailFilter extends React.PureComponent<Props> {
         <section className="filter-section general-mode-only">
           <h2 className="title">カード種別</h2>
           <FilterButtonList<DetailFilterConditionKey>
-            itemName="varTypes"
-            items={filterContents.varTypes}
-            checkedItems={filterCondition.varTypes}
+            itemName="verTypes"
+            items={filterContents.verTypes}
+            checkedItems={filterCondition.verTypes}
             onClickItem={toggleCheckList}
           />
         </section>

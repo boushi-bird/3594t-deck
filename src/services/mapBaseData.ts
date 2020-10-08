@@ -2,10 +2,9 @@ import type { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/re
 import type {
   FilterItem,
   Strategy,
-  StrategyWithRaw,
-  GeneralWithRaw,
+  General,
   AssistStrategy,
-  AssistGeneralWithRaw,
+  AssistGeneral,
   Personal,
   RawPersonal,
   DataItem,
@@ -13,11 +12,11 @@ import type {
   BelongState,
   KeyDataItem,
 } from '3594t-deck';
-import { GeneralImpl } from '../entities/generalImpl';
-import { AssistGeneralImpl } from '../entities/assistGeneralImpl';
-import { StrategyImpl } from '../entities/strategyImpl';
-import { PersonalImpl } from '../entities/personalImpl';
-import { createVersionLabel } from '../entities/createVersionLabel';
+import generateAssistGeneral from './generateAssistGeneral';
+import generateGeneral from './generateGeneral';
+import generatePersonal from './generatePersonal';
+import generateStrategy from './generateStrategy';
+import { createVersionLabel } from '../utils/createVersionLabel';
 import { UNIT_TYPE_NAME_SHORT_ALIAS } from '../const';
 
 interface IdItem {
@@ -27,11 +26,11 @@ interface IdItem {
 export interface BaseData {
   filterContents: FilterContents;
   /** 武将 */
-  generals: GeneralWithRaw[];
+  generals: General[];
   /** 計略 */
-  strategies: StrategyWithRaw[];
+  strategies: Strategy[];
   /** 遊軍 */
-  assistGenerals: AssistGeneralWithRaw[];
+  assistGenerals: AssistGeneral[];
   /** 遊軍計略 */
   assistStrategies: AssistStrategy[];
 }
@@ -171,8 +170,7 @@ const findByIdNullable = <D extends IdItem>(
 const plain = <S>(s: (S | undefined)[]): S[] =>
   s.filter((v) => v != null) as S[];
 
-const noSkillId = '0';
-const exVerTypeId = '2';
+const NO_SKILL_ID = '0';
 
 const convertStrategyExplanation = (explanation: string): string => {
   return (
@@ -250,7 +248,7 @@ export default (baseData: RawBaseData): BaseData => {
     }
   );
   // スターター/通常/Ex
-  const varTypes = convertIdItem(
+  const verTypes = convertIdItem(
     baseData.VER_TYPE,
     idIsIndex,
     toFilterItem
@@ -280,35 +278,21 @@ export default (baseData: RawBaseData): BaseData => {
     })
   );
   // 計略
-  const strategies: StrategyImpl[] = convertIdItem(
+  const strategies = convertIdItem(
     baseData.STRAT,
     idIsKey,
-    (strat, id) => {
-      const {
-        morale,
-        code,
-        explanation,
-        name,
-        name_ruby: nameRuby,
-        strat_category: stratCategory,
-        strat_range: stratRange,
-        strat_time: stratTime,
-      } = strat;
+    (strat, id): Strategy => {
+      const { strat_category: stratCategory, strat_range: stratRange } = strat;
       const stratCategoryName =
         strategyCategories.find((sc) => sc.id === stratCategory)?.name || '';
       const stratRangeCode =
         strategyRanges.find((sr) => sr.id === stratRange)?.code || '';
-      return new StrategyImpl(id, strat, {
-        code,
-        explanation: convertStrategyExplanation(explanation),
-        morale: parseInt(morale),
-        name,
-        nameRuby,
+      return generateStrategy(id, strat, {
+        explanation: convertStrategyExplanation(strat.explanation),
         stratCategory,
         stratCategoryName,
         stratRange,
         stratRangeCode,
-        stratTime,
       });
     }
   );
@@ -317,36 +301,17 @@ export default (baseData: RawBaseData): BaseData => {
   // 武将名
   const personalMaps = new Map<string, Personal>();
   const genPersonalUnique = (raw: RawPersonal) => raw.name;
-  const personals: Personal[] = convertIdItem(
-    baseData.PERSONAL,
-    idIsIndex,
-    (raw, id) => {
-      const key = genPersonalUnique(raw);
-      const personal = new PersonalImpl(id, raw, personalMaps.get(key));
-      if (!personalMaps.has(key)) {
-        personalMaps.set(key, personal);
-      }
-      return personal;
+  const personals = convertIdItem(baseData.PERSONAL, idIsIndex, (raw, id) => {
+    const key = genPersonalUnique(raw);
+    const personal: Personal = generatePersonal(id, raw, personalMaps.get(key));
+    if (!personalMaps.has(key)) {
+      personalMaps.set(key, personal);
     }
-  );
+    return personal;
+  });
   // 武将
   const generals = convertIdItem(baseData.GENERAL, idIsIndex, (raw, id) => {
-    const majorVersion = parseInt(raw.major_version);
-    const addVersion = parseInt(raw.add_version);
-    const isEx = raw.ver_type === exVerTypeId;
-    if (!versions[majorVersion]) {
-      versions[majorVersion] = [];
-    }
-    if (!isEx && !versions[majorVersion].includes(addVersion)) {
-      versions[majorVersion].push(addVersion);
-    }
-    return new GeneralImpl(id, raw, {
-      majorVersion,
-      addVersion,
-      isEx,
-      force: parseInt(raw.buryoku),
-      intelligence: parseInt(raw.chiryoku),
-      conquest: parseInt(raw.seiatsu),
+    const g: General = generateGeneral(id, raw, {
       cost: findById(costs, raw.cost, emptyDataItem),
       genMains: plain(
         [raw.gen_main0, raw.gen_main1, raw.gen_main2]
@@ -359,13 +324,20 @@ export default (baseData: RawBaseData): BaseData => {
       rarity: findById(rarities, raw.rarity, emptyDataItem),
       skills: plain(
         [raw.skill0, raw.skill1, raw.skill2]
-          .filter((v) => v !== '' && v !== noSkillId)
+          .filter((v) => v !== '' && v !== NO_SKILL_ID)
           .map((v) => skills.find((g) => g.id === v))
       ),
       state: findById(belongStates, raw.state, emptyBelongState),
       unitType: findById(unitTypes, raw.unit_type, emptyKeyDataItem),
       strategy: findById(strategies, raw.strat, emptyStrategy),
     });
+    if (!versions[g.majorVersion]) {
+      versions[g.majorVersion] = [];
+    }
+    if (!g.isEx && !versions[g.majorVersion].includes(g.addVersion)) {
+      versions[g.majorVersion].push(g.addVersion);
+    }
+    return g;
   });
   const majorVersions = Object.keys(versions).map((v) => parseInt(v));
   const sortNumber = (a: number, b: number): number => {
@@ -421,7 +393,7 @@ export default (baseData: RawBaseData): BaseData => {
   const assistGenerals = convertIdItem(
     baseData.ASSIST,
     idIsIndex,
-    (raw, id) => {
+    (raw, id): AssistGeneral => {
       const majorVersion = parseInt(raw.major_version);
       const addVersion = parseInt(raw.add_version);
       const isEx = false;
@@ -431,11 +403,12 @@ export default (baseData: RawBaseData): BaseData => {
       if (!isEx && !versions[majorVersion].includes(addVersion)) {
         versions[majorVersion].push(addVersion);
       }
-      return new AssistGeneralImpl(id, raw, {
+      const personal = findById(personals, raw.personal, emptyPersonal);
+      return generateAssistGeneral(id, raw, {
         majorVersion,
         addVersion,
         isEx,
-        personal: findById(personals, raw.personal, emptyPersonal),
+        personal,
         state: findById(belongStates, raw.state, emptyBelongState),
         strategy: findById(
           assistStrategies,
@@ -454,7 +427,7 @@ export default (baseData: RawBaseData): BaseData => {
       genMains,
       rarities,
       generalTypes,
-      varTypes,
+      verTypes,
       versions: Object.entries(versions).map(([k, addVersions]) => {
         const items = convertIdItem(
           addVersions,

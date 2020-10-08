@@ -6,7 +6,7 @@ import type {
 } from 'react-redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import type { General, GeneralWithRaw, Strategy, SearchMode } from '3594t-deck';
+import type { General, Strategy, SearchMode } from '3594t-deck';
 import getSearchMode from '../Common/getSearchMode';
 import type { FilterCondition } from '../../modules/datalist';
 import { datalistActions } from '../../modules/datalist';
@@ -18,7 +18,7 @@ import satisfyStrategy from './satisfyStrategy';
 import satisfyGeneral from './satisfyGeneral';
 
 interface ContainerStateFromProps {
-  generals: GeneralWithRaw[];
+  generals: General[];
   strategies: Strategy[];
   currentPage: number;
   pageLimit: number;

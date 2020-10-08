@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './containers/App';
 import store from './store';
+import unmanagedStore from './unmanagedStore';
 import { windowActions } from './modules/window';
 
 WebFontLoader.load({
@@ -24,7 +25,8 @@ window.addEventListener(
   'beforeinstallprompt',
   (event: BeforeInstallPromptEvent) => {
     event.preventDefault();
-    store.dispatch(windowActions.storeInstallPromptEvent(event));
+    unmanagedStore.installPromptEvent = event;
+    store.dispatch(windowActions.storeInstallPromptEvent());
   }
 );
 
