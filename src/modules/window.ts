@@ -20,7 +20,7 @@ export interface WindowState {
   activeFilter: FilterTab;
   detailGeneral: General | null;
   detailAssistGeneral: AssistGeneral | null;
-  installPromptEvent: BeforeInstallPromptEvent | null;
+  pendingInstallPromptEvent: boolean;
 }
 
 const initialState: WindowState = {
@@ -33,7 +33,7 @@ const initialState: WindowState = {
   activeFilter: 'BASIC',
   detailGeneral: null,
   detailAssistGeneral: null,
-  installPromptEvent: null,
+  pendingInstallPromptEvent: false,
 };
 
 export const windowModule = createSlice({
@@ -143,13 +143,16 @@ export const windowModule = createSlice({
         detailAssistGeneral: action.payload,
       };
     },
-    storeInstallPromptEvent(
-      state: WindowState,
-      action: PayloadAction<BeforeInstallPromptEvent | null>
-    ): WindowState {
+    storeInstallPromptEvent(state: WindowState): WindowState {
       return {
         ...state,
-        installPromptEvent: action.payload,
+        pendingInstallPromptEvent: true,
+      };
+    },
+    clearInstallPromptEvent(state: WindowState): WindowState {
+      return {
+        ...state,
+        pendingInstallPromptEvent: false,
       };
     },
   },
