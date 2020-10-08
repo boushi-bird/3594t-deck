@@ -94,7 +94,7 @@ export default (
     genMainsAnd,
     rarities,
     generalTypes,
-    varTypes,
+    verTypes,
     versions,
     majorVersions,
     enableDetailVersion,
@@ -139,7 +139,7 @@ export default (
     return false;
   }
   // カード種別
-  if (varTypes.length > 0 && !varTypes.includes(general.verType)) {
+  if (verTypes.length > 0 && !verTypes.includes(general.verType)) {
     return false;
   }
   // ぽけっと武将

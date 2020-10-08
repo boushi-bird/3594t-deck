@@ -248,7 +248,7 @@ export default (baseData: RawBaseData): BaseData => {
     }
   );
   // スターター/通常/Ex
-  const varTypes = convertIdItem(
+  const verTypes = convertIdItem(
     baseData.VER_TYPE,
     idIsIndex,
     toFilterItem
@@ -427,7 +427,7 @@ export default (baseData: RawBaseData): BaseData => {
       genMains,
       rarities,
       generalTypes,
-      varTypes,
+      verTypes,
       versions: Object.entries(versions).map(([k, addVersions]) => {
         const items = convertIdItem(
           addVersions,

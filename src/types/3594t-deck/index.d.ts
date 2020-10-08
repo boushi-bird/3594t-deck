@@ -204,7 +204,7 @@ declare module '3594t-deck' {
     /** 官職 */
     generalTypes: KeyDataItem[];
     /** スターター/通常/Ex */
-    varTypes: FilterItem[];
+    verTypes: FilterItem[];
     /** 登場弾(メジャーバージョン) */
     versions: FilterItem[][];
     /** 登場弾(メジャーバージョン) */

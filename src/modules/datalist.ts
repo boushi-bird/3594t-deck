@@ -64,7 +64,7 @@ export interface DetailFilterCondition {
   /** 官職 */
   generalTypes: string[];
   /** カード種別(スターター/通常/Ex) */
-  varTypes: string[];
+  verTypes: string[];
   /** メジャーバージョン */
   majorVersions: string[];
   /** 詳細バージョン */
@@ -139,7 +139,7 @@ const initialDetailFilterCondition: DetailFilterCondition = {
   genMainsAnd: false,
   rarities: [],
   generalTypes: [],
-  varTypes: [],
+  verTypes: [],
   majorVersions: [],
   versions: [],
   enableDetailVersion: false,
@@ -172,7 +172,7 @@ export const initialFilterContents: FilterContents = {
   genMains: [],
   rarities: [],
   generalTypes: [],
-  varTypes: [],
+  verTypes: [],
   versions: [],
   majorVersions: [],
   strategyCategories: [],
