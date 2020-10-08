@@ -2,7 +2,7 @@ import type {
   FilterItem,
   Strategy,
   RawGeneral,
-  GeneralWithRaw,
+  General,
   Personal,
   DataItem,
   KeyDataItem,
@@ -12,12 +12,6 @@ import type {
 import { createVersionLabel } from '../utils/createVersionLabel';
 
 interface Props {
-  /** 登場弾(メジャー) */
-  readonly majorVersion: number;
-  /** 登場弾(追加) */
-  readonly addVersion: number;
-  /** EXカード */
-  readonly isEx: boolean;
   /** コスト */
   readonly cost: DataItem;
   /** 主将器 */
@@ -40,23 +34,24 @@ interface Props {
   readonly strategy: Strategy;
 }
 
-export default function (
-  id: string,
-  raw: RawGeneral,
-  props: Props
-): GeneralWithRaw {
+const EX_VER_TYPE = '2';
+
+export default function (id: string, raw: RawGeneral, props: Props): General {
+  const majorVersion = parseInt(raw.major_version);
+  const addVersion = parseInt(raw.add_version);
+  const verType = raw.ver_type;
+  const isEx = verType === EX_VER_TYPE;
   // 登場弾
-  const version = createVersionLabel(
-    props.majorVersion,
-    props.addVersion,
-    props.isEx
-  );
+  const version = createVersionLabel(majorVersion, addVersion, isEx);
   // 登場弾(内部値)
-  const add = props.isEx ? '-EX' : `-${props.addVersion}`;
-  const versionValue = `${props.majorVersion}${add}`;
+  const add = isEx ? '-EX' : `-${addVersion}`;
+  const versionValue = `${majorVersion}${add}`;
   return {
     id,
-    raw,
+    majorVersion,
+    addVersion,
+    isEx,
+    verType,
     code: raw.code,
     pocketCode: raw.pocket_code,
     name: props.personal.name,

@@ -24,10 +24,6 @@ declare module '3594t-deck' {
    */
   type FilterSelectionMode = 'multiple' | 'singular';
 
-  interface WithRaw<T> {
-    readonly raw: T;
-  }
-
   interface SearchText {
     readonly text: string;
     readonly ruby: string;
@@ -110,6 +106,8 @@ declare module '3594t-deck' {
     readonly addVersion: number;
     /** EXカード */
     readonly isEx: boolean;
+    /** カード種別(スターター/通常/Ex) */
+    readonly verType: string;
     /** 武力 */
     readonly force: number;
     /** 知力 */
@@ -220,6 +218,4 @@ declare module '3594t-deck' {
     /** 遊軍計略カテゴリー */
     assistStrategyCategories: FilterItem[];
   }
-
-  interface GeneralWithRaw extends General, WithRaw<RawGeneral> {}
 }

@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type {
-  GeneralWithRaw,
+  General,
   Strategy,
   AssistGeneral,
   FilterContents,
@@ -186,7 +186,7 @@ export interface DatalistState {
   effectiveFilterCondition: FilterCondition;
   filterSelectionMode: FilterSelectionMode;
   filterContents: FilterContents;
-  generals: GeneralWithRaw[];
+  generals: General[];
   strategies: Strategy[];
   assistGenerals: AssistGeneral[];
   currentPage: number;

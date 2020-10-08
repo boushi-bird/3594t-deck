@@ -2,7 +2,7 @@ import type { BaseData as RawBaseData } from '@boushi-bird/3594t-net-datalist/re
 import type {
   FilterItem,
   Strategy,
-  GeneralWithRaw,
+  General,
   AssistStrategy,
   AssistGeneral,
   Personal,
@@ -26,7 +26,7 @@ interface IdItem {
 export interface BaseData {
   filterContents: FilterContents;
   /** 武将 */
-  generals: GeneralWithRaw[];
+  generals: General[];
   /** 計略 */
   strategies: Strategy[];
   /** 遊軍 */
@@ -170,8 +170,7 @@ const findByIdNullable = <D extends IdItem>(
 const plain = <S>(s: (S | undefined)[]): S[] =>
   s.filter((v) => v != null) as S[];
 
-const noSkillId = '0';
-const exVerTypeId = '2';
+const NO_SKILL_ID = '0';
 
 const convertStrategyExplanation = (explanation: string): string => {
   return (
@@ -311,44 +310,35 @@ export default (baseData: RawBaseData): BaseData => {
     return personal;
   });
   // 武将
-  const generals = convertIdItem(
-    baseData.GENERAL,
-    idIsIndex,
-    (raw, id): GeneralWithRaw => {
-      const majorVersion = parseInt(raw.major_version);
-      const addVersion = parseInt(raw.add_version);
-      const isEx = raw.ver_type === exVerTypeId;
-      if (!versions[majorVersion]) {
-        versions[majorVersion] = [];
-      }
-      if (!isEx && !versions[majorVersion].includes(addVersion)) {
-        versions[majorVersion].push(addVersion);
-      }
-      return generateGeneral(id, raw, {
-        majorVersion,
-        addVersion,
-        isEx,
-        cost: findById(costs, raw.cost, emptyDataItem),
-        genMains: plain(
-          [raw.gen_main0, raw.gen_main1, raw.gen_main2]
-            .filter((v) => v !== '')
-            .map((v) => genMains.find((g) => g.id === v))
-        ),
-        genMainSp: findByIdNullable(genMainSps, id),
-        generalType: findById(generalTypes, raw.general_type, emptyKeyDataItem),
-        personal: findById(personals, raw.personal, emptyPersonal),
-        rarity: findById(rarities, raw.rarity, emptyDataItem),
-        skills: plain(
-          [raw.skill0, raw.skill1, raw.skill2]
-            .filter((v) => v !== '' && v !== noSkillId)
-            .map((v) => skills.find((g) => g.id === v))
-        ),
-        state: findById(belongStates, raw.state, emptyBelongState),
-        unitType: findById(unitTypes, raw.unit_type, emptyKeyDataItem),
-        strategy: findById(strategies, raw.strat, emptyStrategy),
-      });
+  const generals = convertIdItem(baseData.GENERAL, idIsIndex, (raw, id) => {
+    const g: General = generateGeneral(id, raw, {
+      cost: findById(costs, raw.cost, emptyDataItem),
+      genMains: plain(
+        [raw.gen_main0, raw.gen_main1, raw.gen_main2]
+          .filter((v) => v !== '')
+          .map((v) => genMains.find((g) => g.id === v))
+      ),
+      genMainSp: findByIdNullable(genMainSps, id),
+      generalType: findById(generalTypes, raw.general_type, emptyKeyDataItem),
+      personal: findById(personals, raw.personal, emptyPersonal),
+      rarity: findById(rarities, raw.rarity, emptyDataItem),
+      skills: plain(
+        [raw.skill0, raw.skill1, raw.skill2]
+          .filter((v) => v !== '' && v !== NO_SKILL_ID)
+          .map((v) => skills.find((g) => g.id === v))
+      ),
+      state: findById(belongStates, raw.state, emptyBelongState),
+      unitType: findById(unitTypes, raw.unit_type, emptyKeyDataItem),
+      strategy: findById(strategies, raw.strat, emptyStrategy),
+    });
+    if (!versions[g.majorVersion]) {
+      versions[g.majorVersion] = [];
     }
-  );
+    if (!g.isEx && !versions[g.majorVersion].includes(g.addVersion)) {
+      versions[g.majorVersion].push(g.addVersion);
+    }
+    return g;
+  });
   const majorVersions = Object.keys(versions).map((v) => parseInt(v));
   const sortNumber = (a: number, b: number): number => {
     return a - b;

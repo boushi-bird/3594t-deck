@@ -1,9 +1,9 @@
-import type { GeneralWithRaw } from '3594t-deck';
+import type { General } from '3594t-deck';
 import type { FilterCondition } from '../../modules/datalist';
 import { includeSearchText } from './includeSearchText';
 
 export default (
-  general: GeneralWithRaw,
+  general: General,
   filterCondition: FilterCondition
 ): boolean => {
   const {
@@ -139,7 +139,7 @@ export default (
     return false;
   }
   // カード種別
-  if (varTypes.length > 0 && !varTypes.includes(general.raw.ver_type)) {
+  if (varTypes.length > 0 && !varTypes.includes(general.verType)) {
     return false;
   }
   // ぽけっと武将

@@ -34,9 +34,6 @@ const EXAMPLE_GENERAL1 = generateGeneral(
     pocket_off: true,
   },
   {
-    majorVersion: 2,
-    addVersion: 1,
-    isEx: false,
     cost: {
       id: '10',
       code: '10',
@@ -176,9 +173,6 @@ const EXAMPLE_GENERAL2 = generateGeneral(
     pocket_off: false,
   },
   {
-    majorVersion: 1,
-    addVersion: 0,
-    isEx: false,
     cost: {
       id: '25',
       code: '25',
@@ -315,9 +309,6 @@ const EXAMPLE_GENERAL3 = generateGeneral(
     pocket_off: true,
   },
   {
-    majorVersion: 4,
-    addVersion: 1,
-    isEx: false,
     cost: {
       id: '25',
       code: '25',
