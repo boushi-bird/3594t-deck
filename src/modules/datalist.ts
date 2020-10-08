@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type {
   GeneralWithRaw,
   Strategy,
-  AssistGeneralWithRaw,
+  AssistGeneral,
   FilterContents,
   SearchMode,
   FilterSelectionMode,
@@ -188,7 +188,7 @@ export interface DatalistState {
   filterContents: FilterContents;
   generals: GeneralWithRaw[];
   strategies: Strategy[];
-  assistGenerals: AssistGeneralWithRaw[];
+  assistGenerals: AssistGeneral[];
   currentPage: number;
   pageLimit: number;
 }

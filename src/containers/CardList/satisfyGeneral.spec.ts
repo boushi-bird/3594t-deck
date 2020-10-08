@@ -1,9 +1,9 @@
 import satisfyGeneral from './satisfyGeneral';
-import { GeneralImpl } from '../../entities/generalImpl';
-import { StrategyImpl } from '../../entities/strategyImpl';
 import { initialFilterCondition } from '../../modules/datalist';
+import generateGeneral from '../../services/generateGeneral';
+import generateStrategy from '../../services/generateStrategy';
 
-const EXAMPLE_GENERAL1 = new GeneralImpl(
+const EXAMPLE_GENERAL1 = generateGeneral(
   '71',
   {
     code: '4d4d6458fbbe6b4de65cf66fe6defec2',
@@ -37,9 +37,6 @@ const EXAMPLE_GENERAL1 = new GeneralImpl(
     majorVersion: 2,
     addVersion: 1,
     isEx: false,
-    force: 2,
-    intelligence: 6,
-    conquest: 1,
     cost: {
       id: '10',
       code: '10',
@@ -119,7 +116,7 @@ const EXAMPLE_GENERAL1 = new GeneralImpl(
       name: '騎兵',
       nameShort: '騎',
     },
-    strategy: new StrategyImpl(
+    strategy: generateStrategy(
       '63',
       {
         key: '63',
@@ -137,23 +134,18 @@ const EXAMPLE_GENERAL1 = new GeneralImpl(
           '戦場にいる魏の味方の武力の最大値が大きいほど武力が上がる。一定以上武力が上がると、さらに移動速度と突撃ダメージが上がる',
       },
       {
-        code: 'db0303d1fecc2fa15ba2b9d1ef05bd4a',
-        name: '月光の目覚め',
         explanation:
           '戦場にいる魏の味方の武力の最大値が大きいほど武力が上がる。一定以上武力が上がると、さらに移動速度と突撃ダメージが上がる',
-        morale: 4,
-        nameRuby: 'げっこうのめざめ',
         stratCategory: '1',
         stratCategoryName: '強化',
         stratRange: '1',
         stratRangeCode: '5dcd68487fa8097b64a8a0b1e723abd0',
-        stratTime: '0',
       }
     ),
   }
 );
 
-const EXAMPLE_GENERAL2 = new GeneralImpl(
+const EXAMPLE_GENERAL2 = generateGeneral(
   '9',
   {
     code: 'b3bf88e47b9790b3617ce4fc903566d9',
@@ -187,9 +179,6 @@ const EXAMPLE_GENERAL2 = new GeneralImpl(
     majorVersion: 1,
     addVersion: 0,
     isEx: false,
-    force: 8,
-    intelligence: 8,
-    conquest: 2,
     cost: {
       id: '25',
       code: '25',
@@ -269,7 +258,7 @@ const EXAMPLE_GENERAL2 = new GeneralImpl(
       name: '騎兵',
       nameShort: '騎',
     },
-    strategy: new StrategyImpl(
+    strategy: generateStrategy(
       '7',
       {
         key: '7',
@@ -285,22 +274,17 @@ const EXAMPLE_GENERAL2 = new GeneralImpl(
         explanation_search: '敵の武力と移動速度を下げる',
       },
       {
-        code: '4dfa19079d8fb8eb92bbc1a5cadeb715',
-        name: '隻眼の一喝',
         explanation: '敵の武力と移動速度を下げる',
-        morale: 5,
-        nameRuby: 'せきがんのいっかつ',
         stratCategory: '2',
         stratCategoryName: '妨害',
         stratRange: '1',
         stratRangeCode: '6a8be9ce53f700ecbee51f39f5b38501',
-        stratTime: '0',
       }
     ),
   }
 );
 
-const EXAMPLE_GENERAL3 = new GeneralImpl(
+const EXAMPLE_GENERAL3 = generateGeneral(
   '9',
   {
     code: '31a035295983e46b30147a7bbb8787b9',
@@ -334,9 +318,6 @@ const EXAMPLE_GENERAL3 = new GeneralImpl(
     majorVersion: 4,
     addVersion: 1,
     isEx: false,
-    force: 8,
-    intelligence: 8,
-    conquest: 2,
     cost: {
       id: '25',
       code: '25',
@@ -416,7 +397,7 @@ const EXAMPLE_GENERAL3 = new GeneralImpl(
       name: '騎兵',
       nameShort: '騎',
     },
-    strategy: new StrategyImpl(
+    strategy: generateStrategy(
       '7',
       {
         key: '7',
@@ -432,16 +413,11 @@ const EXAMPLE_GENERAL3 = new GeneralImpl(
         explanation_search: '敵の武力と移動速度を下げる',
       },
       {
-        code: '4dfa19079d8fb8eb92bbc1a5cadeb715',
-        name: '隻眼の一喝',
         explanation: '敵の武力と移動速度を下げる',
-        morale: 5,
-        nameRuby: 'せきがんのいっかつ',
         stratCategory: '2',
         stratCategoryName: '妨害',
         stratRange: '1',
         stratRangeCode: '6a8be9ce53f700ecbee51f39f5b38501',
-        stratTime: '0',
       }
     ),
   }

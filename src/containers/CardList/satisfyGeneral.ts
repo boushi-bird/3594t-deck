@@ -112,7 +112,7 @@ export default (
   } else {
     if (
       majorVersions.length > 0 &&
-      !majorVersions.includes(general.raw.major_version)
+      !majorVersions.includes(`${general.majorVersion}`)
     ) {
       return false;
     }

@@ -221,9 +221,5 @@ declare module '3594t-deck' {
     assistStrategyCategories: FilterItem[];
   }
 
-  interface StrategyWithRaw extends Strategy, WithRaw<RawStrategy> {}
   interface GeneralWithRaw extends General, WithRaw<RawGeneral> {}
-  interface AssistGeneralWithRaw
-    extends AssistGeneral,
-      WithRaw<RawAssistGeneral> {}
 }
