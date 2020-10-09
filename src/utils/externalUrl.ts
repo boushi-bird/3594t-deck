@@ -1,4 +1,4 @@
-import { General, AssistGeneral } from '3594t-deck';
+import { General, AssistGeneral, DefaultAssist } from '3594t-deck';
 
 /**
  * @param {General} general 武将カード
@@ -41,7 +41,7 @@ export function assistThumbUrl(assist: AssistGeneral): string {
  * @param {AssistGeneral} assist 遊軍カード
  * @return {string} 遊軍カードのアバター画像のURL
  */
-export function assistAvatarUrl(assist: AssistGeneral): string {
+export function assistAvatarUrl(assist: AssistGeneral | DefaultAssist): string {
   return `https://3594t.net/img/avatar/${assist.avatar}.png`;
 }
 

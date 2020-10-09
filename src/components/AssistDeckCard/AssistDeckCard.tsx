@@ -4,24 +4,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import classNames from 'classnames';
-import type { AssistGeneral } from '3594t-deck';
+import type { AssistGeneral, DefaultAssist, BelongState } from '3594t-deck';
 import { assistAvatarUrl } from '../../utils/externalUrl';
 
 interface Props {
   index: number;
   assist: AssistGeneral | null;
+  defaultAssist: DefaultAssist | null;
   active: boolean;
   onActive: (index: number) => void;
   onRemoveDeck: (index: number) => void;
   onShowDetail: (assist: AssistGeneral) => void;
 }
 
-const DEFAULT_ASSIST: {
+interface AssistEffective {
+  readonly state?: BelongState;
+  readonly avatarUrl?: string;
   readonly name: string;
   readonly strategyName: string;
-} = {
+  // readonly strategyCategoryName: string;
+}
+
+const DEFAULT_ASSIST: AssistEffective = {
   name: '軍師',
   strategyName: '控えめな正兵',
+  // strategyCategoryName: '【全体】全体強化',
 };
 
 export default class AssistDeckCard extends React.PureComponent<Props> {
@@ -55,12 +62,33 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
     onShowDetail(assist);
   };
 
+  private getTargetAssist = (): AssistEffective => {
+    const { assist, defaultAssist } = this.props;
+    if (assist) {
+      return {
+        state: assist.state,
+        avatarUrl: assistAvatarUrl(assist),
+        name: assist.name,
+        strategyName: assist.strategy.name,
+      };
+    }
+    if (defaultAssist) {
+      return {
+        avatarUrl: assistAvatarUrl(defaultAssist),
+        name: defaultAssist.name,
+        strategyName: defaultAssist.strategyName,
+      };
+    }
+    return DEFAULT_ASSIST;
+  };
+
   public render(): React.ReactNode {
-    const { index, active, assist } = this.props;
+    const { index, active } = this.props;
+    const assist = this.getTargetAssist();
     const style: React.CSSProperties = {};
     const styleState: React.CSSProperties = {};
     const styleThumb: React.CSSProperties = {};
-    if (assist) {
+    if (assist.state) {
       style.backgroundColor = assist.state.thincolor;
       styleState.backgroundColor = assist.state.color;
     } else {
@@ -68,14 +96,10 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
     }
     const stateShortName = assist?.state?.nameShort ?? '';
     const name = assist?.name ?? (index === 0 ? DEFAULT_ASSIST.name : '');
-    const avatarUrl = assist ? assistAvatarUrl(assist) : undefined;
-    if (!avatarUrl) {
+    if (!assist.avatarUrl) {
       styleThumb.display = 'none';
     }
-    const stratName =
-      assist?.strategy?.name ??
-      (index === 0 ? DEFAULT_ASSIST.strategyName : '');
-    const noAssist = !assist;
+    const noAssist = !assist.state;
     return (
       <div
         className={classNames('assist-deck-card', {
@@ -86,14 +110,18 @@ export default class AssistDeckCard extends React.PureComponent<Props> {
         onClick={this.handleActive}
       >
         <span className="image">
-          <img className="assist-thumb" style={styleThumb} src={avatarUrl} />
+          <img
+            className="assist-thumb"
+            style={styleThumb}
+            src={assist.avatarUrl}
+          />
         </span>
         <span className="state" style={styleState}>
           {stateShortName}
         </span>
         <span className="card-type">遊軍</span>
         <span className="name">{name}</span>
-        <span className="strategy">{stratName}</span>
+        <span className="strategy">{assist.strategyName}</span>
         <div className="tool-box">
           <button className="remove" onClick={this.handleRemove}>
             <FontAwesomeIcon icon={faMinusCircle} className="circle-icon" />

@@ -7,6 +7,8 @@ import type {
   FilterContents,
   SearchMode,
   FilterSelectionMode,
+  DefaultAssist,
+  AssistStrategy,
 } from '3594t-deck';
 import type { BaseData } from '../services/mapBaseData';
 import cloneDeep from 'lodash-es/cloneDeep';
@@ -189,6 +191,8 @@ export interface DatalistState {
   generals: General[];
   strategies: Strategy[];
   assistGenerals: AssistGeneral[];
+  defaultAssist: DefaultAssist | null;
+  assistStrategies: AssistStrategy[];
   currentPage: number;
   pageLimit: number;
 }
@@ -201,6 +205,8 @@ const initialState: DatalistState = {
   generals: [],
   strategies: [],
   assistGenerals: [],
+  defaultAssist: null,
+  assistStrategies: [],
   currentPage: 1,
   pageLimit: 50,
 };
@@ -309,21 +315,12 @@ export const datalistModule = createSlice({
       state: DatalistState,
       action: PayloadAction<BaseData>
     ): DatalistState {
-      const {
-        generals,
-        strategies,
-        assistGenerals,
-        filterContents,
-      } = action.payload;
       return {
         ...state,
         filterCondition: initialFilterCondition,
         effectiveFilterCondition: initialFilterCondition,
         currentPage: initialState.currentPage,
-        filterContents,
-        generals,
-        strategies,
-        assistGenerals,
+        ...action.payload,
       };
     },
     incrementPage(state: DatalistState): DatalistState {
