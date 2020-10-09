@@ -7,7 +7,6 @@ import type {
   AssistGeneral,
   DefaultAssist,
   Personal,
-  RawPersonal,
   DataItem,
   FilterContents,
   BelongState,
@@ -302,14 +301,8 @@ export default (baseData: RawBaseData): BaseData => {
   // 登場弾
   const versions: { [key: number]: number[] } = {};
   // 武将名
-  const personalMaps = new Map<string, Personal>();
-  const genPersonalUnique = (raw: RawPersonal) => raw.name;
   const personals = convertIdItem(baseData.PERSONAL, idIsIndex, (raw, id) => {
-    const key = genPersonalUnique(raw);
-    const personal: Personal = generatePersonal(id, raw, personalMaps.get(key));
-    if (!personalMaps.has(key)) {
-      personalMaps.set(key, personal);
-    }
+    const personal: Personal = generatePersonal(id, raw);
     return personal;
   });
   // 武将

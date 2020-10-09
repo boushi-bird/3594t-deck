@@ -196,30 +196,24 @@ function isEnabledAddDeckGeneral(
   deckAssistPersonals: string[],
   sameCard: SameCardConstraint
 ): boolean {
-  // 遊軍の同名カード判別
-  if (sameCard !== 'personal-strategy' && sameCard !== 'personal-assist') {
-    const hasSameCard = deckAssistPersonals.some(
-      (p) => p === general.personal.uniqueId
-    );
-    if (hasSameCard) {
-      return false;
-    }
-  }
-
   // 武将カードの同名カード判別
-  if (
-    sameCard === 'personal-strategy' ||
-    sameCard === 'personal-strategy-exclude-assist'
-  ) {
+  if (sameCard === 'personal-strategy') {
     // 武将と計略が一致したときに同名カード扱い
     return !deckPersonals.some(
       (r) =>
-        r.personal === general.personal.id && r.strat === general.strategy.id
+        r.personal === general.personal.uniqueId &&
+        r.strat === general.strategy.id
     );
-  } else {
-    // 武将が一致したときに同名カード扱い
-    return !deckPersonals.some((r) => r.personal === general.personal.uniqueId);
   }
+  // 遊軍の同名カード判別
+  const hasSameCard = deckAssistPersonals.some(
+    (p) => p === general.personal.uniqueId
+  );
+  if (hasSameCard) {
+    return false;
+  }
+  // 武将が一致したときに同名カード扱い
+  return !deckPersonals.some((r) => r.personal === general.personal.uniqueId);
 }
 
 const mergeProps: TMergeProps = (state, actions, ownProps) => {

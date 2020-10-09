@@ -45,15 +45,8 @@ interface SearchCondition {
 
 // 同名武将の制約
 // personal: 同名武将不可・同名遊軍不可(通常ルール)
-// personal-strategy-exclude-assist: 同名武将かつ同計略不可・同名遊軍不可
-// personal-assist: 同名武将不可・同名遊軍可
 // personal-strategy: 同名武将かつ同計略不可・同名遊軍可
-const sameCardConstraints = [
-  'personal',
-  'personal-strategy-exclude-assist',
-  'personal-assist',
-  'personal-strategy',
-] as const;
+const sameCardConstraints = ['personal', 'personal-strategy'] as const;
 export type SameCardConstraint = typeof sameCardConstraints[number];
 export const defaultSameCardConstraint: SameCardConstraint = 'personal';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
