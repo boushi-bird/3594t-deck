@@ -5,6 +5,7 @@ import type {
   General,
   AssistStrategy,
   AssistGeneral,
+  DefaultAssist,
   Personal,
   RawPersonal,
   DataItem,
@@ -31,6 +32,8 @@ export interface BaseData {
   strategies: Strategy[];
   /** 遊軍 */
   assistGenerals: AssistGeneral[];
+  /** デフォルト遊軍 */
+  defaultAssist: DefaultAssist | null;
   /** 遊軍計略 */
   assistStrategies: AssistStrategy[];
 }
@@ -418,6 +421,19 @@ export default (baseData: RawBaseData): BaseData => {
       });
     }
   );
+  // デフォルト遊軍
+  const defaultAssist: DefaultAssist | null =
+    baseData.DEFAULT_ASSIST.length > 0
+      ? (({
+          assist_strat_category_name: strategyCategoryName,
+          assist_strat_name: strategyName,
+          code,
+          name,
+          avatar,
+        }) => {
+          return { strategyCategoryName, strategyName, code, name, avatar };
+        })(baseData.DEFAULT_ASSIST[0])
+      : null;
   return {
     filterContents: {
       belongStates,
@@ -453,6 +469,7 @@ export default (baseData: RawBaseData): BaseData => {
     generals,
     strategies,
     assistGenerals,
+    defaultAssist,
     assistStrategies,
   };
 };

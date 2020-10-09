@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
-import type { General, AssistGeneral } from '3594t-deck';
+import type { General, AssistGeneral, DefaultAssist } from '3594t-deck';
 import AssistDeckCard from '../../components/AssistDeckCard';
 import DeckCard from '../../components/DeckCard';
 import DeckTotal from '../../components/DeckTotal';
@@ -30,6 +30,7 @@ export type DeckCardInfo = DeckCardGeneralInfo | DeckCardDummy;
 export interface StateFromProps {
   deckCards: DeckCardInfo[];
   assistDeckCards: DeckCardAssistInfo[];
+  defaultAssist: DefaultAssist | null;
   activeIndex: number | null;
   activeAssistIndex: number | null;
   enabledAddDeck: boolean;
@@ -92,6 +93,7 @@ export default class DeckBoard extends React.Component<Props> {
   private renderAssistDeckCardList(): React.ReactNode {
     const {
       assistDeckCards,
+      defaultAssist,
       activeAssistIndex,
       modifiedDeckConstraints,
       setActiveAssistCard,
@@ -100,14 +102,17 @@ export default class DeckBoard extends React.Component<Props> {
       openDeckConfig,
     } = this.props;
     const assistDeckCardsElements: JSX.Element[] = [];
-    assistDeckCards.forEach((assistDeckCard, i) => {
+    assistDeckCards.forEach(({ assist }, i) => {
       const active = activeAssistIndex === i;
       assistDeckCardsElements.push(
         <AssistDeckCard
-          key={i}
-          index={i}
-          assist={assistDeckCard.assist}
-          active={active}
+          {...{
+            key: i,
+            index: i,
+            assist,
+            defaultAssist,
+            active,
+          }}
           onActive={setActiveAssistCard}
           onRemoveDeck={removeDeckAssist}
           onShowDetail={showAssistDetail}
@@ -177,20 +182,22 @@ export default class DeckBoard extends React.Component<Props> {
             genMainAwakeningCount + totalAwakeningGenMainCount;
         deckCardsElements.push(
           <DeckCard
-            key={key}
-            index={i}
-            active={active}
-            search={active && enableSearch}
-            genMain={genMain}
-            genMainAwakening={genMainAwakening}
-            genMainAwakeningCount={genMainAwakeningCount}
-            general={general}
-            additionalParams={additionalParams}
-            pocket={pocket}
-            enableMoveLeft={!firstCard}
-            enableMoveRight={!lastCard}
-            enableGenMainAwaken={enableGenMainAwaken}
-            exchangeForceIntelligence={exchangeForceIntelligence}
+            {...{
+              key,
+              index: i,
+              active,
+              search: active && enableSearch,
+              genMain,
+              genMainAwakening,
+              genMainAwakeningCount,
+              general,
+              additionalParams,
+              pocket,
+              enableMoveLeft: !firstCard,
+              enableMoveRight: !lastCard,
+              enableGenMainAwaken,
+              exchangeForceIntelligence,
+            }}
             onSelectGenMain={selectGenMain}
             onAwakenGenMain={awakenGenMain}
             onActive={setActiveCard}
@@ -204,13 +211,15 @@ export default class DeckBoard extends React.Component<Props> {
       } else {
         deckCardsElements.push(
           <DeckDummyCard
-            key={key}
-            index={i}
-            active={active}
-            search={active && enableSearch}
-            deckCard={deckCard}
-            enableMoveLeft={!firstCard}
-            enableMoveRight={!lastCard}
+            {...{
+              key,
+              index: i,
+              active,
+              search: active && enableSearch,
+              deckCard,
+              enableMoveLeft: !firstCard,
+              enableMoveRight: !lastCard,
+            }}
             onActive={setActiveCard}
             onRemoveDeck={removeDeck}
             onToggleSearch={toggleSearch}

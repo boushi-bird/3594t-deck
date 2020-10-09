@@ -12,6 +12,7 @@ import type {
   FilterItem,
   DataItem,
   KeyDataItem,
+  DefaultAssist,
 } from '3594t-deck';
 import { MAX_MORALE_LIMIT, CHARM_MORALE } from '../../const';
 import { datalistActions } from '../../modules/datalist';
@@ -48,6 +49,7 @@ interface ContainerStateFromProps {
   activeAssistIndex: number | null;
   generals: General[];
   assistGenerals: AssistGeneral[];
+  defaultAssist: DefaultAssist | null;
   skills: FilterItem[];
   unitTypes: KeyDataItem[];
   limitCost: number;
@@ -111,6 +113,7 @@ const mapStateToProps: TMapStateToProps = (state) => ({
   activeAssistIndex: state.deck.activeAssistIndex,
   generals: state.datalist.generals,
   assistGenerals: state.datalist.assistGenerals,
+  defaultAssist: state.datalist.defaultAssist,
   skills: state.datalist.filterContents.skills,
   unitTypes: state.datalist.filterContents.unitTypes,
   limitCost: state.deck.deckConstraints.limitCost,
@@ -174,6 +177,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   const {
     deckCards: rawDeckCards,
     assistDeckCards: rawAssistDeckCards,
+    defaultAssist,
     enableSearch,
     activeIndex,
     activeAssistIndex,
@@ -397,6 +401,7 @@ const mergeProps: TMergeProps = (state, actions) => {
   const sProps: StateFromProps = {
     deckCards,
     assistDeckCards,
+    defaultAssist,
     activeIndex,
     activeAssistIndex,
     enabledAddDeck,

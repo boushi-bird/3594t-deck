@@ -39,7 +39,7 @@ export default class CardFilter extends React.PureComponent<Props> {
     this.props.changeActiveFilterTab(activeFilter);
   };
 
-  private handleOnChangeFilterSelectionMode: <V>(
+  private handleOnChangeFilterSelectionMode: (
     _: 'filterSelectionMode',
     value: boolean
   ) => void = (_, value): void => {

@@ -188,6 +188,19 @@ declare module '3594t-deck' {
     readonly avatar: string;
   }
 
+  interface DefaultAssist {
+    /** 計略カテゴリ名 */
+    readonly strategyCategoryName: string;
+    /** 計略名 */
+    readonly strategyName: string;
+    /** コード */
+    readonly code: string;
+    /** 名前 */
+    readonly name: string;
+    /** アバター画像コード */
+    readonly avatar: string;
+  }
+
   interface FilterContents {
     /** 勢力 */
     belongStates: BelongState[];
