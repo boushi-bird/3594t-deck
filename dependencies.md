@@ -216,7 +216,7 @@
     - license: MIT
  - **[@bcoe/v8-coverage@0.2.3](https://github.com/demurgos/v8-coverage)**
     - license: MIT
- - **[@boushi-bird/3594t-net-datalist@0.0.6](https://github.com/boushi-bird/3594t-net-datalist)**
+ - **[@boushi-bird/3594t-net-datalist@0.0.7](https://github.com/boushi-bird/3594t-net-datalist)**
     - license: MIT
  - **[@cnakazawa/watch@1.0.4](https://github.com/mikeal/watch)**
     - license: Apache-2.0
@@ -2766,7 +2766,7 @@
     - license: (MIT OR CC0-1.0)
  - **[type-fest@0.13.1](https://github.com/sindresorhus/type-fest)**
     - license: (MIT OR CC0-1.0)
- - **[type-fest@0.16.0](https://github.com/sindresorhus/type-fest)**
+ - **[type-fest@0.17.0](https://github.com/sindresorhus/type-fest)**
     - license: (MIT OR CC0-1.0)
  - **[type-fest@0.3.1](https://github.com/sindresorhus/type-fest)**
     - license: (MIT OR CC0-1.0)
