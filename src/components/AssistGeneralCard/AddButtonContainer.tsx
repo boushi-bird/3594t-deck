@@ -184,7 +184,7 @@ function isEnabledAddDeckAssist(
     return false;
   }
 
-  if (sameCard === 'personal-strategy' || sameCard === 'personal-assist') {
+  if (sameCard === 'personal-strategy') {
     return true;
   }
   // 武将カードに同名カードがあるか判別する

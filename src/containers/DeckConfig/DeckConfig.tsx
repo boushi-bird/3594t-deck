@@ -26,45 +26,6 @@ export interface DispatchFromProps {
 
 type Props = StateFromProps & DispatchFromProps;
 
-// general: 同名武将不可(通常ルール)
-// general-strategy: 同名武将かつ同計略不可
-type SameCardGeneralConstraint = 'general' | 'general-strategy';
-
-// exclude-assist: 同名遊軍不可(通常ルール)
-// assist: 同名遊軍可
-type SameCardAssistConstraint = 'exclude-assist' | 'assist';
-
-function toSameCardConstraint(
-  generalConst: SameCardGeneralConstraint,
-  assistConst: SameCardAssistConstraint
-): SameCardConstraint {
-  if (generalConst === 'general') {
-    return assistConst === 'assist' ? 'personal-assist' : 'personal';
-  }
-  return assistConst === 'assist'
-    ? 'personal-strategy'
-    : 'personal-strategy-exclude-assist';
-}
-
-function toLocalSameCardConstraint(
-  sameCard: SameCardConstraint
-): {
-  generalConst: SameCardGeneralConstraint;
-  assistConst: SameCardAssistConstraint;
-} {
-  return {
-    generalConst:
-      sameCard === 'personal-strategy' ||
-      sameCard === 'personal-strategy-exclude-assist'
-        ? 'general-strategy'
-        : 'general',
-    assistConst:
-      sameCard === 'personal-assist' || sameCard === 'personal-strategy'
-        ? 'assist'
-        : 'exclude-assist',
-  };
-}
-
 export default class DeckConfig extends React.PureComponent<Props> {
   private costDisplayText(value: number): string {
     return `${value / 10}`;
@@ -90,30 +51,6 @@ export default class DeckConfig extends React.PureComponent<Props> {
     }
   };
 
-  private handleOnChangeSameCardGeneral: (
-    itemName: 'sameCard',
-    value: SameCardGeneralConstraint
-  ) => void = (itemName, value) => {
-    const { assistConst } = toLocalSameCardConstraint(this.props.sameCard);
-    const sameCard: SameCardConstraint = toSameCardConstraint(
-      value,
-      assistConst
-    );
-    this.handleOnChangeDeckConstraints(itemName, sameCard);
-  };
-
-  private handleOnChangeSameCardAssist: (
-    itemName: 'sameCard',
-    value: SameCardAssistConstraint
-  ) => void = (itemName, value) => {
-    const { generalConst } = toLocalSameCardConstraint(this.props.sameCard);
-    const sameCard: SameCardConstraint = toSameCardConstraint(
-      generalConst,
-      value
-    );
-    this.handleOnChangeDeckConstraints(itemName, sameCard);
-  };
-
   public render(): React.ReactNode {
     const {
       show,
@@ -130,7 +67,6 @@ export default class DeckConfig extends React.PureComponent<Props> {
     if (!show) {
       style.display = 'none';
     }
-    const { generalConst, assistConst } = toLocalSameCardConstraint(sameCard);
     return (
       <div className="deck-config" style={style}>
         <div className="deck-config-inner">
@@ -183,44 +119,24 @@ export default class DeckConfig extends React.PureComponent<Props> {
               </div>
             </section>
             <section className="filter-section same-card-constraint">
-              <h2 className="title">同名武将 制限</h2>
-              <div className="deck-filter-content">
-                <RadioButton<DeckConstraintsKey, SameCardGeneralConstraint>
-                  itemName="sameCard"
-                  value="general"
-                  checked={generalConst === 'general'}
-                  onClick={this.handleOnChangeSameCardGeneral}
-                >
-                  同名武将登録不可(通常ルール)
-                </RadioButton>
-                <RadioButton<DeckConstraintsKey, SameCardGeneralConstraint>
-                  itemName="sameCard"
-                  value="general-strategy"
-                  checked={generalConst === 'general-strategy'}
-                  onClick={this.handleOnChangeSameCardGeneral}
-                >
-                  同名武将登録可、ただし同計略の同名武将は登録不可
-                </RadioButton>
-              </div>
-            </section>
-            <section className="filter-section same-card-constraint">
               <h2 className="title">同名武将・遊軍 制限</h2>
               <div className="deck-filter-content">
-                <RadioButton<DeckConstraintsKey, SameCardAssistConstraint>
+                <RadioButton<DeckConstraintsKey, SameCardConstraint>
                   itemName="sameCard"
-                  value="exclude-assist"
-                  checked={assistConst === 'exclude-assist'}
-                  onClick={this.handleOnChangeSameCardAssist}
+                  value="personal"
+                  checked={sameCard === 'personal'}
+                  onClick={this.handleOnChangeDeckConstraints}
                 >
-                  同名の武将・遊軍登録不可(通常ルール)
+                  同名の武将・遊軍登録不可。(通常ルール)
                 </RadioButton>
-                <RadioButton<DeckConstraintsKey, SameCardAssistConstraint>
+                <RadioButton<DeckConstraintsKey, SameCardConstraint>
                   itemName="sameCard"
-                  value="assist"
-                  checked={assistConst === 'assist'}
-                  onClick={this.handleOnChangeSameCardAssist}
+                  value="personal-strategy"
+                  checked={sameCard === 'personal-strategy'}
+                  onClick={this.handleOnChangeDeckConstraints}
                 >
-                  同名の武将・遊軍登録可
+                  同名の武将・遊軍登録可。
+                  <small>ただし同計略の同名武将は登録不可</small>
                 </RadioButton>
               </div>
             </section>

@@ -283,6 +283,12 @@ const costParam: ParamsOptions<State, number> = generateNumberParamsOptions(
   DECK_COST_LIMIT
 );
 
+// 過去に使っていた同名武将の制約
+const oldSameCardConstraints = [
+  'personal-strategy-exclude-assist',
+  'personal-assist',
+];
+
 const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
   action: (sameCard) => deckActions.setDeckConstraints({ sameCard }),
   selector: (state) => state.deck.deckConstraints.sameCard,
@@ -290,6 +296,9 @@ const sameCardParam: ParamsOptions<State, SameCardConstraint> = {
   stringToValue: (s) => {
     if (isSameCardConstraint(s)) {
       return s;
+    }
+    if (oldSameCardConstraints.includes(s)) {
+      return 'personal-strategy';
     }
     return defaultSameCardConstraint;
   },
