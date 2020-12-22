@@ -1914,7 +1914,7 @@
     - license: MIT
  - **[node-modules-regexp@1.0.0](https://github.com/jamestalmage/node-modules-regexp)**
     - license: MIT
- - **[node-notifier@8.0.0](https://github.com/mikaelbr/node-notifier)**
+ - **[node-notifier@8.0.1](https://github.com/mikaelbr/node-notifier)**
     - license: MIT
  - **[node-releases@1.1.61](https://github.com/chicoxyzzy/node-releases)**
     - license: MIT
@@ -2457,6 +2457,8 @@
  - **[semver@7.0.0](https://github.com/npm/node-semver)**
     - license: ISC
  - **[semver@7.3.2](https://github.com/npm/node-semver)**
+    - license: ISC
+ - **[semver@7.3.4](https://github.com/npm/node-semver)**
     - license: ISC
  - **[send@0.17.1](https://github.com/pillarjs/send)**
     - license: MIT
