@@ -1424,7 +1424,7 @@
     - license: ISC
  - **[inherits@2.0.4](https://github.com/isaacs/inherits)**
     - license: ISC
- - **[ini@1.3.5](https://github.com/isaacs/ini)**
+ - **[ini@1.3.7](https://github.com/isaacs/ini)**
     - license: ISC
  - **[internal-ip@4.3.0](https://github.com/sindresorhus/internal-ip)**
     - license: MIT
